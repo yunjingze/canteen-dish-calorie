@@ -78,6 +78,18 @@
   .scope-warn button.trywide{background:#fff;border:1px solid #e8b071;color:#a4560d;border-radius:9px;
         padding:4px 10px;font-size:11.5px;margin-left:6px}
   .scope-warn button.trywide:hover{background:#fff1de}
+/* "the answer is wrong" correction form, shown under every single-dish result */
+.fb{margin-top:14px;border-top:1px dashed #dfe4ea;padding-top:10px;font-size:12.5px;color:#5b6979}
+.fb a{color:#2f6fd0;text-decoration:none}
+.fb a:hover{text-decoration:underline}
+.fb .fb-form{margin-top:9px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fb select,.fb input{font:inherit;padding:6px 8px;border:1px solid #cfd6df;border-radius:8px;background:#fff;color:#22303c}
+.fb input{flex:1 1 180px;min-width:0}
+.fb button{font:inherit;padding:6px 14px;border:0;border-radius:8px;background:#2f6fd0;color:#fff;cursor:pointer}
+.fb button:hover{background:#2760b6}
+.fb button:disabled{background:#9aa9ba;cursor:default}
+.fb .fb-msg{margin-top:6px;color:#2e7d4f}
+.fb .fb-msg.err{color:#b42318}
   .scope-info{margin:2px 0 12px;font-size:12px;color:var(--muted);line-height:1.7}
   .scope-info summary{cursor:pointer;color:var(--brand);font-size:12px;list-style:none;width:max-content}
   .scope-info summary::-webkit-details-marker{display:none}
@@ -312,6 +324,83 @@ function rescale(it, scale){
   };
 }
 
+// ---------------------------------------------------------------------------
+// "The answer is wrong": one correction becomes a labelled pair (photo, what we
+// said, what it really was) under data/splits/feedback/. These are the only
+// labels from the canteen domain itself, so they are worth collecting even if
+// nothing is trained on them automatically.
+// ---------------------------------------------------------------------------
+let fbClasses = null;
+async function ensureFbClasses(){
+  if(fbClasses) return fbClasses;
+  try{
+    const res = await fetch("/api/classes");
+    const data = await readJson(res);
+    fbClasses = data.classes.map(c => ({v: c["class"], label: c.zh}));
+  }catch(err){ fbClasses = []; }
+  return fbClasses;
+}
+
+function mountFeedback(wrap, data){
+  if(mode !== "single") return;
+  const has = data.top3 && data.top3.length;
+  const top1 = has ? data.top3[0]["class"] : "";
+  const top1zh = has ? data.top3[0].zh : "";
+  const box = document.createElement("div");
+  box.className = "fb";
+  box.innerHTML =
+    '<div id="fbToggle"><a href="#" id="fbOpen">结果不对？点这里告诉我正确的菜</a></div>' +
+    '<div class="fb-form" id="fbForm" style="display:none">' +
+      '<select id="fbClass"><option value="">正确的菜是…</option></select>' +
+      '<input id="fbNote" maxlength="120" placeholder="补充说明（可选）">' +
+      '<button type="button" id="fbSend">提交</button>' +
+    '</div>' +
+    '<div class="fb-msg" id="fbMsg"></div>';
+  wrap.appendChild(box);
+
+  $("#fbOpen").onclick = async (ev) => {
+    ev.preventDefault();
+    $("#fbToggle").style.display = "none";
+    $("#fbForm").style.display = "flex";
+    const sel = $("#fbClass");
+    const cls = await ensureFbClasses();
+    cls.forEach(c => {
+      const o = document.createElement("option");
+      o.value = c.v; o.textContent = c.label; sel.appendChild(o);
+    });
+    [["not_a_dish", "照片里没有菜"], ["not_sure", "我也说不准"]].forEach(pair => {
+      const o = document.createElement("option");
+      o.value = pair[0]; o.textContent = pair[1]; sel.appendChild(o);
+    });
+  };
+
+  $("#fbSend").onclick = async () => {
+    const corrected = $("#fbClass").value;
+    const msg = $("#fbMsg");
+    if(!corrected){ msg.className = "fb-msg err"; msg.textContent = "请先选择正确的类别"; return; }
+    const fd = new FormData();
+    fd.append("predicted", top1);
+    fd.append("corrected", corrected);
+    fd.append("note", $("#fbNote").value || "");
+    if(lastSource && lastSource.kind === "file") fd.append("file", lastSource.file);
+    else if(lastSource && lastSource.kind === "sample") fd.append("sample", lastSource.name);
+    $("#fbSend").disabled = true;
+    try{
+      const res = await fetch("/api/feedback", {method:"POST", body:fd});
+      await readJson(res);
+      $("#fbToggle").style.display = "none";
+      $("#fbForm").style.display = "none";
+      msg.className = "fb-msg";
+      msg.textContent = "已记下，谢谢！这条会用来改进模型。" +
+        (top1 && corrected !== top1 ? "（" + top1zh + " 标为你的答案）" : "");
+    }catch(err){
+      $("#fbSend").disabled = false;
+      msg.className = "fb-msg err";
+      msg.textContent = "提交失败：" + err.message;
+    }
+  };
+}
+
 function renderResults(data){
   lastData = data;
   const nClass = mode === "wide" ? WIDE_N : 20;
@@ -349,6 +438,7 @@ function renderResults(data){
         '与其硬给一个答案，不如说“认不出”。可以换一张光线更足、菜占画面更大的照片，' +
         '或者切到「混合餐盘」逐个标出盘里的部分。';
     wrap.appendChild(none);
+    mountFeedback(wrap, data);
     return;
   }
   data.top3.forEach((it, i) => {
@@ -370,6 +460,7 @@ function renderResults(data){
       brandLine(it);
     wrap.appendChild(div);
   });
+  mountFeedback(wrap, data);
 }
 
 async function readJson(res){

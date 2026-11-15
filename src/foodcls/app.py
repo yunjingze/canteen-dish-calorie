@@ -1,9 +1,12 @@
 """FastAPI web demo: photo -> Top-3 dishes + calorie range."""
 from __future__ import annotations
 
+import csv
+import hashlib
 import io
 import json
 import os
+from datetime import datetime
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
@@ -733,6 +736,86 @@ async def predict(
     packaging_prob = pack.prob(frames) if pack is not None else None
     return payload(fused, source=file.filename or "upload", portion=portion, grams=grams,
                    views=views, img=img, food_prob=food_prob, packaging_prob=packaging_prob)
+
+
+# --------------------------------------------------------------------------- #
+# Feedback: "the answer is wrong, it was actually ..." kept as a labelled set
+# --------------------------------------------------------------------------- #
+#: Corrections are the cheapest labelled data in the domain we are worst at: the
+#: photo is a real canteen tray and the user names the dish.  One CSV row plus the
+#: image per submission; nothing is trained on it automatically.
+FEEDBACK_DIR = ROOT / "data/splits/feedback"
+FEEDBACK_CSV = FEEDBACK_DIR / "labels.csv"
+FEEDBACK_SPECIAL = {"not_a_dish": "照片里没有菜", "not_sure": "我也说不准"}
+
+
+@app.get("/api/feedback")
+def feedback_stats():
+    """How many corrections have been collected so far."""
+    if not FEEDBACK_CSV.is_file():
+        return {"n": 0, "path": "data/splits/feedback"}
+    with FEEDBACK_CSV.open("r", encoding="utf-8", newline="") as fh:
+        n = max(0, sum(1 for _ in fh) - 1)
+    return {"n": n, "path": "data/splits/feedback"}
+
+
+@app.post("/api/feedback")
+async def feedback(
+    file: Optional[UploadFile] = File(None),
+    sample: str = Form(""),
+    predicted: str = Form(""),
+    corrected: str = Form(""),
+    note: str = Form(""),
+):
+    """Store one correction: the photo, what we said, and what it really was."""
+    corrected = (corrected or "").strip()
+    if not corrected:
+        return JSONResponse({"error": "请先选择正确的类别"}, status_code=400)
+    if corrected not in CLASS_NAMES and corrected not in FEEDBACK_SPECIAL:
+        return JSONResponse({"error": "未知的类别"}, status_code=400)
+
+    upload = file is not None and bool(file.filename)
+    raw = b""
+    if upload:
+        raw = await file.read(MAX_UPLOAD_BYTES + 1)
+        if len(raw) > MAX_UPLOAD_BYTES:
+            return JSONResponse({"error": "图片过大，请上传 15 MB 以内的照片"}, status_code=413)
+    elif sample:
+        path = _find_sample(sample)
+        if path is None:
+            return JSONResponse({"error": "not found"}, status_code=404)
+        raw = path.read_bytes()
+    if not raw:
+        return JSONResponse({"error": "缺少图片：请重新选择一张照片"}, status_code=400)
+
+    try:
+        img = read_image(raw)
+    except ImageTooLarge:
+        return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
+    except Exception:
+        return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
+
+    FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
+    digest = hashlib.sha1(raw).hexdigest()[:10]
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    #: the corrected class in the name keeps the folder browsable without the CSV
+    name = f"{stamp}_{corrected}_{digest}.jpg"
+    img.convert("RGB").save(FEEDBACK_DIR / name, "JPEG", quality=90)
+
+    fresh = not FEEDBACK_CSV.is_file()
+    with FEEDBACK_CSV.open("a", encoding="utf-8", newline="") as fh:
+        writer = csv.writer(fh)
+        if fresh:
+            writer.writerow(["timestamp", "file", "predicted", "corrected", "note", "source"])
+        writer.writerow([
+            datetime.now().isoformat(timespec="seconds"),
+            name,
+            predicted.strip()[:80],
+            corrected,
+            note.strip().replace("\n", " ")[:200],
+            "upload" if upload else "sample",
+        ])
+    return {"ok": True, "saved": name, "corrected": corrected}
 
 
 # --------------------------------------------------------------------------- #

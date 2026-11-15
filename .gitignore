@@ -6,6 +6,7 @@ data/splits/*
 !data/splits/canteen_real/
 !data/splits/mixed_real/
 !data/splits/negatives/
+# data/splits/feedback/ stays ignored on purpose: user-submitted photos
 
 # ---- environments / caches --------------------------------------------------
 .torch/

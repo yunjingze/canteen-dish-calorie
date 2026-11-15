@@ -589,6 +589,25 @@ from \gainCanExternal{} to \redrawGapSeven{} points. Comparisons between models 
 this proxy are therefore meaningful; comparisons of the absolute level with other
 studies are not, which is why the gap is reported alongside the level throughout.
 
+Because every number here is a point estimate on a finite sample, we also report
+intervals and paired tests rather than bare differences. Bootstrapping the 5,000
+test images (4,000 resamples) gives E7 91.7\% (95\% CI 90.9--92.4) against E4
+90.5\% (89.7--91.4), and an exact McNemar test on the same images fixes 223 that
+E4 misses and breaks 167 that E4 gets, $p=0.005$. On the two proxy draws the same
+comparison reads 71.6\% against 66.0\% ($p<0.001$) and 67.6\% against 63.6\%
+($p=0.005$), so under the single-view protocol the external-data gain survives
+both draws; it is the only intervention in the study that does. De-duplication is
+not detectable: E8 against E7 flips 119/125, 65/58 and 63/72 images on test,
+proxy and the redraw, with $p$ between 0.49 and 0.75. An ensemble of the five
+fine-tuned models is reliably better than any one of them---93.4\% in-domain,
+74.2\% and 71.4\% on the two proxy draws, $p\le0.003$ against E7 throughout---and
+is left out of the deployment only because it costs five forward passes; it is
+the first item of the deployment backlog. On the 100 real photographs E7 scores
+91\% (85--96) under this protocol and 95\% (90--99) with the six-view fusion the
+demo uses; both intervals overlap the test-set interval, which is the statistical
+form of the observation that the batch behaves like a clean photograph rather than
+like a canteen tray.
+
 \begin{figure*}[t]
 \centering
 \begin{subfigure}{0.48\textwidth}
@@ -674,6 +693,26 @@ every framing, unseen ones do not. At 0.32 the gate flags 5.3\% of supported
 photos and 27\% of 20 unseen classes, and the page then says the photo is probably
 not one of the twenty rather than showing a confident wrong answer.
 
+The rule above is a heuristic on scores, and two failure modes exposed it. A
+photograph of a supermarket product---a frozen-pizza carton whose front shows a
+pizza---is confidently in-domain, because nothing in the pipeline asks whether
+the pixels depict a plated dish rather than a printed one: in an audit of 62
+product photographs, 36 were accepted and 12 were reported as the dish printed on
+the package. And the worst-case-of-three-framings score does not separate food
+from non-food: over 131 photographs that contain no dish (empty trays, cups,
+napkins, menu boards, hands) its median is 0.32 against 0.94 for real dishes, and
+no single threshold both rejects the negatives and keeps the dishes---at 0.32,
+70 of the 131 negatives are accepted; at 0.66, only 66 of 86 dishes survive. Both
+problems are handled by learned vetoes instead, each a logistic regression on the
+512-dimensional average-pooled feature that the classifier already computes for
+its full-frame view, so neither head costs an extra forward pass. The food veto
+is fitted on the 131 negatives and 3,700 dish images and rejects 96.9\% (95\% CI
+93.9--99.2) of the negatives while keeping 95\% (90--99) of 100 real canteen
+dishes; the packaging veto is fitted on 79 product photographs and rejects all 62
+audited cartons before scoring, at the price of 18 of 3,700 dish images (0.5\%),
+mostly ice cream and doughnuts photographed on white. Both are stored as a small
+JSON weight file next to the checkpoint, and the page names which veto fired.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.93\columnwidth]{demo_ui.png}
@@ -701,7 +740,11 @@ Third, every configuration is trained from a single seed. Repeating E4 with a
 different seed moves test accuracy from \accTestFour\% to \accTestFourSeed\% and
 proxy accuracy from \accCanFour\% to \accCanFourSeed\%, about half a point, which
 is the size of the augmentation, mobile and distillation differences discussed
-above; only the cross-domain effect of external data clears that bar. The 24-epoch
+above; only the cross-domain effect of external data clears that bar. The
+bootstrap intervals of Section \ref{sec:crossdomain} make the same point from the
+other side: on 1,000 proxy images an interval spans about three points, which is
+why the paired tests, and not the point estimates, decide which differences are
+real. The 24-epoch
 check (E12) shows that the budget is not the limiting factor either: it adds five
 points of training accuracy without moving validation, test or proxy. The
 fine-tuning depth remains partially confounded with the learning-rate schedule,
@@ -719,7 +762,9 @@ accuracy drops by \gapFour{} points on a phone-photograph proxy despite unchange
 class semantics, and adding 69\,512 web images of the same classes recovers
 \gainCanExternal{} of those points, more than any change of the adaptation
 policy. A web demo returning top-3 dishes with energy intervals completes the
-pipeline.
+pipeline; two small learned vetoes sit in front of it, so that photographs of
+product packaging and of food-free scenes are named as such instead of being
+given a confident wrong label.
 
 \section*{Acknowledgment}
 The author thanks the course staff for the assignment specification and the
