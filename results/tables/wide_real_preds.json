@@ -1,0 +1,108 @@
+{
+  "n": 100,
+  "wide_top1": 89,
+  "wide_errors": 11,
+  "e7_would_fix": 7,
+  "ens_would_fix": 6,
+  "errors": [
+    {
+      "path": "data\\splits\\canteen_real\\donuts\\001.jpg",
+      "label": "donuts",
+      "wide": "chocolate_cake",
+      "p": 0.4808,
+      "E7": "donuts",
+      "all5": "donuts",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\french_fries\\002.jpg",
+      "label": "french_fries",
+      "wide": "ice_cream",
+      "p": 0.2543,
+      "E7": "ice_cream",
+      "all5": "ice_cream",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\greek_salad\\002.jpg",
+      "label": "greek_salad",
+      "wide": "caesar_salad",
+      "p": 0.6691,
+      "E7": "greek_salad",
+      "all5": "caesar_salad",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\hamburger\\009.jpg",
+      "label": "hamburger",
+      "wide": "french_fries",
+      "p": 0.5217,
+      "E7": "ice_cream",
+      "all5": "ice_cream",
+      "in_top5": false
+    },
+    {
+      "path": "data\\splits\\canteen_real\\lasagna\\003.jpg",
+      "label": "lasagna",
+      "wide": "pizza",
+      "p": 0.4156,
+      "E7": "lasagna",
+      "all5": "grilled_salmon",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\pizza\\001.jpg",
+      "label": "pizza",
+      "wide": "lasagna",
+      "p": 0.8776,
+      "E7": "lasagna",
+      "all5": "lasagna",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\pizza\\003.jpg",
+      "label": "pizza",
+      "wide": "hot_dog",
+      "p": 0.6735,
+      "E7": "pizza",
+      "all5": "pizza",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\pizza\\004.jpg",
+      "label": "pizza",
+      "wide": "grilled_salmon",
+      "p": 0.44,
+      "E7": "lasagna",
+      "all5": "pizza",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\pizza\\008.jpg",
+      "label": "pizza",
+      "wide": "pancakes",
+      "p": 0.3298,
+      "E7": "pizza",
+      "all5": "pizza",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\pizza\\009.jpg",
+      "label": "pizza",
+      "wide": "pancakes",
+      "p": 0.3972,
+      "E7": "pizza",
+      "all5": "pizza",
+      "in_top5": true
+    },
+    {
+      "path": "data\\splits\\canteen_real\\ramen\\001.jpg",
+      "label": "ramen",
+      "wide": "grilled_salmon",
+      "p": 0.1832,
+      "E7": "ramen",
+      "all5": "ramen",
+      "in_top5": true
+    }
+  ]
+}

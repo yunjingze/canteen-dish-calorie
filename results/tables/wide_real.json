@@ -1,0 +1,11 @@
+{
+  "ckpt": "results\\runs\\resnet18_food101_cn116\\best.pt",
+  "temperature": 0.819,
+  "canteen_real": {
+    "n": 100,
+    "top1_restricted": 0.89,
+    "top5_restricted": 0.99,
+    "top1_full116": 0.71,
+    "classes_in_wide": 20
+  }
+}
