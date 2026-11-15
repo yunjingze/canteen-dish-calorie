@@ -714,6 +714,35 @@ dishes; the packaging veto is fitted on 79 product photographs and rejects all 6
 audited cartons before scoring, at the price of 18 of 3,700 dish images (0.5@%),
 mostly ice cream and doughnuts photographed on white. Both are stored as a small
 JSON weight file next to the checkpoint, and the page names which veto fired.
+A second tab trades depth for breadth. A 116-class head---the twenty dishes plus
+96 Chinese dishes---covers canteens that serve hot pot or stir-fries, but on the
+same 100 real photographs it names the right class 71.0@% of the time over all
+116 classes, against 89.0@% when the twenty-class subset is scored alone and
+99.0@% top-5. The errors are one-sided: when the wide head names a Food-101 dish
+it is almost always right (83.3@% on 5{,}000 held-out Food-101 images), and it
+loses the photograph only when a Chinese class takes the top. Overriding the
+narrow head on disagreement therefore does nothing---across a grid of top-$k$
+and confidence thresholds the real-photo accuracy moved between $-1.0$ and
+$0.0$ points---because the failure is the Chinese class winning, not the
+Food-101 class being overruled. Mixing the two posteriors does work. With
+$p=(1-@alpha)p_{116}+@alpha p_{20}$, where $p_{20}$ is zero outside the twenty
+classes, $@alpha=0.2$ lifts the real photographs from 71.0@% to 79.0@% (8 fixed,
+0 broken, McNemar $p=0.008$), held-out Food-101 from 83.3@% to 87.4@% (205 fixed,
+3 broken), and costs 1.0 point on 20{,}830 Chinese test images (212 broken, 0
+fixed). The blend is one line in the service and reuses the narrow head that is
+already loaded.
+
+Corrections are collected in the interface itself. Under every result the page
+offers a link that says the answer is wrong, which opens the class list of the
+active tab; a tray result lets the user strike out a dish that is not on the
+plate; and when the answer is uncertain the top-3 list doubles as the form, so a
+single click says which candidate was right. Each submission is stored as a JPEG
+plus a CSV row (timestamp, predicted, corrected, struck-out dishes, note, tab),
+and @texttt{scripts/feedback@_report.py} turns the rows into confusion pairs and
+into the classes that need more photographs. The mechanism is deployed and
+covered by the API tests, but the volume of real corrections is still too small
+to report as a result.
+
 
 @begin{figure}[t]
 @centering

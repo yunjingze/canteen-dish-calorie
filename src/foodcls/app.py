@@ -83,6 +83,10 @@ SCOPE_THRESHOLD = 0.32
 #: the same ~5 % false-alarm budget as the 20-class gate (eval_wide_gate.py re-measures).
 WIDE_SCOPE_THRESHOLD = 0.18
 
+#: Where the 20 supported dishes sit in the 116-class table, so the two
+#: posteriors can be mixed without reordering anything.
+WIDE_NARROW_INDEX = np.array([WIDE_CLASS_NAMES.index(c) for c in CLASS_NAMES], dtype=np.int64)
+
 #: Food / non-food gate (see foodcls/foodgate.py).  The view-robust rule only
 #: asks "which dish?", so about half of real non-food photos still pass 0.32.
 #: Combined with the gate, 116 of 131 real non-food photos are rejected while 96
@@ -231,7 +235,9 @@ def load_wide_model():
     _state["wide_arch"] = ckpt["arch"]
     _state["wide_temperature"] = _load_temperature(WIDE_CKPT)
     _state["wide_temperature_fused"] = _load_temperature(WIDE_CKPT, "temperature_fused")
-    print(f"loaded wide {ckpt['arch']} ({WIDE_NUM_CLASSES} classes) from {WIDE_CKPT} on {device}",
+    _state["wide_fuse"] = WIDE_FUSE_ALPHA if _state.get("model") is not None else 0.0
+    print(f"loaded wide {ckpt['arch']} ({WIDE_NUM_CLASSES} classes) from {WIDE_CKPT} on {device}"
+          + (f", fusing {WIDE_FUSE_ALPHA:.2f} of the 20-class posterior" if _state["wide_fuse"] else ""),
           flush=True)
 
 
@@ -342,12 +348,36 @@ def analyse_full(img: Image.Image):
                        _state.get("temperature_fused"), want_feats=True)
 
 
+#: How much of the 20-class posterior to mix into the 116-class one (see
+#: results/_rerank_fuse.py).  The wide head knows which cuisine, the narrow head
+#: is far better on the 20 dishes it was trained on; mixing them lifts the wide
+#: tab on Food-101 dishes at a measurable cost on Chinese ones, which is what
+#: set this value.  On the 100 real canteen photos 0.20 fixes 8 dishes and
+#: breaks none (71.0 -> 79.0, p = 0.008); on 20,830 Chinese test images it
+#: breaks 212 and fixes none (82.9 -> 81.9); on 5,000 Food-101 test images it
+#: fixes 205 and breaks 3 (83.3 -> 87.4).  0 disables the fusion and restores
+#: the plain wide head.
+WIDE_FUSE_ALPHA = float(os.environ.get("FOODCLS_WIDE_FUSE", "0.2"))
+
+
 def analyse_wide(img: Image.Image):
     model = _state.get("wide_model")
     if model is None:
         raise RuntimeError("wide model is not loaded")
-    return _view_probs(model, _state.get("wide_temperature", 1.0), img,
-                       _state.get("wide_temperature_fused"))
+    views, fused = _view_probs(model, _state.get("wide_temperature", 1.0), img,
+                               _state.get("wide_temperature_fused"))
+    alpha = _state.get("wide_fuse", 0.0)
+    narrow = _state.get("model")
+    if alpha > 0 and narrow is not None:
+        # The narrow posterior is mapped into the wide index space and left
+        # there: its mass is not renormalised, so alpha also controls how much
+        # total probability the 20 known dishes may claim.
+        _, p_narrow = _view_probs(narrow, _state.get("temperature", 1.0), img,
+                                  _state.get("temperature_fused"))
+        full = np.zeros_like(fused)
+        full[WIDE_NARROW_INDEX] = p_narrow
+        fused = (1.0 - alpha) * fused + alpha * full
+    return views, fused
 
 
 @torch.no_grad()
@@ -1095,6 +1125,7 @@ def health():
         "wide_arch": _state.get("wide_arch"),
         "wide_classes": WIDE_NUM_CLASSES,
         "wide_temperature": _state.get("wide_temperature", 1.0),
+        "wide_fuse": _state.get("wide_fuse", 0.0),
         "brand_items": _state.get("brand_items", 0),
         "food_gate": {
             "enabled": _state.get("foodgate") is not None,

@@ -98,6 +98,15 @@
 .fb .chip.pred{background:#fff5e8;border-color:#f0d4ac;color:#8a5a12}
 .fb .chip.off{background:#f4f4f5;border-color:#dcdcdf;color:#8b8b93;text-decoration:line-through}
 .fb .chip.off i{color:#8b8b93}
+/* "one of the candidates is right" -- a one-click correction on uncertain results */
+.pickbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.pickbar .lbl{font-size:11.5px;color:var(--muted)}
+.pickbar button{font:inherit;font-size:11.5px;padding:3px 10px;border-radius:99px;cursor:pointer;
+  border:1px solid #cdddf5;background:#eef3fb;color:#1f4f9c}
+.pickbar button:hover{border-color:#9dbdea;background:#e4eefc}
+.pickbar button.top1{border-color:#c8dafd;background:#e8f1ff;font-weight:600}
+.pickbar .picked{font-size:11.5px;color:#2e7d4f}
+.pickbar .picked.err{color:#b42318}
 .fb-hint{flex:1 1 100%;font-size:12px;color:var(--muted);margin:2px 0 0}
   .scope-info{margin:2px 0 12px;font-size:12px;color:var(--muted);line-height:1.7}
   .scope-info summary{cursor:pointer;color:var(--brand);font-size:12px;list-style:none;width:max-content}
@@ -351,6 +360,21 @@ async function ensureFbClasses(kind){
   return fbClasses[kind];
 }
 
+// One correction, one POST. Used by the form below and by the one-click
+// "which of these is it" buttons on uncertain results.
+async function postFeedback(kind, predicted, corrected, removed, note){
+  const fd = new FormData();
+  fd.append("predicted", predicted || "");
+  fd.append("corrected", corrected || "");
+  fd.append("removed", removed || "");
+  fd.append("note", note || "");
+  fd.append("mode", kind);
+  if(lastSource && lastSource.kind === "file") fd.append("file", lastSource.file);
+  else if(lastSource && lastSource.kind === "sample") fd.append("sample", lastSource.name);
+  const res = await fetch("/api/feedback", {method:"POST", body:fd});
+  await readJson(res);
+}
+
 function mountFeedback(wrap, data, kind){
   // every mode collects corrections: the 20-class model, the 116-class one, and
   // the tray model (where the user may name several dishes at once)
@@ -466,18 +490,9 @@ function mountFeedback(wrap, data, kind){
         : "请先选择正确的类别";
       return;
     }
-    const fd = new FormData();
-    fd.append("predicted", guessed);
-    fd.append("corrected", corrected);
-    fd.append("removed", removed);
-    fd.append("note", $("#fbNote").value || "");
-    fd.append("mode", kind);
-    if(lastSource && lastSource.kind === "file") fd.append("file", lastSource.file);
-    else if(lastSource && lastSource.kind === "sample") fd.append("sample", lastSource.name);
     $("#fbSend").disabled = true;
     try{
-      const res = await fetch("/api/feedback", {method:"POST", body:fd});
-      await readJson(res);
+      await postFeedback(kind, guessed, corrected, removed, $("#fbNote").value);
       $("#fbToggle").style.display = "none";
       $("#fbForm").style.display = "none";
       msg.className = "fb-msg";
@@ -553,6 +568,37 @@ function renderResults(data){
       brandLine(it);
     wrap.appendChild(div);
   });
+  // When the answer is shaky, the top-3 list doubles as the correction form:
+  // one click says "it was this one" and that is the whole submission.
+  if (out || data.top3[0].prob < 0.55) {
+    const bar = document.createElement("div");
+    bar.className = "pickbar";
+    const lbl = document.createElement("span");
+    lbl.className = "lbl";
+    lbl.textContent = "其实盘里是：";
+    const msg = document.createElement("span");
+    msg.className = "picked";
+    data.top3.forEach((it, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      if (i === 0) b.className = "top1";
+      b.textContent = it.zh;
+      b.onclick = async () => {
+        Array.prototype.forEach.call(bar.querySelectorAll("button"), x => { x.disabled = true; });
+        try {
+          await postFeedback(mode, data.top3[0]["class"], it["class"], "", "top3 click");
+          msg.textContent = "已记下：" + it.zh + "，谢谢！";
+        } catch (err) {
+          Array.prototype.forEach.call(bar.querySelectorAll("button"), x => { x.disabled = false; });
+          msg.className = "picked err";
+          msg.textContent = "提交失败：" + err.message;
+        }
+      };
+      bar.appendChild(b);
+    });
+    bar.appendChild(msg);
+    wrap.appendChild(bar);
+  }
   mountFeedback(wrap, data);
 }
 

@@ -1,0 +1,17 @@
+﻿
+fastapi==0.162.2
+matplotlib==3.11.2
+numpy==2.5.4
+pandas==3.1.1
+pillow==13.0.0
+pyarrow==26.0.1
+pytest==9.2.0
+python-multipart==0.0.33
+scikit-learn==1.9.1
+segno==1.6.6
+thop==0.1.1.post2209072238
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+uvicorn==0.54.0
+
+
