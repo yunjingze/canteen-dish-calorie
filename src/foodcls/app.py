@@ -272,9 +272,22 @@ def preprocess_views(img: Image.Image) -> torch.Tensor:
     return torch.stack([tf(rgb) for tf in _VIEW_TFS])
 
 
+#: Decompression-bomb guard.  A 12 MP phone photo is 4032x3024; past 40 MP the
+#: decode alone costs seconds and hundreds of MB, and the resize throws the
+#: detail away anyway.
+MAX_PIXELS = 40_000_000
+
+
+class ImageTooLarge(Exception):
+    """The upload decodes to more pixels than we are willing to allocate."""
+
+
 def read_image(raw: bytes) -> Image.Image:
     """Decode uploaded bytes, honouring the EXIF orientation of phone photos."""
     img = Image.open(io.BytesIO(raw))
+    width, height = img.size
+    if width * height > MAX_PIXELS:
+        raise ImageTooLarge(f"{width}x{height}")
     img = ImageOps.exif_transpose(img)
     return img.convert("RGB")
 
@@ -550,6 +563,32 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(title="Campus Canteen Dish Recognition", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=str(STATIC)), name="static")
 
+#: Optional access token.  Unset (the default) keeps the old behaviour — anyone
+#: who can reach the port may use the demo, which is what a same-Wi-Fi demo
+#: wants.  Set FOODCLS_TOKEN=... before opening a public tunnel: the first visit
+#: with ?token=... drops a one-week cookie and every later request is checked.
+AUTH_TOKEN = os.environ.get("FOODCLS_TOKEN", "").strip()
+
+
+@app.middleware("http")
+async def _require_token(request, call_next):
+    if not AUTH_TOKEN:
+        return await call_next(request)
+    given = (request.headers.get("x-food-token")
+             or request.query_params.get("token")
+             or request.cookies.get("food_token"))
+    if given != AUTH_TOKEN:
+        message = "需要访问口令：在网址后面加上 ?token=…"
+        if request.url.path.startswith("/api/"):
+            return JSONResponse({"error": message}, status_code=401)
+        return Response(f"<h1>需要访问口令</h1><p>{message}</p>", status_code=401,
+                        media_type="text/html; charset=utf-8")
+    response = await call_next(request)
+    if request.query_params.get("token") and not request.cookies.get("food_token"):
+        response.set_cookie("food_token", AUTH_TOKEN, httponly=True, samesite="lax",
+                            max_age=7 * 24 * 3600)
+    return response
+
 
 @app.get("/")
 def index():
@@ -683,6 +722,8 @@ async def predict(
         return JSONResponse({"error": "图片过大，请上传 15 MB 以内的照片"}, status_code=413)
     try:
         img = read_image(raw)
+    except ImageTooLarge:
+        return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
         return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
     views, fused, frames = await run_in_threadpool(analyse_full, img)
@@ -769,6 +810,8 @@ async def wide_predict(file: UploadFile = File(...), portion: str = "normal", gr
         return JSONResponse({"error": "图片过大，请上传 15 MB 以内的照片"}, status_code=413)
     try:
         img = read_image(raw)
+    except ImageTooLarge:
+        return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
         return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
     views, fused = await run_in_threadpool(analyse_wide, img)
@@ -826,6 +869,8 @@ async def mixed_predict(file: UploadFile = File(...), portion: str = "normal"):
         return JSONResponse({"error": "图片过大，请上传 15 MB 以内的照片"}, status_code=413)
     try:
         img = read_image(raw)
+    except ImageTooLarge:
+        return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
         return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
     parts = await run_in_threadpool(infer_mixed, img)
@@ -869,7 +914,7 @@ def health():
     return {
         "ok": True,
         "arch": _state.get("arch"),
-        "checkpoint": str(CKPT),
+        "checkpoint": CKPT.name,
         "temperature": _state.get("temperature", 1.0),
         "temperature_fused": _state.get("temperature_fused", _state.get("temperature", 1.0)),
         "views": len(_VIEW_TFS) or 6,
@@ -883,13 +928,13 @@ def health():
         "food_gate": {
             "enabled": _state.get("foodgate") is not None,
             "threshold": FOODGATE_THRESHOLD,
-            "path": str(FOODGATE_PATH),
+            "path": FOODGATE_PATH.name,
         },
         "packaging_head": {
             "enabled": _state.get("packaging") is not None,
             "threshold": (_state["packaging"].threshold
                           if _state.get("packaging") is not None else PACKAGING_THRESHOLD),
-            "path": str(PACKAGING_PATH),
+            "path": PACKAGING_PATH.name,
         },
     }
 
