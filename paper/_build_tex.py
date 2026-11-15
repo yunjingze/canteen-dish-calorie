@@ -699,12 +699,12 @@ The rule above is a heuristic on scores, and two failure modes exposed it. A
 photograph of a supermarket product---a frozen-pizza carton whose front shows a
 pizza---is confidently in-domain, because nothing in the pipeline asks whether
 the pixels depict a plated dish rather than a printed one: in an audit of 62
-product photographs, 36 were accepted and 12 were reported as the dish printed on
-the package. And the worst-case-of-three-framings score does not separate food
-from non-food: over 131 photographs that contain no dish (empty trays, cups,
-napkins, menu boards, hands) its median is 0.32 against 0.94 for real dishes, and
-no single threshold both rejects the negatives and keeps the dishes---at 0.32,
-70 of the 131 negatives are accepted; at 0.66, only 66 of 86 dishes survive. Both
+product photographs, 36 were accepted and given a dish name---the carton front
+above came back as pizza at 98@%. And the worst-case-of-three-framings score does not separate food
+from non-food: on 138 photographs that contain no dish (empty trays, cups,
+napkins, menu boards, hands) no single threshold both rejects them and keeps the
+dishes---at 0.32 the rule still accepts 70 of the 138, and at 0.60 it accepts 13
+but keeps only 79 of 100 real dishes, down from 96. Both
 problems are handled by learned vetoes instead, each a logistic regression on the
 512-dimensional average-pooled feature that the classifier already computes for
 its full-frame view, so neither head costs an extra forward pass. The food veto
