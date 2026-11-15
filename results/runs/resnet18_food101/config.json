@@ -1,0 +1,18 @@
+{
+  "data_root": "C:\\Users\\13561\\Desktop\\神经网络\\项目作业\\food_project\\data\\wide",
+  "arch": "resnet18",
+  "epochs": 10,
+  "batch_size": 96,
+  "lr_head": 0.001,
+  "lr_backbone": 0.0002,
+  "weight_decay": 0.0005,
+  "label_smoothing": 0.1,
+  "seed": 42,
+  "workers": 6,
+  "out": "C:\\Users\\13561\\Desktop\\神经网络\\项目作业\\food_project\\results\\runs\\resnet18_food101",
+  "device": "cuda",
+  "train_size": 65650,
+  "val_size": 10100,
+  "num_classes": 101,
+  "torch": "2.11.0+cu128"
+}

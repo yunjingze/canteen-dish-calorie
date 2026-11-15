@@ -1,0 +1,13 @@
+============================================================
+  Food demo  ->  http://127.0.0.1:8011
+  Same Wi-Fi ->  http://10.17.226.215:8011
+  Same Wi-Fi ->  http://192.168.19.1:8011
+  Same Wi-Fi ->  http://192.168.221.1:8011
+  Stop with Ctrl+C
+============================================================
+loaded resnet18 from E:\项目作业\food_project\results\runs\resnet18_last_stage_aug_seed7\best.pt on cuda
+loaded mixed model resnet18 from E:\项目作业\food_project\results\runs\resnet18_multilabel_aug\best.pt (threshold 0.35, 20 per-class cut-offs)
+temperature 0.819 from E:\项目作业\food_project\results\runs\resnet18_food101_cn116\calibration.json
+temperature_fused 0.819 from E:\项目作业\food_project\results\runs\resnet18_food101_cn116\calibration.json
+loaded wide resnet18 (116 classes) from E:\项目作业\food_project\results\runs\resnet18_food101_cn116\best.pt on cuda
+INFO:     127.0.0.1:12628 - "GET /api/health HTTP/1.1" 200 OK

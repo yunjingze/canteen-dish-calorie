@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#2f6df6" />
+<meta name="description" content="拍一张食堂饭菜，识别菜品并估算热量区间；支持混合餐盘分部份量与整盘合计。" />
+<link rel="manifest" href="/static/manifest.webmanifest" />
+<link rel="icon" href="/static/icon-192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/static/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="食堂热量" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<title>校园食堂菜品识别 · 热量区间估算</title>
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --ink:#1b2430; --muted:#6b7686;
+    --brand:#2f6df6; --brand2:#7a5af8; --line:#e6eaf2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei","PingFang SC","Segoe UI",system-ui,sans-serif;
+       background:radial-gradient(1200px 600px at 10% -10%, #dfe8ff 0%, transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, #efe6ff 0%, transparent 55%), var(--bg);
+       color:var(--ink); min-height:100vh}
+  header{padding:28px 48px 10px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--brand),var(--brand2));
+        display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;box-shadow:0 8px 20px rgba(47,109,246,.35)}
+  h1{margin:0;font-size:24px;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:13px;margin-top:4px}
+  .hdr-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .badge{background:#eef4ff;color:#2f6df6;border:1px solid #d8e4ff;
+         padding:6px 12px;border-radius:999px;font-size:12px}
+  .qr-mini{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);
+           border-radius:14px;padding:7px 12px 7px 8px;box-shadow:0 6px 18px rgba(31,45,70,.06)}
+  .qr-mini img{width:56px;height:56px;border-radius:8px;display:block;background:#fff}
+  .qr-mini b{display:block;font-size:12px;color:var(--ink)}
+  .qr-mini span{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:2px}
+  main{display:grid;grid-template-columns:1.05fr 1fr;gap:22px;padding:18px 48px 30px;max-width:1320px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;
+        box-shadow:0 10px 30px rgba(31,45,70,.06)}
+  .card h2{font-size:15px;margin:0 0 12px;color:var(--muted);font-weight:600;letter-spacing:.5px}
+  #drop{position:relative;border:2px dashed #cfd9ea;border-radius:16px;height:372px;
+        display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafbff;cursor:pointer}
+  #drop.drag{border-color:var(--brand);background:#f0f5ff}
+  #preview{max-width:100%;max-height:100%;object-fit:contain;display:none}
+  .hint{text-align:center;color:var(--muted);font-size:13px;line-height:1.9}
+  .hint b{color:var(--brand);font-weight:600}
+  .row{display:flex;gap:10px;margin-top:14px}
+  button{font-family:inherit;border:0;border-radius:12px;padding:11px 16px;font-size:13px;cursor:pointer;font-weight:600}
+  .primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;flex:1;
+           box-shadow:0 8px 18px rgba(47,109,246,.28)}
+  .ghost{background:#f1f4fa;color:#3b4657}
+  .samples{margin-top:16px}
+  .thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .thumb{border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;aspect-ratio:1/1;background:#eef1f7}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb:hover{border-color:#b9cdfb}
+  .res-head{display:flex;align-items:baseline;gap:8px}
+  .res-head .zh{font-size:22px;font-weight:700}
+  .res-head .en{color:var(--muted);font-size:12px}
+  .kcal{font-size:12px;color:var(--muted);margin-top:6px}
+  .kcal b{color:#e0562a;font-size:20px}
+  .item{border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:10px;background:#fff}
+  .item.top{border-color:#c8dafd;background:linear-gradient(180deg,#f7faff,#fff)}
+  .rank{font-size:11px;color:#8a94a6;margin-bottom:2px}
+  .bar{height:8px;border-radius:99px;background:#eef1f7;overflow:hidden;margin-top:9px}
+  .bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2f6df6,#7a5af8)}
+  .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px}
+  .note{margin-top:14px;font-size:12px;color:var(--muted);line-height:1.7;border-top:1px dashed var(--line);padding-top:12px}
+  .pill{font-size:11px;background:#eaf6ee;color:#15803d;border-radius:99px;padding:3px 9px}
+  .pill.warn{background:#fff4e6;color:#b45309}
+  .scope-warn{border:1px solid #f3c98b;background:#fff8ee;border-radius:14px;padding:11px 13px;
+              margin-bottom:10px;font-size:12.5px;line-height:1.7;color:#7c4a10}
+  .scope-warn b{color:#b45309}
+  .scope-warn .hintline{color:#94683a;font-size:11.5px}
+  .scope-warn button.trywide{background:#fff;border:1px solid #e8b071;color:#a4560d;border-radius:9px;
+        padding:4px 10px;font-size:11.5px;margin-left:6px}
+  .scope-warn button.trywide:hover{background:#fff1de}
+  .scope-info{margin:2px 0 12px;font-size:12px;color:var(--muted);line-height:1.7}
+  .scope-info summary{cursor:pointer;color:var(--brand);font-size:12px;list-style:none;width:max-content}
+  .scope-info summary::-webkit-details-marker{display:none}
+  .scope-info summary::before{content:"▸ ";font-size:11px}
+  .scope-info[open] summary::before{content:"▾ "}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
+  .chips span{background:#f1f4fa;border-radius:999px;padding:4px 9px;font-size:11.5px;color:#3d4657}
+  .chips span i{color:#98a2b3;font-style:normal;font-size:10.5px;margin-left:4px}
+  .status{font-size:12px;color:var(--muted);margin-bottom:8px;min-height:18px}
+  .portion{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:2px 0 12px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#f7f9fe}
+  .seg button{padding:5px 12px;border-radius:0;background:transparent;color:#5b6577;font-size:12px;font-weight:500}
+  .seg button.on{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:600}
+  .seg.dim{opacity:.45}
+  .weight{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);
+          margin:-6px 0 12px;flex-wrap:wrap}
+  .weight input{width:88px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;
+                font-size:13px;color:var(--ink);font-family:inherit;background:#fbfcff;text-align:right}
+  .weight input:focus{outline:none;border-color:#b9cdfb;box-shadow:0 0 0 3px rgba(47,109,246,.12)}
+  .weight input::placeholder{color:#b6bfcd;font-size:11px}
+  .weight .unit{color:#5b6577}
+  .wt-clear{background:#f1f4fa;color:#5b6577;padding:5px 10px;font-size:11px;font-weight:500}
+  .weight .on{color:var(--brand);font-weight:600}
+  .err{color:#b42318;background:#fef3f2;border:1px solid #fecdca;border-radius:12px;padding:10px 12px;font-size:13px}
+  footer{padding:0 48px 34px;color:#98a2b3;font-size:12px}
+  .modes{display:inline-flex;background:#f1f4fa;border-radius:999px;padding:4px;gap:4px;margin-bottom:14px}
+  .modes button{background:transparent;color:#5b6577;padding:7px 16px;border-radius:999px;font-weight:500;font-size:13px}
+  .modes button.on{background:#fff;color:var(--brand);font-weight:700;box-shadow:0 2px 8px rgba(31,45,70,.10)}
+  .modes button:disabled{opacity:.45;cursor:not-allowed}
+  .part-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .part-ctl .seg button{padding:4px 10px;font-size:11px}
+  .part-ctl input{width:84px;padding:5px 8px;border:1px solid var(--line);border-radius:9px;font-size:12px;
+                  font-family:inherit;background:#fbfcff;text-align:right;color:var(--ink)}
+  .part-ctl input:focus{outline:none;border-color:#b9cdfb;box-shadow:0 0 0 3px rgba(47,109,246,.12)}
+  .part-ctl .pkcal{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+  .part-ctl .pkcal b{color:#e0562a;font-size:14px}
+  .total-card{margin-top:4px;border:1px solid #c8dafd;border-radius:16px;padding:14px 16px;
+              background:linear-gradient(135deg,#f5f8ff,#fff)}
+  .total-card .tl{font-size:12px;color:var(--muted);letter-spacing:.5px}
+  .total-card .tv{font-size:26px;font-weight:800;color:#1b2430;margin-top:2px}
+  .total-card .tv b{color:#e0562a}
+  .total-card .tm{font-size:12px;color:var(--muted);margin-top:4px}
+  .truth{font-size:12px;color:#15803d;background:#eaf6ee;border-radius:10px;padding:7px 11px;margin-bottom:12px}
+  .brandline{margin-top:8px;font-size:12px;color:#5a6474;background:#f6f8fd;border-left:3px solid #cfd9ea;
+             border-radius:0 8px 8px 0;padding:7px 10px;line-height:1.65}
+  .brandline b{color:#2f6df6;font-weight:600}
+  details.brand-panel{margin-top:16px;border:1px solid var(--line);border-radius:14px;background:#fbfcff;padding:0 14px}
+  details.brand-panel summary{cursor:pointer;padding:12px 0;font-size:13px;font-weight:600;color:#3b4657}
+  .bp-ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-bottom:10px}
+  .bp-ctl input{flex:1;min-width:180px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;
+                font:inherit;font-size:13px;background:#fff}
+  .bp-cats{display:flex;gap:6px;flex-wrap:wrap}
+  .bp-cats button{background:#eef2f9;color:#3b4657;font-size:12px;padding:6px 10px;border-radius:999px}
+  .bp-cats button.on{background:#2f6df6;color:#fff}
+  .bp-list{max-height:320px;overflow:auto;padding-bottom:6px}
+  .bp-row{display:flex;gap:10px;align-items:baseline;padding:7px 0;border-top:1px dashed #e9eef7;font-size:13px}
+  .bp-row:first-child{border-top:0}
+  .bp-row .nm{flex:1;min-width:0}
+  .bp-row .nm b{font-weight:600}
+  .bp-row .nm i{font-style:normal;color:var(--muted);font-size:12px;margin-left:6px}
+  .bp-row .kc{font-variant-numeric:tabular-nums;font-weight:700;color:#e0562a;white-space:nowrap;text-align:right}
+  .bp-row .sub{display:block;color:var(--muted);font-size:11.5px;margin-top:1px;font-weight:400}
+  .bp-empty{color:var(--muted);font-size:12.5px;padding:2px 0 12px;line-height:1.7}
+  @media (max-width: 900px){
+    header{padding:20px 18px 6px}
+    main{grid-template-columns:1fr;padding:12px 18px 24px}
+    .thumbs{grid-template-columns:repeat(4,1fr)}
+    #drop{height:300px}
+    footer{padding:0 18px 26px}
+    .qr-mini{display:none}
+  }
+  @media (max-width: 560px){
+    header{padding:16px 14px 4px}
+    h1{font-size:18px}
+    .sub{font-size:11.5px}
+    .badge{font-size:11px;padding:5px 9px}
+    main{padding:10px 14px 20px;gap:14px}
+    .card{padding:14px;border-radius:16px}
+    .thumbs{grid-template-columns:repeat(3,1fr)}
+    #drop{height:240px}
+    .row{flex-wrap:wrap}
+    button{font-size:13px}
+    .modes button{padding:6px 12px;font-size:12px}
+    .part-ctl input{width:70px}
+    footer{padding:0 14px 22px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">🍚</div>
+    <div>
+      <h1>校园食堂菜品识别与热量区间估算</h1>
+      <div class="sub" id="pageSub">Food-101 20 类子集 · ResNet18 微调 · Top-3 菜品与粗略热量范围</div>
+    </div>
+    <div class="hdr-right">
+      <div class="badge" id="archBadge">ResNet18</div>
+      <div class="qr-mini">
+        <img id="qrImg" alt="扫码在手机上打开" />
+        <div><b>手机扫码打开</b><span>也可把网址分享给他人<br />打开后可选“添加到主屏幕”</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>1. 上传或选择食堂照片</h2>
+    <div class="modes" id="modeSeg">
+      <button data-mode="single" class="on">单菜识别</button>
+      <button data-mode="mixed" id="modeMixed" disabled>混合餐盘 · 多标签</button>
+      <button data-mode="wide" id="modeWide" disabled>全部菜系 · 更多菜品</button>
+    </div>
+    <div id="drop">
+      <img id="preview" alt="preview" />
+      <div class="hint" id="hint">点击 / 拖拽图片到此处<br /><b>支持 JPG · PNG</b><br />或从下方示例中选择</div>
+    </div>
+    <input type="file" id="file" accept="image/*" hidden />
+    <div class="row">
+      <button class="primary" id="btnPick">选择图片并识别</button>
+      <button class="ghost" id="btnRandom">随机示例</button>
+    </div>
+    <div class="samples">
+      <h2 style="margin-top:4px" id="sampleTitle">示例（未参与训练）</h2>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 id="resTitle">2. 识别结果</h2>
+    <div id="singleCtl">
+    <div class="portion">
+      <span>份量</span>
+      <span class="seg" id="portionSeg">
+        <button data-portion="small">小份</button>
+        <button data-portion="normal" class="on">常规</button>
+        <button data-portion="large">大份</button>
+      </span>
+      <span id="portionHint">按常规份量估算</span>
+    </div>
+    <div class="weight">
+      <span>重量</span>
+      <input id="grams" type="number" min="10" max="2000" step="10" inputmode="numeric"
+             placeholder="自动" aria-label="这一份的重量（克）" />
+      <span class="unit">g</span>
+      <button class="wt-clear" id="clearWeight" title="清除输入的重量，改回按份量估算">清除</button>
+      <span id="weightHint">知道你这一份多重？填克数，热量按它重算</span>
+    </div>
+    </div>
+    <div class="status" id="status">等待图片…</div>
+    <details class="scope-info" id="scopeInfo">
+      <summary>看看这 20 类都是哪些菜</summary>
+      <div class="chips" id="classChips"></div>
+      <div>清单之外的菜（整只烤鸡、烤鸭、火锅、家常炒菜等）模型没见过，最多只能给出“最接近”的类别；
+        遇到这种情况页面会明确提示可能不在支持范围。</div>
+    </details>
+    <div id="results">
+      <div class="item">识别后在此显示 Top-3 菜品、置信度与热量区间。</div>
+    </div>
+    <details class="brand-panel" id="brandPanel">
+      <summary>连锁品牌热量参考（麦当劳中国官网 · <span id="brandCount">89</span> 项）</summary>
+      <div class="bp-ctl">
+        <input id="brandSearch" type="search" placeholder="搜索：巨无霸 / 薯条 / 可乐 / 拿铁" />
+        <div class="bp-cats" id="brandCats"></div>
+      </div>
+      <div class="bp-list" id="brandList"><div class="bp-empty">展开后加载…</div></div>
+      <div class="bp-empty" id="brandFoot"></div>
+    </details>
+    <div class="note">
+      热量 = 该菜品每 100 g 热量先验 × 这一份的实际重量；不填重量时按常见份量估算
+      （可切换小份 / 常规 / 大份）。区间宽度 ±15% 反映做法差异，置信度低时进一步放宽。
+      数值为课堂演示用途的粗略估计，不能替代实验室营养分析。
+      <br />混合餐盘模式下先由多标签模型判断盘中有哪几样菜，再对每个部分单独选份量或填克数，
+      最后把各部分的区间相加得到整盘热量。
+    </div>
+  </section>
+</main>
+<footer>神经网络与深度学习 · 项目作业 02 · 推理在本地 GPU/CPU 上完成</footer>
+<script>
+const $ = (s) => document.querySelector(s);
+let currentName = null;
+let lastData = null;
+let lastSource = null;   // {kind:"file", file} | {kind:"sample", name}, used by the wide-model retry
+let WIDE_N = 101;        // refreshed from /api/health once the wide head is loaded
+let portion = "normal";
+let userGrams = null;
+let mode = "single";          // "single" | "mixed" | "wide"
+let mixedParts = [];          // parts on the current tray, with the user's portion/weight
+
+const PORTS = ["small", "normal", "large"];
+
+const SCALES = {small: 0.7, normal: 1.0, large: 1.35};
+const PLABEL = {small: "小份", normal: "常规", large: "大份"};
+
+function setStatus(t){
+  const el = $("#status");
+  el.textContent = t;
+}
+
+function showError(msg){
+  $("#results").innerHTML = '<div class="err">' + msg + '</div>';
+  setStatus("识别失败");
+}
+
+const round10 = (x) => Math.round(x / 10) * 10;
+
+// Chain-menu cross-check: official per-serving values for the fast-food classes.
+// Only shown when the model class has a match in the brand table (hamburger,
+// fries, wings, ice cream); other dishes keep the generic prior alone.
+function brandLine(it){
+  const refs = (it && it.brand_refs) || [];
+  if(!refs.length) return "";
+  return '<div class="brandline"><b>连锁参考</b>：' + refs.map(r =>
+    r.brand_zh + ' ' + r.item + ' ' + r.kcal + ' kcal（' + r.grams + ' g · ' +
+    r.kcal_per_100g + ' kcal/100g）'
+  ).join(' · ') + ' <i>（官网每份实测值，仅作对照）</i></div>';
+}
+
+// The server returns the per-100 g prior and the spread, so both the portion
+// switch and a hand-typed weight are instant and work for uploaded photos too.
+function rescale(it, scale){
+  const grams = userGrams != null
+    ? userGrams
+    : Math.max(10, Math.round(it.base_portion_g * scale));
+  const point = it.kcal_per_100g * grams / 100;
+  return {
+    grams: grams,
+    point: Math.round(point),
+    low: round10(point * (1 - it.spread)),
+    high: round10(point * (1 + it.spread)),
+  };
+}
+
+function renderResults(data){
+  lastData = data;
+  const nClass = mode === "wide" ? WIDE_N : 20;
+  const wrap = $("#results");
+  const scale = SCALES[portion] || 1;
+  wrap.innerHTML = "";
+  const sc = data.scope;
+  const out = !!(sc && sc.in_scope === false);
+  const pkg = !!(sc && sc.packaging);
+  const notFood = !!(sc && sc.not_food);
+  const title = $("#resTitle");
+  if (title) title.textContent = pkg ? "2. 这看起来是包装食品照"
+                                     : notFood ? "2. 这张照片里没找到菜"
+                                     : out ? "2. 大概不是这 " + nClass + " 道菜" : "2. 识别结果";
+  if (out) {
+    const warn = document.createElement("div");
+    warn.className = "scope-warn";
+    const canTryWide = !pkg && mode === "single" && window.__wideEnabled && lastSource && lastSource.kind === "file";
+    warn.innerHTML = '<b>' + (pkg ? '包装食品照，不给候选'
+                                 : notFood ? '画面里没有菜' : '未识别为支持的菜品') + '</b>：' +
+      (sc.message || '模型不确定这张图属于清单里的哪道菜。') +
+      (pkg ? '' : ' <span class="hintline">（点开上方“支持的 ' + nClass + ' 类”核对一下）</span>') +
+      (canTryWide ? '<button class="trywide" id="tryWide">用 ' + WIDE_N + ' 类模型再试一次</button>' : '');
+    wrap.appendChild(warn);
+    const tw = $("#tryWide");
+    if (tw) tw.onclick = () => { setMode("wide"); predictWideFile(lastSource.file); };
+  }
+  if (!data.top3 || !data.top3.length) {
+    const none = document.createElement("div");
+    none.className = "scope-warn";
+    none.innerHTML = pkg
+      ? '<b>这次不给结果</b>：包装照不在训练范围里，硬套 20 类只会给出误导的答案。' +
+        '拆开装盘、或者直接拍餐盘再试一次。'
+      : '<b>没有把握说出是什么菜</b>：每个候选的把握都低于 10%，' +
+        '与其硬给一个答案，不如说“认不出”。可以换一张光线更足、菜占画面更大的照片，' +
+        '或者切到「混合餐盘」逐个标出盘里的部分。';
+    wrap.appendChild(none);
+    return;
+  }
+  data.top3.forEach((it, i) => {
+    const div = document.createElement("div");
+    div.className = "item" + (i === 0 ? " top" : "");
+    const band = out ? '<span class="pill warn">仅供参考</span>'
+                     : it.prob >= 0.55 ? '<span class="pill">较高置信</span>'
+                     : '<span class="pill warn">低置信 · 区间已放宽</span>';
+    const pct = (it.prob*100).toFixed(1);
+    const est = rescale(it, scale);
+    div.innerHTML =
+      '<div class="rank">TOP ' + (i+1) + ' ' + band + '</div>' +
+      '<div class="res-head"><span class="zh">' + it.zh + '</span><span class="en">' + it["class"] + '</span></div>' +
+      '<div class="kcal">估算热量 <b>' + est.low + '–' + est.high + '</b> kcal · ' +
+        (userGrams != null ? '按你输入的 ' + est.grams + ' g' : '按约 ' + est.grams + ' g') +
+        ' / ' + it.kcal_per_100g + ' kcal·100g⁻¹</div>' +
+      '<div class="bar"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="meta"><span>类别概率</span><span>' + pct + '%</span></div>' +
+      brandLine(it);
+    wrap.appendChild(div);
+  });
+}
+
+async function readJson(res){
+  let data;
+  try { data = await res.json(); } catch (e) { data = {}; }
+  if (!res.ok) throw new Error(data.error || ("服务返回 HTTP " + res.status));
+  return data;
+}
+
+async function predictFile(file){
+  if(mode === "mixed") return predictMixedFile(file);
+  if(mode === "wide") return predictWideFile(file);
+  if(!file.type.startsWith("image/")){ showError("请选择图片文件（JPG / PNG）"); return; }
+  const fd = new FormData();
+  fd.append("file", file);
+  lastSource = {kind:"file", file};
+  setStatus("推理中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/predict?portion=" + portion, {method:"POST", body:fd});
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderResults(data);
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+async function predictSample(name){
+  if(mode === "mixed") return predictMixedSample(name);
+  if(mode === "wide") return predictWideSample(name);
+  lastSource = {kind:"sample", name};
+  setStatus("推理中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/predict_sample?name=" + encodeURIComponent(name) + "&portion=" + portion);
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderResults(data);
+    showPreview("/api/sample_image?name=" + encodeURIComponent(name));
+    currentName = name;
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Wide mode: 116 classes (Food-101 + 15 Chinese dishes), for dishes outside the shortlist
+// ---------------------------------------------------------------------------
+async function predictWideFile(file){
+  if(!file.type.startsWith("image/")){ showError("请选择图片文件（JPG / PNG）"); return; }
+  const fd = new FormData();
+  fd.append("file", file);
+  setStatus("推理中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/wide/predict?portion=" + portion, {method:"POST", body:fd});
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderResults(data);
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+async function predictWideSample(name){
+  setStatus("推理中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/wide/predict_sample?name=" + encodeURIComponent(name) + "&portion=" + portion);
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderResults(data);
+    showPreview("/api/wide/sample_image?name=" + encodeURIComponent(name));
+    currentName = name;
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Mixed trays: multi-label scores -> editable parts -> summed interval
+// ---------------------------------------------------------------------------
+async function predictMixedFile(file){
+  if(!file.type.startsWith("image/")){ showError("请选择图片文件（JPG / PNG）"); return; }
+  const fd = new FormData();
+  fd.append("file", file);
+  setStatus("识别中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/mixed/predict", {method:"POST", body:fd});
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderMixed(data);
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+async function predictMixedSample(name){
+  setStatus("识别中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/mixed/predict_sample?name=" + encodeURIComponent(name));
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderMixed(data);
+    showPreview("/api/mixed/sample_image?name=" + encodeURIComponent(name));
+    currentName = name;
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+function kcalText(low, high, grams){
+  return '<b>' + low + '–' + high + '</b> kcal · 约 ' + grams + ' g';
+}
+
+function partRow(p, i, calc){
+  const div = document.createElement("div");
+  div.className = "item part";
+  const pct = (p.prob*100).toFixed(1);
+  const segs = PORTS.map(k =>
+    '<button data-port="' + k + '"' + (k === "normal" ? ' class="on"' : '') + '>' + PLABEL[k] + '</button>'
+  ).join("");
+  div.innerHTML =
+    '<div class="res-head"><span class="zh">' + p.zh + '</span><span class="en">' + p["class"] + '</span></div>' +
+    '<div class="bar"><i style="width:' + pct + '%"></i></div>' +
+    '<div class="meta"><span>多标签得分（≥ 阈值为盘中一部分）</span><span>' + pct + '%</span></div>' +
+    '<div class="part-ctl">' +
+      '<span class="seg" data-i="' + i + '">' + segs + '</span>' +
+      '<input class="pgrams" data-i="' + i + '" type="number" min="10" max="2000" step="10" ' +
+        'inputmode="numeric" placeholder="克数(自动)">' +
+      '<span class="unit">g</span>' +
+      '<span class="pkcal" id="pk' + i + '">' + kcalText(calc.kcal_low, calc.kcal_high, calc.grams) + '</span>' +
+    '</div>' + brandLine(p);
+  return div;
+}
+
+function totalHtml(t, n){
+  return '<div class="tl">整盘合计</div>' +
+         '<div class="tv"><b>' + t.kcal_low + '–' + t.kcal_high + '</b> kcal</div>' +
+         '<div class="tm">' + n + ' 个部分 · 合计约 ' + t.grams + ' g · 区间为各部分区间相加</div>';
+}
+
+function renderMixed(data){
+  lastData = data;
+  mixedParts = data.parts.map(p => Object.assign({}, p, {portion: "normal", grams: null}));
+  const wrap = $("#results");
+  wrap.innerHTML = "";
+  const title = $("#resTitle");
+  const empty = !data.parts || !data.parts.length;
+  if (title) title.textContent = empty ? "2. 没有认出盘里的菜" : "2. 识别结果";
+  if (data.scope && data.scope.packaging) {
+    wrap.insertAdjacentHTML("beforeend",
+      '<div class="scope-warn"><b>包装食品照</b>：' + (data.scope.message || '这不是餐盘里的菜。') + '</div>');
+    return;
+  }
+  if (data.scope && data.scope.in_scope === false) {
+    wrap.insertAdjacentHTML("beforeend",
+      '<div class="scope-warn"><b>可能不是一盘菜</b>：' + (data.scope.message || '模型不确定盘子里有哪些支持的菜品。') +
+      ' <span class="hintline">（单菜模型看不出这是一盘标准餐；下面的部分来自多标签模型，仅供参考）</span></div>');
+  }
+  if(data.truth && data.truth.zh && data.truth.zh.length){
+    wrap.insertAdjacentHTML("beforeend",
+      '<div class="truth">示例真值：' + data.truth.zh.join(" + ") + '</div>');
+  }
+  if (empty) {
+    wrap.insertAdjacentHTML("beforeend",
+      '<div class="scope-warn"><b>这盘菜没有一样过线</b>：' +
+      '可能整盘就是一道菜（切到「单菜识别」更合适），也可能是清单外的菜。' +
+      '分数低于 10% 的部分一律不显示，免得把噪声当结果。</div>');
+    wrap.insertAdjacentHTML("beforeend",
+      '<div class="note">检测规则：每类有各自的阈值（按验证集 F1 校准），且至少 10% 才显示；最多 3 样。' +
+      '</div>');
+    return;
+  }
+  const list = document.createElement("div");
+  list.id = "mixedList";
+  wrap.appendChild(list);
+  mixedParts.forEach((p, i) => list.appendChild(partRow(p, i, data.plate.parts[i] || data.plate.parts[0])));
+  const card = document.createElement("div");
+  card.className = "total-card";
+  card.id = "totalCard";
+  card.innerHTML = totalHtml(data.plate.total, mixedParts.length);
+  wrap.appendChild(card);
+  const minP = Number(data.min_prob != null ? data.min_prob : 0.10);
+  wrap.insertAdjacentHTML("beforeend",
+    '<div class="note">检测规则：每类按验证集校准各自的阈值（基准 ' + Number(data.threshold).toFixed(2) +
+    '），且得分至少 ' + (minP * 100).toFixed(0) + '% 才显示；最多 3 样。' + data.note + '</div>');
+}
+
+let recalcTimer = null;
+let recalcSeq = 0;
+function recalcMixed(){
+  clearTimeout(recalcTimer);
+  recalcTimer = setTimeout(async () => {
+    const seq = ++recalcSeq;
+    const body = {
+      portion: "normal",
+      parts: mixedParts.map(p => ({ "class": p["class"], prob: p.prob, portion: p.portion, grams: p.grams }))
+    };
+    try {
+      const res = await fetch("/api/mixed/total", {
+        method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)
+      });
+      const data = await readJson(res);
+      if(seq !== recalcSeq || mode !== "mixed") return;
+      data.parts.forEach((r, i) => {
+        const el = document.getElementById("pk" + i);
+        if(el) el.innerHTML = kcalText(r.kcal_low, r.kcal_high, r.grams);
+      });
+      const card = document.getElementById("totalCard");
+      if(card) card.innerHTML = totalHtml(data.total, data.parts.length);
+    } catch (err) { /* keep the last good numbers */ }
+  }, 120);
+}
+
+$("#results").addEventListener("click", (e) => {
+  if(mode !== "mixed") return;
+  const btn = e.target.closest(".seg button[data-port]");
+  if(!btn) return;
+  const seg = btn.parentElement;
+  const i = Number(seg.dataset.i);
+  if(!mixedParts[i]) return;
+  mixedParts[i].portion = btn.dataset.port;
+  mixedParts[i].grams = null;                 // a portion choice clears the typed weight
+  const input = document.querySelector('.pgrams[data-i="' + i + '"]');
+  if(input) input.value = "";
+  [...seg.children].forEach(b => b.classList.toggle("on", b === btn));
+  seg.classList.remove("dim");
+  recalcMixed();
+});
+
+$("#results").addEventListener("input", (e) => {
+  if(mode !== "mixed") return;
+  if(!e.target.classList.contains("pgrams")) return;
+  const i = Number(e.target.dataset.i);
+  if(!mixedParts[i]) return;
+  const raw = e.target.value.trim();
+  const g = Number(raw);
+  mixedParts[i].grams = (raw === "" || !Number.isFinite(g) || g <= 0)
+    ? null : Math.min(2000, Math.max(10, Math.round(g)));
+  const seg = e.target.closest(".part-ctl").querySelector(".seg");
+  if(seg) seg.classList.toggle("dim", mixedParts[i].grams != null);
+  recalcMixed();
+});
+
+$("#portionSeg").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-portion]");
+  if(!btn) return;
+  portion = btn.dataset.portion;
+  [...$("#portionSeg").children].forEach(b => b.classList.toggle("on", b === btn));
+  $("#portionHint").textContent = portion === "normal"
+    ? "按常规份量估算"
+    : PLABEL[portion] + " ≈ " + SCALES[portion].toFixed(2) + " × 常规份量";
+  if(userGrams != null){          // picking a portion档 means "go back to the estimate"
+    $("#grams").value = "";
+    readWeightInput();
+  }
+  if(lastData) renderResults(lastData);
+});
+
+function readWeightInput(){
+  const el = $("#grams");
+  const raw = el.value.trim();
+  if(raw === ""){
+    userGrams = null;
+    $("#weightHint").textContent = "知道你这一份多重？填克数，热量按它重算";
+    $("#weightHint").classList.remove("on");
+    $("#portionSeg").classList.remove("dim");
+    $("#portionHint").textContent = portion === "normal"
+      ? "按常规份量估算"
+      : PLABEL[portion] + " ≈ " + SCALES[portion].toFixed(2) + " × 常规份量";
+    return;
+  }
+  let g = Number(raw);
+  if(!Number.isFinite(g) || g <= 0){
+    userGrams = null;
+    $("#weightHint").textContent = "请输入 10–2000 之间的克数";
+    $("#weightHint").classList.remove("on");
+    $("#portionSeg").classList.remove("dim");
+    $("#portionHint").textContent = "按常规份量估算";
+    return;
+  }
+  g = Math.min(2000, Math.max(10, Math.round(g)));
+  userGrams = g;
+  $("#weightHint").textContent = "按 " + g + " g 重算（份量档不生效）";
+  $("#weightHint").classList.add("on");
+  $("#portionSeg").classList.add("dim");
+  $("#portionHint").textContent = "已用输入重量";
+}
+
+$("#grams").addEventListener("input", () => {
+  readWeightInput();
+  if(lastData) renderResults(lastData);
+});
+$("#clearWeight").addEventListener("click", () => {
+  $("#grams").value = "";
+  readWeightInput();
+  if(lastData) renderResults(lastData);
+});
+
+function showPreview(src){
+  const img = $("#preview");
+  img.src = src; img.style.display = "block";
+  $("#hint").style.display = "none";
+}
+
+$("#drop").addEventListener("click", () => $("#file").click());
+$("#btnPick").addEventListener("click", () => $("#file").click());
+$("#file").addEventListener("change", (e) => {
+  const f = e.target.files[0];
+  if(!f) return;
+  showPreview(URL.createObjectURL(f));
+  predictFile(f);
+});
+["dragover","dragenter"].forEach(ev => $("#drop").addEventListener(ev, (e)=>{e.preventDefault(); $("#drop").classList.add("drag");}));
+["dragleave","drop"].forEach(ev => $("#drop").addEventListener(ev, ()=>$("#drop").classList.remove("drag")));
+$("#drop").addEventListener("drop", (e) => {
+  e.preventDefault();
+  const f = e.dataTransfer.files[0];
+  if(!f) return;
+  showPreview(URL.createObjectURL(f));
+  predictFile(f);
+});
+$("#btnRandom").addEventListener("click", () => {
+  // each mode has its own gallery and its own sample endpoint; mixing them up
+  // sends a 20-class file name to the 116-class route, which always 404s.
+  const pool = mode === "mixed" ? (window.__mixed || [])
+             : mode === "wide" ? (window.__wide || [])
+             : (window.__samples || []);
+  if(!pool.length) return;
+  const s = pool[Math.floor(Math.random()*pool.length)];
+  if(mode === "mixed") predictMixedSample(s.name);
+  else if(mode === "wide") predictWideSample(s.name);
+  else predictSample(s.name);
+});
+
+function loadThumbs(){
+  const box = $("#thumbs");
+  box.innerHTML = "";
+  if(mode === "wide"){
+    $("#sampleTitle").textContent = WIDE_N + " 类示例（官方 test 集与中餐实拍，未参与训练）";
+    (window.__wide || []).forEach(s => {
+      const el = document.createElement("div");
+      el.className = "thumb";
+      el.title = s.zh + " / " + s["class"];
+      el.innerHTML = '<img loading="lazy" src="/api/wide/sample_image?name=' + encodeURIComponent(s.name) + '">';
+      el.onclick = () => predictWideSample(s.name);
+      box.appendChild(el);
+    });
+    return;
+  }
+  if(mode === "single"){
+    $("#sampleTitle").textContent = "示例（未参与训练）";
+    (window.__samples || []).forEach(s => {
+      const el = document.createElement("div");
+      el.className = "thumb";
+      el.title = s.zh + " / " + s["class"];
+      el.innerHTML = '<img loading="lazy" src="/api/sample_image?name=' + encodeURIComponent(s.name) + '">';
+      el.onclick = () => predictSample(s.name);
+      box.appendChild(el);
+    });
+  } else {
+    $("#sampleTitle").textContent = "混合餐盘示例（合成图 · 结果里标注真值）";
+    (window.__mixed || []).forEach(s => {
+      const el = document.createElement("div");
+      el.className = "thumb";
+      el.title = (s.zh || []).join(" + ");
+      el.innerHTML = '<img loading="lazy" src="/api/mixed/sample_image?name=' + encodeURIComponent(s.name) + '">';
+      el.onclick = () => predictMixedSample(s.name);
+      box.appendChild(el);
+    });
+  }
+}
+
+function setMode(next){
+  mode = next;
+  [...$("#modeSeg").children].forEach(b => b.classList.toggle("on", b.dataset.mode === mode));
+  $("#singleCtl").style.display = mode === "mixed" ? "none" : "";
+  $("#results").innerHTML = "";
+  mixedParts = [];
+  lastData = null;
+  $("#preview").style.display = "none";
+  $("#hint").style.display = "";
+  setStatus(mode === "single" ? "等待图片…" : mode === "wide" ? "等待图片…（" + WIDE_N + " 类）" : "等待混合餐盘图片…");
+  const sub = $("#pageSub");
+  if(sub) sub.textContent = mode === "wide"
+    ? "Food-101 全类 + 中餐扩展（" + WIDE_N + " 类）· ResNet18 微调 · Top-3 菜品与粗略热量范围"
+    : "Food-101 20 类子集 · ResNet18 微调 · Top-3 菜品与粗略热量范围";
+  const sum = $("#scopeInfo summary");
+  if(sum) sum.textContent = mode === "wide" ? "看看这 " + WIDE_N + " 类都是哪些菜" : "看看这 20 类都是哪些菜";
+  classesLoaded = false;
+  $("#classChips").innerHTML = "";
+  loadThumbs();
+  // the details panel keeps its open state across a mode switch, and its toggle
+  // listener will not fire again, so refill the chips here when it is open
+  if($("#scopeInfo").open) loadClasses();
+}
+
+$("#modeSeg").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-mode]");
+  if(!btn || btn.disabled || btn.dataset.mode === mode) return;
+  setMode(btn.dataset.mode);
+});
+
+Promise.all([
+  fetch("/api/samples").then(r=>r.json()).catch(()=>({samples:[]})),
+  fetch("/api/mixed/samples").then(r=>r.json()).catch(()=>({samples:[], enabled:false})),
+  fetch("/api/wide/samples").then(r=>r.json()).catch(()=>({samples:[], enabled:false})),
+  fetch("/api/health").then(r=>r.json()).catch(()=>({}))
+]).then(([single, mixed, wide, health]) => {
+  if(health && health.wide_classes){ WIDE_N = health.wide_classes; }
+  if($("#modeWide")) $("#modeWide").textContent = "全部菜系 · " + WIDE_N + " 类";
+  window.__samples = single.samples || [];
+  window.__mixed = mixed.samples || [];
+  window.__wide = wide.samples || [];
+  if(mixed.enabled){
+    $("#modeMixed").disabled = false;
+  } else {
+    $("#modeMixed").title = "混合模型尚未训练完成";
+  }
+  window.__wideEnabled = !!wide.enabled;
+  if(wide.enabled){
+    $("#modeWide").disabled = false;
+  } else {
+    $("#modeWide").title = WIDE_N + " 类模型尚未训练完成";
+  }
+  loadThumbs();
+  const params = new URLSearchParams(location.search);
+  const gq = params.get("g");
+  if(gq){ $("#grams").value = gq; readWeightInput(); }
+  if(params.get("brand")){          // deep link used by the README screenshot
+    const bp = $("#brandPanel");
+    if(bp){
+      bp.open = true;
+      loadBrands();
+    }
+  }
+  const ms = params.get("msample");
+  if(ms && mixed.enabled){ setMode("mixed"); predictMixedSample(ms); return; }
+  const ws = params.get("wsample");
+  if(ws && wide.enabled){ setMode("wide"); predictWideSample(ws); return; }
+  const q = params.get("sample");
+  if(q) predictSample(q);
+});
+
+// "What can it actually recognise?" — filled on first open of the details block.
+let classesLoaded = false;
+async function loadClasses(){
+  if(classesLoaded) return;
+  try{
+    const res = await fetch(mode === "wide" ? "/api/wide/classes" : "/api/classes");
+    const data = await readJson(res);
+    const box = $("#classChips");
+    box.innerHTML = "";
+    data.classes.forEach(c => {
+      const el = document.createElement("span");
+      el.innerHTML = c.zh + '<i>' + c.kcal_per_100g + ' kcal·100g⁻¹</i>';
+      box.appendChild(el);
+    });
+    classesLoaded = true;
+  }catch(err){
+    $("#classChips").textContent = "暂时拿不到清单：" + err.message;
+  }
+}
+$("#scopeInfo").addEventListener("toggle", (e) => {
+  if(e.target.open) loadClasses();
+});
+
+// Brand panel: searchable official chain-menu nutrition (McDonald's China).
+let brandData = null;
+let brandCat = "全部";
+async function loadBrands(){
+  if(brandData) return;
+  try{
+    const res = await fetch("/api/brands");
+    brandData = await readJson(res);
+    $("#brandCount").textContent = brandData.count;
+    const cats = ["全部"];
+    brandData.items.forEach(i => { if(i.category && cats.indexOf(i.category) < 0) cats.push(i.category); });
+    const box = $("#brandCats");
+    box.innerHTML = "";
+    cats.forEach(c => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = c;
+      b.className = c === brandCat ? "on" : "";
+      b.onclick = () => {
+        brandCat = c;
+        [...box.children].forEach(x => x.classList.toggle("on", x === b));
+        renderBrands();
+      };
+      box.appendChild(b);
+    });
+    renderBrands();
+  }catch(err){
+    $("#brandList").innerHTML = '<div class="bp-empty">拿不到品牌数据：' + err.message + '</div>';
+  }
+}
+function renderBrands(){
+  if(!brandData) return;
+  const q = ($("#brandSearch").value || "").trim().toLowerCase();
+  const list = $("#brandList");
+  list.innerHTML = "";
+  const rows = brandData.items.filter(i =>
+    (brandCat === "全部" || i.category === brandCat) &&
+    (!q || (i.item + " " + i.category + " " + i.serving).toLowerCase().indexOf(q) >= 0));
+  if(!rows.length){
+    list.innerHTML = '<div class="bp-empty">没有匹配的项目，换个关键词试试。</div>';
+    return;
+  }
+  rows.forEach(i => {
+    const el = document.createElement("div");
+    el.className = "bp-row";
+    const nut = [
+      i.protein_g != null ? "蛋白 " + i.protein_g + " g" : "",
+      i.fat_g != null ? "脂肪 " + i.fat_g + " g" : "",
+      i.carbs_g != null ? "碳水 " + i.carbs_g + " g" : ""
+    ].filter(Boolean).join(" · ");
+    el.innerHTML =
+      '<div class="nm"><b>' + i.item + '</b><i>' + i.serving +
+        (i.grams ? ' · ' + i.grams + ' g' : '') + '</i>' +
+        '<span class="sub">' + (i.category || '') + (nut ? ' · ' + nut : '') + '</span></div>' +
+      '<div class="kc">' + i.kcal + ' kcal<span class="sub">' + i.kcal_per_100g + ' kcal/100g</span></div>';
+    list.appendChild(el);
+  });
+  const src = (brandData.sources && brandData.sources[0]) || null;
+  $("#brandFoot").textContent = brandData.note +
+    (src ? " · 数据：" + src.name_zh + "（" + String(brandData.generated_at || "").slice(0, 10) + "）" : "");
+}
+$("#brandPanel").addEventListener("toggle", (e) => { if(e.target.open) loadBrands(); });
+$("#brandSearch").addEventListener("input", () => { if(brandData) renderBrands(); });
+
+// QR hand-off to a phone on the same Wi-Fi, and the installable app shell.
+(function(){
+  const qr = document.getElementById("qrImg");
+  if(qr) qr.src = "/api/qr.png?url=" + encodeURIComponent(location.origin + "/");
+  if("serviceWorker" in navigator &&
+     (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")){
+    addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
+  }
+})();
+</script>
+</body>
+</html>

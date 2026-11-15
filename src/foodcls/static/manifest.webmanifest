@@ -1,0 +1,37 @@
+{
+  "name": "食堂菜品热量估算",
+  "short_name": "食堂热量",
+  "description": "拍一张食堂饭菜，识别菜品并估算热量区间；支持混合餐盘分部份量。",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f6fb",
+  "theme_color": "#2f6df6",
+  "categories": [
+    "food",
+    "health",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

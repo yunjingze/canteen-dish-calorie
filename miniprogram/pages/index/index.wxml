@@ -1,0 +1,88 @@
+<view class="wrap">
+  <view class="card">
+    <view class="modes">
+      <view class="mode {{mode === 'single' ? 'on' : ''}}" data-mode="single" bindtap="switchMode">单菜识别</view>
+      <view class="mode {{mode === 'mixed' ? 'on' : ''}} {{mixedEnabled ? '' : 'dim'}}" data-mode="mixed" bindtap="switchMode">混合餐盘</view>
+    </view>
+
+    <view class="drop" bindtap="pick">
+      <image wx:if="{{img}}" class="preview" src="{{img}}" mode="aspectFit" />
+      <view wx:else class="hint">
+        <text class="hint-main">点这里拍照 / 从相册选</text>
+        <text class="hint-sub">20 类食堂常见菜品 · Top-3 与热量区间</text>
+      </view>
+    </view>
+
+    <button class="btn-primary" bindtap="pick" disabled="{{loading}}">{{loading ? '识别中…' : (img ? '换一张照片' : '选择照片')}}</button>
+
+    <view class="portion">
+      <text class="lab">份量</text>
+      <view class="seg">
+        <view wx:for="{{portions}}" wx:key="key" class="seg-item {{portion === item.key ? 'on' : ''}}"
+              data-key="{{item.key}}" bindtap="setPortion">{{item.label}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{mode === 'single'}}" class="weight">
+      <text class="lab">重量</text>
+      <input class="winput" type="number" placeholder="自动" value="{{grams}}"
+             bindinput="onGramsInput" bindblur="applyGrams" bindconfirm="applyGrams" />
+      <text class="unit">g</text>
+      <text class="tip">填实际克数可重算这一份</text>
+    </view>
+
+    <view wx:if="{{err}}" class="err">{{err}}</view>
+  </view>
+
+  <view class="card" wx:if="{{top3.length}}">
+    <view class="h2">识别结果 · Top-3</view>
+    <view wx:if="{{scopeWarn}}" class="warn">{{scopeWarn}}</view>
+    <view wx:for="{{top3}}" wx:key="class" class="item {{index === 0 ? 'top' : ''}}">
+      <view class="rank">TOP {{index + 1}} · {{item.prob > 0.55 ? '较高置信' : '低置信 · 区间已放宽'}}</view>
+      <view class="dish">
+        <text class="zh">{{item.zh}}</text>
+        <text class="en">{{item.class}}</text>
+      </view>
+      <view class="kcal">估算热量 <text class="kcal-v">{{item.kcal_low}}–{{item.kcal_high}}</text> kcal
+        <text class="kcal-sub">（约 {{item.portion_g}} g · {{item.kcal_per_100g}} kcal/100g）</text>
+      </view>
+      <view class="bar"><view class="bar-in" style="width: {{item.probPct}}%"></view></view>
+      <view class="prob">类别概率 {{item.probPct}}%</view>
+    </view>
+    <view class="note">{{note}}</view>
+  </view>
+
+  <view class="card" wx:if="{{empty}}">
+    <view class="h2">{{mode === 'mixed' ? '没有认出盘里的菜' : '认不出这是什么菜'}}</view>
+    <view class="warn">{{emptyMsg}}</view>
+  </view>
+
+  <view class="card" wx:if="{{mode === 'mixed' && parts.length}}">
+    <view class="h2">盘中有 {{parts.length}} 样菜 · 每样可单独调份量</view>
+    <view wx:for="{{parts}}" wx:key="class" wx:for-index="pi" class="part">
+      <view class="dish">
+        <text class="zh">{{item.zh}}</text>
+        <text class="en">{{item.class}} · {{item.probPct}}%</text>
+      </view>
+      <view class="part-kcal">{{item.kcal_low}}–{{item.kcal_high}} kcal <text class="kcal-sub">· 约 {{item.grams}} g</text></view>
+      <view class="part-ctl">
+        <view class="seg small">
+          <view wx:for="{{portions}}" wx:for-item="p" wx:for-index="pk" wx:key="key"
+                class="seg-item {{item.portion === p.key ? 'on' : ''}}"
+                data-index="{{pi}}" data-key="{{p.key}}" bindtap="setPartPortion">{{p.label}}</view>
+        </view>
+        <input class="winput small" type="number" placeholder="克数" value="{{item.grams}}"
+               data-index="{{pi}}" bindinput="onPartGramsInput" bindblur="applyPartGrams" bindconfirm="applyPartGrams" />
+        <text class="unit">g</text>
+      </view>
+    </view>
+    <view class="total">
+      <view class="total-l">整盘合计</view>
+      <view class="total-v">{{total.kcal_low}}–{{total.kcal_high}} <text class="unit">kcal</text></view>
+      <view class="total-m">约 {{total.grams}} g · 区间为各样之和</view>
+    </view>
+    <view class="note">{{note}}</view>
+  </view>
+
+  <view class="foot">热量为课堂演示用途的粗略估计，不能替代实际称重或实验室营养分析。</view>
+</view>

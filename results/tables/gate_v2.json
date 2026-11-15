@@ -1,0 +1,1154 @@
+{
+  "T": 0.7364,
+  "negatives": [
+    {
+      "file": "001.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.45523199439048767
+    },
+    {
+      "file": "002.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.8976663947105408
+    },
+    {
+      "file": "003.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.6707112193107605
+    },
+    {
+      "file": "004.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.5439256429672241
+    },
+    {
+      "file": "005.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.6529702544212341
+    },
+    {
+      "file": "006.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.5293571352958679
+    },
+    {
+      "file": "007.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.49122747778892517
+    },
+    {
+      "file": "008.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.43461278080940247
+    },
+    {
+      "file": "009.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.8998668193817139
+    },
+    {
+      "file": "010.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.39264899492263794
+    },
+    {
+      "file": "011.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.3929687738418579
+    },
+    {
+      "file": "012.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.26480212807655334
+    },
+    {
+      "file": "013.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.4647802710533142
+    },
+    {
+      "file": "014.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.24247834086418152
+    },
+    {
+      "file": "015.jpg",
+      "cat": "v1_unknown",
+      "robust": 0.37688782811164856
+    },
+    {
+      "file": "016.jpg",
+      "cat": "menu_board",
+      "robust": 0.2977461814880371
+    },
+    {
+      "file": "017.jpg",
+      "cat": "menu_board",
+      "robust": 0.26765087246894836
+    },
+    {
+      "file": "018.jpg",
+      "cat": "menu_board",
+      "robust": 0.2704697549343109
+    },
+    {
+      "file": "019.jpg",
+      "cat": "menu_board",
+      "robust": 0.49344995617866516
+    },
+    {
+      "file": "020.jpg",
+      "cat": "menu_board",
+      "robust": 0.2739545702934265
+    },
+    {
+      "file": "021.jpg",
+      "cat": "menu_board",
+      "robust": 0.6915613412857056
+    },
+    {
+      "file": "022.jpg",
+      "cat": "menu_board",
+      "robust": 0.3484482169151306
+    },
+    {
+      "file": "023.jpg",
+      "cat": "menu_board",
+      "robust": 0.2766712009906769
+    },
+    {
+      "file": "024.jpg",
+      "cat": "menu_board",
+      "robust": 0.3160993158817291
+    },
+    {
+      "file": "025.jpg",
+      "cat": "menu_board",
+      "robust": 0.2856925129890442
+    },
+    {
+      "file": "026.jpg",
+      "cat": "menu_board",
+      "robust": 0.3139771521091461
+    },
+    {
+      "file": "027.jpg",
+      "cat": "menu_board",
+      "robust": 0.40622678399086
+    },
+    {
+      "file": "028.jpg",
+      "cat": "empty_tray",
+      "robust": 0.7336084246635437
+    },
+    {
+      "file": "029.jpg",
+      "cat": "drink_cup",
+      "robust": 0.24948598444461823
+    },
+    {
+      "file": "030.jpg",
+      "cat": "drink_cup",
+      "robust": 0.3522997498512268
+    },
+    {
+      "file": "031.jpg",
+      "cat": "drink_cup",
+      "robust": 0.3397137224674225
+    },
+    {
+      "file": "032.jpg",
+      "cat": "drink_cup",
+      "robust": 0.2694973647594452
+    },
+    {
+      "file": "033.jpg",
+      "cat": "drink_cup",
+      "robust": 0.4055582284927368
+    },
+    {
+      "file": "034.jpg",
+      "cat": "drink_cup",
+      "robust": 0.25776803493499756
+    },
+    {
+      "file": "035.jpg",
+      "cat": "drink_cup",
+      "robust": 0.27873072028160095
+    },
+    {
+      "file": "036.jpg",
+      "cat": "drink_cup",
+      "robust": 0.6134867668151855
+    },
+    {
+      "file": "037.jpg",
+      "cat": "drink_cup",
+      "robust": 0.3216608166694641
+    },
+    {
+      "file": "038.jpg",
+      "cat": "drink_cup",
+      "robust": 0.3455646336078644
+    },
+    {
+      "file": "039.jpg",
+      "cat": "drink_cup",
+      "robust": 0.2627866566181183
+    },
+    {
+      "file": "040.jpg",
+      "cat": "drink_cup",
+      "robust": 0.41659823060035706
+    },
+    {
+      "file": "041.jpg",
+      "cat": "drink_cup",
+      "robust": 0.6820703148841858
+    },
+    {
+      "file": "042.jpg",
+      "cat": "napkin",
+      "robust": 0.1722131222486496
+    },
+    {
+      "file": "043.jpg",
+      "cat": "napkin",
+      "robust": 0.41097477078437805
+    },
+    {
+      "file": "044.jpg",
+      "cat": "napkin",
+      "robust": 0.17436577379703522
+    },
+    {
+      "file": "045.jpg",
+      "cat": "napkin",
+      "robust": 0.2483903467655182
+    },
+    {
+      "file": "046.jpg",
+      "cat": "napkin",
+      "robust": 0.6622540354728699
+    },
+    {
+      "file": "047.jpg",
+      "cat": "napkin",
+      "robust": 0.24817220866680145
+    },
+    {
+      "file": "048.jpg",
+      "cat": "napkin",
+      "robust": 0.32682451605796814
+    },
+    {
+      "file": "049.jpg",
+      "cat": "napkin",
+      "robust": 0.25131431221961975
+    },
+    {
+      "file": "050.jpg",
+      "cat": "napkin",
+      "robust": 0.47115591168403625
+    },
+    {
+      "file": "051.jpg",
+      "cat": "napkin",
+      "robust": 0.36389783024787903
+    },
+    {
+      "file": "052.jpg",
+      "cat": "napkin",
+      "robust": 0.3115968406200409
+    },
+    {
+      "file": "053.jpg",
+      "cat": "napkin",
+      "robust": 0.28097933530807495
+    },
+    {
+      "file": "054.jpg",
+      "cat": "hand",
+      "robust": 0.4909296929836273
+    },
+    {
+      "file": "055.jpg",
+      "cat": "hand",
+      "robust": 0.3092191815376282
+    },
+    {
+      "file": "056.jpg",
+      "cat": "hand",
+      "robust": 0.22450017929077148
+    },
+    {
+      "file": "057.jpg",
+      "cat": "hand",
+      "robust": 0.25027188658714294
+    },
+    {
+      "file": "058.jpg",
+      "cat": "hand",
+      "robust": 0.27889710664749146
+    },
+    {
+      "file": "059.jpg",
+      "cat": "hand",
+      "robust": 0.3836989402770996
+    },
+    {
+      "file": "060.jpg",
+      "cat": "hand",
+      "robust": 0.4229370057582855
+    },
+    {
+      "file": "061.jpg",
+      "cat": "hand",
+      "robust": 0.3377425968647003
+    },
+    {
+      "file": "062.jpg",
+      "cat": "hand",
+      "robust": 0.2988937795162201
+    },
+    {
+      "file": "063.jpg",
+      "cat": "hand",
+      "robust": 0.33229246735572815
+    },
+    {
+      "file": "064.jpg",
+      "cat": "hand",
+      "robust": 0.31695282459259033
+    },
+    {
+      "file": "065.jpg",
+      "cat": "packaging",
+      "robust": 0.25114747881889343
+    },
+    {
+      "file": "066.jpg",
+      "cat": "packaging",
+      "robust": 0.230696901679039
+    },
+    {
+      "file": "067.jpg",
+      "cat": "packaging",
+      "robust": 0.3529333770275116
+    },
+    {
+      "file": "068.jpg",
+      "cat": "packaging",
+      "robust": 0.6857712268829346
+    },
+    {
+      "file": "069.jpg",
+      "cat": "packaging",
+      "robust": 0.29999348521232605
+    },
+    {
+      "file": "070.jpg",
+      "cat": "packaging",
+      "robust": 0.21843221783638
+    },
+    {
+      "file": "071.jpg",
+      "cat": "packaging",
+      "robust": 0.29637986421585083
+    },
+    {
+      "file": "072.jpg",
+      "cat": "packaging",
+      "robust": 0.27954742312431335
+    },
+    {
+      "file": "073.jpg",
+      "cat": "packaging",
+      "robust": 0.2218426764011383
+    },
+    {
+      "file": "074.jpg",
+      "cat": "packaging",
+      "robust": 0.3662792444229126
+    },
+    {
+      "file": "075.jpg",
+      "cat": "packaging",
+      "robust": 0.2597416043281555
+    },
+    {
+      "file": "076.jpg",
+      "cat": "packaging",
+      "robust": 0.17455148696899414
+    },
+    {
+      "file": "077.jpg",
+      "cat": "trash_bin",
+      "robust": 0.6118361353874207
+    },
+    {
+      "file": "078.jpg",
+      "cat": "trash_bin",
+      "robust": 0.5153301358222961
+    },
+    {
+      "file": "079.jpg",
+      "cat": "trash_bin",
+      "robust": 0.5241738557815552
+    },
+    {
+      "file": "080.jpg",
+      "cat": "trash_bin",
+      "robust": 0.31172797083854675
+    },
+    {
+      "file": "081.jpg",
+      "cat": "trash_bin",
+      "robust": 0.22631987929344177
+    },
+    {
+      "file": "082.jpg",
+      "cat": "trash_bin",
+      "robust": 0.3318675756454468
+    },
+    {
+      "file": "083.jpg",
+      "cat": "trash_bin",
+      "robust": 0.3006143271923065
+    },
+    {
+      "file": "084.jpg",
+      "cat": "trash_bin",
+      "robust": 0.37531235814094543
+    },
+    {
+      "file": "085.jpg",
+      "cat": "trash_bin",
+      "robust": 0.23559817671775818
+    },
+    {
+      "file": "086.jpg",
+      "cat": "trash_bin",
+      "robust": 0.38251781463623047
+    },
+    {
+      "file": "087.jpg",
+      "cat": "trash_bin",
+      "robust": 0.3299528658390045
+    },
+    {
+      "file": "088.jpg",
+      "cat": "trash_bin",
+      "robust": 0.27929097414016724
+    },
+    {
+      "file": "089.jpg",
+      "cat": "trash_bin",
+      "robust": 0.21777567267417908
+    },
+    {
+      "file": "090.jpg",
+      "cat": "empty_tray",
+      "robust": 0.45362550020217896
+    },
+    {
+      "file": "091.jpg",
+      "cat": "empty_tray",
+      "robust": 0.41489383578300476
+    },
+    {
+      "file": "092.jpg",
+      "cat": "empty_tray",
+      "robust": 0.3763638436794281
+    },
+    {
+      "file": "093.jpg",
+      "cat": "empty_tray",
+      "robust": 0.2176368087530136
+    },
+    {
+      "file": "094.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.29251599311828613
+    },
+    {
+      "file": "095.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.24111448228359222
+    },
+    {
+      "file": "096.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.29003581404685974
+    },
+    {
+      "file": "097.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.24446702003479004
+    },
+    {
+      "file": "098.jpg",
+      "cat": "menu_board",
+      "robust": 0.43471434712409973
+    },
+    {
+      "file": "099.jpg",
+      "cat": "menu_board",
+      "robust": 0.19384267926216125
+    },
+    {
+      "file": "100.jpg",
+      "cat": "menu_board",
+      "robust": 0.5124891996383667
+    },
+    {
+      "file": "101.jpg",
+      "cat": "trash_bin",
+      "robust": 0.2634063959121704
+    },
+    {
+      "file": "102.jpg",
+      "cat": "trash_bin",
+      "robust": 0.4202653765678406
+    },
+    {
+      "file": "103.jpg",
+      "cat": "drink_cup",
+      "robust": 0.14029540121555328
+    },
+    {
+      "file": "104.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.46010395884513855
+    },
+    {
+      "file": "105.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.4809902310371399
+    },
+    {
+      "file": "106.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.22641779482364655
+    },
+    {
+      "file": "107.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.8878737092018127
+    },
+    {
+      "file": "108.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.23473165929317474
+    },
+    {
+      "file": "109.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.3088625371456146
+    },
+    {
+      "file": "110.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.21007907390594482
+    },
+    {
+      "file": "111.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.5735874176025391
+    },
+    {
+      "file": "112.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.6922353506088257
+    },
+    {
+      "file": "113.jpg",
+      "cat": "empty_cafeteria",
+      "robust": 0.32701244950294495
+    },
+    {
+      "file": "114.jpg",
+      "cat": "empty_tray",
+      "robust": 0.4037078619003296
+    },
+    {
+      "file": "115.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.3810747265815735
+    },
+    {
+      "file": "116.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.5669512152671814
+    },
+    {
+      "file": "117.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.23700971901416779
+    },
+    {
+      "file": "118.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.22705446183681488
+    },
+    {
+      "file": "119.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.20323774218559265
+    },
+    {
+      "file": "120.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.40743786096572876
+    },
+    {
+      "file": "121.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.2560965418815613
+    },
+    {
+      "file": "122.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.32727035880088806
+    },
+    {
+      "file": "123.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.5370914936065674
+    },
+    {
+      "file": "124.jpg",
+      "cat": "condiment_bottle",
+      "robust": 0.16993127763271332
+    },
+    {
+      "file": "125.jpg",
+      "cat": "drink_cup",
+      "robust": 0.34207069873809814
+    },
+    {
+      "file": "126.jpg",
+      "cat": "drink_cup",
+      "robust": 0.22612068057060242
+    },
+    {
+      "file": "127.jpg",
+      "cat": "napkin",
+      "robust": 0.25807884335517883
+    },
+    {
+      "file": "128.jpg",
+      "cat": "napkin",
+      "robust": 0.19476303458213806
+    },
+    {
+      "file": "129.jpg",
+      "cat": "napkin",
+      "robust": 0.25668269395828247
+    },
+    {
+      "file": "130.jpg",
+      "cat": "napkin",
+      "robust": 0.3729785978794098
+    },
+    {
+      "file": "131.jpg",
+      "cat": "hand",
+      "robust": 0.5681268572807312
+    },
+    {
+      "file": "132.jpg",
+      "cat": "hand",
+      "robust": 0.46188002824783325
+    },
+    {
+      "file": "133.jpg",
+      "cat": "hand",
+      "robust": 0.3360516428947449
+    },
+    {
+      "file": "134.jpg",
+      "cat": "hand",
+      "robust": 0.5934385657310486
+    },
+    {
+      "file": "135.jpg",
+      "cat": "packaging",
+      "robust": 0.26238685846328735
+    },
+    {
+      "file": "136.jpg",
+      "cat": "packaging",
+      "robust": 0.21409067511558533
+    },
+    {
+      "file": "137.jpg",
+      "cat": "packaging",
+      "robust": 0.20418421924114227
+    },
+    {
+      "file": "138.jpg",
+      "cat": "packaging",
+      "robust": 0.17024806141853333
+    }
+  ],
+  "real": [
+    {
+      "file": "canteen_real\\chicken_wings\\001.jpg",
+      "robust": 0.1992349624633789
+    },
+    {
+      "file": "canteen_real\\chicken_wings\\002.jpg",
+      "robust": 0.8620952367782593
+    },
+    {
+      "file": "canteen_real\\chicken_wings\\003.jpg",
+      "robust": 0.9981827735900879
+    },
+    {
+      "file": "canteen_real\\chicken_wings\\004.jpg",
+      "robust": 0.9509493112564087
+    },
+    {
+      "file": "canteen_real\\chicken_wings\\005.jpg",
+      "robust": 0.9757807850837708
+    },
+    {
+      "file": "canteen_real\\chicken_wings\\006.jpg",
+      "robust": 0.9898474812507629
+    },
+    {
+      "file": "canteen_real\\chicken_wings\\007.jpg",
+      "robust": 0.8512064218521118
+    },
+    {
+      "file": "canteen_real\\chicken_wings\\008.jpg",
+      "robust": 0.979911744594574
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\001.jpg",
+      "robust": 0.9835212230682373
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\002.jpg",
+      "robust": 0.9824907183647156
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\003.jpg",
+      "robust": 0.9670372605323792
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\004.jpg",
+      "robust": 0.9763578772544861
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\005.jpg",
+      "robust": 0.6853271126747131
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\006.jpg",
+      "robust": 0.9884670972824097
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\007.jpg",
+      "robust": 0.9457469582557678
+    },
+    {
+      "file": "canteen_real\\chocolate_cake\\008.jpg",
+      "robust": 0.9491249322891235
+    },
+    {
+      "file": "canteen_real\\donuts\\001.jpg",
+      "robust": 0.5006044507026672
+    },
+    {
+      "file": "canteen_real\\donuts\\002.jpg",
+      "robust": 0.9026631116867065
+    },
+    {
+      "file": "canteen_real\\donuts\\003.jpg",
+      "robust": 0.9978094696998596
+    },
+    {
+      "file": "canteen_real\\donuts\\004.jpg",
+      "robust": 0.9803922772407532
+    },
+    {
+      "file": "canteen_real\\donuts\\005.jpg",
+      "robust": 0.9610503911972046
+    },
+    {
+      "file": "canteen_real\\donuts\\006.jpg",
+      "robust": 0.9895603656768799
+    },
+    {
+      "file": "canteen_real\\donuts\\007.jpg",
+      "robust": 0.9627777934074402
+    },
+    {
+      "file": "canteen_real\\dumplings\\001.jpg",
+      "robust": 0.6492047309875488
+    },
+    {
+      "file": "canteen_real\\dumplings\\002.jpg",
+      "robust": 0.6983571648597717
+    },
+    {
+      "file": "canteen_real\\dumplings\\003.jpg",
+      "robust": 0.9982185959815979
+    },
+    {
+      "file": "canteen_real\\dumplings\\004.jpg",
+      "robust": 0.8735702633857727
+    },
+    {
+      "file": "canteen_real\\dumplings\\005.jpg",
+      "robust": 0.986200213432312
+    },
+    {
+      "file": "canteen_real\\dumplings\\006.jpg",
+      "robust": 0.9928247928619385
+    },
+    {
+      "file": "canteen_real\\dumplings\\007.jpg",
+      "robust": 0.9347838163375854
+    },
+    {
+      "file": "canteen_real\\dumplings\\008.jpg",
+      "robust": 0.9319853186607361
+    },
+    {
+      "file": "canteen_real\\dumplings\\009.jpg",
+      "robust": 0.9968434572219849
+    },
+    {
+      "file": "canteen_real\\dumplings\\010.jpg",
+      "robust": 0.9700468182563782
+    },
+    {
+      "file": "canteen_real\\french_fries\\001.jpg",
+      "robust": 0.5127453207969666
+    },
+    {
+      "file": "canteen_real\\french_fries\\002.jpg",
+      "robust": 0.36262860894203186
+    },
+    {
+      "file": "canteen_real\\french_fries\\003.jpg",
+      "robust": 0.9431625008583069
+    },
+    {
+      "file": "canteen_real\\french_fries\\004.jpg",
+      "robust": 0.9877510070800781
+    },
+    {
+      "file": "canteen_real\\french_fries\\005.jpg",
+      "robust": 0.9818989038467407
+    },
+    {
+      "file": "canteen_real\\french_fries\\006.jpg",
+      "robust": 0.9898281097412109
+    },
+    {
+      "file": "canteen_real\\french_fries\\007.jpg",
+      "robust": 0.8486776351928711
+    },
+    {
+      "file": "canteen_real\\fried_rice\\001.jpg",
+      "robust": 0.9767451882362366
+    },
+    {
+      "file": "canteen_real\\fried_rice\\002.jpg",
+      "robust": 0.9075483083724976
+    },
+    {
+      "file": "canteen_real\\fried_rice\\003.jpg",
+      "robust": 0.44728145003318787
+    },
+    {
+      "file": "canteen_real\\fried_rice\\004.jpg",
+      "robust": 0.9878963232040405
+    },
+    {
+      "file": "canteen_real\\fried_rice\\005.jpg",
+      "robust": 0.9797241687774658
+    },
+    {
+      "file": "canteen_real\\fried_rice\\006.jpg",
+      "robust": 0.8727511167526245
+    },
+    {
+      "file": "canteen_real\\fried_rice\\007.jpg",
+      "robust": 0.5855574011802673
+    },
+    {
+      "file": "canteen_real\\greek_salad\\001.jpg",
+      "robust": 0.5569735169410706
+    },
+    {
+      "file": "canteen_real\\greek_salad\\002.jpg",
+      "robust": 0.6429999470710754
+    },
+    {
+      "file": "canteen_real\\hamburger\\001.jpg",
+      "robust": 0.945254921913147
+    },
+    {
+      "file": "canteen_real\\hamburger\\002.jpg",
+      "robust": 0.9366512298583984
+    },
+    {
+      "file": "canteen_real\\hamburger\\003.jpg",
+      "robust": 0.9917972087860107
+    },
+    {
+      "file": "canteen_real\\hamburger\\004.jpg",
+      "robust": 0.8236650228500366
+    },
+    {
+      "file": "canteen_real\\hamburger\\005.jpg",
+      "robust": 0.6512278318405151
+    },
+    {
+      "file": "canteen_real\\hamburger\\006.jpg",
+      "robust": 0.8437854647636414
+    },
+    {
+      "file": "canteen_real\\hamburger\\007.jpg",
+      "robust": 0.5169473886489868
+    },
+    {
+      "file": "canteen_real\\hamburger\\008.jpg",
+      "robust": 0.36013129353523254
+    },
+    {
+      "file": "canteen_real\\hamburger\\009.jpg",
+      "robust": 0.6139313578605652
+    },
+    {
+      "file": "canteen_real\\hamburger\\010.jpg",
+      "robust": 0.6504195332527161
+    },
+    {
+      "file": "canteen_real\\hamburger\\011.jpg",
+      "robust": 0.5804184675216675
+    },
+    {
+      "file": "canteen_real\\hamburger\\012.jpg",
+      "robust": 0.8767342567443848
+    },
+    {
+      "file": "canteen_real\\hot_dog\\001.jpg",
+      "robust": 0.9915632009506226
+    },
+    {
+      "file": "canteen_real\\hot_dog\\002.jpg",
+      "robust": 0.9878911972045898
+    },
+    {
+      "file": "canteen_real\\hot_dog\\003.jpg",
+      "robust": 0.9371573328971863
+    },
+    {
+      "file": "canteen_real\\hot_dog\\004.jpg",
+      "robust": 0.9785040020942688
+    },
+    {
+      "file": "canteen_real\\ice_cream\\001.jpg",
+      "robust": 0.9577383399009705
+    },
+    {
+      "file": "canteen_real\\lasagna\\001.jpg",
+      "robust": 0.987467348575592
+    },
+    {
+      "file": "canteen_real\\lasagna\\002.jpg",
+      "robust": 0.9340535402297974
+    },
+    {
+      "file": "canteen_real\\lasagna\\003.jpg",
+      "robust": 0.589232325553894
+    },
+    {
+      "file": "canteen_real\\lasagna\\004.jpg",
+      "robust": 0.9894161820411682
+    },
+    {
+      "file": "canteen_real\\lasagna\\005.jpg",
+      "robust": 0.7182923555374146
+    },
+    {
+      "file": "canteen_real\\lasagna\\006.jpg",
+      "robust": 0.873110294342041
+    },
+    {
+      "file": "canteen_real\\pancakes\\001.jpg",
+      "robust": 0.5705140233039856
+    },
+    {
+      "file": "canteen_real\\pizza\\001.jpg",
+      "robust": 0.7213214635848999
+    },
+    {
+      "file": "canteen_real\\pizza\\002.jpg",
+      "robust": 0.38367730379104614
+    },
+    {
+      "file": "canteen_real\\pizza\\003.jpg",
+      "robust": 0.24729035794734955
+    },
+    {
+      "file": "canteen_real\\pizza\\004.jpg",
+      "robust": 0.6500089764595032
+    },
+    {
+      "file": "canteen_real\\pizza\\005.jpg",
+      "robust": 0.3197925388813019
+    },
+    {
+      "file": "canteen_real\\pizza\\006.jpg",
+      "robust": 0.9399021863937378
+    },
+    {
+      "file": "canteen_real\\pizza\\007.jpg",
+      "robust": 0.9726992845535278
+    },
+    {
+      "file": "canteen_real\\pizza\\008.jpg",
+      "robust": 0.6005415320396423
+    },
+    {
+      "file": "canteen_real\\pizza\\009.jpg",
+      "robust": 0.9742562174797058
+    },
+    {
+      "file": "canteen_real\\pizza\\010.jpg",
+      "robust": 0.41756343841552734
+    },
+    {
+      "file": "canteen_real\\pizza\\011.jpg",
+      "robust": 0.9876794219017029
+    },
+    {
+      "file": "canteen_real\\ramen\\001.jpg",
+      "robust": 0.5226775407791138
+    },
+    {
+      "file": "canteen_real\\ramen\\002.jpg",
+      "robust": 0.9853510856628418
+    },
+    {
+      "file": "canteen_real\\ramen\\003.jpg",
+      "robust": 0.5592247843742371
+    },
+    {
+      "file": "canteen_real\\ramen\\004.jpg",
+      "robust": 0.9128386974334717
+    },
+    {
+      "file": "canteen_real\\ramen\\005.jpg",
+      "robust": 0.9585549831390381
+    },
+    {
+      "file": "canteen_real\\ramen\\006.jpg",
+      "robust": 0.9818364977836609
+    },
+    {
+      "file": "canteen_real\\ramen\\007.jpg",
+      "robust": 0.9176189303398132
+    },
+    {
+      "file": "canteen_real\\ramen\\008.jpg",
+      "robust": 0.5701302289962769
+    },
+    {
+      "file": "canteen_real\\spaghetti_bolognese\\001.jpg",
+      "robust": 0.9679408669471741
+    },
+    {
+      "file": "canteen_real\\spaghetti_bolognese\\002.jpg",
+      "robust": 0.9968057870864868
+    },
+    {
+      "file": "canteen_real\\spaghetti_bolognese\\003.jpg",
+      "robust": 0.5499757528305054
+    },
+    {
+      "file": "canteen_real\\spaghetti_bolognese\\004.jpg",
+      "robust": 0.9758166670799255
+    },
+    {
+      "file": "canteen_real\\spaghetti_bolognese\\005.jpg",
+      "robust": 0.9652956128120422
+    },
+    {
+      "file": "canteen_real\\spaghetti_bolognese\\006.jpg",
+      "robust": 0.9960028529167175
+    },
+    {
+      "file": "canteen_real\\spaghetti_bolognese\\007.jpg",
+      "robust": 0.9928761720657349
+    },
+    {
+      "file": "canteen_real\\waffles\\001.jpg",
+      "robust": 0.251911997795105
+    }
+  ],
+  "auc": {
+    "real_vs_neg": 0.9292753623188406,
+    "proxy_vs_neg": 0.769804347826087,
+    "food_vs_neg": 0.7843017127799736
+  },
+  "per_category": {
+    "v1_unknown": {
+      "n": 15,
+      "accepted": 13,
+      "median": 0.4647802710533142
+    },
+    "menu_board": {
+      "n": 15,
+      "accepted": 6,
+      "median": 0.3139771521091461
+    },
+    "empty_tray": {
+      "n": 6,
+      "accepted": 5,
+      "median": 0.4093008488416672
+    },
+    "drink_cup": {
+      "n": 16,
+      "accepted": 9,
+      "median": 0.3306872695684433
+    },
+    "napkin": {
+      "n": 16,
+      "accepted": 6,
+      "median": 0.2695290893316269
+    },
+    "hand": {
+      "n": 15,
+      "accepted": 9,
+      "median": 0.3360516428947449
+    },
+    "packaging": {
+      "n": 16,
+      "accepted": 3,
+      "median": 0.2554445415735245
+    },
+    "trash_bin": {
+      "n": 15,
+      "accepted": 8,
+      "median": 0.3299528658390045
+    },
+    "condiment_bottle": {
+      "n": 14,
+      "accepted": 5,
+      "median": 0.2730661779642105
+    },
+    "empty_cafeteria": {
+      "n": 10,
+      "accepted": 6,
+      "median": 0.39355820417404175
+    }
+  }
+}

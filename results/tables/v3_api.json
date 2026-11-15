@@ -1,0 +1,816 @@
+[
+ {
+  "file": "ice_cream/IMG_ice_cream_0002.jpg",
+  "labels": [
+   "ice_cream"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9836,
+  "robust": 0.8745,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "french_fries/IMG_french_fries_0011.jpg",
+  "labels": [
+   "french_fries",
+   "fried_rice",
+   "greek_salad",
+   "hamburger",
+   "ice_cream",
+   "lasagna",
+   "mixed",
+   "spaghetti_bolognese",
+   "waffles"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.1384,
+  "robust": 0.4138,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "ramen/IMG_ramen_0001.jpg",
+  "labels": [
+   "ramen"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9663,
+  "robust": 0.7384,
+  "top1": "ramen"
+ },
+ {
+  "file": "greek_salad/IMG_greek_salad_0002.jpg",
+  "labels": [
+   "greek_salad"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9637,
+  "robust": 0.2574,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "hot_dog/IMG_hot_dog_0005.jpg",
+  "labels": [
+   "hot_dog"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.1844,
+  "robust": 0.9627,
+  "top1": "hot_dog"
+ },
+ {
+  "file": "hot_dog/IMG_hot_dog_0001.jpg",
+  "labels": [
+   "hot_dog"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.4379,
+  "robust": 0.4328,
+  "top1": "steak"
+ },
+ {
+  "file": "ice_cream/IMG_ice_cream_0006.jpg",
+  "labels": [
+   "ice_cream"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.1361,
+  "robust": 0.9053,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "ramen/IMG_ramen_0003.jpg",
+  "labels": [
+   "ramen"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.0057,
+  "robust": 0.44,
+  "top1": "hot_dog"
+ },
+ {
+  "file": "greek_salad/IMG_greek_salad_0010.jpg",
+  "labels": [
+   "greek_salad",
+   "mixed",
+   "spaghetti_bolognese",
+   "waffles"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.8644,
+  "robust": 0.3935,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "donuts/IMG_donuts_0002.jpg",
+  "labels": [
+   "donuts"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9603,
+  "robust": 0.4829,
+  "top1": "donuts"
+ },
+ {
+  "file": "pizza/IMG_pizza_0007.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9999,
+  "robust": 0.6685,
+  "top1": "pizza"
+ },
+ {
+  "file": "donuts/IMG_donuts_0001.jpg",
+  "labels": [
+   "donuts"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.8452,
+  "robust": 0.7466,
+  "top1": "donuts"
+ },
+ {
+  "file": "pancakes/IMG_pancakes_0002.jpg",
+  "labels": [
+   "pancakes"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9993,
+  "robust": 0.3819,
+  "top1": "pancakes"
+ },
+ {
+  "file": "french_fries/IMG_french_fries_0004.jpg",
+  "labels": [
+   "french_fries"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9951,
+  "robust": 0.1536,
+  "top1": "french_fries"
+ },
+ {
+  "file": "pizza/IMG_pizza_0006.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9397,
+  "robust": 0.9798,
+  "top1": "pizza"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0001.jpg",
+  "labels": [
+   "chicken_wings"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.0221,
+  "robust": 0.3269,
+  "top1": "chicken_wings"
+ },
+ {
+  "file": "greek_salad/IMG_greek_salad_0003.jpg",
+  "labels": [
+   "greek_salad"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9694,
+  "robust": 0.2367,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "hot_dog/IMG_hot_dog_0003.jpg",
+  "labels": [
+   "hot_dog"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.328,
+  "robust": 0.2444,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "pancakes/IMG_pancakes_0003.jpg",
+  "labels": [
+   "pancakes"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9966,
+  "robust": 0.6549,
+  "top1": "pancakes"
+ },
+ {
+  "file": "greek_salad/IMG_greek_salad_0001.jpg",
+  "labels": [
+   "greek_salad"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9383,
+  "robust": 0.2575,
+  "top1": "sushi"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0010.jpg",
+  "labels": [
+   "chicken_wings",
+   "french_fries",
+   "fried_rice",
+   "greek_salad",
+   "hamburger",
+   "ice_cream",
+   "lasagna",
+   "mixed",
+   "pancakes",
+   "spaghetti_bolognese",
+   "waffles"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.1323,
+  "robust": 0.3394,
+  "top1": "sushi"
+ },
+ {
+  "file": "ice_cream/IMG_ice_cream_0003.jpg",
+  "labels": [
+   "ice_cream"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.405,
+  "robust": 0.2704,
+  "top1": "donuts"
+ },
+ {
+  "file": "pancakes/IMG_pancakes_0001.jpg",
+  "labels": [
+   "pancakes"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9997,
+  "robust": 0.2052,
+  "top1": "hot_dog"
+ },
+ {
+  "file": "pizza/IMG_pizza_0005.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9993,
+  "robust": 0.8258,
+  "top1": "pizza"
+ },
+ {
+  "file": "french_fries/IMG_french_fries_0006.jpg",
+  "labels": [
+   "french_fries"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.8573,
+  "robust": 0.4327,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "pizza/IMG_pizza_0003.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9991,
+  "robust": 0.9801,
+  "top1": "pizza"
+ },
+ {
+  "file": "french_fries/IMG_french_fries_0005.jpg",
+  "labels": [
+   "french_fries"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.5925,
+  "robust": 0.3191,
+  "top1": "french_fries"
+ },
+ {
+  "file": "hamburger/IMG_hamburger_0007.jpg",
+  "labels": [
+   "hamburger"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.2397,
+  "robust": 0.4131,
+  "top1": "hamburger"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0003.jpg",
+  "labels": [
+   "chicken_wings"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9367,
+  "robust": 0.4599,
+  "top1": "chicken_wings"
+ },
+ {
+  "file": "hot_dog/IMG_hot_dog_0004.jpg",
+  "labels": [
+   "hot_dog"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.2837,
+  "robust": 0.3243,
+  "top1": "pizza"
+ },
+ {
+  "file": "pancakes/IMG_pancakes_0007.jpg",
+  "labels": [
+   "pancakes"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9651,
+  "robust": 0.26,
+  "top1": "steak"
+ },
+ {
+  "file": "pancakes/IMG_pancakes_0004.jpg",
+  "labels": [
+   "pancakes"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9162,
+  "robust": 0.4066,
+  "top1": "pancakes"
+ },
+ {
+  "file": "hamburger/IMG_hamburger_0009.jpg",
+  "labels": [
+   "hamburger"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9993,
+  "robust": 0.4132,
+  "top1": "pizza"
+ },
+ {
+  "file": "french_fries/IMG_french_fries_0001.jpg",
+  "labels": [
+   "french_fries"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.997,
+  "robust": 0.2261,
+  "top1": "french_fries"
+ },
+ {
+  "file": "dumplings/IMG_dumplings_0003.jpg",
+  "labels": [
+   "dumplings"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9837,
+  "robust": 0.4122,
+  "top1": "dumplings"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0008.jpg",
+  "labels": [
+   "chicken_wings",
+   "chocolate_cake",
+   "donuts",
+   "dumplings",
+   "french_fries",
+   "fried_rice",
+   "greek_salad",
+   "hamburger",
+   "hot_dog",
+   "ice_cream",
+   "lasagna",
+   "mixed",
+   "pancakes",
+   "pizza",
+   "ramen",
+   "spaghetti_bolognese",
+   "waffles"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.0231,
+  "robust": 0.3336,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0006.jpg",
+  "labels": [
+   "chicken_wings"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.4641,
+  "robust": 0.8456,
+  "top1": "chicken_wings"
+ },
+ {
+  "file": "greek_salad/IMG_greek_salad_0009.jpg",
+  "labels": [
+   "greek_salad",
+   "hamburger",
+   "mixed",
+   "spaghetti_bolognese",
+   "waffles"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.083,
+  "robust": 0.445,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "pizza/IMG_pizza_0002.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.991,
+  "robust": 0.8654,
+  "top1": "pizza"
+ },
+ {
+  "file": "pizza/IMG_pizza_0008.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9993,
+  "robust": 0.3017,
+  "top1": "pizza"
+ },
+ {
+  "file": "donuts/IMG_donuts_0003.jpg",
+  "labels": [
+   "donuts"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9962,
+  "robust": 0.6149,
+  "top1": "donuts"
+ },
+ {
+  "file": "pancakes/IMG_pancakes_0005.jpg",
+  "labels": [
+   "pancakes"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9063,
+  "robust": 0.2452,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "pancakes/IMG_pancakes_0006.jpg",
+  "labels": [
+   "pancakes"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.8866,
+  "robust": 0.5971,
+  "top1": "pancakes"
+ },
+ {
+  "file": "hamburger/IMG_hamburger_0010.jpg",
+  "labels": [
+   "hamburger"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.8538,
+  "robust": 0.4965,
+  "top1": "pizza"
+ },
+ {
+  "file": "pizza/IMG_pizza_0001.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9891,
+  "robust": 0.9835,
+  "top1": "pizza"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0002.jpg",
+  "labels": [
+   "chicken_wings"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.3518,
+  "robust": 0.1954,
+  "top1": "chicken_wings"
+ },
+ {
+  "file": "dumplings/IMG_dumplings_0002.jpg",
+  "labels": [
+   "dumplings"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.881,
+  "robust": 0.3238,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "ice_cream/IMG_ice_cream_0005.jpg",
+  "labels": [
+   "ice_cream"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.5515,
+  "robust": 0.6364,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "french_fries/IMG_french_fries_0003.jpg",
+  "labels": [
+   "french_fries"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9738,
+  "robust": 0.6511,
+  "top1": "french_fries"
+ },
+ {
+  "file": "dumplings/IMG_dumplings_0001.jpg",
+  "labels": [
+   "dumplings"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.2806,
+  "robust": 0.4148,
+  "top1": "hot_dog"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0005.jpg",
+  "labels": [
+   "chicken_wings"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.6392,
+  "robust": 0.9907,
+  "top1": "chicken_wings"
+ },
+ {
+  "file": "mixed/IMG_mixed_0015.jpg",
+  "labels": [
+   "mixed"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.5911,
+  "robust": 0.3015,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0009.jpg",
+  "labels": [
+   "chicken_wings",
+   "chocolate_cake",
+   "french_fries",
+   "fried_rice",
+   "greek_salad",
+   "hamburger",
+   "hot_dog",
+   "ice_cream",
+   "lasagna",
+   "mixed",
+   "pancakes",
+   "pizza",
+   "spaghetti_bolognese",
+   "waffles"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.5553,
+  "robust": 0.9357,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "ice_cream/IMG_ice_cream_0001.jpg",
+  "labels": [
+   "ice_cream"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9983,
+  "robust": 0.7734,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "ice_cream/IMG_ice_cream_0004.jpg",
+  "labels": [
+   "ice_cream"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.1629,
+  "robust": 0.319,
+  "top1": "chocolate_cake"
+ },
+ {
+  "file": "ramen/IMG_ramen_0002.jpg",
+  "labels": [
+   "ramen"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.7775,
+  "robust": 0.3279,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0004.jpg",
+  "labels": [
+   "chicken_wings"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.8837,
+  "robust": 0.3986,
+  "top1": "steak"
+ },
+ {
+  "file": "chicken_wings/IMG_chicken_wings_0007.jpg",
+  "labels": [
+   "chicken_wings",
+   "chocolate_cake",
+   "donuts",
+   "dumplings",
+   "french_fries",
+   "fried_rice",
+   "greek_salad",
+   "hamburger",
+   "hot_dog",
+   "ice_cream",
+   "lasagna",
+   "mixed",
+   "pancakes",
+   "pizza",
+   "ramen",
+   "spaghetti_bolognese",
+   "waffles"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.0021,
+  "robust": 0.8006,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "hot_dog/IMG_hot_dog_0002.jpg",
+  "labels": [
+   "hot_dog"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.0231,
+  "robust": 0.2415,
+  "top1": "ice_cream"
+ },
+ {
+  "file": "hamburger/IMG_hamburger_0008.jpg",
+  "labels": [
+   "hamburger"
+  ],
+  "in_scope": false,
+  "packaging": false,
+  "not_food": true,
+  "p_food": 0.0001,
+  "robust": 0.5612,
+  "top1": "fried_rice"
+ },
+ {
+  "file": "french_fries/IMG_french_fries_0002.jpg",
+  "labels": [
+   "french_fries"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9735,
+  "robust": 0.8721,
+  "top1": "french_fries"
+ },
+ {
+  "file": "pizza/IMG_pizza_0004.jpg",
+  "labels": [
+   "pizza"
+  ],
+  "in_scope": true,
+  "packaging": false,
+  "not_food": false,
+  "p_food": 0.9983,
+  "robust": 0.8864,
+  "top1": "pizza"
+ }
+]

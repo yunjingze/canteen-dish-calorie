@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "食堂热量估算",
+    "navigationBarBackgroundColor": "#2f6df6",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f4f6fb"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,44 @@
+# ---- datasets (large; rebuilt by scripts/prepare_data.py) -------------------
+# only the hand-shot canteen photos are versioned: they cannot be regenerated
+data/*
+!data/splits/
+data/splits/*
+!data/splits/canteen_real/
+!data/splits/mixed_real/
+!data/splits/negatives/
+
+# ---- environments / caches --------------------------------------------------
+.torch/
+.venv/
+torchinductor_*/
+__pycache__/
+*.pyc
+
+# ---- checkpoints and cached features (binary, per-run) ----------------------
+results/runs/*/*.pt
+results/runs/*/*.npz
+results/**/*.npz
+results/logs/
+results/_*/
+results/*.png
+results/_ood_img/
+
+# ---- packaged demo and downloaded tools -------------------------------------
+dist/
+tools/*.exe
+
+# ---- scratch files ----------------------------------------------------------
+*.bak*
+demo_probe.*
+train_all.log
+extract.log
+data_download.log
+
+# ---- LaTeX build artefacts --------------------------------------------------
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.png
+paper/*.pdf

@@ -1,0 +1,23 @@
+{
+  "n": 1740,
+  "n_per_class": 15,
+  "temperature": 0.819,
+  "worst_view_percentiles": {
+    "p100": 0.1161,
+    "p250": 0.1384,
+    "p500": 0.1845,
+    "p1000": 0.2431,
+    "p2500": 0.4055,
+    "p5000": 0.7428
+  },
+  "flagged_percent_by_threshold": {
+    "0.20": 6.09,
+    "0.25": 10.34,
+    "0.30": 15.75,
+    "0.35": 20.11,
+    "0.40": 24.37
+  },
+  "suggested_threshold": 0.18,
+  "mean_worst_view": 0.6731,
+  "mean_top1": 0.7853
+}

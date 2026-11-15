@@ -1,0 +1,34 @@
+{
+  "run": "resnet18_scratch_noaug",
+  "temperature": 0.8448,
+  "val": {
+    "before": {
+      "accuracy": 0.5905,
+      "ece": 0.06175689909234642
+    },
+    "after": {
+      "accuracy": 0.5905,
+      "ece": 0.02270326729863883
+    }
+  },
+  "test": {
+    "before": {
+      "accuracy": 0.6604,
+      "ece": 0.09475946018397809
+    },
+    "after": {
+      "accuracy": 0.6604,
+      "ece": 0.029947720870375626
+    }
+  },
+  "canteen": {
+    "before": {
+      "accuracy": 0.356,
+      "ece": 0.08489921011030674
+    },
+    "after": {
+      "accuracy": 0.356,
+      "ece": 0.13423589087277651
+    }
+  }
+}

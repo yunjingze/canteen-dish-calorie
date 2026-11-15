@@ -1,0 +1,378 @@
+[
+  {
+    "run": "resnet18_frozen_noaug",
+    "temperature": 0.663,
+    "val": {
+      "before": {
+        "accuracy": 0.7885,
+        "ece": 0.1416963543072343
+      },
+      "after": {
+        "accuracy": 0.7885,
+        "ece": 0.017464992530643944
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.8444,
+        "ece": 0.16147031000256537
+      },
+      "after": {
+        "accuracy": 0.8444,
+        "ece": 0.03408550392091276
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.64,
+        "ece": 0.14541210323572157
+      },
+      "after": {
+        "accuracy": 0.64,
+        "ece": 0.04966934631764888
+      }
+    }
+  },
+  {
+    "run": "resnet18_frozen_aug",
+    "temperature": 0.68,
+    "val": {
+      "before": {
+        "accuracy": 0.7865,
+        "ece": 0.13675721007585526
+      },
+      "after": {
+        "accuracy": 0.7865,
+        "ece": 0.028339771896600734
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.8408,
+        "ece": 0.15685060895681383
+      },
+      "after": {
+        "accuracy": 0.8408,
+        "ece": 0.037615108147263515
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.643,
+        "ece": 0.14246527978777881
+      },
+      "after": {
+        "accuracy": 0.643,
+        "ece": 0.034203772962093336
+      }
+    }
+  },
+  {
+    "run": "resnet18_last_stage_noaug",
+    "temperature": 0.7207,
+    "val": {
+      "before": {
+        "accuracy": 0.8495,
+        "ece": 0.10850978217273952
+      },
+      "after": {
+        "accuracy": 0.8495,
+        "ece": 0.022926050543785118
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.8974,
+        "ece": 0.11818840972781183
+      },
+      "after": {
+        "accuracy": 0.8974,
+        "ece": 0.02281049368381498
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.64,
+        "ece": 0.07937713333964347
+      },
+      "after": {
+        "accuracy": 0.64,
+        "ece": 0.055236381366848955
+      }
+    }
+  },
+  {
+    "run": "resnet18_last_stage_aug",
+    "temperature": 0.696,
+    "val": {
+      "before": {
+        "accuracy": 0.8535,
+        "ece": 0.11417014799267054
+      },
+      "after": {
+        "accuracy": 0.8535,
+        "ece": 0.017829293206334116
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.9054,
+        "ece": 0.12446134202480313
+      },
+      "after": {
+        "accuracy": 0.9054,
+        "ece": 0.021563414856791516
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.66,
+        "ece": 0.07727908308804034
+      },
+      "after": {
+        "accuracy": 0.66,
+        "ece": 0.06144334025681021
+      }
+    },
+    "temperature_fused": 0.659
+  },
+  {
+    "run": "mobilenet_v3_small_last_stage_aug",
+    "temperature": 0.6993,
+    "val": {
+      "before": {
+        "accuracy": 0.756,
+        "ece": 0.12309363942593335
+      },
+      "after": {
+        "accuracy": 0.756,
+        "ece": 0.016693706713616842
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.8192,
+        "ece": 0.1464858561903238
+      },
+      "after": {
+        "accuracy": 0.8192,
+        "ece": 0.03275722785592077
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.572,
+        "ece": 0.15028267201036213
+      },
+      "after": {
+        "accuracy": 0.572,
+        "ece": 0.021451311081647873
+      }
+    }
+  },
+  {
+    "run": "resnet18_scratch_noaug",
+    "temperature": 0.8448,
+    "val": {
+      "before": {
+        "accuracy": 0.5905,
+        "ece": 0.06175689909234642
+      },
+      "after": {
+        "accuracy": 0.5905,
+        "ece": 0.02270326729863883
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.6604,
+        "ece": 0.09475946018397809
+      },
+      "after": {
+        "accuracy": 0.6604,
+        "ece": 0.029947720870375626
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.356,
+        "ece": 0.08489921011030674
+      },
+      "after": {
+        "accuracy": 0.356,
+        "ece": 0.13423589087277651
+      }
+    }
+  },
+  {
+    "run": "resnet18_last_stage_aug_f101n",
+    "temperature": 0.7364,
+    "val": {
+      "before": {
+        "accuracy": 0.867,
+        "ece": 0.09143896801024677
+      },
+      "after": {
+        "accuracy": 0.867,
+        "ece": 0.02682359535992148
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.9166,
+        "ece": 0.11285966858267783
+      },
+      "after": {
+        "accuracy": 0.9166,
+        "ece": 0.02750478674769402
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.716,
+        "ece": 0.088845387712121
+      },
+      "after": {
+        "accuracy": 0.716,
+        "ece": 0.04145226232707504
+      }
+    },
+    "temperature_fused": 0.671
+  },
+  {
+    "run": "resnet18_last_stage_aug_f101n_nodedup",
+    "temperature": 0.7172,
+    "val": {
+      "before": {
+        "accuracy": 0.8725,
+        "ece": 0.09848394806683065
+      },
+      "after": {
+        "accuracy": 0.8725,
+        "ece": 0.019703725412487962
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.9178,
+        "ece": 0.11492354972064497
+      },
+      "after": {
+        "accuracy": 0.9178,
+        "ece": 0.020203442555665953
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.709,
+        "ece": 0.08281976453214883
+      },
+      "after": {
+        "accuracy": 0.709,
+        "ece": 0.041585301235318166
+      }
+    }
+  },
+  {
+    "run": "mobilenet_v3_small_f101n",
+    "temperature": 0.6511,
+    "val": {
+      "before": {
+        "accuracy": 0.789,
+        "ece": 0.1499185229986906
+      },
+      "after": {
+        "accuracy": 0.789,
+        "ece": 0.02678479647636414
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.834,
+        "ece": 0.15384989207983019
+      },
+      "after": {
+        "accuracy": 0.834,
+        "ece": 0.02184363831281665
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.606,
+        "ece": 0.187766307733953
+      },
+      "after": {
+        "accuracy": 0.606,
+        "ece": 0.03930401939153672
+      }
+    }
+  },
+  {
+    "run": "mobilenet_v3_small_kd_f101n",
+    "temperature": 0.6132,
+    "val": {
+      "before": {
+        "accuracy": 0.7855,
+        "ece": 0.17358217746019367
+      },
+      "after": {
+        "accuracy": 0.7855,
+        "ece": 0.027782022103667283
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.8296,
+        "ece": 0.17378898883461952
+      },
+      "after": {
+        "accuracy": 0.8296,
+        "ece": 0.016514493644237502
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.618,
+        "ece": 0.22654613792896272
+      },
+      "after": {
+        "accuracy": 0.618,
+        "ece": 0.0388271417990327
+      }
+    }
+  },
+  {
+    "run": "mobilenet_v3_small_kd_f101n_a02",
+    "temperature": 0.6303,
+    "val": {
+      "before": {
+        "accuracy": 0.7875,
+        "ece": 0.16017448300868273
+      },
+      "after": {
+        "accuracy": 0.7875,
+        "ece": 0.028152477204799648
+      }
+    },
+    "test": {
+      "before": {
+        "accuracy": 0.8324,
+        "ece": 0.16177387562394147
+      },
+      "after": {
+        "accuracy": 0.8324,
+        "ece": 0.01582476485073565
+      }
+    },
+    "canteen": {
+      "before": {
+        "accuracy": 0.611,
+        "ece": 0.20396584920585153
+      },
+      "after": {
+        "accuracy": 0.611,
+        "ece": 0.03772304214537144
+      }
+    }
+  }
+]

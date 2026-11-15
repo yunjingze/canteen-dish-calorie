@@ -1,0 +1,23 @@
+{
+  "data_root": "../data",
+  "arch": "resnet18",
+  "mode": "full",
+  "color_aug": false,
+  "epochs": 12,
+  "batch_size": 64,
+  "lr_head": 0.001,
+  "lr_backbone": 0.0001,
+  "weight_decay": 0.0005,
+  "label_smoothing": 0.1,
+  "seed": 42,
+  "no_pretrained": true,
+  "workers": 4,
+  "out": "../results/runs/resnet18_scratch_noaug",
+  "tag": "resnet18_scratch_noaug",
+  "device": "cuda",
+  "train_size": 12000,
+  "val_size": 2000,
+  "trainable_params": 11186772,
+  "total_params": 11186772,
+  "torch": "2.11.0+cu128"
+}

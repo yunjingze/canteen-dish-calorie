@@ -1,0 +1,34 @@
+{
+  "run": "mobilenet_v3_small_f101n",
+  "temperature": 0.6511,
+  "val": {
+    "before": {
+      "accuracy": 0.789,
+      "ece": 0.1499185229986906
+    },
+    "after": {
+      "accuracy": 0.789,
+      "ece": 0.02678479647636414
+    }
+  },
+  "test": {
+    "before": {
+      "accuracy": 0.834,
+      "ece": 0.15384989207983019
+    },
+    "after": {
+      "accuracy": 0.834,
+      "ece": 0.02184363831281665
+    }
+  },
+  "canteen": {
+    "before": {
+      "accuracy": 0.606,
+      "ece": 0.187766307733953
+    },
+    "after": {
+      "accuracy": 0.606,
+      "ece": 0.03930401939153672
+    }
+  }
+}

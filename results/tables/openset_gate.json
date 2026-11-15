@@ -1,0 +1,26 @@
+{
+  "threshold": 0.32,
+  "views": [
+    "center",
+    "full",
+    "wide"
+  ],
+  "scores": {
+    "center": {
+      "auc": 0.822,
+      "fpr": 0.029,
+      "tpr": 0.13
+    },
+    "min_view": {
+      "auc": 0.83,
+      "fpr": 0.053,
+      "tpr": 0.267
+    }
+  },
+  "chicken": {
+    "center": 0.49019116163253784,
+    "min_view": 0.1634112000465393
+  },
+  "n_in": 900,
+  "n_ood": 300
+}

@@ -1,0 +1,23 @@
+{
+  "data_root": "C:\\Users\\13561\\Desktop\\神经网络\\项目作业\\food_project\\data",
+  "arch": "resnet18",
+  "mode": "last_stage",
+  "epochs": 12,
+  "batch_size": 64,
+  "lr_head": 0.001,
+  "lr_backbone": 0.0001,
+  "weight_decay": 0.0005,
+  "n_train": 16000,
+  "n_val": 600,
+  "n_canteen": 300,
+  "workers": 6,
+  "seed": 42,
+  "out": "results/runs/resnet18_multilabel_aug",
+  "init_ckpt": null,
+  "device": "cuda",
+  "trainable_params": 8403988,
+  "total_params": 11186772,
+  "torch": "2.11.0+cu128",
+  "val_plates": 600,
+  "canteen_plates": 300
+}

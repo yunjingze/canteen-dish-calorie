@@ -1,0 +1,5123 @@
+{
+  "single_dish": {
+    "n": 100,
+    "rows": [
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\001.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.616694986820221
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.6724985241889954
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9453078508377075
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.7633443474769592
+        },
+        "E13": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.6349265575408936
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "greek_salad",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "greek_salad",
+          "grilled_salmon"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\002.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.8585633039474487
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.8633231520652771
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9137499928474426
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.8918513059616089
+        },
+        "E13": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9153584241867065
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "dumplings",
+          "steak"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "dumplings",
+          "steak"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\003.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9799314141273499
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9798814058303833
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9898781776428223
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9712755680084229
+        },
+        "E13": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9564437866210938
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "fried_rice",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "hot_dog",
+          "fried_rice"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\004.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9176383018493652
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.8578159809112549
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.8788810968399048
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.757109522819519
+        },
+        "E13": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.8744439482688904
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "steak",
+          "sushi"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "steak",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\005.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9572657942771912
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9714552164077759
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9794394373893738
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9795790910720825
+        },
+        "E13": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.939566969871521
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "donuts",
+          "sushi"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "donuts",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\006.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9496694803237915
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9574329257011414
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9914793372154236
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.956559419631958
+        },
+        "E13": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9504082202911377
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "steak",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "steak",
+          "donuts"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\007.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.44431793689727783
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.828468918800354
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.901092529296875
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.8746328353881836
+        },
+        "E13": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.7482659220695496
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "french_fries",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "grilled_salmon",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chicken_wings\\008.jpg",
+        "label": "chicken_wings",
+        "E4": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.4178283214569092
+        },
+        "E7": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9390462636947632
+        },
+        "E8": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9129480719566345
+        },
+        "E12": {
+          "single": "chicken_wings",
+          "fused": "chicken_wings",
+          "conf": 0.9335322380065918
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "chicken_wings",
+          "conf": 0.3629288375377655
+        },
+        "all5": "chicken_wings",
+        "all5_top3": [
+          "chicken_wings",
+          "sushi",
+          "fried_rice"
+        ],
+        "E7_top3": [
+          "chicken_wings",
+          "steak",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\001.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9856481552124023
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9637438654899597
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.967285692691803
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9717575907707214
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9731157422065735
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "greek_salad",
+          "pizza"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "grilled_salmon",
+          "dumplings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\002.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8805803060531616
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9255927205085754
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.807453989982605
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9290561676025391
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.7784760594367981
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "ice_cream",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "dumplings",
+          "ice_cream"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\003.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9536653161048889
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9265395998954773
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9503300189971924
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9279283881187439
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9247952699661255
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "pancakes",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "pancakes",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\004.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.7288165092468262
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9250730872154236
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8200678825378418
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9383653402328491
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.7433204650878906
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "hot_dog",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "hot_dog",
+          "grilled_salmon"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\005.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8498682975769043
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.7797569632530212
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8650335073471069
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8391144871711731
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.7435503602027893
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "grilled_salmon",
+          "hamburger"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "grilled_salmon",
+          "hamburger"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\006.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9697896838188171
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9602152109146118
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9337237477302551
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.952366292476654
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9230272173881531
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "grilled_salmon",
+          "ice_cream"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "grilled_salmon",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\007.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8301672339439392
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9136566519737244
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8021118640899658
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9336462616920471
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.8851794004440308
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "ice_cream",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "ice_cream",
+          "grilled_salmon"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\chocolate_cake\\008.jpg",
+        "label": "chocolate_cake",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9413643479347229
+        },
+        "E7": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9141044020652771
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9440869092941284
+        },
+        "E12": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9478561282157898
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.9295631051063538
+        },
+        "all5": "chocolate_cake",
+        "all5_top3": [
+          "chocolate_cake",
+          "waffles",
+          "greek_salad"
+        ],
+        "E7_top3": [
+          "chocolate_cake",
+          "pancakes",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\donuts\\001.jpg",
+        "label": "donuts",
+        "E4": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.3294682502746582
+        },
+        "E7": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.698582649230957
+        },
+        "E8": {
+          "single": "chocolate_cake",
+          "fused": "donuts",
+          "conf": 0.28687846660614014
+        },
+        "E12": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.7517128586769104
+        },
+        "E13": {
+          "single": "chocolate_cake",
+          "fused": "chocolate_cake",
+          "conf": 0.5999976396560669
+        },
+        "all5": "donuts",
+        "all5_top3": [
+          "donuts",
+          "chocolate_cake",
+          "ice_cream"
+        ],
+        "E7_top3": [
+          "donuts",
+          "chocolate_cake",
+          "ice_cream"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\donuts\\002.jpg",
+        "label": "donuts",
+        "E4": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.3737916052341461
+        },
+        "E7": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.7293227314949036
+        },
+        "E8": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.6529695987701416
+        },
+        "E12": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.7120782732963562
+        },
+        "E13": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.257228821516037
+        },
+        "all5": "donuts",
+        "all5_top3": [
+          "donuts",
+          "pancakes",
+          "chicken_wings"
+        ],
+        "E7_top3": [
+          "donuts",
+          "chicken_wings",
+          "hamburger"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\donuts\\003.jpg",
+        "label": "donuts",
+        "E4": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9018224477767944
+        },
+        "E7": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.981777548789978
+        },
+        "E8": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9613433480262756
+        },
+        "E12": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9257502555847168
+        },
+        "E13": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9162538051605225
+        },
+        "all5": "donuts",
+        "all5_top3": [
+          "donuts",
+          "pizza",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "donuts",
+          "grilled_salmon",
+          "pizza"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\donuts\\004.jpg",
+        "label": "donuts",
+        "E4": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9825328588485718
+        },
+        "E7": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9309048652648926
+        },
+        "E8": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.950821578502655
+        },
+        "E12": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9341875314712524
+        },
+        "E13": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9639402627944946
+        },
+        "all5": "donuts",
+        "all5_top3": [
+          "donuts",
+          "caesar_salad",
+          "greek_salad"
+        ],
+        "E7_top3": [
+          "donuts",
+          "grilled_salmon",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\donuts\\005.jpg",
+        "label": "donuts",
+        "E4": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9715825915336609
+        },
+        "E7": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9597346782684326
+        },
+        "E8": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9663326144218445
+        },
+        "E12": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9466103315353394
+        },
+        "E13": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9634127020835876
+        },
+        "all5": "donuts",
+        "all5_top3": [
+          "donuts",
+          "greek_salad",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "donuts",
+          "caesar_salad",
+          "grilled_salmon"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\donuts\\006.jpg",
+        "label": "donuts",
+        "E4": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9836865067481995
+        },
+        "E7": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9767331480979919
+        },
+        "E8": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9812519550323486
+        },
+        "E12": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9094609022140503
+        },
+        "E13": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9871143102645874
+        },
+        "all5": "donuts",
+        "all5_top3": [
+          "donuts",
+          "fried_rice",
+          "pancakes"
+        ],
+        "E7_top3": [
+          "donuts",
+          "fried_rice",
+          "caesar_salad"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\donuts\\007.jpg",
+        "label": "donuts",
+        "E4": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9366207718849182
+        },
+        "E7": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9567164182662964
+        },
+        "E8": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9389405846595764
+        },
+        "E12": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.929578959941864
+        },
+        "E13": {
+          "single": "donuts",
+          "fused": "donuts",
+          "conf": 0.9901880621910095
+        },
+        "all5": "donuts",
+        "all5_top3": [
+          "donuts",
+          "chocolate_cake",
+          "hamburger"
+        ],
+        "E7_top3": [
+          "donuts",
+          "caesar_salad",
+          "chocolate_cake"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\001.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.5712007880210876
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.777905285358429
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8470526337623596
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.7596465349197388
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.6225453019142151
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "french_fries",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "french_fries",
+          "ramen"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\002.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.37180036306381226
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9218646883964539
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8478229641914368
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8522738218307495
+        },
+        "E13": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.3020327389240265
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "lasagna",
+          "waffles"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "waffles",
+          "lasagna"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\003.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9687662720680237
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9885348677635193
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9592369794845581
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9374958872795105
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9760589599609375
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "ramen",
+          "caesar_salad"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "caesar_salad",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\004.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8885221481323242
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.7905569672584534
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8390352129936218
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.6658346652984619
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9115074872970581
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "spaghetti_bolognese",
+          "steak"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "spaghetti_bolognese",
+          "lasagna"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\005.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9420107007026672
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9801734685897827
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9481253027915955
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9521317481994629
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9672996997833252
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "ramen",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "ramen",
+          "chicken_wings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\006.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.5360822081565857
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9750204682350159
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8265672922134399
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8946969509124756
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8036145567893982
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "donuts",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "ramen",
+          "lasagna"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\007.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "waffles",
+          "fused": "dumplings",
+          "conf": 0.4389512538909912
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9788672924041748
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9735352993011475
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8525726199150085
+        },
+        "E13": {
+          "single": "waffles",
+          "fused": "dumplings",
+          "conf": 0.5917205214500427
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "waffles",
+          "ramen"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "ramen",
+          "waffles"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\008.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9234291911125183
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9816694855690002
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9757362008094788
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9709663987159729
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8482503294944763
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "ramen",
+          "sushi"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "ice_cream",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\009.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.931085467338562
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9841085076332092
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9445510506629944
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9006478786468506
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.936301589012146
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "grilled_salmon",
+          "waffles"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "grilled_salmon",
+          "spaghetti_bolognese"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\dumplings\\010.jpg",
+        "label": "dumplings",
+        "E4": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8845915198326111
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.947007954120636
+        },
+        "E8": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.9374591708183289
+        },
+        "E12": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.8788903951644897
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "dumplings",
+          "conf": 0.7760633230209351
+        },
+        "all5": "dumplings",
+        "all5_top3": [
+          "dumplings",
+          "ramen",
+          "pizza"
+        ],
+        "E7_top3": [
+          "dumplings",
+          "ramen",
+          "pizza"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\french_fries\\001.jpg",
+        "label": "french_fries",
+        "E4": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.4392462372779846
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6709029078483582
+        },
+        "E8": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9180334806442261
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6548320651054382
+        },
+        "E13": {
+          "single": "waffles",
+          "fused": "french_fries",
+          "conf": 0.14952313899993896
+        },
+        "all5": "french_fries",
+        "all5_top3": [
+          "french_fries",
+          "steak",
+          "chocolate_cake"
+        ],
+        "E7_top3": [
+          "french_fries",
+          "steak",
+          "dumplings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\french_fries\\002.jpg",
+        "label": "french_fries",
+        "E4": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.42358487844467163
+        },
+        "E7": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.33502864837646484
+        },
+        "E8": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.4521027207374573
+        },
+        "E12": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.5222285985946655
+        },
+        "E13": {
+          "single": "french_fries",
+          "fused": "ice_cream",
+          "conf": 0.47319307923316956
+        },
+        "all5": "ice_cream",
+        "all5_top3": [
+          "ice_cream",
+          "french_fries",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "ice_cream",
+          "pancakes",
+          "dumplings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\french_fries\\003.jpg",
+        "label": "french_fries",
+        "E4": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6637499332427979
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.944391667842865
+        },
+        "E8": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.7061740159988403
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9068522453308105
+        },
+        "E13": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6589450240135193
+        },
+        "all5": "french_fries",
+        "all5_top3": [
+          "french_fries",
+          "ice_cream",
+          "caesar_salad"
+        ],
+        "E7_top3": [
+          "french_fries",
+          "ice_cream",
+          "chicken_wings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\french_fries\\004.jpg",
+        "label": "french_fries",
+        "E4": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9591944217681885
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9875069856643677
+        },
+        "E8": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9940258264541626
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9783640503883362
+        },
+        "E13": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9661065936088562
+        },
+        "all5": "french_fries",
+        "all5_top3": [
+          "french_fries",
+          "steak",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "french_fries",
+          "steak",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\french_fries\\005.jpg",
+        "label": "french_fries",
+        "E4": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.8407109379768372
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9738732576370239
+        },
+        "E8": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9857659339904785
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9057795405387878
+        },
+        "E13": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.8159980177879333
+        },
+        "all5": "french_fries",
+        "all5_top3": [
+          "french_fries",
+          "steak",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "french_fries",
+          "steak",
+          "chocolate_cake"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\french_fries\\006.jpg",
+        "label": "french_fries",
+        "E4": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.5686158537864685
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9508804082870483
+        },
+        "E8": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9851598739624023
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.9663613438606262
+        },
+        "E13": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6662204265594482
+        },
+        "all5": "french_fries",
+        "all5_top3": [
+          "french_fries",
+          "hot_dog",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "french_fries",
+          "steak",
+          "dumplings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\french_fries\\007.jpg",
+        "label": "french_fries",
+        "E4": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.5067394375801086
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.8182805776596069
+        },
+        "E8": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.47794005274772644
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.3545161485671997
+        },
+        "E13": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.516294538974762
+        },
+        "all5": "french_fries",
+        "all5_top3": [
+          "french_fries",
+          "donuts",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "french_fries",
+          "donuts",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\fried_rice\\001.jpg",
+        "label": "fried_rice",
+        "E4": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9169402718544006
+        },
+        "E7": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9691898822784424
+        },
+        "E8": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.926723062992096
+        },
+        "E12": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.917600154876709
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9166689515113831
+        },
+        "all5": "fried_rice",
+        "all5_top3": [
+          "fried_rice",
+          "ramen",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "fried_rice",
+          "hamburger",
+          "spaghetti_bolognese"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\fried_rice\\002.jpg",
+        "label": "fried_rice",
+        "E4": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8429985642433167
+        },
+        "E7": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8997893333435059
+        },
+        "E8": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8476876020431519
+        },
+        "E12": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9149866700172424
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8950761556625366
+        },
+        "all5": "fried_rice",
+        "all5_top3": [
+          "fried_rice",
+          "ramen",
+          "caesar_salad"
+        ],
+        "E7_top3": [
+          "fried_rice",
+          "ramen",
+          "pancakes"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\fried_rice\\003.jpg",
+        "label": "fried_rice",
+        "E4": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.7681695222854614
+        },
+        "E7": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.7179086804389954
+        },
+        "E8": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.7405397295951843
+        },
+        "E12": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.7566148042678833
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8417044281959534
+        },
+        "all5": "fried_rice",
+        "all5_top3": [
+          "fried_rice",
+          "ramen",
+          "sushi"
+        ],
+        "E7_top3": [
+          "fried_rice",
+          "ramen",
+          "dumplings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\fried_rice\\004.jpg",
+        "label": "fried_rice",
+        "E4": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9740092754364014
+        },
+        "E7": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9726336002349854
+        },
+        "E8": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9729401469230652
+        },
+        "E12": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9287317395210266
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9852994680404663
+        },
+        "all5": "fried_rice",
+        "all5_top3": [
+          "fried_rice",
+          "ice_cream",
+          "ramen"
+        ],
+        "E7_top3": [
+          "fried_rice",
+          "ice_cream",
+          "waffles"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\fried_rice\\005.jpg",
+        "label": "fried_rice",
+        "E4": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9608165621757507
+        },
+        "E7": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9001404643058777
+        },
+        "E8": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8781243562698364
+        },
+        "E12": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8619129061698914
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9423169493675232
+        },
+        "all5": "fried_rice",
+        "all5_top3": [
+          "fried_rice",
+          "greek_salad",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "fried_rice",
+          "greek_salad",
+          "chocolate_cake"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\fried_rice\\006.jpg",
+        "label": "fried_rice",
+        "E4": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9676617980003357
+        },
+        "E7": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9140641689300537
+        },
+        "E8": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8649199604988098
+        },
+        "E12": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8389692902565002
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.881860613822937
+        },
+        "all5": "fried_rice",
+        "all5_top3": [
+          "fried_rice",
+          "pizza",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "fried_rice",
+          "pizza",
+          "hamburger"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\fried_rice\\007.jpg",
+        "label": "fried_rice",
+        "E4": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9067326188087463
+        },
+        "E7": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8945567011833191
+        },
+        "E8": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8848952651023865
+        },
+        "E12": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.9478545188903809
+        },
+        "E13": {
+          "single": "fried_rice",
+          "fused": "fried_rice",
+          "conf": 0.8909685611724854
+        },
+        "all5": "fried_rice",
+        "all5_top3": [
+          "fried_rice",
+          "spaghetti_bolognese",
+          "chocolate_cake"
+        ],
+        "E7_top3": [
+          "fried_rice",
+          "spaghetti_bolognese",
+          "hamburger"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\greek_salad\\001.jpg",
+        "label": "greek_salad",
+        "E4": {
+          "single": "caesar_salad",
+          "fused": "greek_salad",
+          "conf": 0.4081818759441376
+        },
+        "E7": {
+          "single": "greek_salad",
+          "fused": "greek_salad",
+          "conf": 0.7471570372581482
+        },
+        "E8": {
+          "single": "greek_salad",
+          "fused": "greek_salad",
+          "conf": 0.6053519248962402
+        },
+        "E12": {
+          "single": "greek_salad",
+          "fused": "greek_salad",
+          "conf": 0.6926923394203186
+        },
+        "E13": {
+          "single": "greek_salad",
+          "fused": "greek_salad",
+          "conf": 0.5349976420402527
+        },
+        "all5": "greek_salad",
+        "all5_top3": [
+          "greek_salad",
+          "caesar_salad",
+          "ice_cream"
+        ],
+        "E7_top3": [
+          "greek_salad",
+          "caesar_salad",
+          "ice_cream"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\greek_salad\\002.jpg",
+        "label": "greek_salad",
+        "E4": {
+          "single": "caesar_salad",
+          "fused": "caesar_salad",
+          "conf": 0.4620400071144104
+        },
+        "E7": {
+          "single": "caesar_salad",
+          "fused": "greek_salad",
+          "conf": 0.5238627791404724
+        },
+        "E8": {
+          "single": "caesar_salad",
+          "fused": "caesar_salad",
+          "conf": 0.43553775548934937
+        },
+        "E12": {
+          "single": "caesar_salad",
+          "fused": "greek_salad",
+          "conf": 0.46483197808265686
+        },
+        "E13": {
+          "single": "sushi",
+          "fused": "caesar_salad",
+          "conf": 0.23889590799808502
+        },
+        "all5": "caesar_salad",
+        "all5_top3": [
+          "caesar_salad",
+          "greek_salad",
+          "sushi"
+        ],
+        "E7_top3": [
+          "greek_salad",
+          "caesar_salad",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\001.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9969708919525146
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9413313865661621
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9412044286727905
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.8779298067092896
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9945467710494995
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "french_fries",
+          "chicken_wings"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "chicken_wings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\002.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9624062180519104
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.8673320412635803
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.8199850916862488
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.7623147964477539
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9790720343589783
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "french_fries",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\003.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9931055903434753
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9590204954147339
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9615992307662964
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.946575403213501
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9892058372497559
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "ramen",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "pizza"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\004.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9218340516090393
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.8563323020935059
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9120364785194397
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.8663244843482971
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9431675672531128
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "french_fries",
+          "waffles"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "waffles"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\005.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.8670262098312378
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.656120777130127
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.7953765988349915
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.5470589995384216
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.7244638204574585
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "hot_dog",
+          "french_fries"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\006.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.3473379611968994
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.8348383903503418
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6889058947563171
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.7456767559051514
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.3333051800727844
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "french_fries",
+          "donuts"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\007.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9049050211906433
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "hamburger",
+          "conf": 0.4252665340900421
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.4416223168373108
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "hamburger",
+          "conf": 0.47034016251564026
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.9738239645957947
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "french_fries",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\008.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6916160583496094
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.5981207489967346
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6042301058769226
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6677641868591309
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.5850215554237366
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "sushi",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\009.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.49265921115875244
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "ice_cream",
+          "conf": 0.2983977496623993
+        },
+        "E8": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.23645107448101044
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "ice_cream",
+          "conf": 0.3110088109970093
+        },
+        "E13": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.4835810661315918
+        },
+        "all5": "ice_cream",
+        "all5_top3": [
+          "ice_cream",
+          "french_fries",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "ice_cream",
+          "french_fries",
+          "dumplings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\010.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.350938618183136
+        },
+        "E7": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6982783079147339
+        },
+        "E8": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6225595474243164
+        },
+        "E12": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.6934083104133606
+        },
+        "E13": {
+          "single": "french_fries",
+          "fused": "french_fries",
+          "conf": 0.3365485370159149
+        },
+        "all5": "french_fries",
+        "all5_top3": [
+          "french_fries",
+          "hamburger",
+          "sushi"
+        ],
+        "E7_top3": [
+          "french_fries",
+          "hamburger",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\011.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.491593599319458
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.7188451290130615
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6100901961326599
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6725026369094849
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6553745865821838
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "french_fries",
+          "ice_cream"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "ice_cream"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hamburger\\012.jpg",
+        "label": "hamburger",
+        "E4": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.7257240414619446
+        },
+        "E7": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.7157055735588074
+        },
+        "E8": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6340901255607605
+        },
+        "E12": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.6583552360534668
+        },
+        "E13": {
+          "single": "hamburger",
+          "fused": "hamburger",
+          "conf": 0.5980215668678284
+        },
+        "all5": "hamburger",
+        "all5_top3": [
+          "hamburger",
+          "french_fries",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "hamburger",
+          "french_fries",
+          "steak"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hot_dog\\001.jpg",
+        "label": "hot_dog",
+        "E4": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9992571473121643
+        },
+        "E7": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9889417290687561
+        },
+        "E8": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9887343645095825
+        },
+        "E12": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9755497574806213
+        },
+        "E13": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.99936443567276
+        },
+        "all5": "hot_dog",
+        "all5_top3": [
+          "hot_dog",
+          "caesar_salad",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "hot_dog",
+          "spaghetti_bolognese",
+          "donuts"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hot_dog\\002.jpg",
+        "label": "hot_dog",
+        "E4": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9447329640388489
+        },
+        "E7": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9599835276603699
+        },
+        "E8": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9778909683227539
+        },
+        "E12": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9672296643257141
+        },
+        "E13": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.959595263004303
+        },
+        "all5": "hot_dog",
+        "all5_top3": [
+          "hot_dog",
+          "donuts",
+          "pancakes"
+        ],
+        "E7_top3": [
+          "hot_dog",
+          "donuts",
+          "pancakes"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hot_dog\\003.jpg",
+        "label": "hot_dog",
+        "E4": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.964486837387085
+        },
+        "E7": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9061012268066406
+        },
+        "E8": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.8910045027732849
+        },
+        "E12": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9126998782157898
+        },
+        "E13": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9038554430007935
+        },
+        "all5": "hot_dog",
+        "all5_top3": [
+          "hot_dog",
+          "waffles",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "hot_dog",
+          "waffles",
+          "donuts"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\hot_dog\\004.jpg",
+        "label": "hot_dog",
+        "E4": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9882292747497559
+        },
+        "E7": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9429275393486023
+        },
+        "E8": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9093763828277588
+        },
+        "E12": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9109856486320496
+        },
+        "E13": {
+          "single": "hot_dog",
+          "fused": "hot_dog",
+          "conf": 0.9880486130714417
+        },
+        "all5": "hot_dog",
+        "all5_top3": [
+          "hot_dog",
+          "grilled_salmon",
+          "sushi"
+        ],
+        "E7_top3": [
+          "hot_dog",
+          "sushi",
+          "pizza"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ice_cream\\001.jpg",
+        "label": "ice_cream",
+        "E4": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.8699260354042053
+        },
+        "E7": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.9707238078117371
+        },
+        "E8": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.9197349548339844
+        },
+        "E12": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.9759993553161621
+        },
+        "E13": {
+          "single": "ice_cream",
+          "fused": "ice_cream",
+          "conf": 0.7230549454689026
+        },
+        "all5": "ice_cream",
+        "all5_top3": [
+          "ice_cream",
+          "donuts",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "ice_cream",
+          "grilled_salmon",
+          "waffles"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\lasagna\\001.jpg",
+        "label": "lasagna",
+        "E4": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8543926477432251
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9331536293029785
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9442736506462097
+        },
+        "E12": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.7640056610107422
+        },
+        "E13": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9321995377540588
+        },
+        "all5": "lasagna",
+        "all5_top3": [
+          "lasagna",
+          "spaghetti_bolognese",
+          "waffles"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "spaghetti_bolognese",
+          "waffles"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\lasagna\\002.jpg",
+        "label": "lasagna",
+        "E4": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8982119560241699
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8996612429618835
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9200231432914734
+        },
+        "E12": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8439326882362366
+        },
+        "E13": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.964869499206543
+        },
+        "all5": "lasagna",
+        "all5_top3": [
+          "lasagna",
+          "spaghetti_bolognese",
+          "ice_cream"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "donuts",
+          "spaghetti_bolognese"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\lasagna\\003.jpg",
+        "label": "lasagna",
+        "E4": {
+          "single": "grilled_salmon",
+          "fused": "grilled_salmon",
+          "conf": 0.6036533117294312
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.43852174282073975
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "grilled_salmon",
+          "conf": 0.3447359800338745
+        },
+        "E12": {
+          "single": "lasagna",
+          "fused": "grilled_salmon",
+          "conf": 0.4016464948654175
+        },
+        "E13": {
+          "single": "grilled_salmon",
+          "fused": "grilled_salmon",
+          "conf": 0.7397749423980713
+        },
+        "all5": "grilled_salmon",
+        "all5_top3": [
+          "grilled_salmon",
+          "lasagna",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "grilled_salmon",
+          "waffles"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\lasagna\\004.jpg",
+        "label": "lasagna",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.664359986782074
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9620013236999512
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.810704231262207
+        },
+        "E12": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.937289834022522
+        },
+        "E13": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.45059749484062195
+        },
+        "all5": "lasagna",
+        "all5_top3": [
+          "lasagna",
+          "spaghetti_bolognese",
+          "steak"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "spaghetti_bolognese",
+          "steak"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\lasagna\\005.jpg",
+        "label": "lasagna",
+        "E4": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.2896908223628998
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8203296065330505
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.7619743943214417
+        },
+        "E12": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8529579043388367
+        },
+        "E13": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.6689640283584595
+        },
+        "all5": "lasagna",
+        "all5_top3": [
+          "lasagna",
+          "hot_dog",
+          "hamburger"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "hamburger",
+          "steak"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\lasagna\\006.jpg",
+        "label": "lasagna",
+        "E4": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9504846930503845
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9546027779579163
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.920502245426178
+        },
+        "E12": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8851898908615112
+        },
+        "E13": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9915204644203186
+        },
+        "all5": "lasagna",
+        "all5_top3": [
+          "lasagna",
+          "pizza",
+          "hamburger"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "pizza",
+          "french_fries"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pancakes\\001.jpg",
+        "label": "pancakes",
+        "E4": {
+          "single": "pancakes",
+          "fused": "pancakes",
+          "conf": 0.5424168705940247
+        },
+        "E7": {
+          "single": "pancakes",
+          "fused": "pancakes",
+          "conf": 0.7194158434867859
+        },
+        "E8": {
+          "single": "pancakes",
+          "fused": "pancakes",
+          "conf": 0.6517627835273743
+        },
+        "E12": {
+          "single": "pancakes",
+          "fused": "pancakes",
+          "conf": 0.7457827925682068
+        },
+        "E13": {
+          "single": "pancakes",
+          "fused": "pancakes",
+          "conf": 0.5602921843528748
+        },
+        "all5": "pancakes",
+        "all5_top3": [
+          "pancakes",
+          "waffles",
+          "hamburger"
+        ],
+        "E7_top3": [
+          "pancakes",
+          "waffles",
+          "hamburger"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\001.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.6722513437271118
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.9064799547195435
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.8284882307052612
+        },
+        "E12": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.6861509084701538
+        },
+        "E13": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.308654248714447
+        },
+        "all5": "lasagna",
+        "all5_top3": [
+          "lasagna",
+          "pizza",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "grilled_salmon",
+          "pizza"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\002.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.35322877764701843
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.3845522403717041
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.3416745364665985
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.35157710313796997
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.4423847198486328
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "lasagna",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "pizza",
+          "lasagna",
+          "grilled_salmon"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\003.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.29344111680984497
+        },
+        "E7": {
+          "single": "waffles",
+          "fused": "pizza",
+          "conf": 0.24571523070335388
+        },
+        "E8": {
+          "single": "ice_cream",
+          "fused": "hot_dog",
+          "conf": 0.272265762090683
+        },
+        "E12": {
+          "single": "ice_cream",
+          "fused": "pizza",
+          "conf": 0.2673119306564331
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.25241774320602417
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "hot_dog",
+          "waffles"
+        ],
+        "E7_top3": [
+          "pizza",
+          "hot_dog",
+          "waffles"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\004.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "grilled_salmon",
+          "fused": "pizza",
+          "conf": 0.5351016521453857
+        },
+        "E7": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.4788561761379242
+        },
+        "E8": {
+          "single": "lasagna",
+          "fused": "lasagna",
+          "conf": 0.3607498109340668
+        },
+        "E12": {
+          "single": "grilled_salmon",
+          "fused": "pizza",
+          "conf": 0.3626151978969574
+        },
+        "E13": {
+          "single": "grilled_salmon",
+          "fused": "pizza",
+          "conf": 0.45615071058273315
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "lasagna",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "lasagna",
+          "pizza",
+          "grilled_salmon"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\005.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "waffles",
+          "fused": "waffles",
+          "conf": 0.2585087716579437
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.5070104002952576
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.5166127681732178
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.5534819960594177
+        },
+        "E13": {
+          "single": "waffles",
+          "fused": "waffles",
+          "conf": 0.21075648069381714
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "pancakes",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "pizza",
+          "pancakes",
+          "steak"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\006.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.7323602437973022
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.936287522315979
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9334614276885986
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9327318668365479
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.802198588848114
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "lasagna",
+          "chocolate_cake"
+        ],
+        "E7_top3": [
+          "pizza",
+          "chocolate_cake",
+          "lasagna"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\007.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.6639379262924194
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9531608819961548
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9371972680091858
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.949001669883728
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.7128686904907227
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "sushi",
+          "chocolate_cake"
+        ],
+        "E7_top3": [
+          "pizza",
+          "sushi",
+          "fried_rice"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\008.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.48923298716545105
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.6262190937995911
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.5348752737045288
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.7584651112556458
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pancakes",
+          "conf": 0.4603768289089203
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "pancakes",
+          "donuts"
+        ],
+        "E7_top3": [
+          "pizza",
+          "pancakes",
+          "dumplings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\009.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.7144601941108704
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.8907955884933472
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.832319438457489
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9287983775138855
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.7146117091178894
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "pancakes",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "pizza",
+          "pancakes",
+          "chicken_wings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\010.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "ramen",
+          "fused": "pizza",
+          "conf": 0.38031691312789917
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.5370652079582214
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.5425364375114441
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.4464554786682129
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.34979644417762756
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "ramen",
+          "caesar_salad"
+        ],
+        "E7_top3": [
+          "pizza",
+          "ramen",
+          "caesar_salad"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\pizza\\011.jpg",
+        "label": "pizza",
+        "E4": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9647836685180664
+        },
+        "E7": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9533827304840088
+        },
+        "E8": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9751378893852234
+        },
+        "E12": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9208354353904724
+        },
+        "E13": {
+          "single": "pizza",
+          "fused": "pizza",
+          "conf": 0.9229419231414795
+        },
+        "all5": "pizza",
+        "all5_top3": [
+          "pizza",
+          "lasagna",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "pizza",
+          "lasagna",
+          "fried_rice"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\001.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "dumplings",
+          "fused": "ramen",
+          "conf": 0.44553983211517334
+        },
+        "E7": {
+          "single": "dumplings",
+          "fused": "ramen",
+          "conf": 0.5043301582336426
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8313413858413696
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.5200000405311584
+        },
+        "E13": {
+          "single": "dumplings",
+          "fused": "ramen",
+          "conf": 0.250243216753006
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "dumplings",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "ramen",
+          "dumplings",
+          "spaghetti_bolognese"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\002.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.716866135597229
+        },
+        "E7": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9438326358795166
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9474718570709229
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.955504834651947
+        },
+        "E13": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8861279487609863
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "spaghetti_bolognese",
+          "greek_salad"
+        ],
+        "E7_top3": [
+          "ramen",
+          "fried_rice",
+          "spaghetti_bolognese"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\003.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "caesar_salad",
+          "fused": "caesar_salad",
+          "conf": 0.36030054092407227
+        },
+        "E7": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.7367175221443176
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.7341785430908203
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.7447211742401123
+        },
+        "E13": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.21546758711338043
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "caesar_salad",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "ramen",
+          "grilled_salmon",
+          "fried_rice"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\004.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.6164553761482239
+        },
+        "E7": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8505377769470215
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8933594822883606
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8694530129432678
+        },
+        "E13": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.41980916261672974
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "fried_rice",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "ramen",
+          "fried_rice",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\005.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9412383437156677
+        },
+        "E7": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9290878772735596
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8612822890281677
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9320712685585022
+        },
+        "E13": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8734349608421326
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "fried_rice",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "ramen",
+          "fried_rice",
+          "spaghetti_bolognese"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\006.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9005723595619202
+        },
+        "E7": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9621126055717468
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9651281237602234
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.9500231146812439
+        },
+        "E13": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8563064932823181
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "caesar_salad",
+          "spaghetti_bolognese"
+        ],
+        "E7_top3": [
+          "ramen",
+          "donuts",
+          "caesar_salad"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\007.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.6629633903503418
+        },
+        "E7": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8620969653129578
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8735396862030029
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8430814146995544
+        },
+        "E13": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.6790205836296082
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "spaghetti_bolognese",
+          "caesar_salad"
+        ],
+        "E7_top3": [
+          "ramen",
+          "spaghetti_bolognese",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\ramen\\008.jpg",
+        "label": "ramen",
+        "E4": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.5959169864654541
+        },
+        "E7": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8160597681999207
+        },
+        "E8": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8401934504508972
+        },
+        "E12": {
+          "single": "ramen",
+          "fused": "ramen",
+          "conf": 0.8215950727462769
+        },
+        "E13": {
+          "single": "caesar_salad",
+          "fused": "ramen",
+          "conf": 0.40843501687049866
+        },
+        "all5": "ramen",
+        "all5_top3": [
+          "ramen",
+          "caesar_salad",
+          "dumplings"
+        ],
+        "E7_top3": [
+          "ramen",
+          "dumplings",
+          "fried_rice"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\spaghetti_bolognese\\001.jpg",
+        "label": "spaghetti_bolognese",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9807301759719849
+        },
+        "E7": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9649111032485962
+        },
+        "E8": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9685102105140686
+        },
+        "E12": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9373372793197632
+        },
+        "E13": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9603455662727356
+        },
+        "all5": "spaghetti_bolognese",
+        "all5_top3": [
+          "spaghetti_bolognese",
+          "chicken_wings",
+          "ice_cream"
+        ],
+        "E7_top3": [
+          "spaghetti_bolognese",
+          "caesar_salad",
+          "chicken_wings"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\spaghetti_bolognese\\002.jpg",
+        "label": "spaghetti_bolognese",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9717121124267578
+        },
+        "E7": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.980881929397583
+        },
+        "E8": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9740109443664551
+        },
+        "E12": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9724876880645752
+        },
+        "E13": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9551181793212891
+        },
+        "all5": "spaghetti_bolognese",
+        "all5_top3": [
+          "spaghetti_bolognese",
+          "pizza",
+          "hot_dog"
+        ],
+        "E7_top3": [
+          "spaghetti_bolognese",
+          "pizza",
+          "hot_dog"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\spaghetti_bolognese\\003.jpg",
+        "label": "spaghetti_bolognese",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.7995560765266418
+        },
+        "E7": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.7492850422859192
+        },
+        "E8": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.6473370790481567
+        },
+        "E12": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.7016136646270752
+        },
+        "E13": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.8508055210113525
+        },
+        "all5": "spaghetti_bolognese",
+        "all5_top3": [
+          "spaghetti_bolognese",
+          "french_fries",
+          "grilled_salmon"
+        ],
+        "E7_top3": [
+          "spaghetti_bolognese",
+          "french_fries",
+          "steak"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\spaghetti_bolognese\\004.jpg",
+        "label": "spaghetti_bolognese",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9755795001983643
+        },
+        "E7": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9318117499351501
+        },
+        "E8": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9518529772758484
+        },
+        "E12": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9052363634109497
+        },
+        "E13": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.96401047706604
+        },
+        "all5": "spaghetti_bolognese",
+        "all5_top3": [
+          "spaghetti_bolognese",
+          "dumplings",
+          "ramen"
+        ],
+        "E7_top3": [
+          "spaghetti_bolognese",
+          "dumplings",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\spaghetti_bolognese\\005.jpg",
+        "label": "spaghetti_bolognese",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.7333618402481079
+        },
+        "E7": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9110825657844543
+        },
+        "E8": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.8790006041526794
+        },
+        "E12": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9120068550109863
+        },
+        "E13": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.6820954084396362
+        },
+        "all5": "spaghetti_bolognese",
+        "all5_top3": [
+          "spaghetti_bolognese",
+          "steak",
+          "chocolate_cake"
+        ],
+        "E7_top3": [
+          "spaghetti_bolognese",
+          "steak",
+          "chocolate_cake"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\spaghetti_bolognese\\006.jpg",
+        "label": "spaghetti_bolognese",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9739780426025391
+        },
+        "E7": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9879865050315857
+        },
+        "E8": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9885130524635315
+        },
+        "E12": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9713030457496643
+        },
+        "E13": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9729821085929871
+        },
+        "all5": "spaghetti_bolognese",
+        "all5_top3": [
+          "spaghetti_bolognese",
+          "sushi",
+          "greek_salad"
+        ],
+        "E7_top3": [
+          "spaghetti_bolognese",
+          "greek_salad",
+          "sushi"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\spaghetti_bolognese\\007.jpg",
+        "label": "spaghetti_bolognese",
+        "E4": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.938429057598114
+        },
+        "E7": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.973361074924469
+        },
+        "E8": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9819251298904419
+        },
+        "E12": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9584088921546936
+        },
+        "E13": {
+          "single": "spaghetti_bolognese",
+          "fused": "spaghetti_bolognese",
+          "conf": 0.9285231828689575
+        },
+        "all5": "spaghetti_bolognese",
+        "all5_top3": [
+          "spaghetti_bolognese",
+          "hot_dog",
+          "french_fries"
+        ],
+        "E7_top3": [
+          "spaghetti_bolognese",
+          "hot_dog",
+          "ramen"
+        ]
+      },
+      {
+        "path": "data\\splits\\canteen_real\\waffles\\001.jpg",
+        "label": "waffles",
+        "E4": {
+          "single": "pancakes",
+          "fused": "waffles",
+          "conf": 0.34729647636413574
+        },
+        "E7": {
+          "single": "waffles",
+          "fused": "waffles",
+          "conf": 0.4301357567310333
+        },
+        "E8": {
+          "single": "waffles",
+          "fused": "waffles",
+          "conf": 0.5968738198280334
+        },
+        "E12": {
+          "single": "pancakes",
+          "fused": "waffles",
+          "conf": 0.43525537848472595
+        },
+        "E13": {
+          "single": "pancakes",
+          "fused": "waffles",
+          "conf": 0.31715986132621765
+        },
+        "all5": "waffles",
+        "all5_top3": [
+          "waffles",
+          "pancakes",
+          "pizza"
+        ],
+        "E7_top3": [
+          "waffles",
+          "pancakes",
+          "lasagna"
+        ]
+      }
+    ],
+    "accuracy": {
+      "E4": {
+        "single": 0.85,
+        "fused": 0.91
+      },
+      "E7": {
+        "single": 0.91,
+        "fused": 0.95
+      },
+      "E8": {
+        "single": 0.92,
+        "fused": 0.92
+      },
+      "E12": {
+        "single": 0.91,
+        "fused": 0.95
+      },
+      "E13": {
+        "single": 0.85,
+        "fused": 0.9
+      },
+      "all5": {
+        "fused": 0.94
+      }
+    }
+  },
+  "negatives": [
+    {
+      "file": "001.jpg",
+      "robust": 0.45559290051460266,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "002.jpg",
+      "robust": 0.8977119326591492,
+      "in_scope": true,
+      "top1": "hot_dog",
+      "packaging": false
+    },
+    {
+      "file": "003.jpg",
+      "robust": 0.6702138781547546,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "004.jpg",
+      "robust": 0.5436722040176392,
+      "in_scope": true,
+      "top1": "hot_dog",
+      "packaging": false
+    },
+    {
+      "file": "005.jpg",
+      "robust": 0.6527376174926758,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "006.jpg",
+      "robust": 0.5289694666862488,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "007.jpg",
+      "robust": 0.4912884533405304,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "008.jpg",
+      "robust": 0.43455883860588074,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "009.jpg",
+      "robust": 0.8996304869651794,
+      "in_scope": true,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "010.jpg",
+      "robust": 0.39231669902801514,
+      "in_scope": true,
+      "top1": "french_fries",
+      "packaging": false
+    },
+    {
+      "file": "011.jpg",
+      "robust": 0.3931262195110321,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "012.jpg",
+      "robust": 0.2648507356643677,
+      "in_scope": false,
+      "top1": "french_fries",
+      "packaging": false
+    },
+    {
+      "file": "013.jpg",
+      "robust": 0.46475890278816223,
+      "in_scope": true,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "014.jpg",
+      "robust": 0.24256962537765503,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "015.jpg",
+      "robust": 0.37707656621932983,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": true
+    },
+    {
+      "file": "016.jpg",
+      "robust": 0.2979074716567993,
+      "in_scope": false,
+      "top1": "pancakes",
+      "packaging": false
+    },
+    {
+      "file": "017.jpg",
+      "robust": 0.26765182614326477,
+      "in_scope": false,
+      "top1": "french_fries",
+      "packaging": false
+    },
+    {
+      "file": "018.jpg",
+      "robust": 0.2701898515224457,
+      "in_scope": false,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "019.jpg",
+      "robust": 0.49339017271995544,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "020.jpg",
+      "robust": 0.27381065487861633,
+      "in_scope": false,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "021.jpg",
+      "robust": 0.6910041570663452,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "022.jpg",
+      "robust": 0.34830614924430847,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "023.jpg",
+      "robust": 0.27676546573638916,
+      "in_scope": false,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "024.jpg",
+      "robust": 0.31577980518341064,
+      "in_scope": false,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "025.jpg",
+      "robust": 0.28576773405075073,
+      "in_scope": false,
+      "top1": "waffles",
+      "packaging": false
+    },
+    {
+      "file": "026.jpg",
+      "robust": 0.31382736563682556,
+      "in_scope": false,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "027.jpg",
+      "robust": 0.4066829979419708,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "028.jpg",
+      "robust": 0.7337461113929749,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "029.jpg",
+      "robust": 0.24950669705867767,
+      "in_scope": false,
+      "top1": "french_fries",
+      "packaging": false
+    },
+    {
+      "file": "030.jpg",
+      "robust": 0.3519217371940613,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "031.jpg",
+      "robust": 0.339784175157547,
+      "in_scope": true,
+      "top1": "french_fries",
+      "packaging": false
+    },
+    {
+      "file": "032.jpg",
+      "robust": 0.2693571448326111,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "033.jpg",
+      "robust": 0.4050392210483551,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "034.jpg",
+      "robust": 0.25792384147644043,
+      "in_scope": false,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "035.jpg",
+      "robust": 0.27861708402633667,
+      "in_scope": false,
+      "top1": "chocolate_cake",
+      "packaging": false
+    },
+    {
+      "file": "036.jpg",
+      "robust": 0.6133506298065186,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "037.jpg",
+      "robust": 0.32159900665283203,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "038.jpg",
+      "robust": 0.3455181419849396,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "039.jpg",
+      "robust": 0.2625812292098999,
+      "in_scope": false,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "040.jpg",
+      "robust": 0.4163830876350403,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "041.jpg",
+      "robust": 0.6819014549255371,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "042.jpg",
+      "robust": 0.17231020331382751,
+      "in_scope": false,
+      "top1": "chocolate_cake",
+      "packaging": false
+    },
+    {
+      "file": "043.jpg",
+      "robust": 0.4106264114379883,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "044.jpg",
+      "robust": 0.1744030863046646,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "045.jpg",
+      "robust": 0.24817244708538055,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "046.jpg",
+      "robust": 0.6620976328849792,
+      "in_scope": true,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "047.jpg",
+      "robust": 0.24796803295612335,
+      "in_scope": false,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "048.jpg",
+      "robust": 0.32667380571365356,
+      "in_scope": true,
+      "top1": "fried_rice",
+      "packaging": false
+    },
+    {
+      "file": "049.jpg",
+      "robust": 0.25122007727622986,
+      "in_scope": false,
+      "top1": "french_fries",
+      "packaging": false
+    },
+    {
+      "file": "050.jpg",
+      "robust": 0.47111907601356506,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "051.jpg",
+      "robust": 0.3636903166770935,
+      "in_scope": true,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "052.jpg",
+      "robust": 0.31135863065719604,
+      "in_scope": false,
+      "top1": "dumplings",
+      "packaging": false
+    },
+    {
+      "file": "053.jpg",
+      "robust": 0.2812788486480713,
+      "in_scope": false,
+      "top1": "hot_dog",
+      "packaging": false
+    },
+    {
+      "file": "054.jpg",
+      "robust": 0.4911939799785614,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "055.jpg",
+      "robust": 0.3088390529155731,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "056.jpg",
+      "robust": 0.22438029944896698,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "057.jpg",
+      "robust": 0.2501952350139618,
+      "in_scope": false,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "058.jpg",
+      "robust": 0.27900636196136475,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "059.jpg",
+      "robust": 0.3837701976299286,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "060.jpg",
+      "robust": 0.4225528836250305,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "061.jpg",
+      "robust": 0.3379424214363098,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "062.jpg",
+      "robust": 0.2992420792579651,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "063.jpg",
+      "robust": 0.33214566111564636,
+      "in_scope": true,
+      "top1": "hot_dog",
+      "packaging": false
+    },
+    {
+      "file": "064.jpg",
+      "robust": 0.31681862473487854,
+      "in_scope": false,
+      "top1": "dumplings",
+      "packaging": false
+    },
+    {
+      "file": "065.jpg",
+      "robust": 0.2511928081512451,
+      "in_scope": false,
+      "top1": "pancakes",
+      "packaging": false
+    },
+    {
+      "file": "066.jpg",
+      "robust": 0.23076337575912476,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "067.jpg",
+      "robust": 0.35290971398353577,
+      "in_scope": true,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "068.jpg",
+      "robust": 0.6859378814697266,
+      "in_scope": true,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "069.jpg",
+      "robust": 0.2999066710472107,
+      "in_scope": false,
+      "top1": "pancakes",
+      "packaging": false
+    },
+    {
+      "file": "070.jpg",
+      "robust": 0.2184084951877594,
+      "in_scope": false,
+      "top1": "pancakes",
+      "packaging": false
+    },
+    {
+      "file": "071.jpg",
+      "robust": 0.29630959033966064,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "072.jpg",
+      "robust": 0.2797570824623108,
+      "in_scope": false,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "073.jpg",
+      "robust": 0.22200025618076324,
+      "in_scope": false,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "074.jpg",
+      "robust": 0.36621859669685364,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "075.jpg",
+      "robust": 0.259573757648468,
+      "in_scope": false,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "076.jpg",
+      "robust": 0.17465682327747345,
+      "in_scope": false,
+      "top1": "pizza",
+      "packaging": false
+    },
+    {
+      "file": "077.jpg",
+      "robust": 0.6117497682571411,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "078.jpg",
+      "robust": 0.5149930119514465,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "079.jpg",
+      "robust": 0.5240774154663086,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "080.jpg",
+      "robust": 0.3117048144340515,
+      "in_scope": false,
+      "top1": "fried_rice",
+      "packaging": false
+    },
+    {
+      "file": "081.jpg",
+      "robust": 0.22640520334243774,
+      "in_scope": false,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "082.jpg",
+      "robust": 0.33163926005363464,
+      "in_scope": true,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "083.jpg",
+      "robust": 0.30050328373908997,
+      "in_scope": false,
+      "top1": "dumplings",
+      "packaging": false
+    },
+    {
+      "file": "084.jpg",
+      "robust": 0.3753635585308075,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "085.jpg",
+      "robust": 0.23553292453289032,
+      "in_scope": false,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "086.jpg",
+      "robust": 0.3831586241722107,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "087.jpg",
+      "robust": 0.32982337474823,
+      "in_scope": true,
+      "top1": "pancakes",
+      "packaging": false
+    },
+    {
+      "file": "088.jpg",
+      "robust": 0.2792845070362091,
+      "in_scope": false,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "089.jpg",
+      "robust": 0.21797138452529907,
+      "in_scope": false,
+      "top1": "chicken_wings",
+      "packaging": false
+    },
+    {
+      "file": "090.jpg",
+      "robust": 0.4531211256980896,
+      "in_scope": true,
+      "top1": "dumplings",
+      "packaging": false
+    },
+    {
+      "file": "091.jpg",
+      "robust": 0.4148998558521271,
+      "in_scope": true,
+      "top1": "chocolate_cake",
+      "packaging": false
+    },
+    {
+      "file": "092.jpg",
+      "robust": 0.3758813738822937,
+      "in_scope": true,
+      "top1": "chocolate_cake",
+      "packaging": false
+    },
+    {
+      "file": "093.jpg",
+      "robust": 0.21771489083766937,
+      "in_scope": false,
+      "top1": "dumplings",
+      "packaging": false
+    },
+    {
+      "file": "094.jpg",
+      "robust": 0.29277515411376953,
+      "in_scope": false,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "095.jpg",
+      "robust": 0.2410944104194641,
+      "in_scope": false,
+      "top1": "caesar_salad",
+      "packaging": false
+    },
+    {
+      "file": "096.jpg",
+      "robust": 0.2901418209075928,
+      "in_scope": false,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "097.jpg",
+      "robust": 0.2445395141839981,
+      "in_scope": false,
+      "top1": "hot_dog",
+      "packaging": false
+    },
+    {
+      "file": "098.jpg",
+      "robust": 0.4347197115421295,
+      "in_scope": true,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "099.jpg",
+      "robust": 0.19388441741466522,
+      "in_scope": false,
+      "top1": "waffles",
+      "packaging": false
+    },
+    {
+      "file": "100.jpg",
+      "robust": 0.5119760036468506,
+      "in_scope": true,
+      "top1": "lasagna",
+      "packaging": false
+    },
+    {
+      "file": "101.jpg",
+      "robust": 0.26359423995018005,
+      "in_scope": false,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "102.jpg",
+      "robust": 0.4197677969932556,
+      "in_scope": true,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "103.jpg",
+      "robust": 0.14022594690322876,
+      "in_scope": false,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "104.jpg",
+      "robust": 0.4597274959087372,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "105.jpg",
+      "robust": 0.4812290668487549,
+      "in_scope": true,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "106.jpg",
+      "robust": 0.2263207882642746,
+      "in_scope": false,
+      "top1": "chicken_wings",
+      "packaging": false
+    },
+    {
+      "file": "107.jpg",
+      "robust": 0.8880569338798523,
+      "in_scope": true,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "108.jpg",
+      "robust": 0.23470629751682281,
+      "in_scope": false,
+      "top1": "hamburger",
+      "packaging": false
+    },
+    {
+      "file": "109.jpg",
+      "robust": 0.3090062439441681,
+      "in_scope": false,
+      "top1": "pancakes",
+      "packaging": false
+    },
+    {
+      "file": "110.jpg",
+      "robust": 0.20991918444633484,
+      "in_scope": false,
+      "top1": "dumplings",
+      "packaging": false
+    },
+    {
+      "file": "111.jpg",
+      "robust": 0.5734338164329529,
+      "in_scope": true,
+      "top1": "waffles",
+      "packaging": false
+    },
+    {
+      "file": "112.jpg",
+      "robust": 0.6924002170562744,
+      "in_scope": true,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "113.jpg",
+      "robust": 0.32721957564353943,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "114.jpg",
+      "robust": 0.4038003385066986,
+      "in_scope": true,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "115.jpg",
+      "robust": 0.3812514841556549,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "116.jpg",
+      "robust": 0.5672325491905212,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "117.jpg",
+      "robust": 0.2367737591266632,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "118.jpg",
+      "robust": 0.2270151674747467,
+      "in_scope": false,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "119.jpg",
+      "robust": 0.20341847836971283,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "120.jpg",
+      "robust": 0.4079087972640991,
+      "in_scope": true,
+      "top1": "chocolate_cake",
+      "packaging": false
+    },
+    {
+      "file": "121.jpg",
+      "robust": 0.2562829554080963,
+      "in_scope": false,
+      "top1": "fried_rice",
+      "packaging": false
+    },
+    {
+      "file": "122.jpg",
+      "robust": 0.3269234895706177,
+      "in_scope": true,
+      "top1": "donuts",
+      "packaging": false
+    },
+    {
+      "file": "123.jpg",
+      "robust": 0.5364840626716614,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "124.jpg",
+      "robust": 0.17013569176197052,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "125.jpg",
+      "robust": 0.34254521131515503,
+      "in_scope": true,
+      "top1": "chicken_wings",
+      "packaging": false
+    },
+    {
+      "file": "126.jpg",
+      "robust": 0.22641588747501373,
+      "in_scope": false,
+      "top1": "steak",
+      "packaging": false
+    },
+    {
+      "file": "127.jpg",
+      "robust": 0.25831517577171326,
+      "in_scope": false,
+      "top1": "pancakes",
+      "packaging": false
+    },
+    {
+      "file": "128.jpg",
+      "robust": 0.19474409520626068,
+      "in_scope": false,
+      "top1": "lasagna",
+      "packaging": false
+    },
+    {
+      "file": "129.jpg",
+      "robust": 0.25717222690582275,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "130.jpg",
+      "robust": 0.37313568592071533,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "131.jpg",
+      "robust": 0.5684381723403931,
+      "in_scope": true,
+      "top1": "hot_dog",
+      "packaging": false
+    },
+    {
+      "file": "132.jpg",
+      "robust": 0.4616604149341583,
+      "in_scope": true,
+      "top1": "hot_dog",
+      "packaging": false
+    },
+    {
+      "file": "133.jpg",
+      "robust": 0.3359508514404297,
+      "in_scope": true,
+      "top1": "sushi",
+      "packaging": false
+    },
+    {
+      "file": "134.jpg",
+      "robust": 0.5936685800552368,
+      "in_scope": true,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "135.jpg",
+      "robust": 0.2626594007015228,
+      "in_scope": false,
+      "top1": "ice_cream",
+      "packaging": false
+    },
+    {
+      "file": "136.jpg",
+      "robust": 0.2140241116285324,
+      "in_scope": false,
+      "top1": "pizza",
+      "packaging": false
+    },
+    {
+      "file": "137.jpg",
+      "robust": 0.20462200045585632,
+      "in_scope": false,
+      "top1": "chocolate_cake",
+      "packaging": false
+    },
+    {
+      "file": "138.jpg",
+      "robust": 0.17013533413410187,
+      "in_scope": false,
+      "top1": "hot_dog",
+      "packaging": false
+    }
+  ],
+  "mixed": [
+    {
+      "file": "001.jpg",
+      "truth_raw": [
+        "pancakes",
+        "waffles"
+      ],
+      "truth_in_vocab": [
+        "pancakes",
+        "waffles"
+      ],
+      "pred": [],
+      "hit": 0,
+      "miss": [
+        "pancakes",
+        "waffles"
+      ]
+    },
+    {
+      "file": "002.jpg",
+      "truth_raw": [
+        "waffles",
+        "pancakes"
+      ],
+      "truth_in_vocab": [
+        "pancakes",
+        "waffles"
+      ],
+      "pred": [
+        [
+          "waffles",
+          0.919
+        ]
+      ],
+      "hit": 1,
+      "miss": [
+        "pancakes"
+      ]
+    },
+    {
+      "file": "003.jpg",
+      "truth_raw": [
+        "pancakes",
+        "waffles"
+      ],
+      "truth_in_vocab": [
+        "pancakes",
+        "waffles"
+      ],
+      "pred": [
+        [
+          "waffles",
+          0.575
+        ]
+      ],
+      "hit": 1,
+      "miss": [
+        "pancakes"
+      ]
+    },
+    {
+      "file": "004.jpg",
+      "truth_raw": [
+        "waffles",
+        "pancakes"
+      ],
+      "truth_in_vocab": [
+        "pancakes",
+        "waffles"
+      ],
+      "pred": [],
+      "hit": 0,
+      "miss": [
+        "pancakes",
+        "waffles"
+      ]
+    },
+    {
+      "file": "005.jpg",
+      "truth_raw": [],
+      "truth_in_vocab": [],
+      "pred": [
+        [
+          "sushi",
+          0.643
+        ]
+      ],
+      "hit": 0,
+      "miss": []
+    },
+    {
+      "file": "006.jpg",
+      "truth_raw": [
+        "chicken_wings",
+        "greek_salad"
+      ],
+      "truth_in_vocab": [],
+      "pred": [],
+      "hit": 0,
+      "miss": []
+    },
+    {
+      "file": "007.jpg",
+      "truth_raw": [],
+      "truth_in_vocab": [],
+      "pred": [
+        [
+          "donuts",
+          0.804
+        ]
+      ],
+      "hit": 0,
+      "miss": []
+    },
+    {
+      "file": "008.jpg",
+      "truth_raw": [],
+      "truth_in_vocab": [],
+      "pred": [],
+      "hit": 0,
+      "miss": []
+    }
+  ]
+}

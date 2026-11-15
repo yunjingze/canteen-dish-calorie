@@ -1,0 +1,22 @@
+{
+  "data_root": "../data",
+  "arch": "resnet18",
+  "mode": "frozen",
+  "color_aug": false,
+  "epochs": 12,
+  "batch_size": 64,
+  "lr_head": 0.001,
+  "lr_backbone": 0.0001,
+  "weight_decay": 0.0005,
+  "label_smoothing": 0.1,
+  "seed": 42,
+  "workers": 4,
+  "out": "C:\\Users\\13561\\Desktop\\神经网络\\项目作业\\food_project\\results\\runs\\resnet18_frozen_noaug",
+  "tag": "resnet18_frozen_noaug",
+  "device": "cuda",
+  "train_size": 12000,
+  "val_size": 2000,
+  "trainable_params": 10260,
+  "total_params": 11186772,
+  "torch": "2.11.0+cu128"
+}

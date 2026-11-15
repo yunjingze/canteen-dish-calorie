@@ -1,0 +1,133 @@
+{
+  "source": "kaggle:patzer0/16-famous-chinese-dishes",
+  "classes": {
+    "boiled_fish_sichuan": {
+      "zh": "水煮鱼",
+      "kcal_per_100g": 160,
+      "portion_g": 300,
+      "train": 239,
+      "val": 22,
+      "test": 32
+    },
+    "braised_pork_meatballs": {
+      "zh": "红烧狮子头",
+      "kcal_per_100g": 250,
+      "portion_g": 200,
+      "train": 294,
+      "val": 37,
+      "test": 43
+    },
+    "buddha_jumps_over_wall": {
+      "zh": "佛跳墙",
+      "kcal_per_100g": 150,
+      "portion_g": 300,
+      "train": 252,
+      "val": 29,
+      "test": 35
+    },
+    "dongpo_pork": {
+      "zh": "东坡肉",
+      "kcal_per_100g": 400,
+      "portion_g": 150,
+      "train": 309,
+      "val": 29,
+      "test": 27
+    },
+    "fish_with_pickled_cabbage": {
+      "zh": "酸菜鱼",
+      "kcal_per_100g": 130,
+      "portion_g": 300,
+      "train": 286,
+      "val": 34,
+      "test": 34
+    },
+    "husband_and_wife_lung_slices": {
+      "zh": "夫妻肺片",
+      "kcal_per_100g": 220,
+      "portion_g": 150,
+      "train": 216,
+      "val": 29,
+      "test": 28
+    },
+    "kung_pao_chicken": {
+      "zh": "宫保鸡丁",
+      "kcal_per_100g": 200,
+      "portion_g": 200,
+      "train": 317,
+      "val": 44,
+      "test": 33
+    },
+    "mapo_tofu": {
+      "zh": "麻婆豆腐",
+      "kcal_per_100g": 120,
+      "portion_g": 250,
+      "train": 307,
+      "val": 36,
+      "test": 35
+    },
+    "peking_duck": {
+      "zh": "北京烤鸭",
+      "kcal_per_100g": 340,
+      "portion_g": 200,
+      "train": 318,
+      "val": 51,
+      "test": 35
+    },
+    "saliva_chicken": {
+      "zh": "口水鸡",
+      "kcal_per_100g": 210,
+      "portion_g": 200,
+      "train": 286,
+      "val": 33,
+      "test": 34
+    },
+    "soup_dumplings": {
+      "zh": "灌汤小笼包",
+      "kcal_per_100g": 220,
+      "portion_g": 200,
+      "train": 298,
+      "val": 35,
+      "test": 44
+    },
+    "steamed_sea_bass": {
+      "zh": "清蒸鲈鱼",
+      "kcal_per_100g": 120,
+      "portion_g": 250,
+      "train": 309,
+      "val": 32,
+      "test": 52
+    },
+    "sweet_and_sour_pork": {
+      "zh": "咕噜肉",
+      "kcal_per_100g": 250,
+      "portion_g": 200,
+      "train": 318,
+      "val": 43,
+      "test": 37
+    },
+    "twice_cooked_pork": {
+      "zh": "回锅肉",
+      "kcal_per_100g": 290,
+      "portion_g": 200,
+      "train": 299,
+      "val": 53,
+      "test": 31
+    },
+    "west_lake_vinegar_fish": {
+      "zh": "西湖醋鱼",
+      "kcal_per_100g": 130,
+      "portion_g": 250,
+      "train": 288,
+      "val": 39,
+      "test": 36
+    },
+    "yuxiang_shredded_pork": {
+      "zh": "鱼香肉丝",
+      "kcal_per_100g": 190,
+      "portion_g": 200,
+      "train": 297,
+      "val": 33,
+      "test": 44
+    }
+  }
+}

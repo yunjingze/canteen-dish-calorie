@@ -1,0 +1,34 @@
+{
+  "run": "resnet18_frozen_aug",
+  "temperature": 0.68,
+  "val": {
+    "before": {
+      "accuracy": 0.7865,
+      "ece": 0.13675721007585526
+    },
+    "after": {
+      "accuracy": 0.7865,
+      "ece": 0.028339771896600734
+    }
+  },
+  "test": {
+    "before": {
+      "accuracy": 0.8408,
+      "ece": 0.15685060895681383
+    },
+    "after": {
+      "accuracy": 0.8408,
+      "ece": 0.037615108147263515
+    }
+  },
+  "canteen": {
+    "before": {
+      "accuracy": 0.643,
+      "ece": 0.14246527978777881
+    },
+    "after": {
+      "accuracy": 0.643,
+      "ece": 0.034203772962093336
+    }
+  }
+}

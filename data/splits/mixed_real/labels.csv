@@ -1,0 +1,9 @@
+filename,dishes,non_vocab_items
+001.jpg,pancakes; waffles,bacon; berries
+002.jpg,waffles; pancakes,
+003.jpg,pancakes; waffles,bacon; banana
+004.jpg,waffles; pancakes,berries
+005.jpg,,grilled chicken breast; white rice; mixed vegetables; baguette; watermelon; blueberries; cupcake
+006.jpg,chicken_wings; greek_salad,broccoli; dipping sauces
+007.jpg,,chicken nuggets; whole wheat bread; blueberry yogurt; peas; strawberries; milk
+008.jpg,,grilled chicken breast; white rice; mixed vegetables; baguette; fruit; cupcake

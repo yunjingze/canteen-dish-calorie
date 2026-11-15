@@ -1,0 +1,25 @@
+{
+  "ckpt": "results\\runs\\resnet18_food101_cn116\\best.pt",
+  "temperature": 0.819,
+  "test": {
+    "n": 5000,
+    "top1_restricted": 0.9382,
+    "top5_restricted": 0.991,
+    "top1_full101": 0.8246,
+    "classes_in_wide": 20
+  },
+  "canteen_clean": {
+    "n": 1000,
+    "top1_restricted": 0.982,
+    "top5_restricted": 0.997,
+    "top1_full101": 0.955,
+    "classes_in_wide": 20
+  },
+  "canteen_proxy": {
+    "n": 1000,
+    "top1_restricted": 0.755,
+    "top5_restricted": 0.936,
+    "top1_full101": 0.572,
+    "classes_in_wide": 20
+  }
+}
