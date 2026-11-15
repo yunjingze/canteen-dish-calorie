@@ -10,7 +10,7 @@ from datetime import datetime
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import numpy as np
 import torch
@@ -674,19 +674,44 @@ def samples():
     return {"samples": out}
 
 
+def _resolve_in(root: Path, name: str) -> Optional[Path]:
+    """Find name as root/<class>/<name> (split layout) or root/<name> (flat)."""
+    if not root.exists():
+        return None
+    flat = (root / name).resolve()
+    if flat.parent == root.resolve() and flat.is_file():
+        return flat
+    for sub in sorted(p for p in root.iterdir() if p.is_dir()):
+        candidate = (sub / name).resolve()
+        if candidate.parent == sub.resolve() and candidate.is_file():
+            return candidate
+    return None
+
+
 def _find_sample(name: str) -> Optional[Path]:
-    """Resolve a gallery file name inside SAMPLES only.
+    """Resolve a gallery file name inside any of the three galleries.
 
     The name arrives straight from a query string, so ".." or a separator would
     otherwise let a caller read any file the server can read; keep the resolved
     parent inside the split directory.
+
+    Feedback is collected in all three modes, so a mixed-plate or 116-class
+    sample name has to resolve too, not just the 20-class gallery.
     """
-    if not SAMPLES.exists() or not name or "/" in name or "\\" in name or name.startswith("."):
+    if not name or "/" in name or "\\" in name or name.startswith("."):
         return None
-    for cls_dir in sorted(p for p in SAMPLES.iterdir() if p.is_dir()):
-        candidate = (cls_dir / name).resolve()
-        if candidate.parent == cls_dir.resolve() and candidate.is_file():
-            return candidate
+    #: the 116-class gallery prefixes the class, and its files live in a
+    #: per-class directory, so "apple_pie__test_0.jpg" is class + file name
+    if "__" in name:
+        cls, fname = name.split("__", 1)
+        if cls and fname and "/" not in cls and "\\" not in cls:
+            candidate = (WIDE_SAMPLES / cls / fname).resolve()
+            if candidate.parent == (WIDE_SAMPLES / cls).resolve() and candidate.is_file():
+                return candidate
+    for root in (SAMPLES, WIDE_SAMPLES, MIXED_SAMPLES):
+        hit = _resolve_in(root, name)
+        if hit is not None:
+            return hit
     return None
 
 
@@ -747,6 +772,26 @@ async def predict(
 FEEDBACK_DIR = ROOT / "data/splits/feedback"
 FEEDBACK_CSV = FEEDBACK_DIR / "labels.csv"
 FEEDBACK_SPECIAL = {"not_a_dish": "照片里没有菜", "not_sure": "我也说不准"}
+#: A correction can name any class any of the three models knows, not just the 20.
+FEEDBACK_CLASSES = set(CLASS_NAMES) | set(WIDE_CLASS_NAMES) | set(FEEDBACK_SPECIAL)
+FEEDBACK_COLUMNS = ["timestamp", "file", "predicted", "corrected", "note", "source", "mode"]
+
+
+def parse_correction(raw: str) -> List[str]:
+    """Split "a;b;c" into class names, rejecting anything no model knows.
+
+    A tray names several dishes at once, so the field is a semicolon list; the
+    single-class case is just a one-element list.
+    """
+    parts = [p.strip() for p in (raw or "").split(";") if p.strip()]
+    if not parts:
+        raise ValueError("请先选择正确的类别")
+    if len(parts) > 6:
+        raise ValueError("最多标记 6 样菜")
+    unknown = [p for p in parts if p not in FEEDBACK_CLASSES]
+    if unknown:
+        raise ValueError("未知的类别：" + "、".join(unknown[:3]))
+    return parts
 
 
 @app.get("/api/feedback")
@@ -754,9 +799,12 @@ def feedback_stats():
     """How many corrections have been collected so far."""
     if not FEEDBACK_CSV.is_file():
         return {"n": 0, "path": "data/splits/feedback"}
+    by_mode: Dict[str, int] = {}
     with FEEDBACK_CSV.open("r", encoding="utf-8", newline="") as fh:
-        n = max(0, sum(1 for _ in fh) - 1)
-    return {"n": n, "path": "data/splits/feedback"}
+        for row in csv.DictReader(fh):
+            key = (row.get("mode") or "single").strip() or "single"
+            by_mode[key] = by_mode.get(key, 0) + 1
+    return {"n": sum(by_mode.values()), "by_mode": by_mode, "path": "data/splits/feedback"}
 
 
 @app.post("/api/feedback")
@@ -766,13 +814,15 @@ async def feedback(
     predicted: str = Form(""),
     corrected: str = Form(""),
     note: str = Form(""),
+    mode: str = Form("single"),
 ):
     """Store one correction: the photo, what we said, and what it really was."""
-    corrected = (corrected or "").strip()
-    if not corrected:
-        return JSONResponse({"error": "请先选择正确的类别"}, status_code=400)
-    if corrected not in CLASS_NAMES and corrected not in FEEDBACK_SPECIAL:
-        return JSONResponse({"error": "未知的类别"}, status_code=400)
+    try:
+        parts = parse_correction(corrected)
+    except ValueError as exc:
+        return JSONResponse({"error": str(exc)}, status_code=400)
+    corrected = ";".join(parts)
+    mode = mode if mode in ("single", "wide", "mixed") else "single"
 
     upload = file is not None and bool(file.filename)
     raw = b""
@@ -796,17 +846,23 @@ async def feedback(
         return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
 
     FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
+    if FEEDBACK_CSV.is_file():
+        with FEEDBACK_CSV.open("r", encoding="utf-8", newline="") as fh:
+            head = fh.readline().strip()
+        if "mode" not in [c.strip() for c in head.split(",")]:
+            FEEDBACK_CSV.replace(FEEDBACK_DIR / "labels_legacy.csv")
     digest = hashlib.sha1(raw).hexdigest()[:10]
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     #: the corrected class in the name keeps the folder browsable without the CSV
-    name = f"{stamp}_{corrected}_{digest}.jpg"
+    slug = parts[0] if len(parts) == 1 else f"{parts[0]}+{len(parts) - 1}"
+    name = f"{stamp}_{slug}_{digest}.jpg"
     img.convert("RGB").save(FEEDBACK_DIR / name, "JPEG", quality=90)
 
     fresh = not FEEDBACK_CSV.is_file()
     with FEEDBACK_CSV.open("a", encoding="utf-8", newline="") as fh:
         writer = csv.writer(fh)
         if fresh:
-            writer.writerow(["timestamp", "file", "predicted", "corrected", "note", "source"])
+            writer.writerow(FEEDBACK_COLUMNS)
         writer.writerow([
             datetime.now().isoformat(timespec="seconds"),
             name,
@@ -814,8 +870,9 @@ async def feedback(
             corrected,
             note.strip().replace("\n", " ")[:200],
             "upload" if upload else "sample",
+            mode,
         ])
-    return {"ok": True, "saved": name, "corrected": corrected}
+    return {"ok": True, "saved": name, "corrected": corrected, "mode": mode}
 
 
 # --------------------------------------------------------------------------- #

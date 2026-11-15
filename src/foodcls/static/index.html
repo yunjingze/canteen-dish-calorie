@@ -90,6 +90,11 @@
 .fb button:disabled{background:#9aa9ba;cursor:default}
 .fb .fb-msg{margin-top:6px;color:#2e7d4f}
 .fb .fb-msg.err{color:#b42318}
+.fb .fb-picks{flex:1 1 100%;display:none;flex-wrap:wrap;gap:6px}
+.fb .chip{display:inline-flex;align-items:center;gap:6px;background:#eef3fb;border:1px solid #cdddf5;
+  border-radius:999px;padding:3px 9px;color:#1f4f9c;cursor:pointer;font-size:12px}
+.fb .chip i{font-style:normal;color:#7a8ba3}
+.fb .chip:hover{border-color:#9dbdea}
   .scope-info{margin:2px 0 12px;font-size:12px;color:var(--muted);line-height:1.7}
   .scope-info summary{cursor:pointer;color:var(--brand);font-size:12px;list-style:none;width:max-content}
   .scope-info summary::-webkit-details-marker{display:none}
@@ -330,40 +335,69 @@ function rescale(it, scale){
 // labels from the canteen domain itself, so they are worth collecting even if
 // nothing is trained on them automatically.
 // ---------------------------------------------------------------------------
-let fbClasses = null;
-async function ensureFbClasses(){
-  if(fbClasses) return fbClasses;
+let fbClasses = {};      // per mode: the 20 classes, the 116, or the mixed list
+async function ensureFbClasses(kind){
+  if(fbClasses[kind]) return fbClasses[kind];
+  const url = kind === "wide" ? "/api/wide/classes" : "/api/classes";
   try{
-    const res = await fetch("/api/classes");
+    const res = await fetch(url);
     const data = await readJson(res);
-    fbClasses = data.classes.map(c => ({v: c["class"], label: c.zh}));
-  }catch(err){ fbClasses = []; }
-  return fbClasses;
+    fbClasses[kind] = data.classes.map(c => ({v: c["class"], label: c.zh}));
+  }catch(err){ fbClasses[kind] = []; }
+  return fbClasses[kind];
 }
 
-function mountFeedback(wrap, data){
-  if(mode !== "single") return;
+function mountFeedback(wrap, data, kind){
+  // every mode collects corrections: the 20-class model, the 116-class one, and
+  // the tray model (where the user may name several dishes at once)
+  kind = kind || mode;
+  const multi = kind === "mixed";
   const has = data.top3 && data.top3.length;
   const top1 = has ? data.top3[0]["class"] : "";
-  const top1zh = has ? data.top3[0].zh : "";
+  const guessed = multi ? (data.parts || []).map(p => p["class"]).join(";") : top1;
+  const picks = [];                        // mixed only: the dishes the user named
   const box = document.createElement("div");
   box.className = "fb";
   box.innerHTML =
-    '<div id="fbToggle"><a href="#" id="fbOpen">结果不对？点这里告诉我正确的菜</a></div>' +
+    '<div id="fbToggle"><a href="#" id="fbOpen">结果不对？点这里告诉我们正确的菜' +
+      (multi ? '（可多选）' : '') + '</a></div>' +
     '<div class="fb-form" id="fbForm" style="display:none">' +
-      '<select id="fbClass"><option value="">正确的菜是…</option></select>' +
+      '<select id="fbClass"><option value="">' + (multi ? '加一样菜…' : '正确的菜是…') + '</option></select>' +
+      (multi ? '<div class="fb-picks" id="fbPicks"></div>' : '') +
       '<input id="fbNote" maxlength="120" placeholder="补充说明（可选）">' +
       '<button type="button" id="fbSend">提交</button>' +
     '</div>' +
     '<div class="fb-msg" id="fbMsg"></div>';
   wrap.appendChild(box);
 
+  function labelOf(v){
+    const hit = (fbClasses[kind] || []).filter(c => c.v === v)[0];
+    if(hit) return hit.label;
+    return v === "not_a_dish" ? "照片里没有菜" : v === "not_sure" ? "我也说不准" : v;
+  }
+
+  function redrawPicks(){
+    const row = $("#fbPicks");
+    if(!row) return;
+    row.innerHTML = "";
+    picks.forEach((v, i) => {
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.title = "点一下移除";
+      chip.innerHTML = labelOf(v) + '<i>×</i>';
+      chip.onclick = () => { picks.splice(i, 1); redrawPicks(); };
+      row.appendChild(chip);
+    });
+    row.style.display = picks.length ? "flex" : "none";
+  }
+
   $("#fbOpen").onclick = async (ev) => {
     ev.preventDefault();
     $("#fbToggle").style.display = "none";
     $("#fbForm").style.display = "flex";
     const sel = $("#fbClass");
-    const cls = await ensureFbClasses();
+    if(sel.options.length > 1) return;     // already filled, second click is a no-op
+    const cls = await ensureFbClasses(kind);
     cls.forEach(c => {
       const o = document.createElement("option");
       o.value = c.v; o.textContent = c.label; sel.appendChild(o);
@@ -372,16 +406,31 @@ function mountFeedback(wrap, data){
       const o = document.createElement("option");
       o.value = pair[0]; o.textContent = pair[1]; sel.appendChild(o);
     });
+    if(multi){
+      // a tray holds several dishes, so a choice adds to the list instead of
+      // replacing the previous one
+      sel.onchange = () => {
+        if(!sel.value) return;
+        if(picks.indexOf(sel.value) < 0) picks.push(sel.value);
+        sel.value = "";
+        redrawPicks();
+      };
+    }
   };
 
   $("#fbSend").onclick = async () => {
-    const corrected = $("#fbClass").value;
+    const corrected = multi ? picks.join(";") : $("#fbClass").value;
     const msg = $("#fbMsg");
-    if(!corrected){ msg.className = "fb-msg err"; msg.textContent = "请先选择正确的类别"; return; }
+    if(!corrected){
+      msg.className = "fb-msg err";
+      msg.textContent = multi ? "请先选至少一样菜（选好会自动加进上面的列表）" : "请先选择正确的类别";
+      return;
+    }
     const fd = new FormData();
-    fd.append("predicted", top1);
+    fd.append("predicted", guessed);
     fd.append("corrected", corrected);
     fd.append("note", $("#fbNote").value || "");
+    fd.append("mode", kind);
     if(lastSource && lastSource.kind === "file") fd.append("file", lastSource.file);
     else if(lastSource && lastSource.kind === "sample") fd.append("sample", lastSource.name);
     $("#fbSend").disabled = true;
@@ -392,7 +441,7 @@ function mountFeedback(wrap, data){
       $("#fbForm").style.display = "none";
       msg.className = "fb-msg";
       msg.textContent = "已记下，谢谢！这条会用来改进模型。" +
-        (top1 && corrected !== top1 ? "（" + top1zh + " 标为你的答案）" : "");
+        (multi && picks.length > 1 ? "（" + picks.length + " 样都记下了）" : "");
     }catch(err){
       $("#fbSend").disabled = false;
       msg.className = "fb-msg err";
@@ -512,6 +561,7 @@ async function predictSample(name){
 // ---------------------------------------------------------------------------
 async function predictWideFile(file){
   if(!file.type.startsWith("image/")){ showError("请选择图片文件（JPG / PNG）"); return; }
+  lastSource = {kind:"file", file};        // feedback attaches the same photo
   const fd = new FormData();
   fd.append("file", file);
   setStatus("推理中…");
@@ -527,6 +577,7 @@ async function predictWideFile(file){
 }
 
 async function predictWideSample(name){
+  lastSource = {kind:"sample", name};
   setStatus("推理中…");
   const t0 = performance.now();
   try {
@@ -546,6 +597,7 @@ async function predictWideSample(name){
 // ---------------------------------------------------------------------------
 async function predictMixedFile(file){
   if(!file.type.startsWith("image/")){ showError("请选择图片文件（JPG / PNG）"); return; }
+  lastSource = {kind:"file", file};
   const fd = new FormData();
   fd.append("file", file);
   setStatus("识别中…");
@@ -561,6 +613,7 @@ async function predictMixedFile(file){
 }
 
 async function predictMixedSample(name){
+  lastSource = {kind:"sample", name};
   setStatus("识别中…");
   const t0 = performance.now();
   try {
@@ -617,6 +670,7 @@ function renderMixed(data){
   if (data.scope && data.scope.packaging) {
     wrap.insertAdjacentHTML("beforeend",
       '<div class="scope-warn"><b>包装食品照</b>：' + (data.scope.message || '这不是餐盘里的菜。') + '</div>');
+    mountFeedback(wrap, data, "mixed");
     return;
   }
   if (data.scope && data.scope.in_scope === false) {
@@ -636,6 +690,7 @@ function renderMixed(data){
     wrap.insertAdjacentHTML("beforeend",
       '<div class="note">检测规则：每类有各自的阈值（按验证集 F1 校准），且至少 10% 才显示；最多 3 样。' +
       '</div>');
+    mountFeedback(wrap, data, "mixed");
     return;
   }
   const list = document.createElement("div");
@@ -651,6 +706,7 @@ function renderMixed(data){
   wrap.insertAdjacentHTML("beforeend",
     '<div class="note">检测规则：每类按验证集校准各自的阈值（基准 ' + Number(data.threshold).toFixed(2) +
     '），且得分至少 ' + (minP * 100).toFixed(0) + '% 才显示；最多 3 样。' + data.note + '</div>');
+  mountFeedback(wrap, data, "mixed");
 }
 
 let recalcTimer = null;
