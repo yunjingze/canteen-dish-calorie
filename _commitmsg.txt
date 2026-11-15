@@ -1,9 +1,0 @@
-Blend the two posteriors, guard the repo, and make corrections one click
-
-- wide tab: p = (1-a)p116 + a*p20 with a=0.2; real photos 71.0 -> 79.0 (8 fixed, 0 broken, p=0.008),
-  Food-101 83.3 -> 87.4 (205/3), Chinese 82.9 -> 81.9 (212/0); FOODCLS_WIDE_FUSE overrides the blend
-- top-3 candidates are now the correction form when the top-1 is below 0.55
-- scripts/feedback_report.py turns the CSV into confusions and a reshoot list
-- MIT LICENSE with a data carve-out, requirements.lock, docs/reproduce.md
-- tests/test_api.py (34 tests) plus a CPU-only GitHub Actions workflow
-- paper: deployment paragraphs for the 116-class tab, the fusion and the feedback loop

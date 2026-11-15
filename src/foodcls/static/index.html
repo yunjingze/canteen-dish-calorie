@@ -570,7 +570,7 @@ function renderResults(data){
   });
   // When the answer is shaky, the top-3 list doubles as the correction form:
   // one click says "it was this one" and that is the whole submission.
-  if (out || data.top3[0].prob < 0.55) {
+  if (data.top3.length > 1 && (out || data.top3[0].prob < 0.55)) {
     const bar = document.createElement("div");
     bar.className = "pickbar";
     const lbl = document.createElement("span");
@@ -581,7 +581,7 @@ function renderResults(data){
     data.top3.forEach((it, i) => {
       const b = document.createElement("button");
       b.type = "button";
-      if (i === 0) b.className = "top1";
+      if (i === 0) { b.className = "top1"; b.title = "模型原本说的就是这道"; }
       b.textContent = it.zh;
       b.onclick = async () => {
         Array.prototype.forEach.call(bar.querySelectorAll("button"), x => { x.disabled = true; });
