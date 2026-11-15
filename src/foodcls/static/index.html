@@ -95,6 +95,10 @@
   border-radius:999px;padding:3px 9px;color:#1f4f9c;cursor:pointer;font-size:12px}
 .fb .chip i{font-style:normal;color:#7a8ba3}
 .fb .chip:hover{border-color:#9dbdea}
+.fb .chip.pred{background:#fff5e8;border-color:#f0d4ac;color:#8a5a12}
+.fb .chip.off{background:#f4f4f5;border-color:#dcdcdf;color:#8b8b93;text-decoration:line-through}
+.fb .chip.off i{color:#8b8b93}
+.fb-hint{flex:1 1 100%;font-size:12px;color:var(--muted);margin:2px 0 0}
   .scope-info{margin:2px 0 12px;font-size:12px;color:var(--muted);line-height:1.7}
   .scope-info summary{cursor:pointer;color:var(--brand);font-size:12px;list-style:none;width:max-content}
   .scope-info summary::-webkit-details-marker{display:none}
@@ -356,12 +360,17 @@ function mountFeedback(wrap, data, kind){
   const top1 = has ? data.top3[0]["class"] : "";
   const guessed = multi ? (data.parts || []).map(p => p["class"]).join(";") : top1;
   const picks = [];                        // mixed only: the dishes the user named
+  const preds = multi ? (data.parts || []).map(p => p["class"]).filter(v => v) : [];
+  const drops = [];                        // mixed only: predicted dishes that are not there
   const box = document.createElement("div");
   box.className = "fb";
   box.innerHTML =
     '<div id="fbToggle"><a href="#" id="fbOpen">结果不对？点这里告诉我们正确的菜' +
-      (multi ? '（可多选）' : '') + '</a></div>' +
+      (multi ? '（可多选，猜错的菜可以划掉）' : '') + '</a></div>' +
     '<div class="fb-form" id="fbForm" style="display:none">' +
+      (multi && preds.length ?
+        '<div class="fb-hint" id="fbPredHint">模型说这盘里有（点一下划掉其实没有的）：</div>' +
+        '<div class="fb-picks" id="fbPred"></div>' : '') +
       '<select id="fbClass"><option value="">' + (multi ? '加一样菜…' : '正确的菜是…') + '</option></select>' +
       (multi ? '<div class="fb-picks" id="fbPicks"></div>' : '') +
       '<input id="fbNote" maxlength="120" placeholder="补充说明（可选）">' +
@@ -374,6 +383,31 @@ function mountFeedback(wrap, data, kind){
     const hit = (fbClasses[kind] || []).filter(c => c.v === v)[0];
     if(hit) return hit.label;
     return v === "not_a_dish" ? "照片里没有菜" : v === "not_sure" ? "我也说不准" : v;
+  }
+
+  function redrawPred(){
+    const row = $("#fbPred");
+    if(!row) return;
+    row.innerHTML = "";
+    preds.forEach(v => {
+      const off = drops.indexOf(v) >= 0;
+      const chip = document.createElement("span");
+      chip.className = "chip pred" + (off ? " off" : "");
+      chip.title = off ? "点一下恢复：这盘里其实有" : "点一下划掉：这盘里其实没有";
+      chip.innerHTML = labelOf(v) + "<i>" + (off ? "↺" : "×") + "</i>";
+      chip.onclick = () => {
+        const at = drops.indexOf(v);
+        if(at >= 0) drops.splice(at, 1);
+        else {
+          drops.push(v);
+          const j = picks.indexOf(v);
+          if(j >= 0) picks.splice(j, 1);   // cannot be both present and struck out
+        }
+        redrawPred(); redrawPicks();
+      };
+      row.appendChild(chip);
+    });
+    row.style.display = preds.length ? "flex" : "none";
   }
 
   function redrawPicks(){
@@ -412,23 +446,30 @@ function mountFeedback(wrap, data, kind){
       sel.onchange = () => {
         if(!sel.value) return;
         if(picks.indexOf(sel.value) < 0) picks.push(sel.value);
+        const k = drops.indexOf(sel.value);
+        if(k >= 0) drops.splice(k, 1);
         sel.value = "";
-        redrawPicks();
+        redrawPicks(); redrawPred();
       };
+      redrawPred();
     }
   };
 
   $("#fbSend").onclick = async () => {
     const corrected = multi ? picks.join(";") : $("#fbClass").value;
+    const removed = multi ? drops.join(";") : "";
     const msg = $("#fbMsg");
-    if(!corrected){
+    if(!corrected && !removed){
       msg.className = "fb-msg err";
-      msg.textContent = multi ? "请先选至少一样菜（选好会自动加进上面的列表）" : "请先选择正确的类别";
+      msg.textContent = multi
+        ? "请先选出正确的菜，或者点一下上面猜错的菜把它划掉"
+        : "请先选择正确的类别";
       return;
     }
     const fd = new FormData();
     fd.append("predicted", guessed);
     fd.append("corrected", corrected);
+    fd.append("removed", removed);
     fd.append("note", $("#fbNote").value || "");
     fd.append("mode", kind);
     if(lastSource && lastSource.kind === "file") fd.append("file", lastSource.file);
@@ -440,8 +481,11 @@ function mountFeedback(wrap, data, kind){
       $("#fbToggle").style.display = "none";
       $("#fbForm").style.display = "none";
       msg.className = "fb-msg";
+      const bits = [];
+      if(multi && picks.length > 1) bits.push(picks.length + " 样都记下了");
+      if(multi && drops.length) bits.push("划掉了 " + drops.length + " 样");
       msg.textContent = "已记下，谢谢！这条会用来改进模型。" +
-        (multi && picks.length > 1 ? "（" + picks.length + " 样都记下了）" : "");
+        (bits.length ? "（" + bits.join("，") + "）" : "");
     }catch(err){
       $("#fbSend").disabled = false;
       msg.className = "fb-msg err";

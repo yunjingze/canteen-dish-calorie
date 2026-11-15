@@ -774,17 +774,20 @@ FEEDBACK_CSV = FEEDBACK_DIR / "labels.csv"
 FEEDBACK_SPECIAL = {"not_a_dish": "照片里没有菜", "not_sure": "我也说不准"}
 #: A correction can name any class any of the three models knows, not just the 20.
 FEEDBACK_CLASSES = set(CLASS_NAMES) | set(WIDE_CLASS_NAMES) | set(FEEDBACK_SPECIAL)
-FEEDBACK_COLUMNS = ["timestamp", "file", "predicted", "corrected", "note", "source", "mode"]
+FEEDBACK_COLUMNS = ["timestamp", "file", "predicted", "corrected", "removed", "note", "source", "mode"]
 
 
-def parse_correction(raw: str) -> List[str]:
+def parse_correction(raw: str, allow_empty: bool = False) -> List[str]:
     """Split "a;b;c" into class names, rejecting anything no model knows.
 
     A tray names several dishes at once, so the field is a semicolon list; the
-    single-class case is just a one-element list.
+    single-class case is just a one-element list.  The strike-out column may be
+    empty (most corrections only add dishes), hence the allow_empty flag.
     """
     parts = [p.strip() for p in (raw or "").split(";") if p.strip()]
     if not parts:
+        if allow_empty:
+            return []
         raise ValueError("请先选择正确的类别")
     if len(parts) > 6:
         raise ValueError("最多标记 6 样菜")
@@ -800,11 +803,19 @@ def feedback_stats():
     if not FEEDBACK_CSV.is_file():
         return {"n": 0, "path": "data/splits/feedback"}
     by_mode: Dict[str, int] = {}
+    strikes = 0
     with FEEDBACK_CSV.open("r", encoding="utf-8", newline="") as fh:
         for row in csv.DictReader(fh):
             key = (row.get("mode") or "single").strip() or "single"
             by_mode[key] = by_mode.get(key, 0) + 1
-    return {"n": sum(by_mode.values()), "by_mode": by_mode, "path": "data/splits/feedback"}
+            if (row.get("removed") or "").strip():
+                strikes += 1
+    return {
+        "n": sum(by_mode.values()),
+        "by_mode": by_mode,
+        "with_removal": strikes,
+        "path": "data/splits/feedback",
+    }
 
 
 @app.post("/api/feedback")
@@ -813,15 +824,28 @@ async def feedback(
     sample: str = Form(""),
     predicted: str = Form(""),
     corrected: str = Form(""),
+    removed: str = Form(""),
     note: str = Form(""),
     mode: str = Form("single"),
 ):
-    """Store one correction: the photo, what we said, and what it really was."""
+    """Store one correction: the photo, what we said, and what it really was.
+
+    On a tray the user can also strike out a dish we guessed that is not there;
+    the removed column holds those names, and a submission may consist of
+    strike-outs alone when every guess was wrong.
+    """
     try:
-        parts = parse_correction(corrected)
+        parts = parse_correction(corrected, allow_empty=True)
+        dropped = parse_correction(removed, allow_empty=True)
     except ValueError as exc:
         return JSONResponse({"error": str(exc)}, status_code=400)
+    if not parts and not dropped:
+        return JSONResponse(
+            {"error": "请先选出正确的菜，或者点一下预测里其实没有的菜把它划掉"},
+            status_code=400,
+        )
     corrected = ";".join(parts)
+    removed = ";".join(dropped)
     mode = mode if mode in ("single", "wide", "mixed") else "single"
 
     upload = file is not None and bool(file.filename)
@@ -849,12 +873,18 @@ async def feedback(
     if FEEDBACK_CSV.is_file():
         with FEEDBACK_CSV.open("r", encoding="utf-8", newline="") as fh:
             head = fh.readline().strip()
-        if "mode" not in [c.strip() for c in head.split(",")]:
-            FEEDBACK_CSV.replace(FEEDBACK_DIR / "labels_legacy.csv")
+        if [c.strip() for c in head.split(",")] != FEEDBACK_COLUMNS:
+            #: an older layout: keep it beside the new file rather than appending
+            #: rows with a different number of columns
+            legacy = FEEDBACK_DIR / f"labels_legacy_{datetime.now():%Y%m%d-%H%M%S}.csv"
+            FEEDBACK_CSV.replace(legacy)
     digest = hashlib.sha1(raw).hexdigest()[:10]
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     #: the corrected class in the name keeps the folder browsable without the CSV
-    slug = parts[0] if len(parts) == 1 else f"{parts[0]}+{len(parts) - 1}"
+    if parts:
+        slug = parts[0] if len(parts) == 1 else f"{parts[0]}+{len(parts) - 1}"
+    else:
+        slug = f"minus_{dropped[0]}" if len(dropped) == 1 else f"minus_{dropped[0]}+{len(dropped) - 1}"
     name = f"{stamp}_{slug}_{digest}.jpg"
     img.convert("RGB").save(FEEDBACK_DIR / name, "JPEG", quality=90)
 
@@ -868,11 +898,12 @@ async def feedback(
             name,
             predicted.strip()[:80],
             corrected,
+            removed,
             note.strip().replace("\n", " ")[:200],
             "upload" if upload else "sample",
             mode,
         ])
-    return {"ok": True, "saved": name, "corrected": corrected, "mode": mode}
+    return {"ok": True, "saved": name, "corrected": corrected, "removed": removed, "mode": mode}
 
 
 # --------------------------------------------------------------------------- #

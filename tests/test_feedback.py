@@ -31,6 +31,14 @@ class CorrectionTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 parse_correction(bad)
 
+    def test_strike_out_may_be_empty(self):
+        self.assertEqual(parse_correction("", allow_empty=True), [])
+        self.assertEqual(parse_correction(" ; ", allow_empty=True), [])
+
+    def test_strike_out_still_validates(self):
+        with self.assertRaises(ValueError):
+            parse_correction("nope", allow_empty=True)
+
     def test_too_many_parts(self):
         with self.assertRaises(ValueError):
             parse_correction(";".join(list(CLASS_NAMES)[:7]))
