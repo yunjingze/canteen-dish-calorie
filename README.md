@@ -592,7 +592,7 @@ powershell -ExecutionPolicy Bypass -File scripts/start_demo.ps1 -Open
    ```
    这是私有地址，仅同一局域网可达；公共 Wi-Fi 若开了"客户端隔离"则连不上，可用手机热点。
 
-2. **对方在自己电脑上跑（交作业/离线评审）**：运行 `scripts/package_demo.ps1` 生成 `dist/FoodDemo.zip`（约 168 MB，含代码、单菜 / 多标签 / 116 类 / 食堂 20 道四份 `best.pt` 与各自的温度校准文件、四套示例图、启动脚本、小程序工程和 README.txt）。没有食堂权重时打包脚本会跳过它，页面自动少一个标签。对方解压后装 Python 3.10+，执行：
+2. **对方在自己电脑上跑（交作业/离线评审）**：运行 `scripts/package_demo.ps1` 生成 `dist/FoodDemo.zip`（约 168 MB，含代码、单菜 / 多标签 / 116 类 / 食堂 21 路（20 道 + 其它中餐）四份 `best.pt` 与各自的温度校准文件、食堂的域判别头 `results/tables/domain_head.json`、四套示例图、启动脚本、小程序工程和 README.txt）。没有食堂权重时打包脚本会跳过它，页面自动少一个标签。对方解压后装 Python 3.10+，执行：
    ```powershell
    python -m venv .venv
    .venv\Scripts\python.exe -m pip install -r requirements.txt

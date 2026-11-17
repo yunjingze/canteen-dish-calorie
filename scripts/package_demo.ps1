@@ -87,14 +87,21 @@ if (Test-Path $wideSamples) {
     Write-Host "bundled $j wide sample images"
 }
 
-# 20-dish canteen head (optional: the other tabs work without it)
-$cnRun = Join-Path $root "results\runs\cn241_full"
+# canteen head: 20 dishes + an "other Chinese dish" bucket (optional: the other tabs work without it)
+$cnRun = Join-Path $root "results\runs\cn241_21"
 if (Test-Path (Join-Path $cnRun "best.pt")) {
-    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\cn241_full") -Force | Out-Null
-    Copy-Item (Join-Path $cnRun "best.pt") (Join-Path $stage "results\runs\cn241_full\best.pt")
+    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\cn241_21") -Force | Out-Null
+    Copy-Item (Join-Path $cnRun "best.pt") (Join-Path $stage "results\runs\cn241_21\best.pt")
     $ccal = Join-Path $cnRun "calibration.json"
-    if (Test-Path $ccal) { Copy-Item $ccal (Join-Path $stage "results\runs\cn241_full\calibration.json") }
-    Write-Host "bundled 20-dish canteen checkpoint"
+    if (Test-Path $ccal) { Copy-Item $ccal (Join-Path $stage "results\runs\cn241_21\calibration.json") }
+    Write-Host "bundled 21-class canteen checkpoint"
+    # the cuisine probe is a 10 KB JSON; without it the canteen gate stands alone
+    $domainHead = Join-Path $root "results\tables\domain_head.json"
+    if (Test-Path $domainHead) {
+        New-Item -ItemType Directory -Path (Join-Path $stage "results\tables") -Force | Out-Null
+        Copy-Item $domainHead (Join-Path $stage "results\tables\domain_head.json")
+        Write-Host "bundled cuisine probe"
+    }
 }
 $cnSamples = Join-Path $root "data\splits\cn241_full\test"
 if (Test-Path $cnSamples) {
@@ -106,7 +113,7 @@ if (Test-Path $cnSamples) {
             Copy-Item $_.FullName $dst; $k++
         }
     }
-    Write-Host "bundled $k canteen sample images"
+    Write-Host "bundled $k canteen sample images (20 dishes, other_cn bucket has no gallery)"
 }
 
 # the WeChat mini-program talks to the same FastAPI server
@@ -160,8 +167,11 @@ summed calorie range; mixed demo plates live in data\splits\mixed.
    A fourth tab, "canteen home dishes - 20", switches to a model trained on 20
    everyday Chinese dishes from CNFOOD-241 (tomato and egg, hot and sour potato
    strips, braised pork, mapo-style stir fries...), which is what a campus
-   canteen actually serves. It knows only those 20 dishes and says so for
-   anything else; switch back to the 20-class tab for the course menu.
+   canteen actually serves. It knows those 20 dishes plus a catch-all "some
+   other Chinese dish" class, so a dish outside the list is refused with a hint
+   instead of being forced into the closest one, and a small cuisine probe
+   rejects Western food, desserts and drinks outright. Switch back to the
+   20-class tab for the course menu.
    Canteen demo images live in data\splits\cn241_full\test.
    Each result also shows a "chain reference": the measured per-serving calories
    of the closest McDonald's China menu item (Big Mac 513 kcal, medium fries
