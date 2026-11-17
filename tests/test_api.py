@@ -59,6 +59,14 @@ class FeedbackApiTest(unittest.TestCase):
         self.assertEqual(r.status_code, 400)
         self.assertIn("请先选出正确的菜", r.json()["error"])
 
+    def test_canteen_class_passes_validation(self):
+        # Canteen-only slugs must get past validation and fail later, at the
+        # sample lookup (404); a 400 here means the correction was rejected.
+        r = client.post("/api/feedback",
+                        data={"sample": "x.jpg", "corrected": "tomato_egg", "mode": "cn"})
+        self.assertEqual(r.status_code, 404)
+        self.assertEqual(r.json()["error"], "not found")
+
     def test_removal_alone_is_valid(self):
         # Validation comes before the image is resolved, so a strike-out-only
         # submission with a bogus sample name must fail on the lookup (404),
@@ -66,6 +74,24 @@ class FeedbackApiTest(unittest.TestCase):
         r = client.post("/api/feedback", data={"sample": "x.jpg", "corrected": "", "removed": "pizza"})
         self.assertEqual(r.status_code, 404)
         self.assertEqual(r.json()["error"], "not found")
+
+
+class SampleGalleryTest(unittest.TestCase):
+    def test_canteen_sample_name_resolves(self):
+        # Feedback attachments reuse the gallery name, so a canteen sample has
+        # to resolve through the shared lookup, not only through
+        # /api/cn/sample_image.
+        cls_dir = app_module.CN_SAMPLES / "tomato_egg"
+        if not cls_dir.is_dir():
+            self.skipTest("canteen gallery not present")
+        name = sorted(cls_dir.glob("*.jpg"))[0].name
+        hit = app_module._find_sample("tomato_egg__" + name)
+        self.assertIsNotNone(hit)
+        self.assertEqual(hit.name, name)
+
+    def test_path_escape_is_refused(self):
+        for bad in ("", "../app.py", "..\\app.py", ".hidden", "a/b.jpg"):
+            self.assertIsNone(app_module._find_sample(bad))
 
 
 class UploadGuardTest(unittest.TestCase):

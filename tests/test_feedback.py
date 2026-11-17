@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from foodcls.app import FEEDBACK_CLASSES, FEEDBACK_SPECIAL, parse_correction  # noqa: E402
 from foodcls.classes import CLASS_NAMES  # noqa: E402
+from foodcls.classes_cn import CN_CLASS_NAMES  # noqa: E402
 from foodcls.classes_wide import WIDE_CLASS_NAMES  # noqa: E402
 
 
@@ -17,7 +18,16 @@ class CorrectionTest(unittest.TestCase):
     def test_every_model_can_be_corrected(self):
         self.assertTrue(set(CLASS_NAMES) <= FEEDBACK_CLASSES)
         self.assertTrue(set(WIDE_CLASS_NAMES) <= FEEDBACK_CLASSES)
+        self.assertTrue(set(CN_CLASS_NAMES) <= FEEDBACK_CLASSES)
         self.assertTrue(set(FEEDBACK_SPECIAL) <= FEEDBACK_CLASSES)
+
+    def test_canteen_only_slugs_are_valid(self):
+        # Regression: "tomato_egg" is a canteen class that neither the 20-class
+        # nor the 116-class table contains, so this used to fail validation and
+        # every correction made in the canteen tab was thrown away.
+        self.assertEqual(parse_correction("tomato_egg"), ["tomato_egg"])
+        self.assertEqual(parse_correction("tomato_egg;mapo_tofu"),
+                         ["tomato_egg", "mapo_tofu"])
 
     def test_single_class(self):
         self.assertEqual(parse_correction("pizza"), ["pizza"])

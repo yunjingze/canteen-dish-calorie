@@ -1015,20 +1015,21 @@ def _find_sample(name: str) -> Optional[Path]:
     otherwise let a caller read any file the server can read; keep the resolved
     parent inside the split directory.
 
-    Feedback is collected in all three modes, so a mixed-plate or 116-class
-    sample name has to resolve too, not just the 20-class gallery.
+    Feedback is collected in all four modes, so a mixed-plate, 116-class or
+    canteen sample name has to resolve too, not just the 20-class gallery.
     """
     if not name or "/" in name or "\\" in name or name.startswith("."):
         return None
-    #: the 116-class gallery prefixes the class, and its files live in a
-    #: per-class directory, so "apple_pie__test_0.jpg" is class + file name
+    #: the 116-class and canteen galleries prefix the class, and their files live
+    #: in a per-class directory, so "apple_pie__test_0.jpg" is class + file name
     if "__" in name:
         cls, fname = name.split("__", 1)
         if cls and fname and "/" not in cls and "\\" not in cls:
-            candidate = (WIDE_SAMPLES / cls / fname).resolve()
-            if candidate.parent == (WIDE_SAMPLES / cls).resolve() and candidate.is_file():
-                return candidate
-    for root in (SAMPLES, WIDE_SAMPLES, MIXED_SAMPLES):
+            for root in (WIDE_SAMPLES, CN_SAMPLES):
+                candidate = (root / cls / fname).resolve()
+                if candidate.parent == (root / cls).resolve() and candidate.is_file():
+                    return candidate
+    for root in (SAMPLES, WIDE_SAMPLES, MIXED_SAMPLES, CN_SAMPLES):
         hit = _resolve_in(root, name)
         if hit is not None:
             return hit
@@ -1092,8 +1093,12 @@ async def predict(
 FEEDBACK_DIR = ROOT / "data/splits/feedback"
 FEEDBACK_CSV = FEEDBACK_DIR / "labels.csv"
 FEEDBACK_SPECIAL = {"not_a_dish": "照片里没有菜", "not_sure": "我也说不准"}
-#: A correction can name any class any of the three models knows, not just the 20.
-FEEDBACK_CLASSES = set(CLASS_NAMES) | set(WIDE_CLASS_NAMES) | set(FEEDBACK_SPECIAL)
+#: A correction can name any class any of the four heads knows, not just the 20:
+#: the canteen menu has its own slugs (tomato_egg, di_san_xian, ...), and without
+#: them every correction made in the canteen tab failed validation.
+FEEDBACK_CLASSES = (
+    set(CLASS_NAMES) | set(WIDE_CLASS_NAMES) | set(CN_CLASS_NAMES) | set(FEEDBACK_SPECIAL)
+)
 FEEDBACK_COLUMNS = ["timestamp", "file", "predicted", "corrected", "removed", "note", "source", "mode"]
 
 
@@ -1166,7 +1171,7 @@ async def feedback(
         )
     corrected = ";".join(parts)
     removed = ";".join(dropped)
-    mode = mode if mode in ("single", "wide", "mixed") else "single"
+    mode = mode if mode in ("single", "wide", "mixed", "cn") else "single"
 
     upload = file is not None and bool(file.filename)
     raw = b""
