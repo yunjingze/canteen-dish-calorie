@@ -1,0 +1,2144 @@
+[
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4556,
+  "top1": "hot_dog",
+  "top1_prob": 0.2857127785682678
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8977,
+  "top1": "hot_dog",
+  "top1_prob": 0.9828200340270996
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6702,
+  "top1": "hot_dog",
+  "top1_prob": 0.53873610496521
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5437,
+  "top1": "hot_dog",
+  "top1_prob": 0.6071531176567078
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6527,
+  "top1": "ice_cream",
+  "top1_prob": 0.9696663618087769
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.529,
+  "top1": "ice_cream",
+  "top1_prob": 0.8419340252876282
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4913,
+  "top1": "ice_cream",
+  "top1_prob": 0.8703819513320923
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\008.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4346,
+  "top1": "ice_cream",
+  "top1_prob": 0.8465432524681091
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\009.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8996,
+  "top1": "sushi",
+  "top1_prob": 0.9831433892250061
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\010.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3923,
+  "top1": "ice_cream",
+  "top1_prob": 0.4645937979221344
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\011.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3931,
+  "top1": "ice_cream",
+  "top1_prob": 0.7748335599899292
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\012.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2649,
+  "top1": "hamburger",
+  "top1_prob": 0.3598669767379761
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\013.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4648,
+  "top1": "ice_cream",
+  "top1_prob": 0.5232201814651489
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\014.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2426,
+  "top1": "hamburger",
+  "top1_prob": 0.4291171729564667
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\015.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3771,
+  "top1": "donuts",
+  "top1_prob": 0.9215728044509888
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\016.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2979,
+  "top1": "pancakes",
+  "top1_prob": 0.6370305418968201
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\017.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2677,
+  "top1": "french_fries",
+  "top1_prob": 0.2300104945898056
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\018.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2702,
+  "top1": "sushi",
+  "top1_prob": 0.34154215455055237
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\019.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4934,
+  "top1": "ice_cream",
+  "top1_prob": 0.7309547066688538
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\020.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2738,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.2897961139678955
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\021.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.691,
+  "top1": "ice_cream",
+  "top1_prob": 0.831839919090271
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\022.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3483,
+  "top1": "ice_cream",
+  "top1_prob": 0.6119580268859863
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\023.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2768,
+  "top1": "ice_cream",
+  "top1_prob": 0.22004707157611847
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\024.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3158,
+  "top1": "steak",
+  "top1_prob": 0.3625258803367615
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\025.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2858,
+  "top1": "waffles",
+  "top1_prob": 0.43313106894493103
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\026.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3138,
+  "top1": "donuts",
+  "top1_prob": 0.5266424417495728
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\027.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4067,
+  "top1": "ice_cream",
+  "top1_prob": 0.8172652721405029
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\028.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.7337,
+  "top1": "ice_cream",
+  "top1_prob": 0.88254314661026
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\029.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2495,
+  "top1": "ice_cream",
+  "top1_prob": 0.22905206680297852
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\030.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3519,
+  "top1": "donuts",
+  "top1_prob": 0.36727994680404663
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\031.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3398,
+  "top1": "french_fries",
+  "top1_prob": 0.48344701528549194
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\032.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2694,
+  "top1": "ice_cream",
+  "top1_prob": 0.28487664461135864
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\033.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.405,
+  "top1": "donuts",
+  "top1_prob": 0.7072675228118896
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\034.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2579,
+  "top1": "donuts",
+  "top1_prob": 0.4327470064163208
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\035.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2786,
+  "top1": "hamburger",
+  "top1_prob": 0.41202062368392944
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\036.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6134,
+  "top1": "ice_cream",
+  "top1_prob": 0.9255003333091736
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\037.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3216,
+  "top1": "ice_cream",
+  "top1_prob": 0.8098856210708618
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\038.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3455,
+  "top1": "ice_cream",
+  "top1_prob": 0.5617262125015259
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\039.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2626,
+  "top1": "hamburger",
+  "top1_prob": 0.7883018255233765
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\040.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4164,
+  "top1": "ice_cream",
+  "top1_prob": 0.40422603487968445
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\041.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6819,
+  "top1": "ice_cream",
+  "top1_prob": 0.901852011680603
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\042.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1723,
+  "top1": "dumplings",
+  "top1_prob": 0.22695223987102509
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\043.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4106,
+  "top1": "french_fries",
+  "top1_prob": 0.16759806871414185
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\044.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1744,
+  "top1": "dumplings",
+  "top1_prob": 0.18053466081619263
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\045.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2482,
+  "top1": "fried_rice",
+  "top1_prob": 0.2630442678928375
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\046.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6621,
+  "top1": "sushi",
+  "top1_prob": 0.7336993217468262
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\047.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.248,
+  "top1": "donuts",
+  "top1_prob": 0.4095831513404846
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\048.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3267,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.6795247197151184
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\049.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2512,
+  "top1": "french_fries",
+  "top1_prob": 0.2817099392414093
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\050.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4711,
+  "top1": "donuts",
+  "top1_prob": 0.777869462966919
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\051.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3637,
+  "top1": "sushi",
+  "top1_prob": 0.44574254751205444
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\052.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3114,
+  "top1": "sushi",
+  "top1_prob": 0.45832559466362
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\053.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2813,
+  "top1": "hot_dog",
+  "top1_prob": 0.5529015064239502
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\054.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4912,
+  "top1": "ice_cream",
+  "top1_prob": 0.9227627515792847
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\055.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3088,
+  "top1": "ice_cream",
+  "top1_prob": 0.4522884786128998
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\056.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2244,
+  "top1": "ice_cream",
+  "top1_prob": 0.4977723956108093
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\057.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2502,
+  "top1": "ice_cream",
+  "top1_prob": 0.3324708044528961
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\058.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.279,
+  "top1": "sushi",
+  "top1_prob": 0.32314014434814453
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\059.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3838,
+  "top1": "donuts",
+  "top1_prob": 0.5594093203544617
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\060.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4226,
+  "top1": "ice_cream",
+  "top1_prob": 0.8053478598594666
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\061.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3379,
+  "top1": "ice_cream",
+  "top1_prob": 0.3002607226371765
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\062.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2992,
+  "top1": "ice_cream",
+  "top1_prob": 0.5043426752090454
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\063.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3321,
+  "top1": "hot_dog",
+  "top1_prob": 0.5846602916717529
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\064.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3168,
+  "top1": "dumplings",
+  "top1_prob": 0.35635751485824585
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\065.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2512,
+  "top1": "pancakes",
+  "top1_prob": 0.2576712965965271
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\066.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2308,
+  "top1": "ice_cream",
+  "top1_prob": 0.25036323070526123
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\067.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3529,
+  "top1": "ice_cream",
+  "top1_prob": 0.2674259543418884
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\068.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6859,
+  "top1": "steak",
+  "top1_prob": 0.8313460946083069
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\069.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2999,
+  "top1": "french_fries",
+  "top1_prob": 0.40771859884262085
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\070.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2184,
+  "top1": "fried_rice",
+  "top1_prob": 0.201038658618927
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\071.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2963,
+  "top1": "ice_cream",
+  "top1_prob": 0.4277794063091278
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\072.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2798,
+  "top1": "steak",
+  "top1_prob": 0.3327869474887848
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\073.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.222,
+  "top1": "ice_cream",
+  "top1_prob": 0.22591161727905273
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\074.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3662,
+  "top1": "donuts",
+  "top1_prob": 0.45962607860565186
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\075.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2596,
+  "top1": "ice_cream",
+  "top1_prob": 0.26684877276420593
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\076.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1747,
+  "top1": "ice_cream",
+  "top1_prob": 0.2748681902885437
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\077.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6117,
+  "top1": "ice_cream",
+  "top1_prob": 0.8601136207580566
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\078.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.515,
+  "top1": "ice_cream",
+  "top1_prob": 0.6315051913261414
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\079.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5241,
+  "top1": "donuts",
+  "top1_prob": 0.5714804530143738
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\080.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3117,
+  "top1": "fried_rice",
+  "top1_prob": 0.29824188351631165
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\081.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2264,
+  "top1": "waffles",
+  "top1_prob": 0.16933037340641022
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\082.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3316,
+  "top1": "ice_cream",
+  "top1_prob": 0.3859560489654541
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\083.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3005,
+  "top1": "dumplings",
+  "top1_prob": 0.3342556953430176
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\084.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3754,
+  "top1": "donuts",
+  "top1_prob": 0.4045032858848572
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\085.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2355,
+  "top1": "hot_dog",
+  "top1_prob": 0.5013869404792786
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\086.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3832,
+  "top1": "sushi",
+  "top1_prob": 0.2031339704990387
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\087.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3298,
+  "top1": "pancakes",
+  "top1_prob": 0.5039718151092529
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\088.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2793,
+  "top1": "hamburger",
+  "top1_prob": 0.42865270376205444
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\089.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.218,
+  "top1": "french_fries",
+  "top1_prob": 0.15974247455596924
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\090.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4531,
+  "top1": "dumplings",
+  "top1_prob": 0.5946623682975769
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\091.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4149,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.4758847653865814
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\092.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3759,
+  "top1": "sushi",
+  "top1_prob": 0.5457743406295776
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\093.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2177,
+  "top1": "dumplings",
+  "top1_prob": 0.6948786973953247
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\094.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2928,
+  "top1": "waffles",
+  "top1_prob": 0.2444600611925125
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\095.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2411,
+  "top1": "sushi",
+  "top1_prob": 0.23777452111244202
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\096.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2901,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.39511430263519287
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\097.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2445,
+  "top1": "hot_dog",
+  "top1_prob": 0.5799804925918579
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\098.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4347,
+  "top1": "hamburger",
+  "top1_prob": 0.6972480416297913
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\099.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1939,
+  "top1": "hamburger",
+  "top1_prob": 0.24690444767475128
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\100.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.512,
+  "top1": "ice_cream",
+  "top1_prob": 0.519225537776947
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\101.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2636,
+  "top1": "donuts",
+  "top1_prob": 0.24584485590457916
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\102.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4198,
+  "top1": "ice_cream",
+  "top1_prob": 0.28927329182624817
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\103.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1402,
+  "top1": "ice_cream",
+  "top1_prob": 0.27653685212135315
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\104.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4597,
+  "top1": "ice_cream",
+  "top1_prob": 0.7753188014030457
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\105.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4812,
+  "top1": "steak",
+  "top1_prob": 0.4857652485370636
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\106.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2263,
+  "top1": "chicken_wings",
+  "top1_prob": 0.24537181854248047
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\107.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8881,
+  "top1": "steak",
+  "top1_prob": 0.6631860136985779
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\108.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2347,
+  "top1": "steak",
+  "top1_prob": 0.4692932665348053
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\109.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.309,
+  "top1": "pancakes",
+  "top1_prob": 0.37737464904785156
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\110.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2099,
+  "top1": "dumplings",
+  "top1_prob": 0.5610931515693665
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\111.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5734,
+  "top1": "waffles",
+  "top1_prob": 0.6695782542228699
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\112.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6924,
+  "top1": "steak",
+  "top1_prob": 0.8768997192382812
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\113.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3272,
+  "top1": "ice_cream",
+  "top1_prob": 0.30919545888900757
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\114.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4038,
+  "top1": "sushi",
+  "top1_prob": 0.4464542269706726
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\115.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3813,
+  "top1": "donuts",
+  "top1_prob": 0.31237369775772095
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\116.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5672,
+  "top1": "ice_cream",
+  "top1_prob": 0.7877618670463562
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\117.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2368,
+  "top1": "hamburger",
+  "top1_prob": 0.249156653881073
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\118.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.227,
+  "top1": "sushi",
+  "top1_prob": 0.2777731716632843
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\119.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2034,
+  "top1": "ice_cream",
+  "top1_prob": 0.41956114768981934
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\120.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4079,
+  "top1": "ice_cream",
+  "top1_prob": 0.632622480392456
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\121.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2563,
+  "top1": "fried_rice",
+  "top1_prob": 0.2876749038696289
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\122.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3269,
+  "top1": "donuts",
+  "top1_prob": 0.496791809797287
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\123.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5365,
+  "top1": "ice_cream",
+  "top1_prob": 0.7347543835639954
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\124.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1701,
+  "top1": "ice_cream",
+  "top1_prob": 0.3270740211009979
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\125.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3425,
+  "top1": "pancakes",
+  "top1_prob": 0.2452114224433899
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\126.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2264,
+  "top1": "ice_cream",
+  "top1_prob": 0.3207949101924896
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\127.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2583,
+  "top1": "steak",
+  "top1_prob": 0.26076558232307434
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\128.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1947,
+  "top1": "ice_cream",
+  "top1_prob": 0.2754132151603699
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\129.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2572,
+  "top1": "sushi",
+  "top1_prob": 0.3314504325389862
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\130.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3731,
+  "top1": "ice_cream",
+  "top1_prob": 0.6361004710197449
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\131.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5684,
+  "top1": "hot_dog",
+  "top1_prob": 0.732434868812561
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\132.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4617,
+  "top1": "hot_dog",
+  "top1_prob": 0.26755931973457336
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\133.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.336,
+  "top1": "sushi",
+  "top1_prob": 0.7769360542297363
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\134.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5937,
+  "top1": "ice_cream",
+  "top1_prob": 0.8789194822311401
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\135.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2627,
+  "top1": "ice_cream",
+  "top1_prob": 0.41906216740608215
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\136.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.214,
+  "top1": "pizza",
+  "top1_prob": 0.34422022104263306
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\137.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2046,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.2828303873538971
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\138.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1701,
+  "top1": "hot_dog",
+  "top1_prob": 0.27740395069122314
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\001.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.1994,
+  "top1": "chicken_wings",
+  "top1_prob": 0.8685905933380127
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8624,
+  "top1": "chicken_wings",
+  "top1_prob": 0.9793373346328735
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9982,
+  "top1": "chicken_wings",
+  "top1_prob": 0.9991307854652405
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9509,
+  "top1": "chicken_wings",
+  "top1_prob": 0.9752673506736755
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9758,
+  "top1": "chicken_wings",
+  "top1_prob": 0.9983568787574768
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9899,
+  "top1": "chicken_wings",
+  "top1_prob": 0.9973530769348145
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8512,
+  "top1": "chicken_wings",
+  "top1_prob": 0.9745941758155823
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\008.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9799,
+  "top1": "chicken_wings",
+  "top1_prob": 0.9948341846466064
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9835,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.998050332069397
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9825,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.9939475059509277
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.967,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.9934388995170593
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9764,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.9931555390357971
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6851,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.9602298140525818
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9885,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.9972752928733826
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9458,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.9910616278648376
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\008.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9491,
+  "top1": "chocolate_cake",
+  "top1_prob": 0.9924083948135376
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5009,
+  "top1": "donuts",
+  "top1_prob": 0.9006497859954834
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9027,
+  "top1": "donuts",
+  "top1_prob": 0.942859947681427
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9978,
+  "top1": "donuts",
+  "top1_prob": 0.9992569088935852
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9804,
+  "top1": "donuts",
+  "top1_prob": 0.9947388768196106
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.961,
+  "top1": "donuts",
+  "top1_prob": 0.9975486397743225
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9896,
+  "top1": "donuts",
+  "top1_prob": 0.9989853501319885
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9627,
+  "top1": "donuts",
+  "top1_prob": 0.9969909191131592
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6489,
+  "top1": "dumplings",
+  "top1_prob": 0.9547234773635864
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6983,
+  "top1": "dumplings",
+  "top1_prob": 0.99273282289505
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9982,
+  "top1": "dumplings",
+  "top1_prob": 0.9996356964111328
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8735,
+  "top1": "dumplings",
+  "top1_prob": 0.9609736204147339
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9862,
+  "top1": "dumplings",
+  "top1_prob": 0.9986569881439209
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9928,
+  "top1": "dumplings",
+  "top1_prob": 0.9988343119621277
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9346,
+  "top1": "dumplings",
+  "top1_prob": 0.998700737953186
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\008.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.932,
+  "top1": "dumplings",
+  "top1_prob": 0.9992395639419556
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\009.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9968,
+  "top1": "dumplings",
+  "top1_prob": 0.999426007270813
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\010.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.97,
+  "top1": "dumplings",
+  "top1_prob": 0.9958421587944031
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5134,
+  "top1": "french_fries",
+  "top1_prob": 0.8900566101074219
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3624,
+  "top1": "ice_cream",
+  "top1_prob": 0.5295183658599854
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9431,
+  "top1": "french_fries",
+  "top1_prob": 0.9951106905937195
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9878,
+  "top1": "french_fries",
+  "top1_prob": 0.9994831085205078
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9819,
+  "top1": "french_fries",
+  "top1_prob": 0.9986522793769836
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9898,
+  "top1": "french_fries",
+  "top1_prob": 0.9965330362319946
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8488,
+  "top1": "french_fries",
+  "top1_prob": 0.9615563750267029
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9767,
+  "top1": "fried_rice",
+  "top1_prob": 0.9981561303138733
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9075,
+  "top1": "fried_rice",
+  "top1_prob": 0.9885625839233398
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.4471,
+  "top1": "fried_rice",
+  "top1_prob": 0.8715341091156006
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9879,
+  "top1": "fried_rice",
+  "top1_prob": 0.9986716508865356
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9797,
+  "top1": "fried_rice",
+  "top1_prob": 0.9904629588127136
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8726,
+  "top1": "fried_rice",
+  "top1_prob": 0.9907044768333435
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5856,
+  "top1": "fried_rice",
+  "top1_prob": 0.9814788103103638
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\greek_salad\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5573,
+  "top1": "greek_salad",
+  "top1_prob": 0.9201194047927856
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\greek_salad\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6434,
+  "top1": "greek_salad",
+  "top1_prob": 0.6903931498527527
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9453,
+  "top1": "hamburger",
+  "top1_prob": 0.9944108128547668
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9366,
+  "top1": "hamburger",
+  "top1_prob": 0.9628335237503052
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9918,
+  "top1": "hamburger",
+  "top1_prob": 0.9974381923675537
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8238,
+  "top1": "hamburger",
+  "top1_prob": 0.9729908108711243
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6509,
+  "top1": "hamburger",
+  "top1_prob": 0.8478224277496338
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8441,
+  "top1": "hamburger",
+  "top1_prob": 0.9687377214431763
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5171,
+  "top1": "hamburger",
+  "top1_prob": 0.4865281879901886
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\008.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3604,
+  "top1": "hamburger",
+  "top1_prob": 0.852584183216095
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\009.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6138,
+  "top1": "ice_cream",
+  "top1_prob": 0.4313279688358307
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\010.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6508,
+  "top1": "french_fries",
+  "top1_prob": 0.8871240615844727
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\011.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5806,
+  "top1": "hamburger",
+  "top1_prob": 0.910470187664032
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\012.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8767,
+  "top1": "hamburger",
+  "top1_prob": 0.8833209872245789
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9916,
+  "top1": "hot_dog",
+  "top1_prob": 0.9996585845947266
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9879,
+  "top1": "hot_dog",
+  "top1_prob": 0.9975848197937012
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9371,
+  "top1": "hot_dog",
+  "top1_prob": 0.9902715086936951
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9785,
+  "top1": "hot_dog",
+  "top1_prob": 0.9960085153579712
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ice_cream\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9578,
+  "top1": "ice_cream",
+  "top1_prob": 0.9983392953872681
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9874,
+  "top1": "lasagna",
+  "top1_prob": 0.9939616322517395
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9341,
+  "top1": "lasagna",
+  "top1_prob": 0.9888466000556946
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5896,
+  "top1": "lasagna",
+  "top1_prob": 0.5381966829299927
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9894,
+  "top1": "lasagna",
+  "top1_prob": 0.9977879524230957
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.7181,
+  "top1": "lasagna",
+  "top1_prob": 0.9691984057426453
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.8731,
+  "top1": "lasagna",
+  "top1_prob": 0.9966647028923035
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pancakes\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5708,
+  "top1": "pancakes",
+  "top1_prob": 0.9242628812789917
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.7214,
+  "top1": "lasagna",
+  "top1_prob": 0.9832573533058167
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.3837,
+  "top1": "pizza",
+  "top1_prob": 0.5901793241500854
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\003.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2475,
+  "top1": "pizza",
+  "top1_prob": 0.36680951714515686
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6501,
+  "top1": "lasagna",
+  "top1_prob": 0.6333878040313721
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\005.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.3197,
+  "top1": "pizza",
+  "top1_prob": 0.78153395652771
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9399,
+  "top1": "pizza",
+  "top1_prob": 0.99458909034729
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9726,
+  "top1": "pizza",
+  "top1_prob": 0.9965255856513977
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\008.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.6006,
+  "top1": "pizza",
+  "top1_prob": 0.7509467005729675
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\009.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9742,
+  "top1": "pizza",
+  "top1_prob": 0.9872910380363464
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\010.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.418,
+  "top1": "pizza",
+  "top1_prob": 0.7528076767921448
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\011.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9877,
+  "top1": "pizza",
+  "top1_prob": 0.9971020817756653
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5231,
+  "top1": "ramen",
+  "top1_prob": 0.634506344795227
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9854,
+  "top1": "ramen",
+  "top1_prob": 0.9959195852279663
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5593,
+  "top1": "ramen",
+  "top1_prob": 0.9315590262413025
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.913,
+  "top1": "ramen",
+  "top1_prob": 0.9440292716026306
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9586,
+  "top1": "ramen",
+  "top1_prob": 0.9921197891235352
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9818,
+  "top1": "ramen",
+  "top1_prob": 0.997676432132721
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9178,
+  "top1": "ramen",
+  "top1_prob": 0.9783447980880737
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\008.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5698,
+  "top1": "ramen",
+  "top1_prob": 0.9641445279121399
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\001.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9679,
+  "top1": "spaghetti_bolognese",
+  "top1_prob": 0.9980630278587341
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\002.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9968,
+  "top1": "spaghetti_bolognese",
+  "top1_prob": 0.999153733253479
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\003.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.5499,
+  "top1": "spaghetti_bolognese",
+  "top1_prob": 0.9421672821044922
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\004.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9758,
+  "top1": "spaghetti_bolognese",
+  "top1_prob": 0.9944235682487488
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\005.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9653,
+  "top1": "spaghetti_bolognese",
+  "top1_prob": 0.9914600849151611
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\006.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.996,
+  "top1": "spaghetti_bolognese",
+  "top1_prob": 0.9996004700660706
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\007.jpg",
+  "in_scope": true,
+  "food_prob": null,
+  "robust": 0.9929,
+  "top1": "spaghetti_bolognese",
+  "top1_prob": 0.9985968470573425
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\waffles\\001.jpg",
+  "in_scope": false,
+  "food_prob": null,
+  "robust": 0.2514,
+  "top1": "waffles",
+  "top1_prob": 0.7110297083854675
+ }
+]

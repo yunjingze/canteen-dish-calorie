@@ -67,7 +67,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", required=True, help="folder with per-class sub-folders or photos")
     ap.add_argument("--manifest", default=None, help="optional CSV with path,label")
-    ap.add_argument("--ckpt", default=str(ROOT / "results/runs/resnet18_last_stage_aug/best.pt"))
+    ap.add_argument("--ckpt", default=str(ROOT / "results/runs/resnet18_last_stage_aug_f101n/best.pt"))
     ap.add_argument("--out", default=str(ROOT / "results/tables/real_photos.json"))
     args = ap.parse_args(argv)
 

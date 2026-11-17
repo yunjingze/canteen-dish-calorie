@@ -11,8 +11,8 @@
 param(
     [int]$Port = 8000,
     [string]$BindAddress = "0.0.0.0",
-    [string]$Ckpt = "results/runs/resnet18_last_stage_aug/best.pt",
-    [string]$MixedCkpt = "results/runs/resnet18_multilabel_aug/best.pt",
+    [string]$Ckpt = "results/runs/resnet18_last_stage_aug_f101n/best.pt",
+    [string]$MixedCkpt = "results/runs/resnet18_multilabel_plate40/best.pt",
     [string]$WideCkpt = "results/runs/resnet18_food101_cn116/best.pt",
     [switch]$Open,
     [switch]$Qr,

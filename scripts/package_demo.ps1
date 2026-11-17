@@ -29,12 +29,24 @@ foreach ($s in @("setup_cloudflare_tunnel.ps1", "start_permanent.ps1", "start_fu
 if (Test-Path (Join-Path $root "docs")) {
     Copy-Item (Join-Path $root "docs") (Join-Path $stage "docs") -Recurse
 }
-New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\resnet18_last_stage_aug") -Force | Out-Null
-Copy-Item (Join-Path $root "results\runs\resnet18_last_stage_aug\best.pt") (Join-Path $stage "results\runs\resnet18_last_stage_aug\best.pt")
-# without this the stage silently falls back to T=1.0 and every probability,
-# confidence bar and 0.32 gate decision differs from the measured model
-$mainCal = Join-Path $root "results\runs\resnet18_last_stage_aug\calibration.json"
-if (Test-Path $mainCal) { Copy-Item $mainCal (Join-Path $stage "results\runs\resnet18_last_stage_aug\calibration.json") }
+# The deployed 20-class backbone is the Food-101N clean-label run: the food gate
+# and the packaging head below were fitted on its pooled features.  The Food-101
+# run it replaced is NOT bundled -- a bundle that shipped the wrong backbone
+# together with these two json files would score worse than one shipping neither.
+$mainRunName = "resnet18_last_stage_aug_f101n"
+$mainRun = Join-Path $root "results\runs\$mainRunName"
+New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\$mainRunName") -Force | Out-Null
+Copy-Item (Join-Path $mainRun "best.pt") (Join-Path $stage "results\runs\$mainRunName\best.pt")
+# without calibration.json the stage silently falls back to T=1.0 and every
+# probability, confidence bar and 0.32 gate decision differs from the measured
+# model; without the two gate files the food gate and the packaging head stay
+# off and roughly half of all non-food photos pass the 0.32 rule again.
+foreach ($f in @("calibration.json", "foodgate.json", "packaging.json")) {
+    if (Test-Path (Join-Path $mainRun $f)) {
+        Copy-Item (Join-Path $mainRun $f) (Join-Path $stage "results\runs\$mainRunName\$f")
+        Write-Host "bundled $f"
+    }
+}
 
 # keep the bundle clean: no bytecode caches, no TorchInductor scratch directories
 $junk = Get-ChildItem (Join-Path $stage "src") -Recurse -Directory |

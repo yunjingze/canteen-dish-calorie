@@ -5,7 +5,7 @@ param(
   [string]$Sample = "",
   [int]$Grams = 0,
   [int]$Port = 8000,
-  [string]$Ckpt = "results/runs/resnet18_last_stage_aug/best.pt",
+  [string]$Ckpt = "results/runs/resnet18_last_stage_aug_f101n/best.pt",
   [string]$WideCkpt = "results/runs/resnet18_food101_cn116/best.pt",
   [string]$Name = "demo_ui.png",
   [string]$Extra = "",

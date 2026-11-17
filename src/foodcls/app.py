@@ -59,7 +59,15 @@ from . import packaging
 from .utils import pick_device
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_CKPT = ROOT / "results/runs/resnet18_last_stage_aug/best.pt"
+#: The deployed 20-class backbone.  It is the Food-101N clean-label run, not the
+#: plain Food-101 one, because the food gate and the packaging head were fitted
+#: on its pooled features and lose most of their power on another backbone
+#: (measured end to end: 2/123 non-food photos accepted here, 43/123 with the
+#: same two gates on the Food-101 run).  Pointing FOODCLS_CKPT at a different
+#: run without also pointing FOODCLS_GATE / FOODCLS_PACK at matching files
+#: silently turns both heads off -- /api/health shows enabled:false when it
+#: happens.
+DEFAULT_CKPT = ROOT / "results/runs/resnet18_last_stage_aug_f101n/best.pt"
 CKPT = Path(os.environ.get("FOODCLS_CKPT", DEFAULT_CKPT))
 if not CKPT.is_absolute():
     CKPT = (ROOT / CKPT).resolve()
@@ -187,6 +195,9 @@ FOODGATE_PATH = Path(os.environ.get("FOODCLS_GATE", CKPT.parent / "foodgate.json
 if not FOODGATE_PATH.is_absolute():
     FOODGATE_PATH = (ROOT / FOODGATE_PATH).resolve()
 FOODGATE_THRESHOLD = 0.20
+#: where the gate pair belonging to the deployed backbone lives; quoted in the
+#: start-up warning so a missing file is a one-line fix, not a silent loss
+GATE_HOME = "results/runs/resnet18_last_stage_aug_f101n"
 
 #: Packaging head (see foodcls/packaging_head.py).  The food gate answers "is
 #: there food here?" and a photo printed on a pizza box clears it.  This head
@@ -268,8 +279,8 @@ def load_model():
         except (OSError, ValueError, KeyError) as exc:
             print(f"food gate disabled: {exc}", flush=True)
     else:
-        print(f"no food gate at {FOODGATE_PATH}; relying on the view-robust rule only",
-              flush=True)
+        print(f"no food gate at {FOODGATE_PATH}; relying on the view-robust rule "
+              f"only (this backbone's gate pair lives in {GATE_HOME}/)", flush=True)
     _state["packaging"] = None
     if PACKAGING_PATH.is_file():
         try:
@@ -279,8 +290,8 @@ def load_model():
         except (OSError, ValueError, KeyError) as exc:
             print(f"packaging head disabled: {exc}", flush=True)
     else:
-        print(f"no packaging head at {PACKAGING_PATH}; using the edge heuristic only",
-              flush=True)
+        print(f"no packaging head at {PACKAGING_PATH}; using the edge heuristic "
+              f"only (this backbone's gate pair lives in {GATE_HOME}/)", flush=True)
 
 
 def _mixed_tables(ckpt):
@@ -1591,6 +1602,7 @@ def health():
             "classes": len(CN_VETO_CLASSES),
         },
         "brand_items": _state.get("brand_items", 0),
+        "checkpoint": CKPT.parent.name,
         "food_gate": {
             "enabled": _state.get("foodgate") is not None,
             "threshold": FOODGATE_THRESHOLD,

@@ -50,7 +50,7 @@ def infer(model, device, path, portion="normal", grams=None, tta=False):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("image")
-    ap.add_argument("--ckpt", default=str(Path(__file__).resolve().parents[2] / "results/runs/resnet18_last_stage_aug/best.pt"))
+    ap.add_argument("--ckpt", default=str(Path(__file__).resolve().parents[2] / "results/runs/resnet18_last_stage_aug_f101n/best.pt"))
     ap.add_argument("--portion", default="normal", choices=["small", "normal", "large"])
     ap.add_argument("--grams", type=float, default=None,
                     help="actual serving weight in grams; overrides --portion")
