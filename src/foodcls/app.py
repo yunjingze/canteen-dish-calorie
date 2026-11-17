@@ -47,6 +47,12 @@ from .mixed import (
     plate_totals,
 )
 from .models import build_model
+from .plate_classes import (
+    PLATE_CLASS_NAMES,
+    PLATE_KCAL_PER_100G,
+    PLATE_PORTION_G,
+    PLATE_ZH,
+)
 from .foodgate import FoodGate
 from .packaging_head import PackagingHead, message as packaging_head_message
 from . import packaging
@@ -59,7 +65,7 @@ if not CKPT.is_absolute():
     CKPT = (ROOT / CKPT).resolve()
 
 #: optional multi-label head for mixed trays; the single-dish demo works without it
-DEFAULT_MIXED_CKPT = ROOT / "results/runs/resnet18_multilabel_aug/best.pt"
+DEFAULT_MIXED_CKPT = ROOT / "results/runs/resnet18_multilabel_plate40/best.pt"
 MIXED_CKPT = Path(os.environ.get("FOODCLS_MIXED_CKPT", DEFAULT_MIXED_CKPT))
 if not MIXED_CKPT.is_absolute():
     MIXED_CKPT = (ROOT / MIXED_CKPT).resolve()
@@ -277,6 +283,20 @@ def load_model():
               flush=True)
 
 
+def _mixed_tables(ckpt):
+    """Class order and lookup tables for the tray head (20 or 40 classes)."""
+    names = list(ckpt.get("class_names") or CLASS_NAMES)
+    if names == list(CLASS_NAMES):
+        return names, ZH_LABELS, KCAL_PER_100G, PORTION_G
+    if names == list(PLATE_CLASS_NAMES):
+        return names, PLATE_ZH, PLATE_KCAL_PER_100G, PLATE_PORTION_G
+    raise RuntimeError(
+        f"mixed checkpoint {MIXED_CKPT.name} has {len(names)} classes, which match "
+        f"neither the {len(CLASS_NAMES)} western dishes nor those plus the canteen "
+        "menu; refusing to load"
+    )
+
+
 def load_mixed_model():
     """Load the multi-label plate model if it has been trained (optional)."""
     _state["mixed_model"] = None
@@ -287,17 +307,25 @@ def load_mixed_model():
         return
     device = _state["device"]
     ckpt = torch.load(MIXED_CKPT, map_location=device, weights_only=False)
-    _check_class_names(ckpt, CLASS_NAMES, MIXED_CKPT)
-    model = build_model(ckpt["arch"], len(CLASS_NAMES), pretrained=False)
+    names, zh, kcal, grams_table = _mixed_tables(ckpt)
+    model = build_model(ckpt["arch"], len(names), pretrained=False)
     model.load_state_dict(ckpt["model"])
     model.to(device).eval()
     _state["mixed_model"] = model
+    _state["mixed_names"] = names
+    _state["mixed_zh"] = zh
+    _state["mixed_kcal"] = kcal
+    _state["mixed_portion"] = grams_table
     _state["mixed_threshold"] = float(ckpt.get("threshold", DETECT_THRESHOLD))
     table = ckpt.get("class_thresholds") or {}
     _state["mixed_class_thresholds"] = {str(k): float(v) for k, v in table.items()}
+    cuisines = (
+        f"{len(CLASS_NAMES)} western + {len(names) - len(CLASS_NAMES)} canteen"
+        if len(names) > len(CLASS_NAMES) else "western only"
+    )
     print(
         f"loaded mixed model {ckpt['arch']} from {MIXED_CKPT} "
-        f"(threshold {_state['mixed_threshold']:.2f}, "
+        f"({len(names)} classes, {cuisines}; threshold {_state['mixed_threshold']:.2f}, "
         f"{len(_state['mixed_class_thresholds'])} per-class cut-offs)",
         flush=True,
     )
@@ -823,19 +851,35 @@ def mixed_payload(probs: np.ndarray, source: str, portion: str = "normal", truth
     portion = str(portion or "normal").strip().lower()
     threshold = float(_state.get("mixed_threshold", DETECT_THRESHOLD))
     class_thresholds = _state.get("mixed_class_thresholds") or {}
+    names = _state.get("mixed_names") or list(CLASS_NAMES)
+    zh = _state.get("mixed_zh") or ZH_LABELS
+    kcal = _state.get("mixed_kcal") or KCAL_PER_100G
+    grams_table = _state.get("mixed_portion") or PORTION_G
     parts = detect_parts(
         probs,
         threshold=threshold,
         max_parts=MAX_PARTS,
         class_thresholds=class_thresholds,
         min_prob=MIN_PART_PROB,
+        class_names=names,
+        zh_table=zh,
+        kcal_table=kcal,
+        portion_table=grams_table,
     )
     for part in parts:
         part["portion"] = portion
         part["grams"] = None
+        part["cuisine"] = "canteen" if part["class"] in CN_CLASS_NAMES else "western"
         part["brand_refs"] = brands.refs_for_class(part["class"])
-    plate = plate_totals(parts, portion=portion)
+    plate = plate_totals(parts, portion=portion, zh_table=zh, kcal_table=kcal,
+                         portion_table=grams_table)
     note = "多标签模型判断盘子里有哪几样菜；每一部分可以单独选份量或填克数，总热量是各部分区间之和。"
+    mixed_cuisines = {p["cuisine"] for p in parts}
+    if len(mixed_cuisines) > 1:
+        note = ("盘子里同时有西餐和食堂菜，热量按各自的分量区间相加；"
+                "中西混搭时两份主食容易都算成整份，可以手动把其中一份改成「小份」。")
+    elif parts and parts[0]["cuisine"] == "canteen":
+        note = "这是一份食堂托盘：模型按 20 道菜 + 20 道西餐的 40 类清单找菜，每部分的克数是按食堂常见份量估的。"
     if not parts:
         note = "没有哪一样菜的得分过线：可能是一道菜为主，也可能是清单外的菜。换个角度再拍一张，或切到「单菜识别」。"
     return {
@@ -1419,7 +1463,12 @@ def _packaging_scope(img: Image.Image) -> dict:
 @app.get("/api/mixed/samples")
 def mixed_samples():
     items = [
-        {"name": it["name"], "classes": it.get("classes", []), "zh": it.get("zh", [])}
+        {
+            "name": it["name"],
+            "classes": it.get("classes", []),
+            "zh": it.get("zh", []),
+            "cuisine": it.get("cuisine", ""),
+        }
         for it in _mixed_labels()
     ]
     return {"samples": items, "enabled": _state.get("mixed_model") is not None}
@@ -1468,6 +1517,10 @@ async def mixed_predict(file: UploadFile = File(...), portion: str = "normal"):
 async def mixed_total(body: dict):
     """Recompute the per-part and total kcal after the user edits weights."""
     default_portion = str(body.get("portion") or "normal")
+    names = _state.get("mixed_names") or list(CLASS_NAMES)
+    zh = _state.get("mixed_zh") or ZH_LABELS
+    kcal = _state.get("mixed_kcal") or KCAL_PER_100G
+    grams_table = _state.get("mixed_portion") or PORTION_G
     parts = body.get("parts")
     if not isinstance(parts, list):
         return JSONResponse({"error": "parts 必须是数组"}, status_code=400)
@@ -1476,7 +1529,7 @@ async def mixed_total(body: dict):
         if not isinstance(item, dict):
             continue
         name = str(item.get("class", ""))
-        if name not in CLASS_NAMES:
+        if name not in names:
             continue
         try:
             prob = float(item.get("prob", 1.0))
@@ -1492,11 +1545,13 @@ async def mixed_total(body: dict):
         )
     if not rows:
         return JSONResponse({"error": "没有可计算的菜品"}, status_code=400)
-    return plate_totals(rows, portion=default_portion)
+    return plate_totals(rows, portion=default_portion, zh_table=zh, kcal_table=kcal,
+                        portion_table=grams_table)
 
 
 @app.get("/api/health")
 def health():
+    mixed_names = list(_state.get("mixed_names") or CLASS_NAMES)
     return {
         "ok": True,
         "arch": _state.get("arch"),
@@ -1506,6 +1561,8 @@ def health():
         "views": len(_VIEW_TFS) or 6,
         "mixed_enabled": _state.get("mixed_model") is not None,
         "mixed_threshold": _state.get("mixed_threshold", DETECT_THRESHOLD),
+        "mixed_classes": len(mixed_names),
+        "mixed_canteen_classes": max(0, len(mixed_names) - len(CLASS_NAMES)),
         "wide_enabled": _state.get("wide_model") is not None,
         "wide_arch": _state.get("wide_arch"),
         "wide_classes": WIDE_NUM_CLASSES,

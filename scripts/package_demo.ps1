@@ -41,14 +41,18 @@ $junk = Get-ChildItem (Join-Path $stage "src") -Recurse -Directory |
     Where-Object { $_.Name -eq "__pycache__" -or $_.Name -like "torchinductor_*" }
 if ($junk) { $junk | Remove-Item -Recurse -Force }
 
-# multi-label head for mixed trays (optional: the single-dish tab works without it)
-$mixedRun = Join-Path $root "results\runs\resnet18_multilabel_aug"
-if (Test-Path (Join-Path $mixedRun "best.pt")) {
-    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\resnet18_multilabel_aug") -Force | Out-Null
-    Copy-Item (Join-Path $mixedRun "best.pt") (Join-Path $stage "results\runs\resnet18_multilabel_aug\best.pt")
+# multi-label head for mixed trays (optional: the single-dish tab works without it).
+# Prefer the 40-class western+canteen tray head; fall back to the western-only one.
+$mixedCandidates = @("resnet18_multilabel_plate40", "resnet18_multilabel_aug")
+foreach ($cand in $mixedCandidates) {
+    $mixedRun = Join-Path $root "results\runs\$cand"
+    if (-not (Test-Path (Join-Path $mixedRun "best.pt"))) { continue }
+    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\$cand") -Force | Out-Null
+    Copy-Item (Join-Path $mixedRun "best.pt") (Join-Path $stage "results\runs\$cand\best.pt")
     $mcal = Join-Path $mixedRun "calibration.json"
-    if (Test-Path $mcal) { Copy-Item $mcal (Join-Path $stage "results\runs\resnet18_multilabel_aug\calibration.json") }
-    Write-Host "bundled multi-label checkpoint"
+    if (Test-Path $mcal) { Copy-Item $mcal (Join-Path $stage "results\runs\$cand\calibration.json") }
+    Write-Host "bundled multi-label checkpoint $cand"
+    break
 }
 $mixedPlates = Join-Path $root "data\splits\mixed"
 if (Test-Path $mixedPlates) {
@@ -151,8 +155,10 @@ Campus canteen dish recognition - standalone demo
 The page returns Top-3 dishes with an estimated calorie range; demo images
 are in data\splits\canteen and are not used for training.
 Switch to the "mixed plate" tab to detect 2-3 dishes on one tray (for example
-fries + chicken wings), set a portion or weight for each part, and read the
-summed calorie range; mixed demo plates live in data\splits\mixed.
+fries + chicken wings, or tomato and egg + stir-fried greens), set a portion or
+weight for each part, and read the summed calorie range. The tray head knows
+the 20 Western dishes and the 20 canteen dishes, so a Chinese lunch tray works
+in the same tab; mixed demo plates live in data\splits\mixed.
    Scores below 10% are hidden, and if nothing passes its class threshold the
    page says so instead of inventing a dish, so an odd angle may need a retry.
    Photos of dishes outside the 20 supported classes (a whole roast chicken,

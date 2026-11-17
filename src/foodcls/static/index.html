@@ -283,7 +283,8 @@
       （可切换小份 / 常规 / 大份）。区间宽度 ±15% 反映做法差异，置信度低时进一步放宽。
       数值为课堂演示用途的粗略估计，不能替代实验室营养分析。
       <br />混合餐盘模式下先由多标签模型判断盘中有哪几样菜，再对每个部分单独选份量或填克数，
-      最后把各部分的区间相加得到整盘热量。
+      最后把各部分的区间相加得到整盘热量。模型同时认识 20 道西餐和食堂的 20 道菜，
+      中西混搭的托盘也能拆成几部分分别算。
     </div>
   </section>
 </main>
@@ -1027,11 +1028,12 @@ function loadThumbs(){
       box.appendChild(el);
     });
   } else {
-    $("#sampleTitle").textContent = "混合餐盘示例（合成图 · 结果里标注真值）";
+    $("#sampleTitle").textContent = "混合餐盘示例（合成图 · 结果里标注真值 · 西餐与食堂托盘各若干）";
     (window.__mixed || []).forEach(s => {
       const el = document.createElement("div");
       el.className = "thumb";
-      el.title = (s.zh || []).join(" + ");
+      const tag = s.cuisine === "canteen" ? " · 食堂" : (s.cuisine === "mixed" ? " · 中西" : "");
+      el.title = (s.zh || []).join(" + ") + tag;
       el.innerHTML = '<img loading="lazy" src="/api/mixed/sample_image?name=' + encodeURIComponent(s.name) + '">';
       el.onclick = () => predictMixedSample(s.name);
       box.appendChild(el);

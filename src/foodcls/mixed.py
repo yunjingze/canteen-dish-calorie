@@ -16,6 +16,7 @@ from PIL import Image, ImageFilter
 
 from .calorie import class_calorie_range, portion_scale
 from .classes import CLASS_NAMES, KCAL_PER_100G, PORTION_G, ZH_LABELS
+from .plate_classes import PLATE_KCAL_PER_100G, PLATE_PORTION_G, PLATE_ZH
 
 PLATE_SIZE = 256
 DETECT_THRESHOLD = 0.5
@@ -160,12 +161,14 @@ def build_composite(
     return _compose_blobs([img.convert("RGB") for img in images], rng, size)
 
 
-def pair_indices(rng: np.random.Generator, labels: Sequence[int], n: int) -> List[int]:
+def pair_indices(rng: np.random.Generator, labels: Sequence[int], n: int,
+                 num_classes: int | None = None) -> List[int]:
     """Pick n distinct classes at random from the class list."""
+    n_classes = len(CLASS_NAMES) if num_classes is None else int(num_classes)
     picks: List[int] = []
     tries = 0
     while len(picks) < n and tries < 200:
-        lab = int(rng.integers(len(CLASS_NAMES)))
+        lab = int(rng.integers(n_classes))
         tries += 1
         if lab not in picks:
             picks.append(lab)
@@ -194,8 +197,10 @@ class MixedPlateDataset(_BASE):
         seed: int = 0,
         sizes: Sequence[int] = (1, 2, 3),
         probs: Sequence[float] = SINGLE_MIX,
+        num_classes: int | None = None,
     ):
         self.samples = list(samples)
+        self.num_classes = len(CLASS_NAMES) if num_classes is None else int(num_classes)
         self.length = length
         self.transform = transform
         self.seed = seed
@@ -229,7 +234,7 @@ class MixedPlateDataset(_BASE):
         img = parts[0] if len(parts) == 1 else build_composite(parts, rng)
         if self.transform is not None:
             img = self.transform(img)
-        target = torch.zeros(len(CLASS_NAMES), dtype=torch.float32)
+        target = torch.zeros(self.num_classes, dtype=torch.float32)
         target[labels] = 1.0
         return img, target
 
@@ -241,19 +246,27 @@ def build_eval_set(
     sizes: Sequence[int] = (2, 3),
     probs: Sequence[float] = (0.6, 0.4),
     size: int = PLATE_SIZE,
+    num_classes: int | None = None,
+    label_map: Sequence[int] | None = None,
 ) -> List[Tuple[Image.Image, List[int]]]:
-    """Deterministic composites, rebuilt identically on every evaluation run."""
+    """Deterministic composites, rebuilt identically on every evaluation run.
+
+    ``label_map`` translates the local labels of ``samples`` (0..k-1) into the
+    model's output units: the canteen pool is a 20-class dataset but occupies
+    units 20..39 of the 40-class tray head.
+    """
     out: List[Tuple[Image.Image, List[int]]] = []
     n_samples = len(samples)
     for i in range(count):
         rng = np.random.default_rng((seed, i))
         n = int(rng.choice(sizes, p=probs))
-        labels = pair_indices(rng, [], n)
+        picks = pair_indices(rng, [], n, num_classes=num_classes)
         paths = []
-        for lab in labels:
+        for lab in picks:
             # deterministic member of the class: index walks the file list
             cands = [s for s in samples if s[1] == lab] or [samples[0]]
             paths.append(cands[i % len(cands)][0])
+        labels = picks if label_map is None else [int(label_map[l]) for l in picks]
         parts = [MixedPlateDataset._load(p) for p in paths]
         out.append((build_composite(parts, rng, size=size), labels))
     return out
@@ -268,6 +281,10 @@ def detect_parts(
     max_parts: int = MAX_PARTS,
     class_thresholds: Dict[str, float] | None = None,
     min_prob: float = MIN_PART_PROB,
+    class_names: Sequence[str] | None = None,
+    zh_table: Dict[str, str] | None = None,
+    kcal_table: Dict[str, float] | None = None,
+    portion_table: Dict[str, float] | None = None,
 ) -> List[Dict]:
     """Turn per-class sigmoid scores into the parts on the plate.
 
@@ -276,26 +293,36 @@ def detect_parts(
     ``min_prob`` is dropped even if its per-class threshold is lower, and a
     plate with no confident part returns an empty list instead of a forced
     top-1: showing "steak 4%" as the answer is worse than saying nothing.
+
+    ``class_names`` and the three lookup tables let one call serve both the
+    20-class western checkpoints and the 40-class western+canteen one; they
+    default to the western tables so old callers keep working unchanged.
     """
+    class_names = CLASS_NAMES if class_names is None else list(class_names)
+    zh_table = ZH_LABELS if zh_table is None else zh_table
+    kcal_table = KCAL_PER_100G if kcal_table is None else kcal_table
+    portion_table = PORTION_G if portion_table is None else portion_table
     probs = np.asarray(probs, dtype=float).ravel()
+    if probs.size != len(class_names):
+        raise ValueError(f"got {probs.size} scores for {len(class_names)} classes")
     order = np.argsort(-probs)
     picked = []
     for i in order:
         i = int(i)
         cut = threshold
         if class_thresholds:
-            cut = float(class_thresholds.get(CLASS_NAMES[i], threshold))
+            cut = float(class_thresholds.get(class_names[i], threshold))
         if probs[i] >= max(cut, min_prob):
             picked.append(i)
         if len(picked) >= max_parts:
             break
     return [
         {
-            "class": CLASS_NAMES[i],
-            "zh": ZH_LABELS[CLASS_NAMES[i]],
+            "class": class_names[i],
+            "zh": zh_table.get(class_names[i], class_names[i]),
             "prob": float(probs[i]),
-            "kcal_per_100g": KCAL_PER_100G[CLASS_NAMES[i]],
-            "base_portion_g": PORTION_G[CLASS_NAMES[i]],
+            "kcal_per_100g": kcal_table.get(class_names[i]),
+            "base_portion_g": portion_table.get(class_names[i]),
         }
         for i in picked
     ]
@@ -304,25 +331,35 @@ def detect_parts(
 # --------------------------------------------------------------------------- #
 # Calorie arithmetic for a plate
 # --------------------------------------------------------------------------- #
-def plate_totals(parts: Sequence[Dict], portion: str = "normal") -> Dict:
+def plate_totals(
+    parts: Sequence[Dict],
+    portion: str = "normal",
+    zh_table: Dict[str, str] | None = None,
+    kcal_table: Dict[str, float] | None = None,
+    portion_table: Dict[str, float] | None = None,
+) -> Dict:
     """Per-part intervals plus their sum.
 
     Each part uses its own weight (grams) or portion multiplier; the total is the
     sum of the part intervals, which keeps the report honest: the range still
     covers recipe variability, it is not a single point estimate added up.
     """
+    zh_table = ZH_LABELS if zh_table is None else zh_table
+    kcal_table = KCAL_PER_100G if kcal_table is None else kcal_table
+    portion_table = PORTION_G if portion_table is None else portion_table
     rows = []
     for part in parts:
         name = str(part["class"])
-        if name not in KCAL_PER_100G:
+        if name not in kcal_table:
             continue
         conf = float(part.get("prob", 1.0))
         scale = portion_scale(part.get("portion", portion))
-        rng = class_calorie_range(name, conf, scale, grams=part.get("grams"))
+        rng = class_calorie_range(name, conf, scale, grams=part.get("grams"),
+                                  kcal_table=kcal_table, portion_table=portion_table)
         rows.append(
             {
                 "class": name,
-                "zh": ZH_LABELS[name],
+                "zh": zh_table[name],
                 "prob": conf,
                 "grams": rng["portion_g"],
                 "weight_source": rng["weight_source"],
