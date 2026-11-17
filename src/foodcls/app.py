@@ -154,6 +154,20 @@ CN_OTHER_THRESHOLD = float(os.environ.get("FOODCLS_CN_OTHER", "0.40"))
 #: 1 and the threshold stays CN_SCOPE_THRESHOLD, so old weights behave as before.
 CN_SCOPE_THRESHOLD_21 = float(os.environ.get("FOODCLS_CN_SCOPE_21", "0.3445"))
 
+#: Optional domain probe: "is this even a canteen-style Chinese dish?"  The
+#: 21-class head can only answer "which of the 21", so a pizza still comes back
+#: as some stir-fry with a straight face -- the bucket catches 79 % of the real
+#: western photos, and names a dish on the rest.  A logistic regression on the
+#: pooled 512-d feature of the same backbone answers the other question at the
+#: cost of one dot product: no second network, no extra forward pass, ~10 KB of
+#: JSON (scripts/extract_domain_features.py -> scripts/fit_domain_head.py).
+DOMAIN_HEAD_PATH = Path(os.environ.get("FOODCLS_DOMAIN_HEAD", "results/tables/domain_head.json"))
+if not DOMAIN_HEAD_PATH.is_absolute():
+    DOMAIN_HEAD_PATH = (ROOT / DOMAIN_HEAD_PATH).resolve()
+#: 0 keeps the threshold stored in the head file; set it to re-tune without refitting.
+DOMAIN_THRESHOLD_OVERRIDE = float(os.environ.get("FOODCLS_DOMAIN_THRESHOLD", "0"))
+DOMAIN_ZH = "食堂中餐"
+
 #: Where the 20 supported dishes sit in the 116-class table, so the two
 #: posteriors can be mixed without reordering anything.
 WIDE_NARROW_INDEX = np.array([WIDE_CLASS_NAMES.index(c) for c in CLASS_NAMES], dtype=np.int64)
@@ -344,6 +358,25 @@ def load_cn_model():
           + f") from {CN_CKPT} on {device}, T={_state['cn_temperature']:.3f}", flush=True)
 
 
+def load_domain_head():
+    """Load the optional Chinese-vs-western probe (see DOMAIN_HEAD_PATH)."""
+    _state["domain_head"] = None
+    if not DOMAIN_HEAD_PATH.is_file():
+        print(f"no domain probe at {DOMAIN_HEAD_PATH}; the canteen gate stands alone", flush=True)
+        return
+    head = json.loads(DOMAIN_HEAD_PATH.read_text(encoding="utf-8"))
+    w = np.asarray(head["w"], dtype=np.float64)
+    _state["domain_head"] = {
+        "w": w,
+        "b": float(head["b"]),
+        "mean": np.asarray(head["mean"], dtype=np.float64),
+        "scale": np.asarray(head["scale"], dtype=np.float64),
+        "threshold": DOMAIN_THRESHOLD_OVERRIDE or float(head["threshold"]),
+    }
+    print(f"loaded domain probe ({w.size} weights, threshold "
+          f"{_state['domain_head']['threshold']:.3f}) from {DOMAIN_HEAD_PATH}", flush=True)
+
+
 def _transforms(flip: bool = False):
     from torchvision import transforms
 
@@ -483,12 +516,22 @@ def analyse_wide(img: Image.Image):
     return views, fused
 
 
-def analyse_cn(img: Image.Image):
-    """Six-view posterior of the 20-dish canteen head."""
+def analyse_cn(img: Image.Image, want_feats: bool = False):
+    """Six-view posterior of the canteen head, plus the pooled feature."""
     model = _state.get("cn_model")
     if model is None:
         raise RuntimeError("canteen model is not loaded")
-    return _view_probs(model, _state.get("cn_temperature", 1.0), img)
+    return _view_probs(model, _state.get("cn_temperature", 1.0), img, want_feats=want_feats)
+
+
+def _domain_prob(frames: np.ndarray | None) -> Optional[float]:
+    """P(this photo is a canteen-style Chinese dish) from the pooled features."""
+    head = _state.get("domain_head")
+    if head is None or frames is None:
+        return None
+    x = np.asarray(frames, dtype=np.float64).mean(axis=0)
+    z = float(((x - head["mean"]) / head["scale"]) @ head["w"] + head["b"])
+    return float(1.0 / (1.0 + np.exp(-np.clip(z, -60.0, 60.0))))
 
 
 @torch.no_grad()
@@ -524,7 +567,8 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
              packaging_prob: float | None = None, cn: bool = False,
              cn_veto_result: dict | None = None,
              cn_other_prob: float | None = None,
-             cn_other_top: bool = False) -> dict:
+             cn_other_top: bool = False,
+             cn_domain_prob: float | None = None) -> dict:
     """Is this photo one of the supported dishes?
 
     The reported confidence is the fused posterior; the decision still uses the
@@ -591,8 +635,13 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     other_hit = False
     if cn and cn_other_prob is not None:
         other_hit = bool(cn_other_prob >= CN_OTHER_THRESHOLD or cn_other_top)
+    # The bucket is still a Chinese dish; a pizza is not, and the head has no
+    # class for "wrong cuisine".  The probe asks that question first, so the
+    # message says "not canteen food" instead of "some other Chinese dish".
+    dom_th = (_state.get("domain_head") or {}).get("threshold", 0.5)
+    domain_hit = bool(cn and cn_domain_prob is not None and cn_domain_prob < dom_th)
     in_scope = (bool(robust >= threshold) and food_ok and not package
-                and not vetoed and not other_hit)
+                and not vetoed and not other_hit and not domain_hit)
     # Name the nearest *dish* even when the bucket won: "closest: 其它中餐" tells
     # the user nothing about what the photo looks like.
     top_idx = int(np.argmax(probs))
@@ -613,6 +662,13 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
             "prob": round(float(cn_other_prob), 4),
             "threshold": CN_OTHER_THRESHOLD,
             "fired": other_hit,
+        }
+    if cn and cn_domain_prob is not None:
+        scope["domain"] = {
+            "zh": DOMAIN_ZH,
+            "prob": round(float(cn_domain_prob), 4),
+            "threshold": dom_th,
+            "fired": domain_hit,
         }
     if cn and cn_veto_result is not None:
         scope["veto"] = {
@@ -640,6 +696,13 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
             f"这张照片里没找到菜（是菜的可能性{chance}）：空盘子、饮料杯、包装袋、"
             "菜单牌、人手这些都不在识别范围里。把镜头对准餐盘里的菜再拍一张，"
             "或者切到「混合餐盘」逐个标出盘里的部分。"
+        )
+    elif not in_scope and domain_hit:
+        scope["message"] = (
+            f"这张看起来不是食堂窗口的家常菜：域判别认为它是「{DOMAIN_ZH}」的把握只有 "
+            f"{cn_domain_prob * 100:.0f}%（低于 {dom_th * 100:.0f}%），"
+            "更像西餐、甜点或饮料。食堂模式只认识 20 道中餐——"
+            "换成「单菜识别」或「116 类」标签再试。"
         )
     elif not in_scope and other_hit:
         # The bucket caught what the wide-head veto kept missing (宫保鸡丁 was
@@ -671,7 +734,8 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
 
 def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None, views=None,
             wide: bool = False, img: Image.Image | None = None, food_prob: float | None = None,
-            packaging_prob: float | None = None, cn: bool = False):
+            packaging_prob: float | None = None, cn: bool = False,
+            cn_frames: np.ndarray | None = None):
     portion = str(portion or "normal").strip().lower()
     cn_other_prob = None
     cn_other_top = False
@@ -696,9 +760,11 @@ def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None,
     # The canteen tab is the only one that consults a second head: after the
     # worst-view rule said "one of the 20", the wide head may still object.
     veto = cn_veto(img) if (cn and img is not None) else None
+    cn_domain_prob = _domain_prob(cn_frames) if cn else None
     scope = scope_of(views, probs, wide=wide, food_prob=food_prob,
                     packaging_prob=packaging_prob, cn=cn, cn_veto_result=veto,
-                    cn_other_prob=cn_other_prob, cn_other_top=cn_other_top)
+                    cn_other_prob=cn_other_prob, cn_other_top=cn_other_top,
+                    cn_domain_prob=cn_domain_prob)
     in_scope = scope["in_scope"]
     if img is not None and not in_scope and not scope.get("packaging"):
         # No head weights for this run: the edge heuristic is the only cue left.
@@ -812,6 +878,7 @@ async def lifespan(_app: FastAPI):
     load_mixed_model()
     load_wide_model()
     load_cn_model()
+    load_domain_head()
     _state["brand_items"] = int(brands.menu().get("count", 0))
     yield
 
@@ -1309,8 +1376,9 @@ def cn_predict_sample(name: str, portion: str = "normal", grams: Optional[str] =
         return JSONResponse({"error": "not found"}, status_code=404)
     with open(path, "rb") as fh:
         img = read_image(fh.read())
-    views, fused = analyse_cn(img)
-    return payload(fused, source=name, portion=portion, grams=grams, views=views, cn=True, img=img)
+    views, fused, frames = analyse_cn(img, want_feats=True)
+    return payload(fused, source=name, portion=portion, grams=grams, views=views, cn=True,
+                   img=img, cn_frames=frames)
 
 
 @app.post("/api/cn/predict")
@@ -1327,9 +1395,9 @@ async def cn_predict(file: UploadFile = File(...), portion: str = "normal",
         return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
         return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
-    views, fused = await run_in_threadpool(analyse_cn, img)
+    views, fused, frames = await run_in_threadpool(analyse_cn, img, True)
     return payload(fused, source=file.filename or "upload", portion=portion, grams=grams,
-                   views=views, cn=True, img=img)
+                   views=views, cn=True, img=img, cn_frames=frames)
 
 
 def _packaging_scope(img: Image.Image) -> dict:
@@ -1448,6 +1516,11 @@ def health():
             "zh": CN_OTHER_ZH,
             "threshold": CN_OTHER_THRESHOLD,
             "gate_threshold": CN_SCOPE_THRESHOLD_21,
+        },
+        "domain": {
+            "enabled": _state.get("domain_head") is not None,
+            "zh": DOMAIN_ZH,
+            "threshold": (_state.get("domain_head") or {}).get("threshold"),
         },
         "cn_veto": {
             "enabled": _state.get("wide_model") is not None,
