@@ -221,6 +221,7 @@
       <button data-mode="single" class="on">单菜识别</button>
       <button data-mode="mixed" id="modeMixed" disabled>混合餐盘 · 多标签</button>
       <button data-mode="wide" id="modeWide" disabled>全部菜系 · 更多菜品</button>
+      <button data-mode="cn" id="modeCn" disabled>食堂家常菜 · 20 道</button>
     </div>
     <div id="drop">
       <img id="preview" alt="preview" />
@@ -293,9 +294,10 @@ let currentName = null;
 let lastData = null;
 let lastSource = null;   // {kind:"file", file} | {kind:"sample", name}, used by the wide-model retry
 let WIDE_N = 101;        // refreshed from /api/health once the wide head is loaded
+let CN_N = 20;           // the canteen head's class count, likewise from /api/health
 let portion = "normal";
 let userGrams = null;
-let mode = "single";          // "single" | "mixed" | "wide"
+let mode = "single";          // "single" | "mixed" | "wide" | "cn"
 let mixedParts = [];          // parts on the current tray, with the user's portion/weight
 
 const PORTS = ["small", "normal", "large"];
@@ -351,7 +353,8 @@ function rescale(it, scale){
 let fbClasses = {};      // per mode: the 20 classes, the 116, or the mixed list
 async function ensureFbClasses(kind){
   if(fbClasses[kind]) return fbClasses[kind];
-  const url = kind === "wide" ? "/api/wide/classes" : "/api/classes";
+  const url = kind === "wide" ? "/api/wide/classes"
+            : kind === "cn" ? "/api/cn/classes" : "/api/classes";
   try{
     const res = await fetch(url);
     const data = await readJson(res);
@@ -511,7 +514,7 @@ function mountFeedback(wrap, data, kind){
 
 function renderResults(data){
   lastData = data;
-  const nClass = mode === "wide" ? WIDE_N : 20;
+  const nClass = mode === "wide" ? WIDE_N : mode === "cn" ? CN_N : 20;
   const wrap = $("#results");
   const scale = SCALES[portion] || 1;
   wrap.innerHTML = "";
@@ -612,6 +615,7 @@ async function readJson(res){
 async function predictFile(file){
   if(mode === "mixed") return predictMixedFile(file);
   if(mode === "wide") return predictWideFile(file);
+  if(mode === "cn") return predictCnFile(file);
   if(!file.type.startsWith("image/")){ showError("请选择图片文件（JPG / PNG）"); return; }
   const fd = new FormData();
   fd.append("file", file);
@@ -631,6 +635,7 @@ async function predictFile(file){
 async function predictSample(name){
   if(mode === "mixed") return predictMixedSample(name);
   if(mode === "wide") return predictWideSample(name);
+  if(mode === "cn") return predictCnSample(name);
   lastSource = {kind:"sample", name};
   setStatus("推理中…");
   const t0 = performance.now();
@@ -676,6 +681,42 @@ async function predictWideSample(name){
     setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
     renderResults(data);
     showPreview("/api/wide/sample_image?name=" + encodeURIComponent(name));
+    currentName = name;
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Canteen mode: 20 everyday Chinese dishes (CNFOOD-241 subset), Chinese head
+// ---------------------------------------------------------------------------
+async function predictCnFile(file){
+  if(!file.type.startsWith("image/")){ showError("请选择图片文件（JPG / PNG）"); return; }
+  lastSource = {kind:"file", file};
+  const fd = new FormData();
+  fd.append("file", file);
+  setStatus("推理中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/cn/predict?portion=" + portion, {method:"POST", body:fd});
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderResults(data);
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+async function predictCnSample(name){
+  lastSource = {kind:"sample", name};
+  setStatus("推理中…");
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/cn/predict_sample?name=" + encodeURIComponent(name) + "&portion=" + portion);
+    const data = await readJson(res);
+    setStatus("完成 · 本地推理 " + ((performance.now()-t0)/1000).toFixed(2) + " s");
+    renderResults(data);
+    showPreview("/api/cn/sample_image?name=" + encodeURIComponent(name));
     currentName = name;
   } catch (err) {
     showError(err.message);
@@ -938,11 +979,13 @@ $("#btnRandom").addEventListener("click", () => {
   // sends a 20-class file name to the 116-class route, which always 404s.
   const pool = mode === "mixed" ? (window.__mixed || [])
              : mode === "wide" ? (window.__wide || [])
+             : mode === "cn" ? (window.__cn || [])
              : (window.__samples || []);
   if(!pool.length) return;
   const s = pool[Math.floor(Math.random()*pool.length)];
   if(mode === "mixed") predictMixedSample(s.name);
   else if(mode === "wide") predictWideSample(s.name);
+  else if(mode === "cn") predictCnSample(s.name);
   else predictSample(s.name);
 });
 
@@ -957,6 +1000,18 @@ function loadThumbs(){
       el.title = s.zh + " / " + s["class"];
       el.innerHTML = '<img loading="lazy" src="/api/wide/sample_image?name=' + encodeURIComponent(s.name) + '">';
       el.onclick = () => predictWideSample(s.name);
+      box.appendChild(el);
+    });
+    return;
+  }
+  if(mode === "cn"){
+    $("#sampleTitle").textContent = "食堂家常菜示例（CNFOOD-241 test 集，未参与训练）";
+    (window.__cn || []).forEach(s => {
+      const el = document.createElement("div");
+      el.className = "thumb";
+      el.title = s.zh + " / " + s["class"];
+      el.innerHTML = '<img loading="lazy" src="/api/cn/sample_image?name=' + encodeURIComponent(s.name) + '">';
+      el.onclick = () => predictCnSample(s.name);
       box.appendChild(el);
     });
     return;
@@ -993,13 +1048,20 @@ function setMode(next){
   lastData = null;
   $("#preview").style.display = "none";
   $("#hint").style.display = "";
-  setStatus(mode === "single" ? "等待图片…" : mode === "wide" ? "等待图片…（" + WIDE_N + " 类）" : "等待混合餐盘图片…");
+  setStatus(mode === "single" ? "等待图片…"
+            : mode === "wide" ? "等待图片…（" + WIDE_N + " 类）"
+            : mode === "cn" ? "等待图片…（" + CN_N + " 道食堂家常菜）"
+            : "等待混合餐盘图片…");
   const sub = $("#pageSub");
   if(sub) sub.textContent = mode === "wide"
     ? "Food-101 全类 + 中餐扩展（" + WIDE_N + " 类）· ResNet18 微调 · Top-3 菜品与粗略热量范围"
+    : mode === "cn"
+    ? "食堂家常菜 " + CN_N + " 道（CNFOOD-241 子集）· ResNet18 微调 · Top-3 菜品与粗略热量范围"
     : "Food-101 20 类子集 · ResNet18 微调 · Top-3 菜品与粗略热量范围";
   const sum = $("#scopeInfo summary");
-  if(sum) sum.textContent = mode === "wide" ? "看看这 " + WIDE_N + " 类都是哪些菜" : "看看这 20 类都是哪些菜";
+  if(sum) sum.textContent = mode === "wide" ? "看看这 " + WIDE_N + " 类都是哪些菜"
+                             : mode === "cn" ? "看看这 " + CN_N + " 道食堂家常菜都是哪些"
+                             : "看看这 20 类都是哪些菜";
   classesLoaded = false;
   $("#classChips").innerHTML = "";
   loadThumbs();
@@ -1018,13 +1080,17 @@ Promise.all([
   fetch("/api/samples").then(r=>r.json()).catch(()=>({samples:[]})),
   fetch("/api/mixed/samples").then(r=>r.json()).catch(()=>({samples:[], enabled:false})),
   fetch("/api/wide/samples").then(r=>r.json()).catch(()=>({samples:[], enabled:false})),
+  fetch("/api/cn/samples").then(r=>r.json()).catch(()=>({samples:[], enabled:false})),
   fetch("/api/health").then(r=>r.json()).catch(()=>({}))
-]).then(([single, mixed, wide, health]) => {
+]).then(([single, mixed, wide, cn, health]) => {
   if(health && health.wide_classes){ WIDE_N = health.wide_classes; }
+  if(health && health.cn_classes){ CN_N = health.cn_classes; }
   if($("#modeWide")) $("#modeWide").textContent = "全部菜系 · " + WIDE_N + " 类";
+  if($("#modeCn")) $("#modeCn").textContent = "食堂家常菜 · " + CN_N + " 道";
   window.__samples = single.samples || [];
   window.__mixed = mixed.samples || [];
   window.__wide = wide.samples || [];
+  window.__cn = cn.samples || [];
   if(mixed.enabled){
     $("#modeMixed").disabled = false;
   } else {
@@ -1035,6 +1101,12 @@ Promise.all([
     $("#modeWide").disabled = false;
   } else {
     $("#modeWide").title = WIDE_N + " 类模型尚未训练完成";
+  }
+  window.__cnEnabled = !!cn.enabled;
+  if(cn.enabled){
+    $("#modeCn").disabled = false;
+  } else {
+    $("#modeCn").title = CN_N + " 道食堂家常菜模型尚未训练完成";
   }
   loadThumbs();
   const params = new URLSearchParams(location.search);
@@ -1051,6 +1123,8 @@ Promise.all([
   if(ms && mixed.enabled){ setMode("mixed"); predictMixedSample(ms); return; }
   const ws = params.get("wsample");
   if(ws && wide.enabled){ setMode("wide"); predictWideSample(ws); return; }
+  const cs = params.get("csample");
+  if(cs && cn.enabled){ setMode("cn"); predictCnSample(cs); return; }
   const q = params.get("sample");
   if(q) predictSample(q);
 });
@@ -1060,7 +1134,8 @@ let classesLoaded = false;
 async function loadClasses(){
   if(classesLoaded) return;
   try{
-    const res = await fetch(mode === "wide" ? "/api/wide/classes" : "/api/classes");
+    const res = await fetch(mode === "wide" ? "/api/wide/classes"
+                       : mode === "cn" ? "/api/cn/classes" : "/api/classes");
     const data = await readJson(res);
     const box = $("#classChips");
     box.innerHTML = "";

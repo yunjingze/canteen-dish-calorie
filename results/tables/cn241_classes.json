@@ -1,0 +1,272 @@
+{
+ "source": "CNFOOD-241 (Mendeley fspyss5zbb), val600x600",
+ "splits": {
+  "train": 0.7,
+  "val": 0.1,
+  "test": 0.2
+ },
+ "classes": [
+  {
+   "slug": "hot_sour_potato",
+   "zh": "酸辣土豆丝",
+   "en": "Potato silk",
+   "cnfood_id": 5,
+   "id": 5,
+   "n": 131
+  },
+  {
+   "slug": "di_san_xian",
+   "zh": "地三鲜",
+   "en": "Fried potato, green pepper and eggplant",
+   "cnfood_id": 9,
+   "id": 9,
+   "n": 143
+  },
+  {
+   "slug": "hand_torn_cabbage",
+   "zh": "手撕包菜",
+   "en": "Shredded cabbage",
+   "cnfood_id": 17,
+   "id": 17,
+   "n": 131
+  },
+  {
+   "slug": "stir_fried_greens",
+   "zh": "炒青菜",
+   "en": "Sauteed greens",
+   "cnfood_id": 19,
+   "id": 19,
+   "n": 102
+  },
+  {
+   "slug": "dry_fried_beans",
+   "zh": "干煸豆角",
+   "en": "Dry-fried green beans",
+   "cnfood_id": 37,
+   "id": 37,
+   "n": 113
+  },
+  {
+   "slug": "tomato_egg",
+   "zh": "西红柿炒鸡蛋",
+   "en": "Scrambled egg with tomato",
+   "cnfood_id": 50,
+   "id": 50,
+   "n": 131
+  },
+  {
+   "slug": "steamed_egg",
+   "zh": "鸡蛋羹",
+   "en": "Steamed egg custard",
+   "cnfood_id": 53,
+   "id": 53,
+   "n": 131
+  },
+  {
+   "slug": "sweet_sour_ribs",
+   "zh": "糖醋排骨",
+   "en": "Sweet and sour spareribs",
+   "cnfood_id": 58,
+   "id": 58,
+   "n": 131
+  },
+  {
+   "slug": "cola_wings",
+   "zh": "可乐鸡翅",
+   "en": "Cola chicken wings",
+   "cnfood_id": 60,
+   "id": 60,
+   "n": 131
+  },
+  {
+   "slug": "boiled_chicken",
+   "zh": "白斩鸡",
+   "en": "Poached chicken",
+   "cnfood_id": 65,
+   "id": 65,
+   "n": 34
+  },
+  {
+   "slug": "braised_chicken",
+   "zh": "黄焖鸡",
+   "en": "Chicken braised in brown sauce",
+   "cnfood_id": 68,
+   "id": 68,
+   "n": 131
+  },
+  {
+   "slug": "spicy_chicken",
+   "zh": "辣子鸡",
+   "en": "Spicy chicken",
+   "cnfood_id": 70,
+   "id": 70,
+   "n": 131
+  },
+  {
+   "slug": "braised_pork",
+   "zh": "红烧肉",
+   "en": "Braised pork belly",
+   "cnfood_id": 77,
+   "id": 77,
+   "n": 131
+  },
+  {
+   "slug": "boiled_pork",
+   "zh": "水煮肉片",
+   "en": "Pork slices in chilli oil",
+   "cnfood_id": 86,
+   "id": 86,
+   "n": 131
+  },
+  {
+   "slug": "sweet_sour_pork",
+   "zh": "糖醋里脊",
+   "en": "Sweet and sour tenderloin",
+   "cnfood_id": 87,
+   "id": 87,
+   "n": 131
+  },
+  {
+   "slug": "farmhouse_pork",
+   "zh": "农家小炒肉",
+   "en": "Farmhouse stir-fried pork",
+   "cnfood_id": 90,
+   "id": 90,
+   "n": 139
+  },
+  {
+   "slug": "pepper_pork",
+   "zh": "青椒肉丝",
+   "en": "Shredded pork with green pepper",
+   "cnfood_id": 96,
+   "id": 96,
+   "n": 131
+  },
+  {
+   "slug": "mu_xi_pork",
+   "zh": "木须肉",
+   "en": "Sauteed pork, egg and wood ear",
+   "cnfood_id": 99,
+   "id": 99,
+   "n": 97
+  },
+  {
+   "slug": "baozi",
+   "zh": "包子",
+   "en": "Steamed stuffed bun",
+   "cnfood_id": 145,
+   "id": 145,
+   "n": 131
+  },
+  {
+   "slug": "fried_noodles",
+   "zh": "炒面",
+   "en": "Fried noodles",
+   "cnfood_id": 158,
+   "id": 158,
+   "n": 131
+  }
+ ],
+ "per_class": {
+  "hot_sour_potato": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "di_san_xian": {
+   "train": 100,
+   "val": 14,
+   "test": 29
+  },
+  "hand_torn_cabbage": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "stir_fried_greens": {
+   "train": 71,
+   "val": 10,
+   "test": 21
+  },
+  "dry_fried_beans": {
+   "train": 79,
+   "val": 11,
+   "test": 23
+  },
+  "tomato_egg": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "steamed_egg": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "sweet_sour_ribs": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "cola_wings": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "boiled_chicken": {
+   "train": 24,
+   "val": 3,
+   "test": 7
+  },
+  "braised_chicken": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "spicy_chicken": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "braised_pork": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "boiled_pork": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "sweet_sour_pork": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "farmhouse_pork": {
+   "train": 97,
+   "val": 14,
+   "test": 28
+  },
+  "pepper_pork": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "mu_xi_pork": {
+   "train": 68,
+   "val": 10,
+   "test": 19
+  },
+  "baozi": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  },
+  "fried_noodles": {
+   "train": 92,
+   "val": 13,
+   "test": 26
+  }
+ }
+}

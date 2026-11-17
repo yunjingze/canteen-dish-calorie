@@ -1,0 +1,16 @@
+{
+ "in_list": {
+  "mean_top1_prob": 0.7152,
+  "p50": 0.7972,
+  "share_above_0.5": 0.7719,
+  "share_above_0.8": 0.4969,
+  "n": 491
+ },
+ "out_of_list": {
+  "mean_top1_prob": 0.4599,
+  "p50": 0.4023,
+  "share_above_0.5": 0.3617,
+  "share_above_0.8": 0.105,
+  "n": 600
+ }
+}

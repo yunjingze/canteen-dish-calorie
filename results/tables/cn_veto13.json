@@ -1,0 +1,26 @@
+{
+  "in": {
+    "n": 2462,
+    "base": 0.948,
+    "keep": 0.9435,
+    "vetoed_of_based": 0.0047
+  },
+  "out_cn": {
+    "n": 360,
+    "base": 0.7111,
+    "keep": 0.4,
+    "vetoed_of_based": 0.4375
+  },
+  "out_other": {
+    "n": 808,
+    "base": 0.5223,
+    "keep": 0.5223,
+    "vetoed_of_based": 0.0
+  },
+  "real": {
+    "n": 100,
+    "base": 0.5,
+    "keep": 0.44,
+    "vetoed_of_based": 0.12
+  }
+}

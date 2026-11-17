@@ -1,0 +1,98 @@
+{
+  "baseline_keep": {
+    "in": 0.948,
+    "out_cn": 0.7111,
+    "out_other": 0.5223,
+    "real": 0.5
+  },
+  "veto_table": [
+    {
+      "veto_threshold": 0.25,
+      "in_keep": 0.6064,
+      "out_cn_keep": 0.0306,
+      "out_other_keep": 0.521,
+      "real_keep": 0.39,
+      "in_vetoed": 0.3591
+    },
+    {
+      "veto_threshold": 0.3,
+      "in_keep": 0.6296,
+      "out_cn_keep": 0.0333,
+      "out_other_keep": 0.521,
+      "real_keep": 0.39,
+      "in_vetoed": 0.3335
+    },
+    {
+      "veto_threshold": 0.35,
+      "in_keep": 0.6503,
+      "out_cn_keep": 0.0361,
+      "out_other_keep": 0.521,
+      "real_keep": 0.39,
+      "in_vetoed": 0.3107
+    },
+    {
+      "veto_threshold": 0.4,
+      "in_keep": 0.6771,
+      "out_cn_keep": 0.0472,
+      "out_other_keep": 0.521,
+      "real_keep": 0.41,
+      "in_vetoed": 0.2811
+    },
+    {
+      "veto_threshold": 0.45,
+      "in_keep": 0.7055,
+      "out_cn_keep": 0.0528,
+      "out_other_keep": 0.521,
+      "real_keep": 0.41,
+      "in_vetoed": 0.2502
+    },
+    {
+      "veto_threshold": 0.5,
+      "in_keep": 0.7271,
+      "out_cn_keep": 0.0611,
+      "out_other_keep": 0.521,
+      "real_keep": 0.41,
+      "in_vetoed": 0.2275
+    },
+    {
+      "veto_threshold": 0.55,
+      "in_keep": 0.7478,
+      "out_cn_keep": 0.0833,
+      "out_other_keep": 0.521,
+      "real_keep": 0.42,
+      "in_vetoed": 0.2055
+    },
+    {
+      "veto_threshold": 0.6,
+      "in_keep": 0.7701,
+      "out_cn_keep": 0.1056,
+      "out_other_keep": 0.521,
+      "real_keep": 0.42,
+      "in_vetoed": 0.182
+    }
+  ],
+  "wide_top1_on_15": 0.8972,
+  "cn_like_wide_classes": [
+    "mapo_tofu",
+    "kung_pao_chicken",
+    "twice_cooked_pork",
+    "sweet_and_sour_pork",
+    "boiled_fish_sichuan",
+    "fish_with_pickled_cabbage",
+    "west_lake_vinegar_fish",
+    "steamed_sea_bass",
+    "peking_duck",
+    "soup_dumplings",
+    "dumplings",
+    "spring_rolls",
+    "fried_rice",
+    "ramen",
+    "braised_pork_meatballs"
+  ],
+  "n": {
+    "in": 2462,
+    "out_cn": 360,
+    "out_other": 808,
+    "real": 100
+  }
+}

@@ -1,0 +1,82 @@
+{
+ "canteen20": {
+  "classes": 20,
+  "mean_top1_prob": 0.4486,
+  "share_above_0.5": 0.3462,
+  "share_above_0.8": 0.0998,
+  "top_predictions": {
+   "fried_rice": 81,
+   "chicken_wings": 71,
+   "ramen": 63,
+   "greek_salad": 56,
+   "steak": 50,
+   "spaghetti_bolognese": 31,
+   "caesar_salad": 31,
+   "dumplings": 26,
+   "french_fries": 15,
+   "grilled_salmon": 13
+  },
+  "mean_prob_per_true_class": {
+   "hot_sour_potato": 0.424,
+   "di_san_xian": 0.369,
+   "hand_torn_cabbage": 0.4196,
+   "stir_fried_greens": 0.5077,
+   "dry_fried_beans": 0.3119,
+   "tomato_egg": 0.3827,
+   "steamed_egg": 0.4143,
+   "sweet_sour_ribs": 0.4995,
+   "cola_wings": 0.5886,
+   "boiled_chicken": 0.3594,
+   "braised_chicken": 0.4349,
+   "spicy_chicken": 0.4112,
+   "braised_pork": 0.4509,
+   "boiled_pork": 0.5792,
+   "sweet_sour_pork": 0.4484,
+   "farmhouse_pork": 0.443,
+   "pepper_pork": 0.3574,
+   "mu_xi_pork": 0.3487,
+   "baozi": 0.6833,
+   "fried_noodles": 0.4523
+  }
+ },
+ "wide116": {
+  "classes": 116,
+  "mean_top1_prob": 0.4114,
+  "share_above_0.5": 0.3136,
+  "share_above_0.8": 0.11,
+  "top_predictions": {
+   "twice_cooked_pork": 73,
+   "sweet_and_sour_pork": 48,
+   "pad_thai": 28,
+   "chicken_wings": 23,
+   "seaweed_salad": 19,
+   "edamame": 16,
+   "kung_pao_chicken": 15,
+   "yuxiang_shredded_pork": 12,
+   "ramen": 11,
+   "shrimp_and_grits": 11
+  },
+  "mean_prob_per_true_class": {
+   "hot_sour_potato": 0.3585,
+   "di_san_xian": 0.4528,
+   "hand_torn_cabbage": 0.3075,
+   "stir_fried_greens": 0.5075,
+   "dry_fried_beans": 0.4848,
+   "tomato_egg": 0.2501,
+   "steamed_egg": 0.3659,
+   "sweet_sour_ribs": 0.405,
+   "cola_wings": 0.4648,
+   "boiled_chicken": 0.3276,
+   "braised_chicken": 0.3445,
+   "spicy_chicken": 0.3578,
+   "braised_pork": 0.3712,
+   "boiled_pork": 0.3712,
+   "sweet_sour_pork": 0.6169,
+   "farmhouse_pork": 0.4793,
+   "pepper_pork": 0.3661,
+   "mu_xi_pork": 0.3074,
+   "baozi": 0.5331,
+   "fried_noodles": 0.4835
+  }
+ }
+}

@@ -1,0 +1,963 @@
+{
+ "heldout_ids": [
+  3,
+  13,
+  22,
+  29,
+  36,
+  44,
+  52,
+  62,
+  72,
+  80,
+  89,
+  98,
+  106,
+  113,
+  120,
+  127,
+  134,
+  141,
+  150,
+  159,
+  166,
+  173,
+  180,
+  187,
+  194,
+  214,
+  221,
+  229,
+  236
+ ],
+ "items": [
+  {
+   "path": "data/splits/cn241_21_ood/003/000.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/003/001.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/003/002.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/003/003.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/003/004.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/003/005.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/003/006.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/003/007.jpg",
+   "cnfood_id": 3
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/000.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/001.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/002.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/003.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/004.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/005.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/006.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/013/007.jpg",
+   "cnfood_id": 13
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/000.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/001.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/002.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/003.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/004.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/005.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/006.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/022/007.jpg",
+   "cnfood_id": 22
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/000.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/001.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/002.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/003.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/004.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/005.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/006.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/029/007.jpg",
+   "cnfood_id": 29
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/000.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/001.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/002.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/003.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/004.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/005.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/006.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/036/007.jpg",
+   "cnfood_id": 36
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/000.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/001.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/002.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/003.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/004.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/005.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/006.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/044/007.jpg",
+   "cnfood_id": 44
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/000.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/001.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/002.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/003.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/004.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/005.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/006.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/052/007.jpg",
+   "cnfood_id": 52
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/000.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/001.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/002.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/003.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/004.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/005.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/006.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/062/007.jpg",
+   "cnfood_id": 62
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/000.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/001.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/002.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/003.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/004.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/005.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/006.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/072/007.jpg",
+   "cnfood_id": 72
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/000.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/001.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/002.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/003.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/004.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/005.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/006.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/080/007.jpg",
+   "cnfood_id": 80
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/000.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/001.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/002.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/003.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/004.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/005.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/006.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/089/007.jpg",
+   "cnfood_id": 89
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/000.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/001.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/002.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/003.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/004.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/005.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/006.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/098/007.jpg",
+   "cnfood_id": 98
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/000.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/001.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/002.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/003.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/004.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/005.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/006.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/106/007.jpg",
+   "cnfood_id": 106
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/000.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/001.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/002.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/003.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/004.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/005.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/006.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/113/007.jpg",
+   "cnfood_id": 113
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/000.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/001.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/002.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/003.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/004.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/005.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/006.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/120/007.jpg",
+   "cnfood_id": 120
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/000.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/001.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/002.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/003.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/004.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/005.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/006.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/127/007.jpg",
+   "cnfood_id": 127
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/000.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/001.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/002.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/003.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/004.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/005.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/006.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/134/007.jpg",
+   "cnfood_id": 134
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/000.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/001.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/002.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/003.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/004.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/005.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/006.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/141/007.jpg",
+   "cnfood_id": 141
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/000.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/001.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/002.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/003.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/004.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/005.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/006.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/150/007.jpg",
+   "cnfood_id": 150
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/000.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/001.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/002.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/003.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/004.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/005.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/006.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/159/007.jpg",
+   "cnfood_id": 159
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/000.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/001.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/002.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/003.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/004.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/005.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/006.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/166/007.jpg",
+   "cnfood_id": 166
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/000.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/001.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/002.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/003.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/004.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/005.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/006.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/173/007.jpg",
+   "cnfood_id": 173
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/000.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/001.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/002.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/003.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/004.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/005.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/006.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/180/007.jpg",
+   "cnfood_id": 180
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/000.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/001.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/002.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/003.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/004.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/005.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/006.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/187/007.jpg",
+   "cnfood_id": 187
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/000.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/001.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/002.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/003.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/004.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/005.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/006.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/194/007.jpg",
+   "cnfood_id": 194
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/000.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/001.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/002.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/003.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/004.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/005.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/006.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/214/007.jpg",
+   "cnfood_id": 214
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/000.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/001.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/002.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/003.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/004.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/005.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/006.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/221/007.jpg",
+   "cnfood_id": 221
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/000.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/001.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/002.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/003.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/004.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/005.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/006.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/229/007.jpg",
+   "cnfood_id": 229
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/000.jpg",
+   "cnfood_id": 236
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/001.jpg",
+   "cnfood_id": 236
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/002.jpg",
+   "cnfood_id": 236
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/003.jpg",
+   "cnfood_id": 236
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/004.jpg",
+   "cnfood_id": 236
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/005.jpg",
+   "cnfood_id": 236
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/006.jpg",
+   "cnfood_id": 236
+  },
+  {
+   "path": "data/splits/cn241_21_ood/236/007.jpg",
+   "cnfood_id": 236
+  }
+ ]
+}

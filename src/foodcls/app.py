@@ -24,6 +24,13 @@ from PIL import Image, ImageOps
 from . import brands
 from .calorie import PORTION_LABELS, topk_with_calories
 from .classes import CLASS_NAMES, KCAL_PER_100G, PORTION_G, ZH_LABELS
+from .classes_cn import (
+    CN_CLASS_NAMES,
+    CN_KCAL_PER_100G,
+    CN_NUM_CLASSES,
+    CN_PORTION_G,
+    CN_ZH,
+)
 from .classes_wide import (
     WIDE_CLASS_NAMES,
     WIDE_KCAL_PER_100G,
@@ -62,6 +69,14 @@ WIDE_CKPT = Path(os.environ.get("FOODCLS_WIDE_CKPT", DEFAULT_WIDE_CKPT))
 if not WIDE_CKPT.is_absolute():
     WIDE_CKPT = (ROOT / WIDE_CKPT).resolve()
 WIDE_SAMPLES = ROOT / "data/wide/splits/test"
+#: optional canteen-Chinese head, 20 everyday dishes from CNFOOD-241 plus a 21st
+#: "other Chinese dish" bucket (CNFOOD-241 is non-commercial; see NOTICE).  Its
+#: own checkpoint, its own class table.  The 20-dish checkpoint still loads.
+DEFAULT_CN_CKPT = ROOT / "results/runs/cn241_21/best.pt"
+CN_CKPT = Path(os.environ.get("FOODCLS_CN_CKPT", DEFAULT_CN_CKPT))
+if not CN_CKPT.is_absolute():
+    CN_CKPT = (ROOT / CN_CKPT).resolve()
+CN_SAMPLES = ROOT / "data/splits/cn241_full/test"
 MIXED_SAMPLES = ROOT / "data/splits/mixed"
 STATIC = Path(__file__).resolve().parent / "static"
 _PROXY = ROOT / "data/splits/canteen"
@@ -82,6 +97,62 @@ SCOPE_THRESHOLD = 0.32
 #: unseen set we put this at the 5th percentile of in-scope worst-view scores, i.e.
 #: the same ~5 % false-alarm budget as the 20-class gate (eval_wide_gate.py re-measures).
 WIDE_SCOPE_THRESHOLD = 0.18
+
+#: The canteen head has the same shape of risk as the 20-class one (it names
+#: something for every photo), so it gets the same worst-view rule; the value is
+#: measured by scripts/eval_cn_scope.py on 794 CNFOOD-241 test images (in scope,
+#: worst-view score mean 0.83) and 320 dishes outside the 20 drawn from the wide
+#: test split (out of scope, mean 0.50).  0.40 is the 5th percentile of the
+#: in-scope scores, the same ~5 % false-alarm budget as the two other heads: it
+#: keeps 94.8 % of in-scope photos and flags 43 % of the outside dishes.
+CN_SCOPE_THRESHOLD = 0.40
+
+#: The canteen head has to refuse dishes it never learned, and it does not: on 15
+#: Chinese dishes of the wide table it still names one of its 20 classes 71 % of
+#: the time (scripts/eval_cn_crosscheck.py).  The wide head knows those dishes, so
+#: it gets a veto: if it names one of them *and* is more confident than the
+#: canteen head by CN_VETO_MARGIN, the verdict is "not one of the 20".
+#:
+#: Two of the fifteen are left out on purpose.  糖醋里脊 (sweet_and_sour_pork) is
+#: the same dish as a canteen class, and 回锅肉 (twice_cooked_pork) is visually
+#: the same plate as 农家小炒肉: vetoing either one threw away 27 % of the
+#: in-scope photos to catch dishes the user would have accepted.  With them out,
+#: the veto keeps 94.4 % of the 2,462 in-scope test photos (94.8 % before) and
+#: rejects 56 % of the out-of-scope Chinese dishes instead of 29 %.
+CN_VETO_CLASSES = (
+    "mapo_tofu", "kung_pao_chicken", "boiled_fish_sichuan",
+    "fish_with_pickled_cabbage", "west_lake_vinegar_fish", "steamed_sea_bass",
+    "peking_duck", "soup_dumplings", "dumplings", "spring_rolls", "fried_rice",
+    "ramen", "braised_pork_meatballs",
+)
+CN_VETO_INDEX = np.array([WIDE_CLASS_NAMES.index(c) for c in CN_VETO_CLASSES], dtype=np.int64)
+CN_VETO_THRESHOLD = 0.50
+CN_VETO_MARGIN = 0.02
+
+#: The head is also trained with a 21st class, "other Chinese dish": the rest of
+#: CNFOOD-241 (minus Western/dessert dishes and the classes held out for testing)
+#: compressed into one bucket.  This is the structural fix for the dishes the veto
+#: kept missing -- 宫保鸡丁 was 0.005 short of the veto margin, and a soup dumpling
+#: is a dumpling to a head that has never seen "not on the list".  The bucket
+#: gives those photos somewhere to go; CN_OTHER_THRESHOLD is how much mass it
+#: needs before the verdict becomes "not one of the 20".
+#:
+#: Measured on 2,462 in-scope test photos, 360 Chinese dishes outside the list,
+#: 232 photos of 29 never-trained Chinese classes, 808 Western test photos and
+#: 100 real canteen photos (scripts/eval_cn_other.py + search_cn_other_rule.py):
+#: 0.40 turns away 76 % of the outside Chinese dishes for 3 % of the in-scope
+#: ones.  Money either way -- the curve is flat above 0.40 because the failures
+#: left are the look-alikes (回锅肉/农家小炒肉), not low-confidence cases.
+CN_OTHER_SLUG = "other_cn"
+CN_OTHER_ZH = "其它中餐"
+CN_OTHER_THRESHOLD = float(os.environ.get("FOODCLS_CN_OTHER", "0.40"))
+
+#: The bucket steals probability mass from the 20 dishes, so the gate is measured
+#: on the dish mass after dividing it back out: per view p_dish / (1 - p_other),
+#: worst view, 5th percentile of the in-scope validation split = 0.3445
+#: (scripts/search_cn_other_rule.py).  With the 20-dish checkpoint the divisor is
+#: 1 and the threshold stays CN_SCOPE_THRESHOLD, so old weights behave as before.
+CN_SCOPE_THRESHOLD_21 = float(os.environ.get("FOODCLS_CN_SCOPE_21", "0.3445"))
 
 #: Where the 20 supported dishes sit in the 116-class table, so the two
 #: posteriors can be mixed without reordering anything.
@@ -241,6 +312,38 @@ def load_wide_model():
           flush=True)
 
 
+def load_cn_model():
+    """Load the optional 20-dish canteen head (CNFOOD-241); optional like wide."""
+    _state["cn_model"] = None
+    _state["cn_temperature"] = 1.0
+    if not CN_CKPT.is_file():
+        print(f"no canteen model at {CN_CKPT}; canteen mode disabled", flush=True)
+        return
+    device = _state["device"]
+    ckpt = torch.load(CN_CKPT, map_location=device, weights_only=False)
+    names = list(ckpt.get("class_names") or CN_CLASS_NAMES)
+    has_other = (len(names) == CN_NUM_CLASSES + 1
+                 and names[:CN_NUM_CLASSES] == list(CN_CLASS_NAMES)
+                 and names[-1] == CN_OTHER_SLUG)
+    if list(names) != list(CN_CLASS_NAMES) and not has_other:
+        raise RuntimeError(
+            f"{CN_CKPT.name}: checkpoint class_names ({len(names)}) match neither the "
+            f"{CN_NUM_CLASSES} dishes nor those plus '{CN_OTHER_SLUG}'; refusing to load"
+        )
+    model = build_model(ckpt["arch"], len(names), pretrained=False)
+    model.load_state_dict(ckpt["model"])
+    model.to(device).eval()
+    _state["cn_model"] = model
+    _state["cn_arch"] = ckpt["arch"]
+    _state["cn_other_index"] = CN_NUM_CLASSES if has_other else None
+    #: the gate is re-measured on the 21-class checkpoint (see CN_SCOPE_THRESHOLD_21)
+    _state["cn_scope_threshold"] = CN_SCOPE_THRESHOLD_21 if has_other else CN_SCOPE_THRESHOLD
+    _state["cn_temperature"] = _load_temperature(CN_CKPT)
+    print(f"loaded canteen {ckpt['arch']} ({len(names)} classes"
+          + (", incl. 'other Chinese'" if has_other else "")
+          + f") from {CN_CKPT} on {device}, T={_state['cn_temperature']:.3f}", flush=True)
+
+
 def _transforms(flip: bool = False):
     from torchvision import transforms
 
@@ -380,6 +483,36 @@ def analyse_wide(img: Image.Image):
     return views, fused
 
 
+def analyse_cn(img: Image.Image):
+    """Six-view posterior of the 20-dish canteen head."""
+    model = _state.get("cn_model")
+    if model is None:
+        raise RuntimeError("canteen model is not loaded")
+    return _view_probs(model, _state.get("cn_temperature", 1.0), img)
+
+
+@torch.no_grad()
+def cn_veto(img: Image.Image) -> Optional[dict]:
+    """The wide head's objection to a canteen verdict, if it has one.
+
+    The wide posterior is used *as trained* here: analyse_wide() mixes the
+    canteen head into it, which would make the two heads agree by construction
+    and hide exactly the disagreement this veto looks for.
+    """
+    wide = _state.get("wide_model")
+    if wide is None:
+        return None
+    views, fused = _view_probs(wide, _state.get("wide_temperature", 1.0), img,
+                               _state.get("wide_temperature_fused"))
+    top = int(np.argmax(fused))
+    return {
+        "class": WIDE_CLASS_NAMES[top],
+        "zh": WIDE_ZH[WIDE_CLASS_NAMES[top]],
+        "prob": float(fused[top]),
+        "views": views,
+    }
+
+
 @torch.no_grad()
 def infer(img: Image.Image) -> np.ndarray:
     """Fused posterior: the six views averaged in logit space, then calibrated."""
@@ -388,7 +521,10 @@ def infer(img: Image.Image) -> np.ndarray:
 
 def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
              food_prob: float | None = None,
-             packaging_prob: float | None = None) -> dict:
+             packaging_prob: float | None = None, cn: bool = False,
+             cn_veto_result: dict | None = None,
+             cn_other_prob: float | None = None,
+             cn_other_top: bool = False) -> dict:
     """Is this photo one of the supported dishes?
 
     The reported confidence is the fused posterior; the decision still uses the
@@ -399,6 +535,15 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
         names, zh, threshold = WIDE_CLASS_NAMES, WIDE_ZH, WIDE_SCOPE_THRESHOLD
         label = f"{WIDE_NUM_CLASSES} 类"
         examples = f"火锅、麻辣烫、家常炒菜等中式吃法都不在这 {WIDE_NUM_CLASSES} 类里"
+    elif cn:
+        names, zh = CN_CLASS_NAMES, CN_ZH
+        # With the bucket the gate must ignore it: an in-scope dish can put 40 %
+        # on "some other dish" and still be the right one, and the old threshold
+        # would then throw the photo away for the wrong reason.
+        threshold = (CN_SCOPE_THRESHOLD_21 if cn_other_prob is not None
+                     else CN_SCOPE_THRESHOLD)
+        label = f"{CN_NUM_CLASSES} 道"
+        examples = "牛肉面、麻辣烫、米线、手抓饼、清蒸鱼这些食堂主食和小吃不在这 20 道里"
     else:
         names, zh, threshold, label = CLASS_NAMES, ZH_LABELS, SCOPE_THRESHOLD, "20 类"
         examples = "整只烤鸡/烤鸭、火锅、家常炒菜等都不在支持的 20 类里"
@@ -407,13 +552,22 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     # on every photo, so the gate keeps the three original framings only; that
     # is the calibration the 0.32 / 0.18 thresholds were measured on.
     gate_views = views[:_GATE_VIEWS] if len(views) > _GATE_VIEWS else views
-    robust = float(min(np.max(v) for v in gate_views))
+    if cn_other_prob is not None and views.shape[1] > CN_NUM_CLASSES:
+        # Divide the bucket back out of every view before asking "which of the 20
+        # dishes is this?": the dish mass is what the 20-dish gate was calibrated
+        # on, and the bucket answers the other question separately.
+        dish = views[:, :CN_NUM_CLASSES].astype(np.float64)
+        bucket = views[:, CN_NUM_CLASSES].astype(np.float64)
+        renorm = dish / np.clip(1.0 - bucket, 1e-6, None)[:, None]
+        robust = float(min(np.max(v) for v in renorm[:_GATE_VIEWS]))
+    else:
+        robust = float(min(np.max(v) for v in gate_views))
     # Two questions, two answers: the gate asks "is there food here at all?",
     # the robust score asks "is it one of the supported dishes?".  A menu board
     # clears neither, but it does clear the second one often enough to matter.
     gate = _state.get("foodgate")
     food_ok = True
-    if gate is not None and food_prob is not None and not wide:
+    if gate is not None and food_prob is not None and not wide and not cn:
         food_ok = bool(food_prob >= gate.threshold)
     # A package prints a picture of a dish: the 20-class head is confident and
     # the food gate agrees, so neither of them can catch it.  This is a veto --
@@ -422,10 +576,29 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     # product package), and 43 of the 46 flagged negatives were exactly that.
     pack_head = _state.get("packaging")
     package = False
-    if pack_head is not None and packaging_prob is not None and not wide and food_ok:
+    if pack_head is not None and packaging_prob is not None and not wide and not cn and food_ok:
         package = bool(packaging_prob >= pack_head.threshold)
-    in_scope = bool(robust >= threshold) and food_ok and not package
-    closest = zh[names[int(np.argmax(probs))]]
+    # The wide head's veto runs last: it can only take a verdict away, never add
+    # one, and it only speaks about dishes the canteen head cannot represent.
+    vetoed = False
+    if cn and cn_veto_result is not None:
+        vetoed = bool(cn_veto_result["class"] in CN_VETO_CLASSES
+                      and cn_veto_result["prob"] >= CN_VETO_THRESHOLD
+                      and cn_veto_result["prob"] >= top1 + CN_VETO_MARGIN)
+    # The 21st class is not a dish: it is the head saying "some other Chinese
+    # dish", which is a refusal, not a name.  It is measured on the fused
+    # posterior because a single view can be fooled by a garnish (see README).
+    other_hit = False
+    if cn and cn_other_prob is not None:
+        other_hit = bool(cn_other_prob >= CN_OTHER_THRESHOLD or cn_other_top)
+    in_scope = (bool(robust >= threshold) and food_ok and not package
+                and not vetoed and not other_hit)
+    # Name the nearest *dish* even when the bucket won: "closest: 其它中餐" tells
+    # the user nothing about what the photo looks like.
+    top_idx = int(np.argmax(probs))
+    if cn and cn_other_prob is not None and top_idx >= CN_NUM_CLASSES:
+        top_idx = int(np.argmax(probs[:CN_NUM_CLASSES]))
+    closest = zh[names[top_idx]]
     scope = {
         "in_scope": in_scope,
         "top1_prob": round(top1, 4),
@@ -434,10 +607,25 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
         "closest": closest,
         "label": label,
     }
-    if food_prob is not None and not wide:
+    if cn and cn_other_prob is not None:
+        scope["other"] = {
+            "zh": CN_OTHER_ZH,
+            "prob": round(float(cn_other_prob), 4),
+            "threshold": CN_OTHER_THRESHOLD,
+            "fired": other_hit,
+        }
+    if cn and cn_veto_result is not None:
+        scope["veto"] = {
+            "class": cn_veto_result["class"],
+            "zh": cn_veto_result["zh"],
+            "prob": round(cn_veto_result["prob"], 4),
+            "threshold": CN_VETO_THRESHOLD,
+            "fired": vetoed,
+        }
+    if food_prob is not None and not wide and not cn:
         scope["food_prob"] = round(float(food_prob), 4)
         scope["food_threshold"] = gate.threshold if gate is not None else None
-    if packaging_prob is not None and not wide:
+    if packaging_prob is not None and not wide and not cn:
         scope["packaging"] = package
         scope["packaging_prob"] = round(float(packaging_prob), 4)
         scope["packaging_threshold"] = pack_head.threshold if pack_head is not None else None
@@ -453,6 +641,23 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
             "菜单牌、人手这些都不在识别范围里。把镜头对准餐盘里的菜再拍一张，"
             "或者切到「混合餐盘」逐个标出盘里的部分。"
         )
+    elif not in_scope and other_hit:
+        # The bucket caught what the wide-head veto kept missing (宫保鸡丁 was
+        # 0.005 short of the margin, and 汤包/饺子 fell into 包子).
+        scope["message"] = (
+            f"这张看起来不在食堂模式的 20 道清单里：模型把 {cn_other_prob * 100:.0f}% 的把握"
+            f"放在「{CN_OTHER_ZH}」这一类上，也就是说它更像清单之外的菜"
+            f"（最接近的「{closest}」只是强行归类的候选）。"
+            "想吃别的菜可以切到「116 类」标签试试。"
+        )
+    elif not in_scope and vetoed:
+        # A dish the canteen head would have force-fitted into its 20 classes:
+        # name what the photo actually looks like instead of the nearest match.
+        scope["message"] = (
+            f"这张更像「{cn_veto_result['zh']}」——它不在食堂模式的 20 道清单里"
+            f"（最接近的「{closest}」是强行归类的候选，把握只有 {robust * 100:.0f}%）。"
+            "切到「116 类」标签可以认出这道菜。"
+        )
     elif not in_scope:
         # The head always names *something*; say out loud when that something is
         # only the nearest of an unsupported dish.
@@ -466,9 +671,21 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
 
 def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None, views=None,
             wide: bool = False, img: Image.Image | None = None, food_prob: float | None = None,
-            packaging_prob: float | None = None):
+            packaging_prob: float | None = None, cn: bool = False):
     portion = str(portion or "normal").strip().lower()
-    if wide:
+    cn_other_prob = None
+    cn_other_top = False
+    if cn:
+        # Split off the "other Chinese" bucket: it has no name, no calories and
+        # no portion, so it must never reach topk_with_calories().
+        if len(probs) > CN_NUM_CLASSES:
+            cn_other_prob = float(probs[CN_NUM_CLASSES])
+            cn_other_top = bool(int(np.argmax(probs)) == CN_NUM_CLASSES)
+            probs = probs[:CN_NUM_CLASSES]
+        items = topk_with_calories(probs, k=3, portion=portion, grams=grams,
+                                   class_names=CN_CLASS_NAMES, zh_table=CN_ZH,
+                                   kcal_table=CN_KCAL_PER_100G, portion_table=CN_PORTION_G)
+    elif wide:
         items = topk_with_calories(probs, k=3, portion=portion, grams=grams,
                                    class_names=WIDE_CLASS_NAMES, zh_table=WIDE_ZH,
                                    kcal_table=WIDE_KCAL_PER_100G, portion_table=WIDE_PORTION_G)
@@ -476,8 +693,12 @@ def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None,
         items = topk_with_calories(probs, k=3, portion=portion, grams=grams)
     weight_source = items[0]["weight_source"] if items else "portion"
     views = views if views is not None else probs[None, :]
+    # The canteen tab is the only one that consults a second head: after the
+    # worst-view rule said "one of the 20", the wide head may still object.
+    veto = cn_veto(img) if (cn and img is not None) else None
     scope = scope_of(views, probs, wide=wide, food_prob=food_prob,
-                    packaging_prob=packaging_prob)
+                    packaging_prob=packaging_prob, cn=cn, cn_veto_result=veto,
+                    cn_other_prob=cn_other_prob, cn_other_top=cn_other_top)
     in_scope = scope["in_scope"]
     if img is not None and not in_scope and not scope.get("packaging"):
         # No head weights for this run: the edge heuristic is the only cue left.
@@ -508,10 +729,11 @@ def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None,
         "grams": items[0]["portion_g"] if items else None,
         "weight_source": weight_source,
         "temperature": _state.get(
-            "wide_temperature_fused" if wide else "temperature_fused",
-            _state.get("wide_temperature" if wide else "temperature", 1.0),
+            "wide_temperature_fused" if wide else "cn_temperature" if cn else "temperature_fused",
+            _state.get("wide_temperature" if wide else "cn_temperature" if cn else "temperature",
+                       1.0),
         ),
-        "mode": "wide" if wide else "single",
+        "mode": "cn" if cn else "wide" if wide else "single",
         "top3": items,
         "note": note,
     }
@@ -589,6 +811,7 @@ async def lifespan(_app: FastAPI):
     load_model()
     load_mixed_model()
     load_wide_model()
+    load_cn_model()
     _state["brand_items"] = int(brands.menu().get("count", 0))
     yield
 
@@ -1020,6 +1243,95 @@ async def wide_predict(file: UploadFile = File(...), portion: str = "normal", gr
                    views=views, wide=True, img=img)
 
 
+# --------------------------------------------------------------------------- #
+# Canteen head: 20 everyday Chinese dishes (CNFOOD-241 subset)
+# --------------------------------------------------------------------------- #
+def _sample_name(cls: str, fname: str) -> str:
+    return f"{cls}__{fname}"
+
+
+def _find_cn_sample(name: str) -> Optional[Path]:
+    """Look up a gallery image by "class__file.jpg", refusing any path escape."""
+    if "__" not in name or not CN_SAMPLES.exists():
+        return None
+    cls, fname = name.split("__", 1)
+    if cls not in CN_CLASS_NAMES or "/" in fname or "\\" in fname:
+        return None
+    path = CN_SAMPLES / cls / fname
+    return path if path.is_file() else None
+
+
+@app.get("/api/cn/classes")
+def cn_classes():
+    return {
+        "count": CN_NUM_CLASSES,
+        "threshold": (_state.get("cn_scope_threshold") or CN_SCOPE_THRESHOLD),
+        "other": {
+            "enabled": _state.get("cn_other_index") is not None,
+            "zh": CN_OTHER_ZH,
+            "threshold": CN_OTHER_THRESHOLD,
+        },
+        "enabled": _state.get("cn_model") is not None,
+        "classes": [
+            {"class": c, "zh": CN_ZH[c], "kcal_per_100g": CN_KCAL_PER_100G[c],
+             "portion_g": CN_PORTION_G[c]}
+            for c in CN_CLASS_NAMES
+        ],
+    }
+
+
+@app.get("/api/cn/samples")
+def cn_samples():
+    """One test photo per dish, so the mode can be tried without a camera."""
+    if not CN_SAMPLES.exists():
+        return {"samples": [], "enabled": _state.get("cn_model") is not None}
+    out: List[dict] = []
+    for cls in CN_CLASS_NAMES:
+        for f_ in sorted((CN_SAMPLES / cls).glob("*.jpg"))[:1]:
+            out.append({"name": _sample_name(cls, f_.name), "class": cls, "zh": CN_ZH[cls]})
+    return {"samples": out, "enabled": _state.get("cn_model") is not None}
+
+
+@app.get("/api/cn/sample_image")
+def cn_sample_image(name: str):
+    path = _find_cn_sample(name)
+    if path is None:
+        return JSONResponse({"error": "not found"}, status_code=404)
+    return FileResponse(path)
+
+
+@app.get("/api/cn/predict_sample")
+def cn_predict_sample(name: str, portion: str = "normal", grams: Optional[str] = None):
+    if _state.get("cn_model") is None:
+        return JSONResponse({"error": f"{CN_NUM_CLASSES} 道食堂菜模型尚未训练完成"}, status_code=503)
+    path = _find_cn_sample(name)
+    if path is None:
+        return JSONResponse({"error": "not found"}, status_code=404)
+    with open(path, "rb") as fh:
+        img = read_image(fh.read())
+    views, fused = analyse_cn(img)
+    return payload(fused, source=name, portion=portion, grams=grams, views=views, cn=True, img=img)
+
+
+@app.post("/api/cn/predict")
+async def cn_predict(file: UploadFile = File(...), portion: str = "normal",
+                     grams: Optional[str] = Form(None)):
+    if _state.get("cn_model") is None:
+        return JSONResponse({"error": f"{CN_NUM_CLASSES} 道食堂菜模型尚未训练完成"}, status_code=503)
+    raw = await file.read(MAX_UPLOAD_BYTES + 1)
+    if len(raw) > MAX_UPLOAD_BYTES:
+        return JSONResponse({"error": "图片过大，请上传 15 MB 以内的照片"}, status_code=413)
+    try:
+        img = read_image(raw)
+    except ImageTooLarge:
+        return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
+    except Exception:
+        return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
+    views, fused = await run_in_threadpool(analyse_cn, img)
+    return payload(fused, source=file.filename or "upload", portion=portion, grams=grams,
+                   views=views, cn=True, img=img)
+
+
 def _packaging_scope(img: Image.Image) -> dict:
     """Scope of the single-dish head, plus the packaging cue for the tray view."""
     views, fused, frames = analyse_full(img)
@@ -1126,6 +1438,23 @@ def health():
         "wide_classes": WIDE_NUM_CLASSES,
         "wide_temperature": _state.get("wide_temperature", 1.0),
         "wide_fuse": _state.get("wide_fuse", 0.0),
+        "cn_enabled": _state.get("cn_model") is not None,
+        "cn_arch": _state.get("cn_arch"),
+        "cn_classes": CN_NUM_CLASSES,
+        "cn_temperature": _state.get("cn_temperature", 1.0),
+        "cn_threshold": (_state.get("cn_scope_threshold") or CN_SCOPE_THRESHOLD),
+        "cn_other": {
+            "enabled": _state.get("cn_other_index") is not None,
+            "zh": CN_OTHER_ZH,
+            "threshold": CN_OTHER_THRESHOLD,
+            "gate_threshold": CN_SCOPE_THRESHOLD_21,
+        },
+        "cn_veto": {
+            "enabled": _state.get("wide_model") is not None,
+            "threshold": CN_VETO_THRESHOLD,
+            "margin": CN_VETO_MARGIN,
+            "classes": len(CN_VETO_CLASSES),
+        },
         "brand_items": _state.get("brand_items", 0),
         "food_gate": {
             "enabled": _state.get("foodgate") is not None,

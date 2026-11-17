@@ -1,0 +1,385 @@
+{
+  "test_acc": 0.8911,
+  "n_test": 2462,
+  "confusions": [
+    {
+      "true": "farmhouse_pork",
+      "pred": "pepper_pork",
+      "n": 20
+    },
+    {
+      "true": "pepper_pork",
+      "pred": "farmhouse_pork",
+      "n": 13
+    },
+    {
+      "true": "sweet_sour_ribs",
+      "pred": "braised_chicken",
+      "n": 11
+    },
+    {
+      "true": "spicy_chicken",
+      "pred": "farmhouse_pork",
+      "n": 9
+    },
+    {
+      "true": "sweet_sour_ribs",
+      "pred": "braised_pork",
+      "n": 8
+    },
+    {
+      "true": "fried_noodles",
+      "pred": "hot_sour_potato",
+      "n": 8
+    },
+    {
+      "true": "braised_pork",
+      "pred": "sweet_sour_ribs",
+      "n": 7
+    },
+    {
+      "true": "hand_torn_cabbage",
+      "pred": "hot_sour_potato",
+      "n": 6
+    },
+    {
+      "true": "farmhouse_pork",
+      "pred": "dry_fried_beans",
+      "n": 6
+    },
+    {
+      "true": "braised_chicken",
+      "pred": "spicy_chicken",
+      "n": 5
+    },
+    {
+      "true": "braised_chicken",
+      "pred": "sweet_sour_ribs",
+      "n": 5
+    },
+    {
+      "true": "cola_wings",
+      "pred": "sweet_sour_pork",
+      "n": 4
+    }
+  ],
+  "per_class": {
+    "hot_sour_potato": 0.9695,
+    "di_san_xian": 0.958,
+    "hand_torn_cabbage": 0.9008,
+    "stir_fried_greens": 0.902,
+    "dry_fried_beans": 0.9558,
+    "tomato_egg": 0.9695,
+    "steamed_egg": 0.9466,
+    "sweet_sour_ribs": 0.7634,
+    "cola_wings": 0.916,
+    "boiled_chicken": 0.8529,
+    "braised_chicken": 0.8168,
+    "spicy_chicken": 0.8244,
+    "braised_pork": 0.8931,
+    "boiled_pork": 0.9237,
+    "sweet_sour_pork": 0.9237,
+    "farmhouse_pork": 0.7266,
+    "pepper_pork": 0.7939,
+    "mu_xi_pork": 0.9485,
+    "baozi": 0.9771,
+    "fried_noodles": 0.8626
+  },
+  "weakest": [
+    [
+      "farmhouse_pork",
+      0.7266
+    ],
+    [
+      "sweet_sour_ribs",
+      0.7634
+    ],
+    [
+      "pepper_pork",
+      0.7939
+    ],
+    [
+      "braised_chicken",
+      0.8168
+    ],
+    [
+      "spicy_chicken",
+      0.8244
+    ],
+    [
+      "boiled_chicken",
+      0.8529
+    ],
+    [
+      "fried_noodles",
+      0.8626
+    ],
+    [
+      "braised_pork",
+      0.8931
+    ]
+  ],
+  "chinese_wide": [
+    {
+      "dish": "mapo_tofu",
+      "n": 20,
+      "in_scope_rate": 0.7,
+      "top_pred": [
+        [
+          "boiled_pork",
+          9
+        ],
+        [
+          "sweet_sour_ribs",
+          4
+        ],
+        [
+          "spicy_chicken",
+          2
+        ]
+      ]
+    },
+    {
+      "dish": "kung_pao_chicken",
+      "n": 20,
+      "in_scope_rate": 0.95,
+      "top_pred": [
+        [
+          "spicy_chicken",
+          11
+        ],
+        [
+          "braised_chicken",
+          4
+        ],
+        [
+          "di_san_xian",
+          3
+        ]
+      ]
+    },
+    {
+      "dish": "twice_cooked_pork",
+      "n": 20,
+      "in_scope_rate": 0.95,
+      "top_pred": [
+        [
+          "farmhouse_pork",
+          19
+        ],
+        [
+          "braised_pork",
+          1
+        ]
+      ]
+    },
+    {
+      "dish": "sweet_and_sour_pork",
+      "n": 20,
+      "in_scope_rate": 0.95,
+      "top_pred": [
+        [
+          "sweet_sour_pork",
+          20
+        ]
+      ]
+    },
+    {
+      "dish": "boiled_fish_sichuan",
+      "n": 20,
+      "in_scope_rate": 0.95,
+      "top_pred": [
+        [
+          "boiled_pork",
+          17
+        ],
+        [
+          "boiled_chicken",
+          1
+        ],
+        [
+          "hand_torn_cabbage",
+          1
+        ]
+      ]
+    },
+    {
+      "dish": "fish_with_pickled_cabbage",
+      "n": 20,
+      "in_scope_rate": 0.75,
+      "top_pred": [
+        [
+          "boiled_pork",
+          8
+        ],
+        [
+          "steamed_egg",
+          4
+        ],
+        [
+          "hand_torn_cabbage",
+          3
+        ]
+      ]
+    },
+    {
+      "dish": "west_lake_vinegar_fish",
+      "n": 20,
+      "in_scope_rate": 0.85,
+      "top_pred": [
+        [
+          "cola_wings",
+          14
+        ],
+        [
+          "boiled_pork",
+          2
+        ],
+        [
+          "sweet_sour_ribs",
+          2
+        ]
+      ]
+    },
+    {
+      "dish": "steamed_sea_bass",
+      "n": 20,
+      "in_scope_rate": 0.75,
+      "top_pred": [
+        [
+          "hot_sour_potato",
+          6
+        ],
+        [
+          "boiled_chicken",
+          6
+        ],
+        [
+          "stir_fried_greens",
+          3
+        ]
+      ]
+    },
+    {
+      "dish": "peking_duck",
+      "n": 20,
+      "in_scope_rate": 0.7,
+      "top_pred": [
+        [
+          "cola_wings",
+          12
+        ],
+        [
+          "boiled_chicken",
+          4
+        ],
+        [
+          "sweet_sour_ribs",
+          2
+        ]
+      ]
+    },
+    {
+      "dish": "soup_dumplings",
+      "n": 20,
+      "in_scope_rate": 1.0,
+      "top_pred": [
+        [
+          "baozi",
+          20
+        ]
+      ]
+    },
+    {
+      "dish": "dumplings",
+      "n": 20,
+      "in_scope_rate": 1.0,
+      "top_pred": [
+        [
+          "baozi",
+          19
+        ],
+        [
+          "hot_sour_potato",
+          1
+        ]
+      ]
+    },
+    {
+      "dish": "spring_rolls",
+      "n": 20,
+      "in_scope_rate": 0.75,
+      "top_pred": [
+        [
+          "baozi",
+          7
+        ],
+        [
+          "boiled_chicken",
+          5
+        ],
+        [
+          "stir_fried_greens",
+          3
+        ]
+      ]
+    },
+    {
+      "dish": "fried_rice",
+      "n": 20,
+      "in_scope_rate": 0.65,
+      "top_pred": [
+        [
+          "fried_noodles",
+          9
+        ],
+        [
+          "steamed_egg",
+          4
+        ],
+        [
+          "tomato_egg",
+          2
+        ]
+      ]
+    },
+    {
+      "dish": "ramen",
+      "n": 20,
+      "in_scope_rate": 0.95,
+      "top_pred": [
+        [
+          "steamed_egg",
+          9
+        ],
+        [
+          "stir_fried_greens",
+          5
+        ],
+        [
+          "fried_noodles",
+          3
+        ]
+      ]
+    },
+    {
+      "dish": "braised_pork_meatballs",
+      "n": 20,
+      "in_scope_rate": 0.95,
+      "top_pred": [
+        [
+          "cola_wings",
+          11
+        ],
+        [
+          "stir_fried_greens",
+          5
+        ],
+        [
+          "sweet_sour_ribs",
+          3
+        ]
+      ]
+    }
+  ]
+}

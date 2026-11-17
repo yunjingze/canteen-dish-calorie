@@ -87,6 +87,28 @@ if (Test-Path $wideSamples) {
     Write-Host "bundled $j wide sample images"
 }
 
+# 20-dish canteen head (optional: the other tabs work without it)
+$cnRun = Join-Path $root "results\runs\cn241_full"
+if (Test-Path (Join-Path $cnRun "best.pt")) {
+    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\cn241_full") -Force | Out-Null
+    Copy-Item (Join-Path $cnRun "best.pt") (Join-Path $stage "results\runs\cn241_full\best.pt")
+    $ccal = Join-Path $cnRun "calibration.json"
+    if (Test-Path $ccal) { Copy-Item $ccal (Join-Path $stage "results\runs\cn241_full\calibration.json") }
+    Write-Host "bundled 20-dish canteen checkpoint"
+}
+$cnSamples = Join-Path $root "data\splits\cn241_full\test"
+if (Test-Path $cnSamples) {
+    $k = 0
+    foreach ($cls in Get-ChildItem $cnSamples -Directory) {
+        $dst = Join-Path $stage "data\splits\cn241_full\test\$($cls.Name)"
+        New-Item -ItemType Directory -Path $dst -Force | Out-Null
+        $cls.GetFiles("*.jpg") | Select-Object -First 2 | ForEach-Object {
+            Copy-Item $_.FullName $dst; $k++
+        }
+    }
+    Write-Host "bundled $k canteen sample images"
+}
+
 # the WeChat mini-program talks to the same FastAPI server
 $mp = Join-Path $root "miniprogram"
 if (Test-Path $mp) {
@@ -135,6 +157,12 @@ summed calorie range; mixed demo plates live in data\splits\mixed.
    It is broader but each class has fewer examples, so it is less accurate on
    canteen photos; the 20-class model remains the course model.
    Wide demo images live in data\wide\splits\test.
+   A fourth tab, "canteen home dishes - 20", switches to a model trained on 20
+   everyday Chinese dishes from CNFOOD-241 (tomato and egg, hot and sour potato
+   strips, braised pork, mapo-style stir fries...), which is what a campus
+   canteen actually serves. It knows only those 20 dishes and says so for
+   anything else; switch back to the 20-class tab for the course menu.
+   Canteen demo images live in data\splits\cn241_full\test.
    Each result also shows a "chain reference": the measured per-serving calories
    of the closest McDonald's China menu item (Big Mac 513 kcal, medium fries
    279 kcal, ...), scraped from the official nutrition calculator. The panel

@@ -1,0 +1,59 @@
+NOTICE
+======
+
+This repository contains code, configuration and result files for a course
+project on canteen food recognition.  It does NOT redistribute any of the
+image datasets listed below; every dataset stays where its authors publish it,
+and the paths in the README refer to a local copy produced by the download
+scripts.  If you reproduce this work, download the data yourself and accept
+each licence on its own terms.
+
+1. Food-101
+   Authors: Lukas Bossard, Matthieu Guillaumin, Luc Van Gool (ETH Zurich).
+   Project page: https://data.vision.ee.ethz.ch/cvl/datasets_extra/food-101/
+   Mirror used here: https://huggingface.co/datasets/ethz/food101
+   Licence: the dataset is distributed for research use; images are collected
+   from the web and remain the property of their original owners.  Food-101 is
+   used here for coursework and research only.
+
+2. Food-101N (noisy Food-101 with CleanNet verification labels)
+   Authors: Kuang-Huei Lee et al. (CleanNet, arXiv:1711.07131).
+   Project page: https://kuanghuei.github.io/Food-101N/
+   Download: https://www.kaggle.com/datasets/kuanghueilee/food-101n
+   Licence: released by the authors for research use under the terms stated on
+   the project page / Kaggle dataset card.  This project used a 20-class subset
+   (69,512 images) for the E7 fine-tuning experiment (README section 5.8).
+
+3. 16 famous Chinese dishes
+   Source: https://www.kaggle.com/datasets/patzer0/16-famous-chinese-dishes
+   Licence: as stated on the Kaggle dataset card; images remain the property of
+   their original owners.  Used to extend the 20-class model to 116 classes
+   (README section 5.5); Peking duck was merged into Food-101's peking_duck.
+
+4. CNFOOD-241
+   Authors: the CNFOOD-241 dataset, published on Mendeley Data,
+   https://data.mendeley.com/datasets/fspyss5zbb (DOI 10.17632/fspyss5zbb,
+   contributed by Shenzhen Institutes of Advanced Technology, CAS)
+   Method paper: PLOS ONE, doi:10.1371/journal.pone.0358248 (the Mendeley page
+   lists the full citation).
+   Licence: CC BY-NC 3.0 (Attribution-NonCommercial 3.0 Unported,
+   https://creativecommons.org/licenses/by-nc/3.0).  The dataset card states:
+   "As some of the images in the dataset are from ChineseFoodNet, they are not
+   supported for commercial use."  ChineseFoodNet itself
+   (https://sites.google.com/view/chinesefoodnet/) is likewise restricted to
+   non-commercial research.  This project used 20 of its
+   241 classes (21,043 images) for the canteen head described in README
+   section 5.7, strictly for coursework; no images are redistributed here and
+   the trained checkpoint must not be used commercially either.
+
+5. Chain nutrition reference
+   The per-serving calorie figures shown in the web demo come from the official
+   McDonald's China nutrition calculator, scraped into
+   data/external/brand_menu.json by scripts/fetch_brand_nutrition.py.  They are
+   quoted as reference values only, with attribution, and are not part of any
+   model training.
+
+6. Code
+   The source code in this repository is released under the MIT licence; see
+   LICENSE.  The MIT licence applies to the code only, not to the datasets,
+   their derivatives, or the trained weights that were fitted on them.
