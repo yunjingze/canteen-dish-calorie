@@ -535,7 +535,7 @@ def analyse_full(img: Image.Image):
 WIDE_FUSE_ALPHA = float(os.environ.get("FOODCLS_WIDE_FUSE", "0.2"))
 
 
-def analyse_wide(img: Image.Image):
+def analyse_wide(img: Image.Image, want_feats: bool = False):
     model = _state.get("wide_model")
     if model is None:
         raise RuntimeError("wide model is not loaded")
@@ -543,15 +543,21 @@ def analyse_wide(img: Image.Image):
                                _state.get("wide_temperature_fused"))
     alpha = _state.get("wide_fuse", 0.0)
     narrow = _state.get("model")
-    if alpha > 0 and narrow is not None:
-        # The narrow posterior is mapped into the wide index space and left
-        # there: its mass is not renormalised, so alpha also controls how much
-        # total probability the 20 known dishes may claim.
-        _, p_narrow = _view_probs(narrow, _state.get("temperature", 1.0), img,
-                                  _state.get("temperature_fused"))
-        full = np.zeros_like(fused)
-        full[WIDE_NARROW_INDEX] = p_narrow
-        fused = (1.0 - alpha) * fused + alpha * full
+    frames = None
+    if narrow is not None and (alpha > 0 or want_feats):
+        # One narrow forward pass serves both jobs: its posterior is mapped into
+        # the wide index space for the fusion, and its pooled feature is what
+        # the food gate was fitted on.  Asking for the feature costs nothing.
+        _, p_narrow, frames = _view_probs(narrow, _state.get("temperature", 1.0), img,
+                                          _state.get("temperature_fused"), want_feats=True)
+        if alpha > 0:
+            # The narrow mass is not renormalised, so alpha also controls how
+            # much total probability the 20 known dishes may claim.
+            full = np.zeros_like(fused)
+            full[WIDE_NARROW_INDEX] = p_narrow
+            fused = (1.0 - alpha) * fused + alpha * full
+    if want_feats:
+        return views, fused, frames
     return views, fused
 
 
@@ -571,6 +577,19 @@ def _domain_prob(frames: np.ndarray | None) -> Optional[float]:
     x = np.asarray(frames, dtype=np.float64).mean(axis=0)
     z = float(((x - head["mean"]) / head["scale"]) @ head["w"] + head["b"])
     return float(1.0 / (1.0 + np.exp(-np.clip(z, -60.0, 60.0))))
+
+
+def _food_prob(frames: np.ndarray | None) -> Optional[float]:
+    """P(there is a dish in the frame), or None when no gate is loaded.
+
+    The gate lives on the narrow backbone's pooled feature; every tab that runs
+    that backbone can ask it, so the wide and tray tabs get the same
+    "is there food here at all?" answer the single-dish tab already had.
+    """
+    gate = _state.get("foodgate")
+    if gate is None or frames is None:
+        return None
+    return gate.prob(frames[0])
 
 
 @torch.no_grad()
@@ -650,7 +669,10 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     # clears neither, but it does clear the second one often enough to matter.
     gate = _state.get("foodgate")
     food_ok = True
-    if gate is not None and food_prob is not None and not wide and not cn:
+    if gate is not None and food_prob is not None and not cn:
+        # Not "not wide": the gate rides on the narrow backbone, which the wide
+        # tab already runs for the fusion, so a menu board is as much
+        # "no dish here" for 116 classes as it is for 20.
         food_ok = bool(food_prob >= gate.threshold)
     # A package prints a picture of a dish: the 20-class head is confident and
     # the food gate agrees, so neither of them can catch it.  This is a veto --
@@ -717,7 +739,7 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
             "threshold": CN_VETO_THRESHOLD,
             "fired": vetoed,
         }
-    if food_prob is not None and not wide and not cn:
+    if food_prob is not None and not cn:
         scope["food_prob"] = round(float(food_prob), 4)
         scope["food_threshold"] = gate.threshold if gate is not None else None
     if packaging_prob is not None and not wide and not cn:
@@ -893,6 +915,14 @@ def mixed_payload(probs: np.ndarray, source: str, portion: str = "normal", truth
         note = "这是一份食堂托盘：模型按 20 道菜 + 20 道西餐的 40 类清单找菜，每部分的克数是按食堂常见份量估的。"
     if not parts:
         note = "没有哪一样菜的得分过线：可能是一道菜为主，也可能是清单外的菜。换个角度再拍一张，或切到「单菜识别」。"
+    if scope and scope.get("not_food"):
+        # Naming parts on a napkin or a menu board is the exact false positive
+        # the gate exists to stop, so the tray reports nothing here.
+        parts = []
+        plate = plate_totals([], portion=portion, zh_table=zh, kcal_table=kcal,
+                             portion_table=grams_table)
+        note = ("这张照片里没找到菜：门控认为画面是菜单牌、饮料杯、包装袋或空盘一类的场景，"
+                "所以不列出盘里的部分。把镜头对准托盘里的菜再拍一张。")
     return {
         "mode": "mixed",
         "source": source,
@@ -1107,8 +1137,7 @@ def predict_sample(name: str, portion: str = "normal", grams: Optional[str] = No
     with open(path, "rb") as fh:
         img = read_image(fh.read())
     views, fused, frames = analyse_full(img)
-    gate = _state.get("foodgate")
-    food_prob = gate.prob(frames[0]) if gate is not None else None
+    food_prob = _food_prob(frames)
     pack = _state.get("packaging")
     packaging_prob = pack.prob(frames) if pack is not None else None
     return payload(fused, source=name, portion=portion, grams=grams, views=views, img=img,
@@ -1131,8 +1160,7 @@ async def predict(
     except Exception:
         return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
     views, fused, frames = await run_in_threadpool(analyse_full, img)
-    gate = _state.get("foodgate")
-    food_prob = gate.prob(frames[0]) if gate is not None else None
+    food_prob = _food_prob(frames)
     pack = _state.get("packaging")
     packaging_prob = pack.prob(frames) if pack is not None else None
     return payload(fused, source=file.filename or "upload", portion=portion, grams=grams,
@@ -1348,8 +1376,9 @@ def wide_predict_sample(name: str, portion: str = "normal", grams: Optional[str]
         return JSONResponse({"error": "not found"}, status_code=404)
     with open(path, "rb") as fh:
         img = read_image(fh.read())
-    views, fused = analyse_wide(img)
-    return payload(fused, source=name, portion=portion, grams=grams, views=views, wide=True, img=img)
+    views, fused, frames = analyse_wide(img, want_feats=True)
+    return payload(fused, source=name, portion=portion, grams=grams, views=views, wide=True,
+                   img=img, food_prob=_food_prob(frames))
 
 
 @app.post("/api/wide/predict")
@@ -1365,9 +1394,9 @@ async def wide_predict(file: UploadFile = File(...), portion: str = "normal", gr
         return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
         return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
-    views, fused = await run_in_threadpool(analyse_wide, img)
+    views, fused, frames = await run_in_threadpool(analyse_wide, img, True)
     return payload(fused, source=file.filename or "upload", portion=portion, grams=grams,
-                   views=views, wide=True, img=img)
+                   views=views, wide=True, img=img, food_prob=_food_prob(frames))
 
 
 # --------------------------------------------------------------------------- #
@@ -1464,7 +1493,8 @@ def _packaging_scope(img: Image.Image) -> dict:
     """Scope of the single-dish head, plus the packaging cue for the tray view."""
     views, fused, frames = analyse_full(img)
     pack = _state.get("packaging")
-    scope = scope_of(views, fused, packaging_prob=pack.prob(frames) if pack is not None else None)
+    scope = scope_of(views, fused, food_prob=_food_prob(frames),
+                     packaging_prob=pack.prob(frames) if pack is not None else None)
     if not scope["in_scope"] and not scope.get("packaging") and packaging.signals(img)["detected"]:
         scope["packaging"] = True
         scope["message"] = packaging.message()

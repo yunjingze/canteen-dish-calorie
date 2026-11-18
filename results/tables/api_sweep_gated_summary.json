@@ -1,0 +1,14 @@
+{
+ "wide": {
+  "neg": 8,
+  "neg_n": 123,
+  "real": 89,
+  "real_n": 100
+ },
+ "mixed": {
+  "neg": 3,
+  "neg_n": 123,
+  "real": 88,
+  "real_n": 100
+ }
+}
