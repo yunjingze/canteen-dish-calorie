@@ -1,6 +1,6 @@
 # FoodCLS 食品识别与热量估计 —— 项目交接文档
 
-> 用途：本文件是把整个项目对话浓缩成的自包含状态快照。开启新对话时，把本文件全文交给 AI 即可继续开发，无需旧对话上下文。最后更新：2026-11-18（食物门控接进 116 类与混合餐盘两个标签）。
+> 用途：本文件是把整个项目对话浓缩成的自包含状态快照。开启新对话时，把本文件全文交给 AI 即可继续开发，无需旧对话上下文。最后更新：2026-11-18（宽头换主干：一次否定的实验，README §5.5.1）。
 
 ## 0. 项目一句话
 Windows 上的食品识别 + 热量估算网页应用：FastAPI 后端 + PyTorch resnet18 多套头 + 前端网页（4 个识别模式标签）。工作目录 E:\项目作业\food_project（注意：venv 在 E:\项目作业\.venv，不在项目内）。
@@ -11,6 +11,17 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI 后端 + PyTorch
 - ② 混合餐盘（多标签，托盘上多道菜）：results/runs/resnet18_multilabel_plate40/best.pt，**40 类（20 西餐 + 20 食堂）**，sigmoid 阈值 0.35。
 - ③ 116 类宽模型（含 16 道中餐）：resnet18_food101_cn116/best.pt，T=0.819，融合 0.20 的 20 类后验。
 - ④ 食堂家常菜 **21 路**（20 道 + 「其它中餐」桶）：cn241_21/best.pt，T=0.827，门控阈值 0.3445（扣桶质量后的最差视图分数），桶阈值 0.40；外加**域判别头**（512 维特征 + 逻辑回归，阈值 0.2554）先挡掉非中餐，见下。
+
+**最新（2026-11-18，第六轮）：宽头换主干——认真试过，结论是不换**
+- 起因：第四轮把 20 类那条线的主干换成了 Food-101N 清洗标签重训的 resnet18（f101n），于是问 116 类宽头要不要也跟。看着划算：整个应用只剩一个主干家族，而且 15 道中餐每类只有几百张，起点强一点也不亏。
+- 三种配方（scripts/train_wide.py，均 6 epoch、batch 96、workers 2、lr 头 1e-3 / 主干 1e-4）：(a) 只用 f101n 的 20 行按类名搬进 116 行头、其余 96 类随机初始化 → results/runs/resnet18_cn116_f101n；(b) 主干 f101n + 现役 116 行头整块搬入（`--init "…f101n/best.pt,…resnet18_food101_cn116/best.pt@head"`）→ results/runs/resnet18_cn116_f101n_hybrid；(c) 在 (b) 上续 4 epoch（lr 5e-4 / 5e-5）→ val F1 76.68 低于 (b) 的 77.12、train@1 已 95.15，过拟合弃用（目录 resnet18_cn116_f101n_hybrid_e10）。
+- 对照（单视角；scripts/eval_wide_candidate.py 同一套温度缩放）：官方 test 116 路 Top-1 现役 **80.58** / (a) 79.36 / (b) 79.46；macro-F1 80.77 / 80.12 / 80.30；ECE 1.84 / 1.36 / 1.44；Food-101 分组 80.40 / 79.11 / 79.21；中餐 15 类 88.99 / 91.01 / **91.19**；20 类协议 test（限定 20 类）93.82 / **94.60** / 94.24；食堂退化照片（116 路全开）**95.50** / 90.20 / 89.60；100 张真实食堂照（限定 20 类）89.0 / 94.0 / **95.0**、116 路全开 71.0 / 74.0 / 73.0。现役这一列复算出的数与历史 results.json、wide_real.json、wide_domain.json 完全吻合，说明评测口径可信。
+- 结论：**现役 resnet18_food101_cn116/best.pt 不动**（DEFAULT_WIDE_CKPT 未改）。理由：① f101n 只认识那 20 道菜，(a) 等于让另外 96 个 Food-101 类从头学，而现役宽头是 101 类 Food-101 头热启动的；② 把主干单独隔离后（b）f101n 主干本身也不占优，食堂退化照片 116 路全开 −5.9 pt，正是页面最常出错的那一格（脏一点/糊一点的西餐照被拽进中餐类）；③ 真实照 +6 pt 是限定 20 类口径、n=100，±4 pt 不足以下注；④ 中餐 15 类 +2 pt 是真的，真要吃得只在中餐子集上动手，而不是整套 116 路一起换。
+- 顺手修掉一个真 bug：`--init` 原来按**位置**把前 20 行搬进 116 行头，而 `WIDE_CLASS_NAMES[:20]` 是字母序、`CLASS_NAMES` 是菜单序，整排错位。现在 scripts/train_wide.py 的 warm_start() 按类名落位，并支持 `--init a.pt,b.pt@head`（逗号分隔按顺序加载，`@head` 只搬分类头），config.json 的 warm_start 记成列表。
+- 新工具：scripts/eval_wide_candidate.py（三视图 + 温度，报 top1_restricted / top5_restricted / top1_full116，test 段分 food101 与 chinese 两组；--skip-tta 省内存）、scripts/compare_wide_backbones.py（合成 results/tables/wide_backbone_compare.json 与 markdown 表）；产物 results/tables/wide_candidate_{deployed,f101n,hybrid}.json。
+- tests/test_warm_start.py 4 个用例（按类名落位、head_only 不动主干、后一份覆盖头、未知源类跳过），全量 **78 passed**。
+- 文档：README 新增 §5.5.1「宽头要不要也跟着换主干：一次否定的实验」（三种配方 / 12 行对照表 / 4 条理由 / 复现命令 / 先接电源的注），§5.5 命令块与 §1 目录树补两个脚本。
+- 环境坑（新增）：笔记本用**电池**时 GPU 被功耗墙压到 19 W、SM 利用率 15%，一个 epoch 从 235 s 变成 25 分钟还没跑完，还会报 `OSError: [WinError 1455] 页面文件太小 … cufft64_11.dll`；接上电源后 99% / 49 W / 235–360 s/epoch 正常。commit charge（C 2 GB + D 16 GB pagefile）打满时，三视图 TTA 阶段报 `OpenBLAS error: Memory allocation still failed after 10 retries` → 训练用 --workers 2、评测加 --skip-tta。
 
 **最新（2026-11-18，第五轮）：食物门控接进「116 类」与「混合餐盘」两个标签**
 - 起因：门控此前只在单菜 20 类分支生效（scope_of 里写着 `not wide and not cn`），宽头与托盘两个标签对菜单牌/餐巾纸照样给菜名，各放过 70/123 张真负样本。
@@ -56,7 +67,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI 后端 + PyTorch
 - 规则升级（src/foodcls/app.py）：门控分数改为每视图 p20/(1−p_other) 的最差视图（rob20r），阈值 CN_SCOPE_THRESHOLD_21=0.3445（验证集 5% 分位）；桶闸 p(other)≥CN_OTHER_THRESHOLD(0.40) 或桶直接夺冠即判「不在清单里」；13 类宽头 veto 不变（veto 用的是宽头原始后验）。
 - 效果（仍被接受的比例，越低越好）：清单内 91.3%（20 类 + veto 时 94.4%）/ 清单外中餐 360 张 24.2%（原 40.0%）/ 其它中餐 808 张 20.4%（原 52.2%）/ 没见过的中餐 232 张 32.3% / 真实西餐照 100 张 21.0%（原 44.0%）。
 - 仍漏（本质边界）：饺子 66.7%、汤包 54.2% → 包子；回锅肉 79.2% → 农家小炒肉；糖醋里脊 91.7% → 糖醋排骨（本来就是同一道菜）。
-- 服务在跑：http://127.0.0.1:8000（后台 job pwsh-4bce8309457d4fb1，日志 results/_server.log；health 显示 checkpoint=resnet18_last_stage_aug_f101n / food_gate{enabled:true,0.2} / packaging_head{enabled:true,0.8} / temperature 0.7364 / mixed_classes 40 / cn_classes 20 / cn_threshold 0.3445 / cn_other 0.40 / domain 0.2554 / wide 116）。
+- 服务在跑：http://127.0.0.1:8000（后台 job pwsh-2d708edc095a4de2，日志 results/_server.log）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / food_gate{enabled:true,0.2} / packaging_head{enabled:true,0.8} / temperature 0.7364 / mixed_classes 40 / cn_classes 20 / cn_threshold 0.3445 / cn_other 0.40 / domain 0.2554 / wide 116。宽头权重仍是 resnet18_food101_cn116（第六轮否掉了换主干）。
 
 ## 2. 待办清单（按建议顺序）
 1. `21 类含「其它中餐」重训` **已完成 2026-11-17**（见 §1；README §5.7.1 有完整记录）。
@@ -67,10 +78,11 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI 后端 + PyTorch
 6. **外部测试集**：test 2,462 张全来自 CNFOOD 官方 val 同分布，75.40%（21 路）/ 91.66%（20 路单视图，六视图 TTA 93.4%）偏乐观；用 ChineseFoodNet 对得上的几道做外部测试。
 7. **部署**：蒸馏 MobileNetV3 + int8（约 45 MB）适合小程序；服务需守护进程。
 8. `重新打包` **已完成 2026-11-17（第四轮重打）**：dist/FoodDemo.zip 168.9 MB / 278 项，含四份权重（单菜 f101n / 40 类餐盘 plate40 / 116 类 / 食堂 21 路 cn241_21）+ f101n 的 foodgate.json 与 packaging.json + 3 份 calibration.json + results/tables/domain_head.json + 17 张混合餐盘示例 + 四套示例图；包内无 cn241_full 权重、**无旧 resnet18_last_stage_aug 主干**。解包到 dist/FoodDemo 在 8002 实跑，health 两个头 enabled，负样本 2/123 与源码树一致。
+9. `宽头从 f101n 重训` **已试并否掉 2026-11-18**（见 §1 第六轮与 README §5.5.1）：三种配方都略逊于现役，保持 resnet18_food101_cn116/best.pt；这一项留下的是 eval_wide_candidate.py / compare_wide_backbones.py 与按类名热启动。
 
 ## 3. 目录结构与关键文件
 E:\项目作业\food_project\
-  README.md                 # 约 75 KB，项目文档（§1 目录/§3 数据/§4 训练/§5 结果/§6 网页与打包/§9 许可）；§5.3 混合餐盘 40 类、§5.7 食堂 20 类、§5.7.1 「其它中餐」21 类、§5.7.2 域判别头
+  README.md                 # 约 85 KB，项目文档（§1 目录/§3 数据/§4 训练/§5 结果/§6 网页与打包/§9 许可）；§5.3 混合餐盘 40 类、§5.4.1 食物门控、§5.5.1 宽头换主干实验、§5.7 食堂 20 类、§5.7.1 「其它中餐」21 类、§5.7.2 域判别头
   NOTICE                    # 数据来源与许可声明（仓库不分发任何图片）
   HANDOFF.md                # 本文件
   src\foodcls\              # 应用代码包
@@ -90,10 +102,12 @@ E:\项目作业\food_project\
     extract_domain_features.py fit_domain_head.py eval_domain_gate.py pick_domain_threshold.py  # 域判别头
     package_demo.ps1         # 打包 -> dist/FoodDemo.zip（4 份 best.pt + 每类 2 张样例）
     train_mixed.py make_mixed_samples.py eval_mixed_plate.py   # 混合餐盘训练 / 示例图 / 40 类评估
+    train_wide.py eval_wide_candidate.py compare_wide_backbones.py   # 116 类训练 / 候选评测 / 对照表
   tests\test_cn_other.py     # 11 个用例：桶只否决不加分、桶不进热量表、重算门控、端点字段
   tests\test_domain_gate.py  # 9 个用例：域头 sigmoid/平均/否决/文案优先级/缺省
   tests\test_mixed_plate.py  # 9 个用例：20/40 类表切换、cuisine/热量/note、health 字段
   tests\test_food_gate_tabs.py # 7 个用例：门控进宽头/托盘两个标签（否决、清空 parts、无门控不变）
+  tests\test_warm_start.py # 4 个用例：按类名热启动、head_only、覆盖顺序、未知源类
   results\
     runs\<run>\best.pt + calibration.json + config.json + history.csv + results.json
     tables\*.json            # cn_other.json / cn_veto13.json / cn241_21.json / domain_head.json / domain_gate.json / domain_head_choice.json 等
@@ -143,7 +157,8 @@ E:\项目作业\food_project\
 - **域判别头**：python scripts/extract_domain_features.py --views 1（约 8 分钟）→ python scripts/fit_domain_head.py --mode mean → python scripts/eval_domain_gate.py（五集约 9 分钟）→ python scripts/pick_domain_threshold.py（离线扫阈值）。
 - **训练食堂头**：python scripts/prepare_cn241_other.py 然后 python scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --out results/tables/cn241_21.json --save-dir results/runs/cn241_21 --epochs 8 --workers 0。
 - **混合餐盘 40 类**：python scripts/train_mixed.py --classes plate --epochs 10 --n-train 24000 --n-val 600 --n-canteen 300 --n-real 80 --workers 4 --init-ckpt results/runs/resnet18_multilabel_aug/best.pt --out results/runs/resnet18_multilabel_plate40（混合训练 --workers 4 可用，约 27 分钟）；评估 python scripts/eval_mixed_plate.py（约 3 分钟）→ results/tables/mixed_plate40.json；示例 python scripts/make_mixed_samples.py。
-- **测试**：python -m pytest tests -q（当前 74 个用例，约 7 秒；含 tests/test_cn_other.py 11 个、tests/test_domain_gate.py 9 个、tests/test_mixed_plate.py 9 个、tests/test_food_gate_tabs.py 7 个）
+- **测试**：python -m pytest tests -q（当前 78 个用例，约 7 秒；含 tests/test_cn_other.py 11 个、test_domain_gate.py 9 个、test_mixed_plate.py 9 个、test_food_gate_tabs.py 7 个、test_warm_start.py 4 个）
+- **宽头候选评测**：python scripts/eval_wide_candidate.py --ckpt results/runs/<run>/best.pt --skip-tta --out results/tables/wide_candidate_<tag>.json 然后 python scripts/compare_wide_backbones.py（→ results/tables/wide_backbone_compare.json）。**先接电源**：电池下 GPU 被压到 19 W，一个 epoch 跑不完。
 - **打包**：powershell -File scripts/package_demo.ps1 → dist/FoodDemo.zip（约 169 MB / 278 项；自动挑 f101n 主干 + foodgate.json + packaging.json、resnet18_multilabel_plate40、cn241_21，缺哪个就回退 / 跳过）。
 - **端到端负样本扫描**：起服务后 python results/_api_sweep_port.py 8000 default_f101n（写 results/tables/api_sweep_default_f101n.json），再用 results/_cmp_sweep.py 与历史版本对比（123 张真负样本口径）。
 
@@ -169,6 +184,7 @@ E:\项目作业\food_project\
 - 混合餐盘扩到 40 类（20 西餐 + 20 食堂）+ build_eval_set 标签映射 bug 修复（2026-11-17，README §5.3）。
 - 部署主干换成 f101n + 食物门控/包装头真正生效 + 分发包补两个 json（2026-11-17，README §5.4.1）：负样本 66/123 → 2/123，真实菜 top-1 91.0% → 95.0%。
 - 食物门控接进宽头（116 类）与混合餐盘两个标签（2026-11-18，README §5.4.1）：负样本 70/123 → 8/123 与 3/123，真实照各掉 1 张（同一张 french_fries/002）。
+- 宽头换 f101n 主干的 A/B（2026-11-18，README §5.5.1）：三种配方都略逊，保持现役 116 类权重；顺带修了 `--init` 按位置搬 20 行头的错位 bug（tests/test_warm_start.py 钉住）。
 
 ## 10. 下一步行动建议
-部署侧这一轮把「没菜的照片」在四个标签里都压住了：单菜 2/123、116 类 8/123、托盘 3/123（真实照 95 / 89 / 88 张）。下一步建议：① §2 第 2 项 241 类预训练（+1~2 pt，约 1.5 小时，收益确定）；② 补漏网的饮料杯 / 甜品柜 / 包装食品负样本（宽头 8 张里 p_food 0.28–0.80，调阈值分不开）；③ 用反馈闭环攒真实托盘照再微调餐盘头（44.0 → ? 是最大 gap，但要有真实数据）；④ 三套门控统一 + 按域概率自动切标签（新设计，先想清楚误切代价）；⑤ 食堂模式阈值偏严（真实照只留 13/100），可单独再评估。任何改动前先 curl 一次 /api/health 确认 checkpoint 与两个 enabled。
+部署侧这一轮把「没菜的照片」在四个标签里都压住了：单菜 2/123、116 类 8/123、托盘 3/123（真实照 95 / 89 / 88 张）。下一步建议：① §2 第 2 项 241 类预训练（+1~2 pt，约 1.5 小时，收益确定）；② 补漏网的饮料杯 / 甜品柜 / 包装食品负样本（宽头 8 张里 p_food 0.28–0.80，调阈值分不开）；③ 用反馈闭环攒真实托盘照再微调餐盘头（44.0 → ? 是最大 gap，但要有真实数据）；④ 三套门控统一 + 按域概率自动切标签（新设计，先想清楚误切代价）；⑤ 食堂模式阈值偏严（真实照只留 13/100），可单独再评估。任何改动前先 curl 一次 /api/health 确认 checkpoint 与两个 enabled。⑥ 宽头换主干已试过并否掉（§1 第六轮），想再吃中餐那 2 pt 应只在中餐子集上动手。

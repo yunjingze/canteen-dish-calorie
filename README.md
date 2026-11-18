@@ -63,6 +63,8 @@ food_project/
 │  ├─ eval_wide_domain.py   # 116 类模型在 20 类食堂数据上的对比评估
 │  ├─ eval_wide_gate.py     # 116 类模式的门控阈值（官方 test 最差分数的 5% 分位）
 │  ├─ eval_wide_groups.py   # 116 类 test 评测：单视角 / TTA / ECE / 分组 / 每类
+│  ├─ eval_wide_candidate.py # 换主干实验：候选 116 类权重放进现役同一套评分
+│  ├─ compare_wide_backbones.py # 把几个候选 116 类权重的指标并成一张对照表
 │  ├─ pdl.py                # 多线程 HTTP Range 下载器（大文件直链，12 线程约 12 MB/s）
 │  ├─ prepare_cn241.py      # 解压 CNFOOD-241 并抽食堂 20 道 → data/splits/cn241_full
 │  ├─ train_cn241.py        # 训练 / 线性探针 20 道食堂模型（--mode probe|finetune）
@@ -353,6 +355,8 @@ python scripts/add_chinese_dishes.py                    # 解压 16 道中餐，
 python scripts/prepare_wide_data.py                    # Food-101 101 类 train/val/test 划分
 python scripts/train_wide.py --epochs 10 --batch-size 96 --workers 6 --out results/runs/resnet18_food101
 python scripts/train_wide.py --epochs 4 --init results/runs/resnet18_food101/best.pt --lr-head 5e-4 --lr-backbone 5e-5 --out results/runs/resnet18_food101_cn116
+python scripts/eval_wide_candidate.py --ckpt results/runs/<run>/best.pt --skip-tta   # 候选权重同一套评分
+python scripts/compare_wide_backbones.py               # 三个候选的对照表（5.5.1）
 python scripts/eval_wide_groups.py --run results/runs/resnet18_food101_cn116   # 单视角/TTA/ECE/分组
 python scripts/eval_wide_domain.py                     # 与 20 类模型在同一套 20 类评分下对比
 python scripts/eval_wide_gate.py                       # 116 类门控阈值（5% 分位）
@@ -362,6 +366,55 @@ python scripts/make_wide_figure.py                     # 画 wide_scale.png
 ```
 
 > 注：`train_wide.py` 结尾会用 DataLoader worker 再跑一遍 test，在 Windows 上曾因共享内存段耗尽报 `RuntimeError: Couldn't open shared file mapping ... error code: 1455`（该处已降到 2 个 worker）。对 116 类划分，这一步要处理 25,830×3 个视图、约 40 分钟，所以实际指标由 `eval_wide_groups.py` 单独重算（8 worker 一次解码三视图），用的仍是同一套温度缩放与 TTA。
+
+### 5.5.1 宽头要不要也跟着换主干：一次否定的实验
+
+第四轮把 20 类那条线的主干换成了 Food-101N 清洗标签重训的 resnet18（见 5.4.1），于是很自然的问题：116 类的宽头要不要也从这份主干出发？好处看着很直接——整个应用只剩一个主干家族，部署和排查都省事；而且 15 道中餐每类只有几百张，起点强一点也不亏。
+
+试了三种配方，都用 `scripts/eval_wide_candidate.py` 打分（同一套代码、同一套温度缩放、单视角），和现役权重逐行对比：
+
+- **(a) 只用 20 类 f101n 权重热启动**：fc 的 20 行按类名搬进 116 行头，其余 96 类随机初始化，6 epochs，lr 头 1e-3 / 主干 1e-4。
+- **(b) 混合热启动**：主干来自 f101n，116 行分类头整个来自现役宽头，同样 6 epochs。这一组把「主干」单独隔离出来，是真正的 A/B。
+- **(c) 在 (b) 上续训 4 epochs**（共 10，学习率重启到 5e-4）：验证集 macro-F1 76.68%，比 (b) 的 77.12% 还低，训练集已到 95.15%——过拟合，弃用。
+
+| 指标（单视角，%） | 现役（Food-101 头热启动） | (a) 只用 f101n | (b) 混合热启动 |
+| --- | --- | --- | --- |
+| 官方 test Top-1（116 路） | **80.58** | 79.36 | 79.46 |
+| 官方 test Top-5 | 94.39 | 94.67 | 94.56 |
+| 官方 test macro-F1 | **80.77** | 80.12 | 80.30 |
+| 官方 test ECE（校准后） | 1.84 | **1.36** | 1.44 |
+| Food-101 分组 Top-1 | **80.40** | 79.11 | 79.21 |
+| 中餐 15 类分组 Top-1 | 88.99 | 91.01 | **91.19** |
+| 20 类协议 test（限定 20 类） | 93.82 | **94.60** | 94.24 |
+| 20 类协议 test（116 路全开） | **82.46** | 81.24 | 81.50 |
+| 食堂退化照片（限定 20 类） | **98.20** | 97.60 | 96.70 |
+| 食堂退化照片（116 路全开） | **95.50** | 90.20 | 89.60 |
+| 100 张真实食堂照（限定 20 类） | 89.00 | 94.00 | **95.00** |
+| 100 张真实食堂照（116 路全开） | 71.00 | 74.00 | **73.00** |
+
+结论是**不换**，理由按重要性排：
+
+1. **f101n 只认识那 20 道菜，(a) 等于让另外 96 个 Food-101 类从头学**。现役宽头是从 101 类 Food-101 头热启动的，101 行都是「有知识的」；(a) 只有 20 行有知识。Food-101 分组 −1.3 pt、整体 Top-1 −1.2 pt 就是这笔账。
+2. **(b) 把主干这个变量单独隔离后，f101n 主干本身也不占优**：Food-101 分组 −1.2 pt、整体 −1.1 pt、食堂退化照片（116 路全开）−5.9 pt。f101n 的好处（20 类的标签更干净）在 116 路判别里太窄，抵消不了它在其余 96 类上的差别。
+3. **它换掉的恰恰是页面最常出错的那一格**：食堂退化照片上「116 路全开」从 95.5% 掉到 89.6%，也就是脏一点、糊一点的西餐照更容易被拽进中餐类——用户看到的就是「一盘薯条被判成麻婆豆腐」。真实照片（100 张手标）那 +6 pt 是真的，但它是限定 20 类口径，且样本量只有 100，±4 pt 级别的差别不足以下注。
+4. 顺带一提，(a)/(b) 的中餐分组都涨了约 2 pt（88.99 → 91.19），说明 f101n 的干净标签对那 15 道菜确实有用；真要吃到这 2 pt，应该只在中餐子集上动手，而不是整套 116 路一起换——这留作以后的事。
+
+所以现役宽头（`results/runs/resnet18_food101_cn116/best.pt`）保持不变；这一轮留下的是度量工具和一个真 bug 的修复：`--init` 原来按**位置**把前 20 行搬进 116 行头，而 `WIDE_CLASS_NAMES[:20]` 与 `CLASS_NAMES` 顺序不同（前者字母序），整排错位；现在改成按类名搬，并且支持 `--init a.pt,b.pt@head`（逗号分隔按顺序加载，`@head` 表示只搬分类头、不动主干）。这几条由 `tests/test_warm_start.py` 的 4 个用例钉住。
+
+复现：
+
+```powershell
+python scripts/train_wide.py --epochs 6 --batch-size 96 --workers 2 --lr-head 1e-3 --lr-backbone 1e-4 `
+  --init results/runs/resnet18_last_stage_aug_f101n/best.pt --out results/runs/resnet18_cn116_f101n
+python scripts/train_wide.py --epochs 6 --batch-size 96 --workers 2 --lr-head 1e-3 --lr-backbone 1e-4 `
+  --init "results/runs/resnet18_last_stage_aug_f101n/best.pt,results/runs/resnet18_food101_cn116/best.pt@head" `
+  --out results/runs/resnet18_cn116_f101n_hybrid
+python scripts/eval_wide_candidate.py --ckpt results/runs/resnet18_cn116_f101n_hybrid/best.pt --skip-tta `
+  --out results/tables/wide_candidate_hybrid.json
+python scripts/compare_wide_backbones.py                # 汇总成上表（results/tables/wide_backbone_compare.json）
+```
+
+> 注：跑这一串之前先把电源接上。笔记本用电池时 GPU 被功耗墙压到 19 W、SM 利用率 15%，一个 epoch 从 235 s 变成 25 分钟还没跑完；接上电源后同样的命令 235–360 s/epoch 正常收敛。
 
 ### 5.6 连锁品牌热量参考（麦当劳中国官网）
 

@@ -123,6 +123,48 @@ def fit_temperature(val_logits: np.ndarray, labels: np.ndarray) -> float:
     return float(torch.exp(log_t).item())
 
 
+def warm_start(model, ckpt_path: Path, head_only: bool = False) -> dict:
+    """Copy a checkpoint into the wide model, matching the head rows by class name.
+
+    The narrow canteen head and the wide head share 20 dish names but not their
+    order (WIDE_CLASS_NAMES is alphabetical, CLASS_NAMES follows the canteen
+    menu), so copying fc rows positionally would scramble them.  Rows are placed
+    by name instead; every wide class the source does not know keeps the random
+    init it was given.
+
+    With head_only the backbone is left alone, which lets a run take its backbone
+    from one checkpoint and its classifier from another.
+    """
+    src = torch.load(ckpt_path, map_location="cpu", weights_only=False)
+    src_sd = src["model"]
+    src_names = list(src.get("class_names") or [])
+    tgt = model.state_dict()
+    copied = 0
+    head_rows = {}
+    for key, val in src_sd.items():
+        if key not in tgt:
+            continue
+        if key in ("fc.weight", "fc.bias") and src_names:
+            index = {name: i for i, name in enumerate(WIDE_CLASS_NAMES)}
+            rows = [(index[n], i) for i, n in enumerate(src_names) if n in index]
+            if not rows:
+                continue
+            for dst, s in rows:
+                tgt[key][dst] = val[s]
+            head_rows[key] = [src_names[s] for _, s in rows]
+            copied += 1
+            continue
+        if head_only:
+            continue
+        if tgt[key].shape == val.shape:
+            tgt[key] = val
+            copied += 1
+    model.load_state_dict(tgt)
+    return {"tensors": copied, "head_rows": head_rows, "source_classes": src_names,
+            "source_epoch": src.get("epoch"), "source_arch": src.get("arch"),
+            "head_only": head_only}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-root", default=str(ROOT / "data/wide"))
@@ -136,7 +178,9 @@ def main(argv=None) -> int:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--out", default=str(ROOT / "results/runs/resnet18_food101"))
-    ap.add_argument("--init", default="", help="warm-start checkpoint; its head rows are copied onto the shared classes")
+    ap.add_argument("--init", default="",
+                    help="warm-start checkpoint(s), comma separated and applied in order; head rows are "
+                         "matched by class name, later checkpoints win")
     args = ap.parse_args(argv)
 
     out = Path(args.out).resolve()
@@ -152,21 +196,18 @@ def main(argv=None) -> int:
     print(f"train {len(train_ds)} / val {len(val_ds)} images, {WIDE_NUM_CLASSES} classes", flush=True)
 
     model = build_model(args.arch, WIDE_NUM_CLASSES, pretrained=True).to(device)
-    if args.init:
-        src = torch.load(args.init, map_location="cpu", weights_only=False)
-        src_sd, warm = src["model"], 0
-        tgt = model.state_dict()
-        for key, val in src_sd.items():
-            if key not in tgt:
-                continue
-            if tgt[key].shape == val.shape:
-                tgt[key] = val
-                warm += 1
-            elif key in ("fc.weight", "fc.bias") and tgt[key].shape[1:] == val.shape[1:]:
-                tgt[key][: val.shape[0]] = val
-                warm += 1
-        model.load_state_dict(tgt)
-        print(f"warm start from {args.init}: {warm} tensors, head rows kept for the original classes", flush=True)
+    warm_infos = []
+    for entry in [p.strip() for p in args.init.split(",") if p.strip()]:
+        # "path@head" takes only the classifier rows, leaving the backbone alone.
+        head_only = entry.endswith("@head")
+        init_path = entry[: -len("@head")] if head_only else entry
+        info = warm_start(model, Path(init_path), head_only=head_only)
+        warm_infos.append(info)
+        kept = len(info["head_rows"].get("fc.weight", []))
+        print(f"warm start from {init_path}{' (head only)' if head_only else ''}: "
+              f"{info['tensors']} tensors, {kept}/{len(info['source_classes'])} head rows "
+              f"placed by class name", flush=True)
+    warm_info = warm_infos[-1] if warm_infos else None
     head = model.fc if hasattr(model, "fc") else model.classifier[-1]
     head_ids = {id(p) for p in head.parameters()}
     backbone = [p for p in model.parameters() if p.requires_grad and id(p) not in head_ids]
@@ -181,6 +222,8 @@ def main(argv=None) -> int:
 
     config = vars(args) | {"device": str(device), "train_size": len(train_ds),
                            "val_size": len(val_ds), "num_classes": WIDE_NUM_CLASSES,
+                           "warm_start": [{k: v for k, v in w.items() if k != "head_rows"}
+                                          for w in warm_infos] or None,
                            "torch": torch.__version__}
     save_json(out / "config.json", config)
 

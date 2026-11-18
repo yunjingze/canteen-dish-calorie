@@ -1,0 +1,53 @@
+{
+  "ckpt": "results\\runs\\resnet18_food101_cn116\\best.pt",
+  "arch": "resnet18",
+  "epoch": 4,
+  "temperature": 0.819,
+  "val_macro_f1": 0.7722007121708935,
+  "val_acc": 0.7652401910291226,
+  "test": {
+    "top1": 0.8057684862562912,
+    "top5": 0.9439411536972513,
+    "n": 25830,
+    "tta": false
+  },
+  "test_metrics": {
+    "accuracy": 0.8057684862562912,
+    "macro_f1": 0.807662279411765,
+    "ece": 0.018381279447352867
+  },
+  "test_groups": {
+    "food101": {
+      "n": 25285,
+      "top1": 0.804
+    },
+    "chinese": {
+      "n": 545,
+      "top1": 0.8899
+    }
+  },
+  "course_test": {
+    "n": 5000,
+    "top1_restricted": 0.9382,
+    "top5_restricted": 0.991,
+    "top1_full116": 0.8246
+  },
+  "canteen_clean": {
+    "n": 1000,
+    "top1_restricted": 0.982,
+    "top5_restricted": 0.997,
+    "top1_full116": 0.955
+  },
+  "canteen_proxy": {
+    "n": 1000,
+    "top1_restricted": 0.755,
+    "top5_restricted": 0.936,
+    "top1_full116": 0.572
+  },
+  "canteen_real": {
+    "n": 100,
+    "top1_restricted": 0.89,
+    "top5_restricted": 0.99,
+    "top1_full116": 0.71
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "runs": {
+    "deployed_f101_head": {
+      "ckpt": "results\\runs\\resnet18_food101_cn116\\best.pt",
+      "epoch": 4,
+      "temperature": 0.819,
+      "val_acc": 0.7652401910291226,
+      "val_macro_f1": 0.7722007121708935
+    },
+    "f101n_only": {
+      "ckpt": "results\\runs\\resnet18_cn116_f101n\\best.pt",
+      "epoch": 6,
+      "temperature": 0.7797,
+      "val_acc": 0.760651746418204,
+      "val_macro_f1": 0.7720639881913983
+    },
+    "f101n_backbone_f101_head": {
+      "ckpt": "results\\runs\\resnet18_cn116_f101n_hybrid\\best.pt",
+      "epoch": 6,
+      "temperature": 0.785,
+      "val_acc": 0.7603708212379436,
+      "val_macro_f1": 0.7711511085826065
+    }
+  },
+  "table": {
+    "deployed_f101_head": {
+      "wide test top-1": 80.58,
+      "wide test top-5": 94.39,
+      "wide test macro F1": 80.77,
+      "wide test ECE": 1.84,
+      "food101 group top-1": 80.4,
+      "chinese group top-1": 88.99,
+      "course test r20": 93.82,
+      "course test full116": 82.46,
+      "canteen clean r20": 98.2,
+      "canteen clean full116": 95.5,
+      "canteen proxy r20": 75.5,
+      "canteen proxy full116": 57.2,
+      "canteen real r20": 89.0,
+      "canteen real full116": 71.0
+    },
+    "f101n_only": {
+      "wide test top-1": 79.36,
+      "wide test top-5": 94.67,
+      "wide test macro F1": 80.12,
+      "wide test ECE": 1.36,
+      "food101 group top-1": 79.11,
+      "chinese group top-1": 91.01,
+      "course test r20": 94.6,
+      "course test full116": 81.24,
+      "canteen clean r20": 97.6,
+      "canteen clean full116": 90.2,
+      "canteen proxy r20": 76.9,
+      "canteen proxy full116": 55.7,
+      "canteen real r20": 94.0,
+      "canteen real full116": 74.0
+    },
+    "f101n_backbone_f101_head": {
+      "wide test top-1": 79.46,
+      "wide test top-5": 94.56,
+      "wide test macro F1": 80.3,
+      "wide test ECE": 1.44,
+      "food101 group top-1": 79.21,
+      "chinese group top-1": 91.19,
+      "course test r20": 94.24,
+      "course test full116": 81.5,
+      "canteen clean r20": 96.7,
+      "canteen clean full116": 89.6,
+      "canteen proxy r20": 76.3,
+      "canteen proxy full116": 55.7,
+      "canteen real r20": 95.0,
+      "canteen real full116": 73.0
+    }
+  }
+}
