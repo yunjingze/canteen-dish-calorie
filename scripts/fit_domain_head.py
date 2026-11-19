@@ -46,7 +46,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--feats", default="results/tables/domain_feats.npz")
     ap.add_argument("--mode", default="mean", choices=["mean", "min", "meanmin"])
+    ap.add_argument("--tag", default="", help="write domain_head_<tag>.json instead of the shipped file")
     args = ap.parse_args()
+
+    global HEAD, REPORT
+    if args.tag:
+        HEAD = ROOT / f"results/tables/domain_head_{args.tag}.json"
+        REPORT = ROOT / f"results/tables/domain_head_{args.tag}_metrics.json"
 
     z = np.load(ROOT / args.feats, allow_pickle=True)
     feat, y, names = z["feat"], z["y"].astype(int), z["set"]

@@ -153,12 +153,16 @@ def run_finetune(args, names, table, device):
     val_ds = SplitDataset(root / "val", names, build_transforms(False, False))
     test_ds = SplitDataset(root / "test", names, build_transforms(False, False))
     loaders = {
+        # Only the train loader keeps its workers alive: on Windows every worker
+        # holds its own copy of torch plus the batch buffers, and the eval loaders
+        # used to add three more each (nine in total), which is what tipped the
+        # commit limit over.  Eval workers spawn for the pass and exit after it.
         "train": DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, num_workers=args.workers,
                             pin_memory=True, drop_last=True, persistent_workers=args.workers > 0),
-        "val": DataLoader(val_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.workers,
-                          pin_memory=True, persistent_workers=args.workers > 0),
-        "test": DataLoader(test_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.workers,
-                           pin_memory=True, persistent_workers=args.workers > 0),
+        "val": DataLoader(val_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.eval_workers,
+                          pin_memory=True),
+        "test": DataLoader(test_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.eval_workers,
+                           pin_memory=True),
     }
     print(f"train {len(train_ds)} / val {len(val_ds)} / test {len(test_ds)}", flush=True)
 
@@ -177,7 +181,18 @@ def run_finetune(args, names, table, device):
 
     best = {"val_acc": -1.0, "epoch": -1, "state": None}
     history = []
-    for epoch in range(1, args.epochs + 1):
+    start_epoch = 1
+    last_path = Path(args.save_dir) / "last.pt"
+    if args.resume and last_path.is_file():
+        prev = torch.load(last_path, map_location=device, weights_only=False)
+        model.load_state_dict(prev["model"])
+        opt.load_state_dict(prev["optimizer"])
+        sched.load_state_dict(prev["scheduler"])
+        best = prev["best"]
+        history = prev["history"]
+        start_epoch = prev["epoch"] + 1
+        print(f"resumed {last_path} at epoch {prev['epoch']} (best val@1 {best['val_acc']*100:.2f})", flush=True)
+    for epoch in range(start_epoch, args.epochs + 1):
         model.train()
         t0, loss_sum, seen, correct = time.perf_counter(), 0.0, 0, 0
         for x, y in loaders["train"]:
@@ -208,6 +223,12 @@ def run_finetune(args, names, table, device):
               f"val@1 {row['val_acc']*100:.2f} valF1 {row['val_macro_f1']*100:.2f} ({dt:.0f}s)", flush=True)
         if met["accuracy"] > best["val_acc"]:
             best = {"val_acc": met["accuracy"], "epoch": epoch, "state": {k: v.clone() for k, v in model.state_dict().items()}}
+        # Written every epoch so an interrupted run resumes instead of restarting.
+        Path(args.save_dir).mkdir(parents=True, exist_ok=True)
+        torch.save({"model": model.state_dict(), "optimizer": opt.state_dict(),
+                    "scheduler": sched.state_dict(), "epoch": epoch, "best": best,
+                    "history": history, "arch": args.arch, "class_names": names},
+                   last_path)
     model.load_state_dict(best["state"])
     model.eval()
     # temperature scaling on the validation split, applied to everything downstream
@@ -259,6 +280,8 @@ def main(argv=None) -> int:
     ap.add_argument("--epochs", type=int, default=8)
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--eval-workers", type=int, default=0)
+    ap.add_argument("--resume", action="store_true")
     ap.add_argument("--C", type=float, default=1.0)
     ap.add_argument("--lr-head", type=float, default=1e-3)
     ap.add_argument("--lr-backbone", type=float, default=2e-4)

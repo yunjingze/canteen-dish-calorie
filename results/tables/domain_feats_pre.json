@@ -1,0 +1,17 @@
+{
+  "checkpoint": "results/runs/cn241_21_pre/best.pt",
+  "views": 1,
+  "n": 37550,
+  "by_set": {
+    "cn_ood": 232,
+    "cn_te": 3858,
+    "cn_tr": 12000,
+    "cn_va": 2214,
+    "f101_te": 5000,
+    "f101_tr": 12000,
+    "f101_va": 2000,
+    "mixed_real": 8,
+    "neg": 138,
+    "real": 100
+  }
+}

@@ -1,0 +1,64 @@
+{
+ "f101n": {
+  "auc_neg_vs_f101": 0.9896,
+  "n_neg": 138,
+  "n_real": 100,
+  "n_f101": 600,
+  "t0.05": {
+   "neg_kept": 9,
+   "real_kept": 99,
+   "f101_kept": 600
+  },
+  "t0.1": {
+   "neg_kept": 6,
+   "real_kept": 98,
+   "f101_kept": 599
+  },
+  "t0.2": {
+   "neg_kept": 6,
+   "real_kept": 96,
+   "f101_kept": 598
+  },
+  "t0.3": {
+   "neg_kept": 6,
+   "real_kept": 94,
+   "f101_kept": 596
+  },
+  "t0.5": {
+   "neg_kept": 6,
+   "real_kept": 92,
+   "f101_kept": 591
+  }
+ },
+ "plain": {
+  "auc_neg_vs_f101": 0.9641,
+  "n_neg": 138,
+  "n_real": 100,
+  "n_f101": 600,
+  "t0.05": {
+   "neg_kept": 127,
+   "real_kept": 100,
+   "f101_kept": 600
+  },
+  "t0.1": {
+   "neg_kept": 122,
+   "real_kept": 99,
+   "f101_kept": 600
+  },
+  "t0.2": {
+   "neg_kept": 112,
+   "real_kept": 99,
+   "f101_kept": 600
+  },
+  "t0.3": {
+   "neg_kept": 100,
+   "real_kept": 98,
+   "f101_kept": 598
+  },
+  "t0.5": {
+   "neg_kept": 87,
+   "real_kept": 98,
+   "f101_kept": 596
+  }
+ }
+}

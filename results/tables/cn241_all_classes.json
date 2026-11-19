@@ -1,0 +1,2186 @@
+{
+ "source": "CNFOOD-241 train600x600 (train/val) + val600x600 (test)",
+ "n_classes": 241,
+ "splits": {
+  "train": 0.9,
+  "val": 0.09999999999999998,
+  "test": "all of val600x600"
+ },
+ "cap": 0,
+ "totals": {
+  "train": 153746,
+  "val": 17122,
+  "test": 20943
+ },
+ "classes": [
+  {
+   "slug": "c000",
+   "cnfood_id": 0,
+   "zh": "麻婆豆腐",
+   "en": "Mapo Tofu",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c001",
+   "cnfood_id": 1,
+   "zh": "家常豆腐",
+   "en": "Home style sauteed Tofu",
+   "n_train": 612,
+   "n_val": 68,
+   "n_test": 95
+  },
+  {
+   "slug": "c002",
+   "cnfood_id": 2,
+   "zh": "煎豆腐",
+   "en": "Fried Tofu",
+   "n_train": 665,
+   "n_val": 74,
+   "n_test": 103
+  },
+  {
+   "slug": "c003",
+   "cnfood_id": 3,
+   "zh": "豆腐花",
+   "en": "Bean curd",
+   "n_train": 335,
+   "n_val": 37,
+   "n_test": 51
+  },
+  {
+   "slug": "c004",
+   "cnfood_id": 4,
+   "zh": "臭豆腐",
+   "en": "Stinky tofu",
+   "n_train": 218,
+   "n_val": 24,
+   "n_test": 33
+  },
+  {
+   "slug": "c005",
+   "cnfood_id": 5,
+   "zh": "酸辣土豆丝",
+   "en": "Potato silk",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c006",
+   "cnfood_id": 6,
+   "zh": "土豆泥",
+   "en": "Pan fried potato",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c007",
+   "cnfood_id": 7,
+   "zh": "香煎土豆",
+   "en": "Pan fried potato",
+   "n_train": 354,
+   "n_val": 39,
+   "n_test": 55
+  },
+  {
+   "slug": "c008",
+   "cnfood_id": 8,
+   "zh": "土豆焖豆角",
+   "en": "Braised beans with potato",
+   "n_train": 356,
+   "n_val": 40,
+   "n_test": 55
+  },
+  {
+   "slug": "c009",
+   "cnfood_id": 9,
+   "zh": "地三鲜",
+   "en": "Fried Potato, Green Pepper & Eggplant",
+   "n_train": 1239,
+   "n_val": 138,
+   "n_test": 143
+  },
+  {
+   "slug": "c010",
+   "cnfood_id": 10,
+   "zh": "薯条",
+   "en": "French fries",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c011",
+   "cnfood_id": 11,
+   "zh": "鱼香茄子",
+   "en": "Yu-Shiang Eggplant",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c012",
+   "cnfood_id": 12,
+   "zh": "蒜泥茄子",
+   "en": "Mashed garlic eggplant",
+   "n_train": 610,
+   "n_val": 68,
+   "n_test": 95
+  },
+  {
+   "slug": "c013",
+   "cnfood_id": 13,
+   "zh": "肉末茄子",
+   "en": "Eggplant with mince pork",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c014",
+   "cnfood_id": 14,
+   "zh": "辣白菜",
+   "en": "Spicy cabbage",
+   "n_train": 449,
+   "n_val": 50,
+   "n_test": 69
+  },
+  {
+   "slug": "c015",
+   "cnfood_id": 15,
+   "zh": "醋溜白菜",
+   "en": "Sour cabbage",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c016",
+   "cnfood_id": 16,
+   "zh": "上汤娃娃菜",
+   "en": "Steamed Baby Cabbage",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c017",
+   "cnfood_id": 17,
+   "zh": "手撕包菜",
+   "en": "Shredded cabbage",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c018",
+   "cnfood_id": 18,
+   "zh": "蚝油生菜",
+   "en": "Sauteed Lettuce in Oyster Sauce",
+   "n_train": 1246,
+   "n_val": 139,
+   "n_test": 155
+  },
+  {
+   "slug": "c019",
+   "cnfood_id": 19,
+   "zh": "炒青菜",
+   "en": "Saute vegetable",
+   "n_train": 660,
+   "n_val": 73,
+   "n_test": 102
+  },
+  {
+   "slug": "c020",
+   "cnfood_id": 20,
+   "zh": "炒空心菜",
+   "en": "tumis kangkung",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c021",
+   "cnfood_id": 21,
+   "zh": "蒜蓉油麦菜",
+   "en": "Lettuce with smashed garlic",
+   "n_train": 798,
+   "n_val": 89,
+   "n_test": 74
+  },
+  {
+   "slug": "c022",
+   "cnfood_id": 22,
+   "zh": "清炒菠菜",
+   "en": "Sauteed spainch",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c023",
+   "cnfood_id": 23,
+   "zh": "炒豆芽",
+   "en": "Sauteed bean sprouts",
+   "n_train": 1229,
+   "n_val": 137,
+   "n_test": 131
+  },
+  {
+   "slug": "c024",
+   "cnfood_id": 24,
+   "zh": "炒蚕豆",
+   "en": "Sauteed broad beans",
+   "n_train": 453,
+   "n_val": 50,
+   "n_test": 70
+  },
+  {
+   "slug": "c025",
+   "cnfood_id": 25,
+   "zh": "毛豆炒肉",
+   "en": "Soybean with pork",
+   "n_train": 659,
+   "n_val": 73,
+   "n_test": 46
+  },
+  {
+   "slug": "c026",
+   "cnfood_id": 26,
+   "zh": "蚝油西兰花",
+   "en": "Broccoli with Oyster Sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c027",
+   "cnfood_id": 27,
+   "zh": "香煎藕盒",
+   "en": "Deep Fried lotus root",
+   "n_train": 406,
+   "n_val": 45,
+   "n_test": 63
+  },
+  {
+   "slug": "c028",
+   "cnfood_id": 28,
+   "zh": "莲藕",
+   "en": "Lotus root",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c029",
+   "cnfood_id": 29,
+   "zh": "凉拌西红柿",
+   "en": "Tomato salad",
+   "n_train": 186,
+   "n_val": 21,
+   "n_test": 28
+  },
+  {
+   "slug": "c030",
+   "cnfood_id": 30,
+   "zh": "鸡鸭胗",
+   "en": "Gizzard",
+   "n_train": 1084,
+   "n_val": 120,
+   "n_test": 116
+  },
+  {
+   "slug": "c031",
+   "cnfood_id": 31,
+   "zh": "凉拌木耳",
+   "en": "Black Fungus in Vinegar Sauce",
+   "n_train": 679,
+   "n_val": 75,
+   "n_test": 105
+  },
+  {
+   "slug": "c032",
+   "cnfood_id": 32,
+   "zh": "口水黄瓜",
+   "en": "Cucumber in Sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c033",
+   "cnfood_id": 33,
+   "zh": "花生米",
+   "en": "peanut",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c034",
+   "cnfood_id": 34,
+   "zh": "凉拌海带丝",
+   "en": "Seaweed salad",
+   "n_train": 680,
+   "n_val": 75,
+   "n_test": 106
+  },
+  {
+   "slug": "c035",
+   "cnfood_id": 35,
+   "zh": "拔丝山药",
+   "en": "Chinese Yam in Hot Toffee",
+   "n_train": 829,
+   "n_val": 92,
+   "n_test": 129
+  },
+  {
+   "slug": "c036",
+   "cnfood_id": 36,
+   "zh": "清炒山药",
+   "en": "Fried Yam",
+   "n_train": 660,
+   "n_val": 73,
+   "n_test": 102
+  },
+  {
+   "slug": "c037",
+   "cnfood_id": 37,
+   "zh": "干煸豆角",
+   "en": "Fried beans",
+   "n_train": 727,
+   "n_val": 81,
+   "n_test": 113
+  },
+  {
+   "slug": "c038",
+   "cnfood_id": 38,
+   "zh": "蚝油杏鲍菇",
+   "en": "Oyster mushroom",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c039",
+   "cnfood_id": 39,
+   "zh": "酿苦瓜",
+   "en": "stuffed bitter melon",
+   "n_train": 302,
+   "n_val": 34,
+   "n_test": 46
+  },
+  {
+   "slug": "c040",
+   "cnfood_id": 40,
+   "zh": "炒苦瓜",
+   "en": "sauteed bitter melon",
+   "n_train": 366,
+   "n_val": 41,
+   "n_test": 56
+  },
+  {
+   "slug": "c041",
+   "cnfood_id": 41,
+   "zh": "虎皮青椒",
+   "en": "pepper with tiger skin",
+   "n_train": 806,
+   "n_val": 90,
+   "n_test": 125
+  },
+  {
+   "slug": "c042",
+   "cnfood_id": 42,
+   "zh": "凉拌腐竹",
+   "en": "Yuba salad",
+   "n_train": 194,
+   "n_val": 21,
+   "n_test": 29
+  },
+  {
+   "slug": "c043",
+   "cnfood_id": 43,
+   "zh": "炒花菜",
+   "en": "fried cauliflower",
+   "n_train": 1245,
+   "n_val": 138,
+   "n_test": 131
+  },
+  {
+   "slug": "c044",
+   "cnfood_id": 44,
+   "zh": "松仁玉米",
+   "en": "Sauteed Sweet Corn with Pine Nuts",
+   "n_train": 391,
+   "n_val": 43,
+   "n_test": 60
+  },
+  {
+   "slug": "c045",
+   "cnfood_id": 45,
+   "zh": "香菇青菜",
+   "en": "Sauted Chinese Greens with Mushrooms",
+   "n_train": 712,
+   "n_val": 79,
+   "n_test": 58
+  },
+  {
+   "slug": "c046",
+   "cnfood_id": 46,
+   "zh": "椒盐蘑菇",
+   "en": "Spiced mushroom",
+   "n_train": 125,
+   "n_val": 14,
+   "n_test": 19
+  },
+  {
+   "slug": "c047",
+   "cnfood_id": 47,
+   "zh": "芹菜香干",
+   "en": "Celery and tofu",
+   "n_train": 331,
+   "n_val": 37,
+   "n_test": 51
+  },
+  {
+   "slug": "c048",
+   "cnfood_id": 48,
+   "zh": "西芹百合",
+   "en": "Sauteed Lily Bulbs and Celery",
+   "n_train": 207,
+   "n_val": 23,
+   "n_test": 31
+  },
+  {
+   "slug": "c049",
+   "cnfood_id": 49,
+   "zh": "韭菜炒香干",
+   "en": "Leak and tofu",
+   "n_train": 94,
+   "n_val": 11,
+   "n_test": 14
+  },
+  {
+   "slug": "c050",
+   "cnfood_id": 50,
+   "zh": "西红柿炒鸡蛋",
+   "en": "Scrambled egg with tomato",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c051",
+   "cnfood_id": 51,
+   "zh": "韭菜炒鸡蛋",
+   "en": "Scrambled Egg with Leek",
+   "n_train": 1115,
+   "n_val": 124,
+   "n_test": 133
+  },
+  {
+   "slug": "c052",
+   "cnfood_id": 52,
+   "zh": "黄瓜炒鸡蛋",
+   "en": "Scrambled Egg with cucumber",
+   "n_train": 732,
+   "n_val": 81,
+   "n_test": 113
+  },
+  {
+   "slug": "c053",
+   "cnfood_id": 53,
+   "zh": "鸡蛋羹",
+   "en": "Steamed egg custard",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c054",
+   "cnfood_id": 54,
+   "zh": "猪肝",
+   "en": "Pork liver",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c055",
+   "cnfood_id": 55,
+   "zh": "猪耳朵",
+   "en": "Pig ears",
+   "n_train": 220,
+   "n_val": 25,
+   "n_test": 34
+  },
+  {
+   "slug": "c056",
+   "cnfood_id": 56,
+   "zh": "叉烧",
+   "en": "roast pork",
+   "n_train": 958,
+   "n_val": 107,
+   "n_test": 99
+  },
+  {
+   "slug": "c057",
+   "cnfood_id": 57,
+   "zh": "粉蒸排骨",
+   "en": "Steamed pork with rice powder",
+   "n_train": 397,
+   "n_val": 44,
+   "n_test": 61
+  },
+  {
+   "slug": "c058",
+   "cnfood_id": 58,
+   "zh": "糖醋排骨",
+   "en": "Sweet and sour spareribs",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c059",
+   "cnfood_id": 59,
+   "zh": "海带炖排骨",
+   "en": "Braised spareribs with kelp",
+   "n_train": 300,
+   "n_val": 33,
+   "n_test": 46
+  },
+  {
+   "slug": "c060",
+   "cnfood_id": 60,
+   "zh": "可乐鸡翅",
+   "en": "Cola Chicken wings",
+   "n_train": 1108,
+   "n_val": 123,
+   "n_test": 131
+  },
+  {
+   "slug": "c061",
+   "cnfood_id": 61,
+   "zh": "泡椒凤爪",
+   "en": "Chicken Feet with Pickled Peppers",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c062",
+   "cnfood_id": 62,
+   "zh": "红烧鸡爪",
+   "en": "Chicken Feet with black bean sauce",
+   "n_train": 1138,
+   "n_val": 127,
+   "n_test": 131
+  },
+  {
+   "slug": "c063",
+   "cnfood_id": 63,
+   "zh": "口水鸡",
+   "en": "Steamed Chicken with Chili Sauce",
+   "n_train": 900,
+   "n_val": 100,
+   "n_test": 90
+  },
+  {
+   "slug": "c064",
+   "cnfood_id": 64,
+   "zh": "烧鹅",
+   "en": "Roast goose",
+   "n_train": 440,
+   "n_val": 49,
+   "n_test": 68
+  },
+  {
+   "slug": "c065",
+   "cnfood_id": 65,
+   "zh": "白斩鸡",
+   "en": "Boiled chicken",
+   "n_train": 223,
+   "n_val": 25,
+   "n_test": 34
+  },
+  {
+   "slug": "c066",
+   "cnfood_id": 66,
+   "zh": "大盘鸡",
+   "en": "Saute Spicy Chicken",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c067",
+   "cnfood_id": 67,
+   "zh": "香菇蒸鸡",
+   "en": "Steamed Chicken with Mushroom",
+   "n_train": 513,
+   "n_val": 57,
+   "n_test": 80
+  },
+  {
+   "slug": "c068",
+   "cnfood_id": 68,
+   "zh": "黄焖鸡",
+   "en": "chicken braised with brown sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c069",
+   "cnfood_id": 69,
+   "zh": "豉油鸡",
+   "en": "Soy sauce chicken",
+   "n_train": 602,
+   "n_val": 67,
+   "n_test": 40
+  },
+  {
+   "slug": "c070",
+   "cnfood_id": 70,
+   "zh": "辣子鸡",
+   "en": "Spicy Chicken",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c071",
+   "cnfood_id": 71,
+   "zh": "宫保鸡丁",
+   "en": "Kung Pao Chicken",
+   "n_train": 1645,
+   "n_val": 183,
+   "n_test": 144
+  },
+  {
+   "slug": "c072",
+   "cnfood_id": 72,
+   "zh": "三杯鸡",
+   "en": "Stewed Chicken with Three Cups Sauce",
+   "n_train": 422,
+   "n_val": 47,
+   "n_test": 65
+  },
+  {
+   "slug": "c073",
+   "cnfood_id": 73,
+   "zh": "鸡丝、鸡丝面",
+   "en": "Shredded chicken",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c074",
+   "cnfood_id": 74,
+   "zh": "炸鸡腿",
+   "en": "Fried chicken drumsticks",
+   "n_train": 252,
+   "n_val": 28,
+   "n_test": 39
+  },
+  {
+   "slug": "c075",
+   "cnfood_id": 75,
+   "zh": "啤酒鸭",
+   "en": "Beer duck",
+   "n_train": 673,
+   "n_val": 75,
+   "n_test": 105
+  },
+  {
+   "slug": "c076",
+   "cnfood_id": 76,
+   "zh": "腰花",
+   "en": "Scalloped pork or lamb kidneys",
+   "n_train": 361,
+   "n_val": 40,
+   "n_test": 56
+  },
+  {
+   "slug": "c077",
+   "cnfood_id": 77,
+   "zh": "红烧肉",
+   "en": "Braised pork",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c078",
+   "cnfood_id": 78,
+   "zh": "红烧牛肉",
+   "en": "Braised beef",
+   "n_train": 243,
+   "n_val": 27,
+   "n_test": 37
+  },
+  {
+   "slug": "c079",
+   "cnfood_id": 79,
+   "zh": "酱牛肉",
+   "en": "Beef Seasoned with Soy Sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c080",
+   "cnfood_id": 80,
+   "zh": "西红柿牛腩",
+   "en": "Sirloin tomatoes",
+   "n_train": 558,
+   "n_val": 62,
+   "n_test": 86
+  },
+  {
+   "slug": "c081",
+   "cnfood_id": 81,
+   "zh": "土豆炖牛腩",
+   "en": "Stewed sirloin potatoes",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c082",
+   "cnfood_id": 82,
+   "zh": "杭椒牛柳",
+   "en": "Sauteed Beef Fillet with Hot Green Pepper",
+   "n_train": 572,
+   "n_val": 63,
+   "n_test": 89
+  },
+  {
+   "slug": "c083",
+   "cnfood_id": 83,
+   "zh": "梅菜扣肉",
+   "en": "Pork with salted vegetable",
+   "n_train": 657,
+   "n_val": 73,
+   "n_test": 71
+  },
+  {
+   "slug": "c084",
+   "cnfood_id": 84,
+   "zh": "回锅肉",
+   "en": "Double cooked pork slices",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c085",
+   "cnfood_id": 85,
+   "zh": "猪肉炖粉条",
+   "en": "Braised Pork with Vermicelli",
+   "n_train": 252,
+   "n_val": 28,
+   "n_test": 38
+  },
+  {
+   "slug": "c086",
+   "cnfood_id": 86,
+   "zh": "水煮肉片",
+   "en": "Boiled Shredded pork in chili oil",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c087",
+   "cnfood_id": 87,
+   "zh": "糖醋里脊",
+   "en": "Fried Sweet and Sour Tenderloin",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c088",
+   "cnfood_id": 88,
+   "zh": "咕噜肉",
+   "en": "Cripsy sweet & sour pork slices",
+   "n_train": 359,
+   "n_val": 40,
+   "n_test": 55
+  },
+  {
+   "slug": "c089",
+   "cnfood_id": 89,
+   "zh": "锅包肉",
+   "en": "Pot bag meat",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c090",
+   "cnfood_id": 90,
+   "zh": "农家小炒肉",
+   "en": "Shredded Pork with Vegetables",
+   "n_train": 1192,
+   "n_val": 133,
+   "n_test": 139
+  },
+  {
+   "slug": "c091",
+   "cnfood_id": 91,
+   "zh": "培根金针菇卷",
+   "en": "Tiger lily buds in Baconic",
+   "n_train": 755,
+   "n_val": 84,
+   "n_test": 117
+  },
+  {
+   "slug": "c092",
+   "cnfood_id": 92,
+   "zh": "京酱肉丝",
+   "en": "Sauteed Shredded Pork in Sweet Bean Sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c093",
+   "cnfood_id": 93,
+   "zh": "豆角肉丝",
+   "en": "Shredded pork with bean",
+   "n_train": 840,
+   "n_val": 93,
+   "n_test": 131
+  },
+  {
+   "slug": "c094",
+   "cnfood_id": 94,
+   "zh": "酱焖猪蹄",
+   "en": "Braised pig feet with soy sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c095",
+   "cnfood_id": 95,
+   "zh": "肚丝",
+   "en": "Tripe",
+   "n_train": 788,
+   "n_val": 88,
+   "n_test": 123
+  },
+  {
+   "slug": "c096",
+   "cnfood_id": 96,
+   "zh": "青椒肉丝",
+   "en": "Shredded pork and green pepper",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c097",
+   "cnfood_id": 97,
+   "zh": "鱼香肉丝",
+   "en": "Yu-Shiang Shredded Pork",
+   "n_train": 1259,
+   "n_val": 140,
+   "n_test": 131
+  },
+  {
+   "slug": "c098",
+   "cnfood_id": 98,
+   "zh": "木耳炒肉丝",
+   "en": "Braised Fungus with pork slice",
+   "n_train": 537,
+   "n_val": 60,
+   "n_test": 83
+  },
+  {
+   "slug": "c099",
+   "cnfood_id": 99,
+   "zh": "木须肉",
+   "en": "Sauteed Sliced Pork,Eggs and Black Fungus",
+   "n_train": 622,
+   "n_val": 69,
+   "n_test": 97
+  },
+  {
+   "slug": "c100",
+   "cnfood_id": 100,
+   "zh": "莴笋肉丝",
+   "en": "Lettuce shredded meat",
+   "n_train": 414,
+   "n_val": 46,
+   "n_test": 64
+  },
+  {
+   "slug": "c101",
+   "cnfood_id": 101,
+   "zh": "蚂蚁上树",
+   "en": "Sauteed Vermicelli with Spicy Minced Pork",
+   "n_train": 946,
+   "n_val": 105,
+   "n_test": 90
+  },
+  {
+   "slug": "c102",
+   "cnfood_id": 102,
+   "zh": "孜然羊肉",
+   "en": "Fried Lamb with Cumin",
+   "n_train": 257,
+   "n_val": 29,
+   "n_test": 39
+  },
+  {
+   "slug": "c103",
+   "cnfood_id": 103,
+   "zh": "羊肉串",
+   "en": "Lamb shashlik",
+   "n_train": 446,
+   "n_val": 50,
+   "n_test": 69
+  },
+  {
+   "slug": "c104",
+   "cnfood_id": 104,
+   "zh": "葱爆羊肉",
+   "en": "Sauteed Sliced Lamb with Scallion",
+   "n_train": 476,
+   "n_val": 53,
+   "n_test": 74
+  },
+  {
+   "slug": "c105",
+   "cnfood_id": 105,
+   "zh": "红烧狮子头",
+   "en": "Stewed Pork Ball in Brown Sauce",
+   "n_train": 570,
+   "n_val": 63,
+   "n_test": 88
+  },
+  {
+   "slug": "c106",
+   "cnfood_id": 106,
+   "zh": "酸菜鱼",
+   "en": "Boiled Fish with Picked Cabbage and Chili",
+   "n_train": 1004,
+   "n_val": 111,
+   "n_test": 131
+  },
+  {
+   "slug": "c107",
+   "cnfood_id": 107,
+   "zh": "烤鱼",
+   "en": "grilled fish",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c108",
+   "cnfood_id": 108,
+   "zh": "糖醋鲤鱼",
+   "en": "Sweet and sour fish",
+   "n_train": 440,
+   "n_val": 49,
+   "n_test": 68
+  },
+  {
+   "slug": "c109",
+   "cnfood_id": 109,
+   "zh": "松鼠桂鱼",
+   "en": "Sweet and Sour Mandarin Fish",
+   "n_train": 82,
+   "n_val": 9,
+   "n_test": 12
+  },
+  {
+   "slug": "c110",
+   "cnfood_id": 110,
+   "zh": "红烧带鱼",
+   "en": "Braised Hairtail in Brown Sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c111",
+   "cnfood_id": 111,
+   "zh": "剁椒鱼头",
+   "en": "Steamed Fish Head with Diced Hot Red Peppers",
+   "n_train": 1185,
+   "n_val": 132,
+   "n_test": 124
+  },
+  {
+   "slug": "c112",
+   "cnfood_id": 112,
+   "zh": "水煮鱼",
+   "en": "Fish Filets in Hot Chili Oil",
+   "n_train": 1106,
+   "n_val": 123,
+   "n_test": 125
+  },
+  {
+   "slug": "c113",
+   "cnfood_id": 113,
+   "zh": "清蒸鲈鱼",
+   "en": "Steamed Perch",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c114",
+   "cnfood_id": 114,
+   "zh": "芝士虾球",
+   "en": "Cheese Shrimp Meat",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c115",
+   "cnfood_id": 115,
+   "zh": "虾仁西兰花",
+   "en": "Shrimp broccoli",
+   "n_train": 231,
+   "n_val": 26,
+   "n_test": 35
+  },
+  {
+   "slug": "c116",
+   "cnfood_id": 116,
+   "zh": "油焖大虾",
+   "en": "Braised Shrimp in chili oil",
+   "n_train": 1252,
+   "n_val": 139,
+   "n_test": 139
+  },
+  {
+   "slug": "c117",
+   "cnfood_id": 117,
+   "zh": "香辣虾",
+   "en": "Spicy shrimp",
+   "n_train": 653,
+   "n_val": 73,
+   "n_test": 101
+  },
+  {
+   "slug": "c118",
+   "cnfood_id": 118,
+   "zh": "香辣小龙虾",
+   "en": "Spicy crayfish",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c119",
+   "cnfood_id": 119,
+   "zh": "水晶虾饺",
+   "en": "Shrimp Duplings",
+   "n_train": 566,
+   "n_val": 63,
+   "n_test": 88
+  },
+  {
+   "slug": "c120",
+   "cnfood_id": 120,
+   "zh": "蒜茸粉丝蒸虾",
+   "en": "Steamed shrimp with garlic and vermicelli",
+   "n_train": 454,
+   "n_val": 50,
+   "n_test": 70
+  },
+  {
+   "slug": "c121",
+   "cnfood_id": 121,
+   "zh": "清炒虾仁",
+   "en": "Sauteed Shrimp meat",
+   "n_train": 184,
+   "n_val": 21,
+   "n_test": 28
+  },
+  {
+   "slug": "c122",
+   "cnfood_id": 122,
+   "zh": "皮皮虾",
+   "en": "Pipi shrimp",
+   "n_train": 463,
+   "n_val": 51,
+   "n_test": 71
+  },
+  {
+   "slug": "c123",
+   "cnfood_id": 123,
+   "zh": "扇贝",
+   "en": "Scallop in Shell",
+   "n_train": 816,
+   "n_val": 91,
+   "n_test": 127
+  },
+  {
+   "slug": "c124",
+   "cnfood_id": 124,
+   "zh": "生蚝",
+   "en": "Oysters",
+   "n_train": 290,
+   "n_val": 32,
+   "n_test": 44
+  },
+  {
+   "slug": "c125",
+   "cnfood_id": 125,
+   "zh": "鱿鱼",
+   "en": "squid",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c126",
+   "cnfood_id": 126,
+   "zh": "鲍鱼",
+   "en": "Abalone",
+   "n_train": 670,
+   "n_val": 74,
+   "n_test": 104
+  },
+  {
+   "slug": "c127",
+   "cnfood_id": 127,
+   "zh": "螃蟹",
+   "en": "Crab",
+   "n_train": 769,
+   "n_val": 85,
+   "n_test": 120
+  },
+  {
+   "slug": "c128",
+   "cnfood_id": 128,
+   "zh": "炖甲鱼",
+   "en": "Turtle",
+   "n_train": 126,
+   "n_val": 14,
+   "n_test": 19
+  },
+  {
+   "slug": "c129",
+   "cnfood_id": 129,
+   "zh": "炒鳝鱼",
+   "en": "eel",
+   "n_train": 292,
+   "n_val": 32,
+   "n_test": 45
+  },
+  {
+   "slug": "c130",
+   "cnfood_id": 130,
+   "zh": "炒饭",
+   "en": "fried rice",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c131",
+   "cnfood_id": 131,
+   "zh": "蛋包饭",
+   "en": "Omelette",
+   "n_train": 1232,
+   "n_val": 137,
+   "n_test": 147
+  },
+  {
+   "slug": "c132",
+   "cnfood_id": 132,
+   "zh": "小笼汤包",
+   "en": "Steamed Bun Stuffed",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c133",
+   "cnfood_id": 133,
+   "zh": "烧麦",
+   "en": "Steamed Pork Dumplings",
+   "n_train": 294,
+   "n_val": 33,
+   "n_test": 45
+  },
+  {
+   "slug": "c134",
+   "cnfood_id": 134,
+   "zh": "家常早餐鸡蛋饼",
+   "en": "egg omelet",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c135",
+   "cnfood_id": 135,
+   "zh": "土豆鸡蛋饼",
+   "en": "Potato omelet",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c136",
+   "cnfood_id": 136,
+   "zh": "鸡蛋灌饼",
+   "en": "Egg pie cake",
+   "n_train": 384,
+   "n_val": 43,
+   "n_test": 59
+  },
+  {
+   "slug": "c137",
+   "cnfood_id": 137,
+   "zh": "卤蛋",
+   "en": "Marinated Egg",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c138",
+   "cnfood_id": 138,
+   "zh": "荷包蛋",
+   "en": "Poached Egg",
+   "n_train": 394,
+   "n_val": 44,
+   "n_test": 61
+  },
+  {
+   "slug": "c139",
+   "cnfood_id": 139,
+   "zh": "葱花手抓饼",
+   "en": "Pine cake with Diced Scallion",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c140",
+   "cnfood_id": 140,
+   "zh": "芝麻烧饼",
+   "en": "Sesame seed cake",
+   "n_train": 390,
+   "n_val": 43,
+   "n_test": 60
+  },
+  {
+   "slug": "c141",
+   "cnfood_id": 141,
+   "zh": "肉夹馍",
+   "en": "Chinese hamburger",
+   "n_train": 630,
+   "n_val": 70,
+   "n_test": 98
+  },
+  {
+   "slug": "c142",
+   "cnfood_id": 142,
+   "zh": "韭菜盒子",
+   "en": "Leek box",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c143",
+   "cnfood_id": 143,
+   "zh": "南瓜紫薯馒头",
+   "en": "steamed bun with purple potato and pumpkin",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c144",
+   "cnfood_id": 144,
+   "zh": "馒头",
+   "en": "steamed bun",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c145",
+   "cnfood_id": 145,
+   "zh": "包子",
+   "en": "Steamed stuffed bun",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c146",
+   "cnfood_id": 146,
+   "zh": "南瓜饼",
+   "en": "Pumpkin pie",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c147",
+   "cnfood_id": 147,
+   "zh": "披萨",
+   "en": "Pizza",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c148",
+   "cnfood_id": 148,
+   "zh": "油条",
+   "en": "Deep-Fried Dough Sticks",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c149",
+   "cnfood_id": 149,
+   "zh": "炸酱面",
+   "en": "sauteed noodles with minced meat",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c150",
+   "cnfood_id": 150,
+   "zh": "重庆酸辣粉",
+   "en": "Chongqing Hot and Sour Rice Noodles",
+   "n_train": 694,
+   "n_val": 77,
+   "n_test": 108
+  },
+  {
+   "slug": "c151",
+   "cnfood_id": 151,
+   "zh": "凉拌凉面",
+   "en": "Cold noodles",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c152",
+   "cnfood_id": 152,
+   "zh": "西红柿鸡蛋面",
+   "en": "Noodles with egg and tomato",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c153",
+   "cnfood_id": 153,
+   "zh": "肉酱意大利面",
+   "en": "spaghetti with meat sauce",
+   "n_train": 824,
+   "n_val": 92,
+   "n_test": 128
+  },
+  {
+   "slug": "c154",
+   "cnfood_id": 154,
+   "zh": "茄汁拌面",
+   "en": "Noodles with tomato sauce",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c155",
+   "cnfood_id": 155,
+   "zh": "凉皮",
+   "en": "Cold Rice Noodles",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c156",
+   "cnfood_id": 156,
+   "zh": "担担面",
+   "en": "Sichuan noodles with peppery sauce",
+   "n_train": 133,
+   "n_val": 15,
+   "n_test": 20
+  },
+  {
+   "slug": "c157",
+   "cnfood_id": 157,
+   "zh": "臊子面",
+   "en": "Qishan noodles",
+   "n_train": 251,
+   "n_val": 28,
+   "n_test": 38
+  },
+  {
+   "slug": "c158",
+   "cnfood_id": 158,
+   "zh": "炒面",
+   "en": "fried noodles",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c159",
+   "cnfood_id": 159,
+   "zh": "饺子",
+   "en": "Dumplings",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c160",
+   "cnfood_id": 160,
+   "zh": "玉米棒",
+   "en": "Corn Cob",
+   "n_train": 104,
+   "n_val": 12,
+   "n_test": 15
+  },
+  {
+   "slug": "c161",
+   "cnfood_id": 161,
+   "zh": "红烧牛肉面",
+   "en": "Braised beef noodle",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c162",
+   "cnfood_id": 162,
+   "zh": "河粉",
+   "en": "fried rice noodles",
+   "n_train": 392,
+   "n_val": 44,
+   "n_test": 60
+  },
+  {
+   "slug": "c163",
+   "cnfood_id": 163,
+   "zh": "肠粉",
+   "en": "Steamed vermicelli roll",
+   "n_train": 849,
+   "n_val": 94,
+   "n_test": 78
+  },
+  {
+   "slug": "c164",
+   "cnfood_id": 164,
+   "zh": "鲜肉小馄饨",
+   "en": "Pork wonton",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c165",
+   "cnfood_id": 165,
+   "zh": "煎饺",
+   "en": "Fried Dumplings",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c166",
+   "cnfood_id": 166,
+   "zh": "汤圆",
+   "en": "Tang-yuan",
+   "n_train": 1112,
+   "n_val": 123,
+   "n_test": 131
+  },
+  {
+   "slug": "c167",
+   "cnfood_id": 167,
+   "zh": "小米粥",
+   "en": "Millet congee",
+   "n_train": 676,
+   "n_val": 75,
+   "n_test": 105
+  },
+  {
+   "slug": "c168",
+   "cnfood_id": 168,
+   "zh": "红薯粥",
+   "en": "Sweet potato porridge",
+   "n_train": 215,
+   "n_val": 24,
+   "n_test": 33
+  },
+  {
+   "slug": "c169",
+   "cnfood_id": 169,
+   "zh": "凉拌海蛰",
+   "en": "Jellyfish",
+   "n_train": 30,
+   "n_val": 3,
+   "n_test": 4
+  },
+  {
+   "slug": "c170",
+   "cnfood_id": 170,
+   "zh": "皮蛋瘦肉粥",
+   "en": "Minced Pork Congee with Preserved Egg",
+   "n_train": 1246,
+   "n_val": 139,
+   "n_test": 136
+  },
+  {
+   "slug": "c171",
+   "cnfood_id": 171,
+   "zh": "大米粥",
+   "en": "Rice porridge",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c172",
+   "cnfood_id": 172,
+   "zh": "米饭",
+   "en": "Rice",
+   "n_train": 811,
+   "n_val": 90,
+   "n_test": 66
+  },
+  {
+   "slug": "c173",
+   "cnfood_id": 173,
+   "zh": "紫菜包饭",
+   "en": "Laver rice",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c174",
+   "cnfood_id": 174,
+   "zh": "石锅饭",
+   "en": "Stone pot of rice",
+   "n_train": 277,
+   "n_val": 31,
+   "n_test": 42
+  },
+  {
+   "slug": "c175",
+   "cnfood_id": 175,
+   "zh": "乌鸡汤",
+   "en": "Black bone chicken soup",
+   "n_train": 399,
+   "n_val": 44,
+   "n_test": 62
+  },
+  {
+   "slug": "c176",
+   "cnfood_id": 176,
+   "zh": "鲫鱼豆腐汤",
+   "en": "Crucian and Bean Curd Soup",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c177",
+   "cnfood_id": 177,
+   "zh": "疙瘩汤",
+   "en": "Dough Drop and Assorted Vegetable Soup",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c178",
+   "cnfood_id": 178,
+   "zh": "酸辣汤",
+   "en": "Hot and Sour Soup",
+   "n_train": 267,
+   "n_val": 30,
+   "n_test": 41
+  },
+  {
+   "slug": "c179",
+   "cnfood_id": 179,
+   "zh": "萝卜排骨汤",
+   "en": "Pork ribs soup with radish",
+   "n_train": 727,
+   "n_val": 81,
+   "n_test": 113
+  },
+  {
+   "slug": "c180",
+   "cnfood_id": 180,
+   "zh": "西红柿鸡蛋汤",
+   "en": "Tomato and Egg Soup",
+   "n_train": 724,
+   "n_val": 80,
+   "n_test": 113
+  },
+  {
+   "slug": "c181",
+   "cnfood_id": 181,
+   "zh": "西湖牛肉羹",
+   "en": "West Lake beef soup",
+   "n_train": 101,
+   "n_val": 11,
+   "n_test": 15
+  },
+  {
+   "slug": "c182",
+   "cnfood_id": 182,
+   "zh": "莲藕排骨汤",
+   "en": "Lotus Root and Rib soup",
+   "n_train": 434,
+   "n_val": 48,
+   "n_test": 67
+  },
+  {
+   "slug": "c183",
+   "cnfood_id": 183,
+   "zh": "紫菜蛋花汤",
+   "en": "Seaweed and Egg Soup",
+   "n_train": 559,
+   "n_val": 62,
+   "n_test": 87
+  },
+  {
+   "slug": "c184",
+   "cnfood_id": 184,
+   "zh": "海带豆腐汤",
+   "en": "Seaweed tofu soup",
+   "n_train": 96,
+   "n_val": 11,
+   "n_test": 14
+  },
+  {
+   "slug": "c185",
+   "cnfood_id": 185,
+   "zh": "玉米排骨汤",
+   "en": "Corn and sparerib soup",
+   "n_train": 941,
+   "n_val": 105,
+   "n_test": 131
+  },
+  {
+   "slug": "c186",
+   "cnfood_id": 186,
+   "zh": "菠菜猪肝汤",
+   "en": "Spinach and pork liver soup",
+   "n_train": 78,
+   "n_val": 9,
+   "n_test": 11
+  },
+  {
+   "slug": "c187",
+   "cnfood_id": 187,
+   "zh": "罗宋汤",
+   "en": "Borsch",
+   "n_train": 454,
+   "n_val": 50,
+   "n_test": 70
+  },
+  {
+   "slug": "c188",
+   "cnfood_id": 188,
+   "zh": "银耳汤",
+   "en": "White fungus soup",
+   "n_train": 1111,
+   "n_val": 123,
+   "n_test": 100
+  },
+  {
+   "slug": "c189",
+   "cnfood_id": 189,
+   "zh": "冬瓜汤",
+   "en": "White gourd soup",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c190",
+   "cnfood_id": 190,
+   "zh": "酱汤",
+   "en": "Miso soup",
+   "n_train": 519,
+   "n_val": 58,
+   "n_test": 80
+  },
+  {
+   "slug": "c191",
+   "cnfood_id": 191,
+   "zh": "毛血旺",
+   "en": "Duck Blood in Chili Sauce",
+   "n_train": 492,
+   "n_val": 55,
+   "n_test": 43
+  },
+  {
+   "slug": "c192",
+   "cnfood_id": 192,
+   "zh": "夫妻肺片",
+   "en": "Pork Lungs in Chili Sauce",
+   "n_train": 418,
+   "n_val": 46,
+   "n_test": 26
+  },
+  {
+   "slug": "c193",
+   "cnfood_id": 193,
+   "zh": "麻辣香锅",
+   "en": "Spicy pot",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c194",
+   "cnfood_id": 194,
+   "zh": "黄金如意肉卷",
+   "en": "Golden meat rolls",
+   "n_train": 97,
+   "n_val": 11,
+   "n_test": 14
+  },
+  {
+   "slug": "c195",
+   "cnfood_id": 195,
+   "zh": "蛋糕",
+   "en": "Chiffon Cake",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c196",
+   "cnfood_id": 196,
+   "zh": "蛋挞",
+   "en": "Egg Tart",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c197",
+   "cnfood_id": 197,
+   "zh": "面包",
+   "en": "Bread",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c198",
+   "cnfood_id": 198,
+   "zh": "牛角包",
+   "en": "Croissant",
+   "n_train": 250,
+   "n_val": 28,
+   "n_test": 38
+  },
+  {
+   "slug": "c199",
+   "cnfood_id": 199,
+   "zh": "吐司",
+   "en": "toast",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c200",
+   "cnfood_id": 200,
+   "zh": "饼干",
+   "en": "Biscuits",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c201",
+   "cnfood_id": 201,
+   "zh": "曲奇饼干",
+   "en": "cookies",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c202",
+   "cnfood_id": 202,
+   "zh": "苏打饼干",
+   "en": "Soda biscuit",
+   "n_train": 336,
+   "n_val": 37,
+   "n_test": 52
+  },
+  {
+   "slug": "c203",
+   "cnfood_id": 203,
+   "zh": "双皮奶",
+   "en": "Double skin milk",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c204",
+   "cnfood_id": 204,
+   "zh": "冰激凌",
+   "en": "ice cream",
+   "n_train": 781,
+   "n_val": 87,
+   "n_test": 122
+  },
+  {
+   "slug": "c205",
+   "cnfood_id": 205,
+   "zh": "鸡蛋布丁",
+   "en": "Egg pudding",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c206",
+   "cnfood_id": 206,
+   "zh": "冰糖雪梨",
+   "en": "Sweet stewed snow pear",
+   "n_train": 767,
+   "n_val": 85,
+   "n_test": 119
+  },
+  {
+   "slug": "c207",
+   "cnfood_id": 207,
+   "zh": "水果沙拉",
+   "en": "Fruit salad",
+   "n_train": 842,
+   "n_val": 94,
+   "n_test": 131
+  },
+  {
+   "slug": "c208",
+   "cnfood_id": 208,
+   "zh": "萝卜炖牛肉",
+   "en": "Beef stew with radish",
+   "n_train": 367,
+   "n_val": 41,
+   "n_test": 34
+  },
+  {
+   "slug": "c209",
+   "cnfood_id": 209,
+   "zh": "北京烤鸭",
+   "en": "Beijing Roast Duck",
+   "n_train": 360,
+   "n_val": 40,
+   "n_test": 40
+  },
+  {
+   "slug": "c210",
+   "cnfood_id": 210,
+   "zh": "蛋蒸肉饼",
+   "en": "Egg steamed meat pie",
+   "n_train": 332,
+   "n_val": 37,
+   "n_test": 32
+  },
+  {
+   "slug": "c211",
+   "cnfood_id": 211,
+   "zh": "干炸带鱼",
+   "en": "dry fried hairtail",
+   "n_train": 395,
+   "n_val": 44,
+   "n_test": 13
+  },
+  {
+   "slug": "c212",
+   "cnfood_id": 212,
+   "zh": "干锅肥肠",
+   "en": "Griddle Pork Intestines",
+   "n_train": 362,
+   "n_val": 40,
+   "n_test": 24
+  },
+  {
+   "slug": "c213",
+   "cnfood_id": 213,
+   "zh": "菊花鱼",
+   "en": "Chrysanthemum fish",
+   "n_train": 172,
+   "n_val": 19,
+   "n_test": 11
+  },
+  {
+   "slug": "c214",
+   "cnfood_id": 214,
+   "zh": "粉蒸肉",
+   "en": "Steamed pork with rice powder",
+   "n_train": 406,
+   "n_val": 45,
+   "n_test": 16
+  },
+  {
+   "slug": "c215",
+   "cnfood_id": 215,
+   "zh": "南瓜粥",
+   "en": "Pumpkin porridge",
+   "n_train": 346,
+   "n_val": 38,
+   "n_test": 16
+  },
+  {
+   "slug": "c216",
+   "cnfood_id": 216,
+   "zh": "小鸡炖蘑菇",
+   "en": "Braised mushroom with chicken",
+   "n_train": 393,
+   "n_val": 44,
+   "n_test": 16
+  },
+  {
+   "slug": "c217",
+   "cnfood_id": 217,
+   "zh": "柠檬鸡爪",
+   "en": "Lemon chicken feet",
+   "n_train": 370,
+   "n_val": 41,
+   "n_test": 16
+  },
+  {
+   "slug": "c218",
+   "cnfood_id": 218,
+   "zh": "溜肉段",
+   "en": "Sliced meat",
+   "n_train": 340,
+   "n_val": 38,
+   "n_test": 24
+  },
+  {
+   "slug": "c219",
+   "cnfood_id": 219,
+   "zh": "蒜苗炒肉",
+   "en": "Stir-fried Pork with Garlic",
+   "n_train": 388,
+   "n_val": 43,
+   "n_test": 24
+  },
+  {
+   "slug": "c220",
+   "cnfood_id": 220,
+   "zh": "辣椒酿肉",
+   "en": "Stuffed Pork with Chillies",
+   "n_train": 394,
+   "n_val": 44,
+   "n_test": 16
+  },
+  {
+   "slug": "c221",
+   "cnfood_id": 221,
+   "zh": "香煎鲫鱼",
+   "en": "Pan-fried Crucian Carp",
+   "n_train": 334,
+   "n_val": 37,
+   "n_test": 24
+  },
+  {
+   "slug": "c222",
+   "cnfood_id": 222,
+   "zh": "俄式红菜汤",
+   "en": "Russian red cabbage soup",
+   "n_train": 301,
+   "n_val": 33,
+   "n_test": 16
+  },
+  {
+   "slug": "c223",
+   "cnfood_id": 223,
+   "zh": "干锅菜花",
+   "en": "Dry-aged Cauliflower",
+   "n_train": 752,
+   "n_val": 84,
+   "n_test": 40
+  },
+  {
+   "slug": "c224",
+   "cnfood_id": 224,
+   "zh": "醪糟鸡蛋",
+   "en": "Poached Egg in Fermented Glutinous Rice Soup",
+   "n_train": 356,
+   "n_val": 40,
+   "n_test": 16
+  },
+  {
+   "slug": "c225",
+   "cnfood_id": 225,
+   "zh": "红糖冰粉",
+   "en": "Brown sugar ice powder",
+   "n_train": 396,
+   "n_val": 44,
+   "n_test": 24
+  },
+  {
+   "slug": "c226",
+   "cnfood_id": 226,
+   "zh": "麻花",
+   "en": "Twist",
+   "n_train": 306,
+   "n_val": 34,
+   "n_test": 16
+  },
+  {
+   "slug": "c227",
+   "cnfood_id": 227,
+   "zh": "腊肉",
+   "en": "Preserved meat",
+   "n_train": 490,
+   "n_val": 54,
+   "n_test": 16
+  },
+  {
+   "slug": "c228",
+   "cnfood_id": 228,
+   "zh": "咖喱鸡块",
+   "en": "Curry Chicken Nuggets",
+   "n_train": 285,
+   "n_val": 32,
+   "n_test": 16
+  },
+  {
+   "slug": "c229",
+   "cnfood_id": 229,
+   "zh": "手撕鸡",
+   "en": "Shredded chicken",
+   "n_train": 372,
+   "n_val": 41,
+   "n_test": 16
+  },
+  {
+   "slug": "c230",
+   "cnfood_id": 230,
+   "zh": "椰子鸡",
+   "en": "Coconut Chicken",
+   "n_train": 353,
+   "n_val": 39,
+   "n_test": 16
+  },
+  {
+   "slug": "c231",
+   "cnfood_id": 231,
+   "zh": "羊肉汤",
+   "en": "Goat Meat Soup",
+   "n_train": 399,
+   "n_val": 44,
+   "n_test": 16
+  },
+  {
+   "slug": "c232",
+   "cnfood_id": 232,
+   "zh": "蒜泥白肉",
+   "en": "Sliced Boiled Pork with Garlic Sauce",
+   "n_train": 383,
+   "n_val": 43,
+   "n_test": 16
+  },
+  {
+   "slug": "c233",
+   "cnfood_id": 233,
+   "zh": "炸鲜奶",
+   "en": "Fried milk",
+   "n_train": 400,
+   "n_val": 45,
+   "n_test": 16
+  },
+  {
+   "slug": "c234",
+   "cnfood_id": 234,
+   "zh": "白灼大虾",
+   "en": "scalded prawns",
+   "n_train": 332,
+   "n_val": 37,
+   "n_test": 16
+  },
+  {
+   "slug": "c235",
+   "cnfood_id": 235,
+   "zh": "清蒸小黄鱼",
+   "en": "Steamed small yellow croaker",
+   "n_train": 286,
+   "n_val": 32,
+   "n_test": 16
+  },
+  {
+   "slug": "c236",
+   "cnfood_id": 236,
+   "zh": "蒜蓉虾尾",
+   "en": "Shrimp tail with garlic",
+   "n_train": 257,
+   "n_val": 29,
+   "n_test": 16
+  },
+  {
+   "slug": "c237",
+   "cnfood_id": 237,
+   "zh": "凉拌毛豆",
+   "en": "edamame beans",
+   "n_train": 386,
+   "n_val": 43,
+   "n_test": 16
+  },
+  {
+   "slug": "c238",
+   "cnfood_id": 238,
+   "zh": "糖油粑粑",
+   "en": "Sugar oil cake",
+   "n_train": 405,
+   "n_val": 45,
+   "n_test": 16
+  },
+  {
+   "slug": "c239",
+   "cnfood_id": 239,
+   "zh": "凉拌皮蛋",
+   "en": "Preserved egg salad",
+   "n_train": 751,
+   "n_val": 83,
+   "n_test": 16
+  },
+  {
+   "slug": "c240",
+   "cnfood_id": 240,
+   "zh": "煲仔饭",
+   "en": "clay pot rice",
+   "n_train": 338,
+   "n_val": 37,
+   "n_test": 16
+  }
+ ]
+}

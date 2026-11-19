@@ -1,0 +1,159 @@
+{
+  "domain_threshold": 0.3524,
+  "sets": {
+    "in": {
+      "n": 2462,
+      "accept_domain_off": 0.9155,
+      "accept_domain_on": 0.8887
+    },
+    "out_cn": {
+      "n": 360,
+      "accept_domain_off": 0.2333,
+      "accept_domain_on": 0.1611,
+      "per_class": {
+        "boiled_fish_sichuan": {
+          "n": 24,
+          "accept_on": 0.25
+        },
+        "braised_pork_meatballs": {
+          "n": 24,
+          "accept_on": 0.0
+        },
+        "dumplings": {
+          "n": 24,
+          "accept_on": 0.083
+        },
+        "fish_with_pickled_cabbage": {
+          "n": 24,
+          "accept_on": 0.042
+        },
+        "fried_rice": {
+          "n": 24,
+          "accept_on": 0.0
+        },
+        "kung_pao_chicken": {
+          "n": 24,
+          "accept_on": 0.083
+        },
+        "mapo_tofu": {
+          "n": 24,
+          "accept_on": 0.042
+        },
+        "peking_duck": {
+          "n": 24,
+          "accept_on": 0.0
+        },
+        "ramen": {
+          "n": 24,
+          "accept_on": 0.0
+        },
+        "soup_dumplings": {
+          "n": 24,
+          "accept_on": 0.333
+        },
+        "spring_rolls": {
+          "n": 24,
+          "accept_on": 0.0
+        },
+        "steamed_sea_bass": {
+          "n": 24,
+          "accept_on": 0.0
+        },
+        "sweet_and_sour_pork": {
+          "n": 24,
+          "accept_on": 0.833
+        },
+        "twice_cooked_pork": {
+          "n": 24,
+          "accept_on": 0.75
+        },
+        "west_lake_vinegar_fish": {
+          "n": 24,
+          "accept_on": 0.0
+        }
+      }
+    },
+    "out_ood": {
+      "n": 232,
+      "accept_domain_off": 0.2716,
+      "accept_domain_on": 0.2284
+    },
+    "out_other": {
+      "n": 808,
+      "accept_domain_off": 0.151,
+      "accept_domain_on": 0.0507
+    },
+    "real": {
+      "n": 100,
+      "accept_domain_off": 0.18,
+      "accept_domain_on": 0.12,
+      "per_class": {
+        "chicken_wings": {
+          "n": 8,
+          "accept_on": 0.5
+        },
+        "chocolate_cake": {
+          "n": 8,
+          "accept_on": 0.0
+        },
+        "donuts": {
+          "n": 7,
+          "accept_on": 0.143
+        },
+        "dumplings": {
+          "n": 10,
+          "accept_on": 0.0
+        },
+        "french_fries": {
+          "n": 7,
+          "accept_on": 0.143
+        },
+        "fried_rice": {
+          "n": 7,
+          "accept_on": 0.143
+        },
+        "greek_salad": {
+          "n": 2,
+          "accept_on": 0.0
+        },
+        "hamburger": {
+          "n": 12,
+          "accept_on": 0.0
+        },
+        "hot_dog": {
+          "n": 4,
+          "accept_on": 0.0
+        },
+        "ice_cream": {
+          "n": 1,
+          "accept_on": 0.0
+        },
+        "lasagna": {
+          "n": 6,
+          "accept_on": 0.0
+        },
+        "pancakes": {
+          "n": 1,
+          "accept_on": 0.0
+        },
+        "pizza": {
+          "n": 11,
+          "accept_on": 0.0
+        },
+        "ramen": {
+          "n": 8,
+          "accept_on": 0.375
+        },
+        "spaghetti_bolognese": {
+          "n": 7,
+          "accept_on": 0.286
+        },
+        "waffles": {
+          "n": 1,
+          "accept_on": 0.0
+        }
+      }
+    }
+  },
+  "in_top1_21class": 0.9106
+}

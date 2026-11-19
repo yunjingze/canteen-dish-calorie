@@ -14,6 +14,7 @@ Writes results/tables/domain_gate.json.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -36,6 +37,7 @@ A._state["device"] = A.pick_device()
 A.load_cn_model()
 A.load_wide_model()
 A.load_domain_head()
+TAG = os.environ.get("EVAL_TAG", "")
 HEAD = A._state.get("domain_head")
 if HEAD is None:
     raise SystemExit("no domain head loaded; run scripts/fit_domain_head.py first")
@@ -98,7 +100,7 @@ def run(paths, tag):
             print(f"  {tag} {i + 1}/{len(paths)} {(i + 1) / el:.1f} img/s", flush=True)
     # The probe is a pure veto, so accept_on(t) = accept_off & p_domain >= t for
     # any t: keeping the rows lets the threshold be re-swept without another pass.
-    np.savez(ROOT / f"results/tables/_domain_gate_{tag}.npz",
+    np.savez(ROOT / f"results/tables/_domain_gate{TAG}_{tag}.npz",
              path=np.array([r["path"] for r in rows]),
              cls=np.array([r["cls"] for r in rows]),
              top=np.array([r["top"] for r in rows]),
@@ -135,6 +137,6 @@ for tag, paths in sets.items():
             for c, v in sorted(per.items())}
     print(f"  -> {res['sets'][tag]}", flush=True)
 
-out = ROOT / "results/tables/domain_gate.json"
+out = ROOT / f"results/tables/domain_gate{TAG}.json"
 out.write_text(json.dumps(res, indent=2, ensure_ascii=False), "utf-8")
 print("wrote", out.relative_to(ROOT))

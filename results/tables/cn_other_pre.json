@@ -1,0 +1,119 @@
+{
+  "cn_ckpt": "results\\runs\\cn241_21_pre\\best.pt",
+  "n_classes": 21,
+  "threshold_from_val_5pct": 0.4007999897003174,
+  "in_scope_top1": 0.8883,
+  "in_scope_called_other": 0.0366,
+  "val_other_rate": 0.0311,
+  "sweep": [
+    {
+      "tau_other": 0.0,
+      "in": 0.9326,
+      "out_cn": 0.625,
+      "out_ood": 0.8017,
+      "out_other": 0.8057,
+      "real": 0.83,
+      "in_other_rej": 0.0,
+      "out_cn_other_rej": 0.0
+    },
+    {
+      "tau_other": 0.1,
+      "in": 0.8611,
+      "out_cn": 0.2083,
+      "out_ood": 0.194,
+      "out_other": 0.078,
+      "real": 0.14,
+      "in_other_rej": 0.1044,
+      "out_cn_other_rej": 0.7361
+    },
+    {
+      "tau_other": 0.2,
+      "in": 0.8863,
+      "out_cn": 0.2222,
+      "out_ood": 0.2112,
+      "out_other": 0.1077,
+      "real": 0.14,
+      "in_other_rej": 0.0626,
+      "out_cn_other_rej": 0.6889
+    },
+    {
+      "tau_other": 0.25,
+      "in": 0.894,
+      "out_cn": 0.2306,
+      "out_ood": 0.2155,
+      "out_other": 0.1213,
+      "real": 0.15,
+      "in_other_rej": 0.0528,
+      "out_cn_other_rej": 0.6694
+    },
+    {
+      "tau_other": 0.3,
+      "in": 0.8989,
+      "out_cn": 0.2306,
+      "out_ood": 0.2328,
+      "out_other": 0.1287,
+      "real": 0.16,
+      "in_other_rej": 0.0447,
+      "out_cn_other_rej": 0.6528
+    },
+    {
+      "tau_other": 0.35,
+      "in": 0.9021,
+      "out_cn": 0.2306,
+      "out_ood": 0.2414,
+      "out_other": 0.1349,
+      "real": 0.16,
+      "in_other_rej": 0.0406,
+      "out_cn_other_rej": 0.6333
+    },
+    {
+      "tau_other": 0.4,
+      "in": 0.9037,
+      "out_cn": 0.2333,
+      "out_ood": 0.2543,
+      "out_other": 0.146,
+      "real": 0.16,
+      "in_other_rej": 0.0386,
+      "out_cn_other_rej": 0.6167
+    },
+    {
+      "tau_other": 0.45,
+      "in": 0.905,
+      "out_cn": 0.2361,
+      "out_ood": 0.2543,
+      "out_other": 0.1547,
+      "real": 0.18,
+      "in_other_rej": 0.037,
+      "out_cn_other_rej": 0.6111
+    },
+    {
+      "tau_other": 0.5,
+      "in": 0.9054,
+      "out_cn": 0.2389,
+      "out_ood": 0.2543,
+      "out_other": 0.1559,
+      "real": 0.18,
+      "in_other_rej": 0.0366,
+      "out_cn_other_rej": 0.6056
+    }
+  ],
+  "sets": {
+    "in": 2462,
+    "out_cn": 360,
+    "out_ood": 232,
+    "out_other": 808,
+    "real": 100
+  },
+  "baseline_20class": {
+    "in_keep": 0.948,
+    "out_cn_keep": 0.711,
+    "out_other_keep": 0.522,
+    "real_keep": 0.5
+  },
+  "veto_20class": {
+    "in_keep": 0.941,
+    "out_cn_keep": 0.344,
+    "out_other_keep": 0.522,
+    "real_keep": 0.43
+  }
+}

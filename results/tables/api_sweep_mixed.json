@@ -1,0 +1,1430 @@
+[
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\008.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\009.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\010.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\011.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\012.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\013.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\014.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\015.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\016.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\017.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\018.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\019.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\020.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\021.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\022.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\023.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\024.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\025.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\026.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\027.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\028.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\029.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\030.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\031.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\032.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\033.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\034.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\035.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\036.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\037.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\038.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\039.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\040.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\041.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\042.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\043.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\044.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\045.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\046.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\047.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\048.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\049.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\050.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\051.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\052.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\053.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\054.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\055.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\056.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\057.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\058.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\059.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\060.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\061.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\062.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\063.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\064.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\065.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\066.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\067.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\068.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\069.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\070.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\071.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\072.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\073.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\074.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\075.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\076.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\077.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\078.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\079.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\080.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\081.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\082.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\083.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\084.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\085.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\086.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\087.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\088.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\089.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\090.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\091.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\092.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\093.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\094.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\095.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\096.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\097.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\098.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\099.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\100.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\101.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\102.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\103.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\104.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\105.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\106.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\107.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\108.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\109.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\110.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\111.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\112.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\113.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\114.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\115.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\116.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\117.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\118.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\119.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\120.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\121.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\122.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\123.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\124.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\125.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\126.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\127.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\128.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\129.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\130.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\131.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\132.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\133.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\134.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\135.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\136.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\137.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "neg",
+  "file": "data\\splits\\negatives\\138.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chicken_wings\\008.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\chocolate_cake\\008.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\donuts\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\008.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\009.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\dumplings\\010.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\001.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\006.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\french_fries\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\fried_rice\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\greek_salad\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\greek_salad\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\006.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\008.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\009.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\010.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\011.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hamburger\\012.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\hot_dog\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ice_cream\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\003.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\005.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\lasagna\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pancakes\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\005.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\008.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\009.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\010.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\pizza\\011.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\001.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\004.jpg",
+  "accepted": false,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\ramen\\008.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\001.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\002.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\003.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\004.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\005.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\006.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\spaghetti_bolognese\\007.jpg",
+  "accepted": true,
+  "top1": null
+ },
+ {
+  "kind": "real",
+  "file": "data\\splits\\canteen_real\\waffles\\001.jpg",
+  "accepted": true,
+  "top1": null
+ }
+]

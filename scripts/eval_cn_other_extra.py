@@ -18,6 +18,7 @@ Writes results/tables/_extra_<set>.npz, aligned row-for-row with _other_<set>.np
 from __future__ import annotations
 
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -32,7 +33,8 @@ sys.path.insert(0, str(ROOT / "src"))
 from foodcls import app as A  # noqa: E402
 from foodcls.models import build_model  # noqa: E402
 
-CN_CKPT = ROOT / "results/runs/cn241_21/best.pt"
+CN_CKPT = Path(os.environ.get("EVAL_CN_CKPT", ROOT / "results/runs/cn241_21/best.pt"))
+TAG = os.environ.get("EVAL_TAG", "")
 OTHER = len(A.CN_CLASS_NAMES)
 CN_LIKE = ["mapo_tofu", "kung_pao_chicken", "twice_cooked_pork", "sweet_and_sour_pork",
            "boiled_fish_sichuan", "fish_with_pickled_cabbage", "west_lake_vinegar_fish",
@@ -98,7 +100,7 @@ for tag, paths in sets.items():
     print(f"[{tag}] n={len(paths)}", flush=True)
     t0 = time.time()
     out = vectors(paths)
-    np.savez(ROOT / f"results/tables/_extra_{tag}.npz", **out)
+    np.savez(ROOT / f"results/tables/_extra{TAG}_{tag}.npz", **out)
     print(f"  done in {time.time() - t0:.0f}s", flush=True)
 
-print("wrote results/tables/_extra_<set>.npz")
+print(f"wrote results/tables/_extra{TAG}_<set>.npz")

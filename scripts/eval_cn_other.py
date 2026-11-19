@@ -21,6 +21,7 @@ Writes results/tables/cn_other.json (+ _other_<set>.npz).
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -35,7 +36,8 @@ from foodcls import app as A
 from foodcls.models import build_model
 from foodcls.utils import pick_device
 
-CN_CKPT = ROOT / "results/runs/cn241_21/best.pt"
+CN_CKPT = Path(os.environ.get("EVAL_CN_CKPT", ROOT / "results/runs/cn241_21/best.pt"))
+TAG = os.environ.get("EVAL_TAG", "")
 WIDE_CKPT = ROOT / "results/runs/resnet18_food101_cn116/best.pt"
 CLASS_TABLE = ROOT / "results/tables/cn241_21_classes.json"
 
@@ -106,7 +108,7 @@ def vectors(paths, batch=16, with_wide=True):
 def collect(tag, paths):
     print(f"[{tag}] n={len(paths)}", flush=True)
     out = vectors(paths)
-    np.savez(ROOT / f"results/tables/_other_{tag}.npz", rob=out[0], top=out[1],
+    np.savez(ROOT / f"results/tables/_other{TAG}_{tag}.npz", rob=out[0], top=out[1],
              top_p=out[2], p_other=out[3], w_top=out[4], w_p=out[5])
     return out
 
@@ -194,6 +196,6 @@ res = {"cn_ckpt": str(CN_CKPT.relative_to(ROOT)), "n_classes": len(CN_NAMES),
                             "out_other_keep": 0.522, "real_keep": 0.50},
        "veto_20class": {"in_keep": 0.941, "out_cn_keep": 0.344,
                         "out_other_keep": 0.522, "real_keep": 0.43}}
-(ROOT / "results/tables/cn_other.json").write_text(
+(ROOT / f"results/tables/cn_other{TAG}.json").write_text(
     json.dumps(res, indent=2, ensure_ascii=False), "utf-8")
-print("wrote results/tables/cn_other.json")
+print(f"wrote results/tables/cn_other{TAG}.json")

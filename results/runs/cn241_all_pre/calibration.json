@@ -1,0 +1,6 @@
+{
+ "temperature": 0.8225,
+ "n": 17122,
+ "val_ece_before": 0.0717,
+ "val_ece_after": 0.0198
+}

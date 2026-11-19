@@ -7,6 +7,7 @@ and scores candidate decision rules without touching the GPU.
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -25,12 +26,13 @@ CN_LIKE = ["mapo_tofu", "kung_pao_chicken", "twice_cooked_pork", "sweet_and_sour
 TAGS = ["in", "out_cn", "out_ood", "out_other", "real", "val"]
 MAIN = ("in", "out_cn", "out_ood", "out_other", "real")
 
+TAG = os.environ.get("EVAL_TAG", "")
 S = {}
 for t in TAGS:
-    b = np.load(ROOT / ("results/tables/_extra_%s.npz" % t))
+    b = np.load(ROOT / ("results/tables/_extra%s_%s.npz" % (TAG, t)))
     merged = {k: b[k] for k in b.files}
     if t != "val":  # the first pass never dumped the validation split
-        a = np.load(ROOT / ("results/tables/_other_%s.npz" % t))
+        a = np.load(ROOT / ("results/tables/_other%s_%s.npz" % (TAG, t)))
         assert len(a["rob"]) == len(b["p20"]) == len(a["p_other"]), t
         merged.update({k: a[k] for k in a.files})
     S[t] = merged

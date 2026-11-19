@@ -1,0 +1,110 @@
+{
+  "mode": "mean",
+  "C": 0.1,
+  "threshold": 0.3524,
+  "val_auc": 0.9857,
+  "val_keep_cn": 0.9499,
+  "val_reject_west": 0.9265,
+  "sets": {
+    "cn_ood": {
+      "n": 232,
+      "accept": 0.7284,
+      "mean_prob": 0.6646,
+      "accuracy": 0.728
+    },
+    "cn_te": {
+      "n": 3858,
+      "accept": 0.9041,
+      "mean_prob": 0.856,
+      "accuracy": 0.904
+    },
+    "cn_tr": {
+      "n": 12000,
+      "accept": 0.964,
+      "mean_prob": 0.9224,
+      "accuracy": 0.964
+    },
+    "cn_va": {
+      "n": 2214,
+      "accept": 0.9499,
+      "mean_prob": 0.9092,
+      "accuracy": 0.95
+    },
+    "f101_te": {
+      "n": 5000,
+      "accept": 0.0684,
+      "mean_prob": 0.0765,
+      "accuracy": 0.932
+    },
+    "f101_tr": {
+      "n": 12000,
+      "accept": 0.0699,
+      "mean_prob": 0.0776,
+      "accuracy": 0.93
+    },
+    "f101_va": {
+      "n": 2000,
+      "accept": 0.0735,
+      "mean_prob": 0.0796,
+      "accuracy": 0.926
+    },
+    "mixed_real": {
+      "n": 8,
+      "accept": 0.0,
+      "mean_prob": 0.0592,
+      "accuracy": 1.0
+    },
+    "neg": {
+      "n": 138,
+      "accept": 0.2899,
+      "mean_prob": 0.2633,
+      "accuracy": 0.71
+    },
+    "real": {
+      "n": 100,
+      "accept": 0.3,
+      "mean_prob": 0.2639,
+      "accuracy": 0.7
+    }
+  },
+  "per_class_f101_te": {
+    "caesar_salad": 0.092,
+    "chicken_wings": 0.18,
+    "chocolate_cake": 0.032,
+    "donuts": 0.056,
+    "dumplings": 0.104,
+    "french_fries": 0.056,
+    "fried_rice": 0.084,
+    "greek_salad": 0.072,
+    "grilled_salmon": 0.052,
+    "hamburger": 0.028,
+    "hot_dog": 0.044,
+    "ice_cream": 0.052,
+    "lasagna": 0.024,
+    "pancakes": 0.04,
+    "pizza": 0.068,
+    "ramen": 0.188,
+    "spaghetti_bolognese": 0.1,
+    "steak": 0.052,
+    "sushi": 0.024,
+    "waffles": 0.02
+  },
+  "per_class_real": {
+    "chicken_wings": 0.625,
+    "chocolate_cake": 0.0,
+    "donuts": 0.1429,
+    "dumplings": 0.6,
+    "french_fries": 0.0,
+    "fried_rice": 0.4286,
+    "greek_salad": 1.0,
+    "hamburger": 0.0833,
+    "hot_dog": 0.0,
+    "ice_cream": 1.0,
+    "lasagna": 0.3333,
+    "pancakes": 0.0,
+    "pizza": 0.3636,
+    "ramen": 0.375,
+    "spaghetti_bolognese": 0.2857,
+    "waffles": 0.0
+  }
+}

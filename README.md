@@ -18,7 +18,7 @@ food_project/
 │  ├─ raw/food-101/         # 抽取后的 images/ 与 images_test/（20 类）
 │  ├─ wide/                 # 116 类（Food-101 101 类 + 15 道中餐）：raw/ 与 splits/{train,val,test}
 │  ├─ external/             # brand_menu.json（麦当劳中国官网营养表，见 5.6）、cnfood241_*.zip
-│  └─ splits/               # train / val / test / canteen / canteen_clean / mixed / cn241_full / cn241_21 / negatives
+│  └─ splits/               # train / val / test / canteen / canteen_clean / mixed / cn241_full / cn241_21 / cn241_all / negatives
 ├─ src/foodcls/
 │  ├─ classes.py            # 20 类定义：英文名、中文名、每 100 g 热量、常见份量
 │  ├─ classes_wide.py       # 116 类定义（前 101 个为 Food-101，按字母序对齐旧权重）
@@ -37,7 +37,7 @@ food_project/
 │  ├─ predict.py            # 命令行单图预测
 │  └─ static/               # 前端单页 index.html、PWA manifest、Service Worker、应用图标
 ├─ miniprogram/             # 微信小程序版（导入微信开发者工具，改 config.js 的 BASE_URL）
-├─ docs/                    # 使用文档：永久公网地址.md、微信小程序上手指南.md
+├─ docs/                    # 使用文档：永久公网地址.md、微信小程序上手指南.md、HISTORY.md（历轮完整记录归档）
 ├─ scripts/
 │  ├─ fetch_food101_hf.py   # 从 hf-mirror 下载 parquet 分片
 │  ├─ extract_food101_hf.py # 抽取 20 类（或 --all 抽全 101 类）到本地目录结构
@@ -502,6 +502,8 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 
 #### 5.7.1 让模型学会说「这是别的中餐」：第 21 类
 
+> 本节是**第一版**（Food-101N 主干）的测量与推理，数字保留作对照；现行版本换成 241 类预训练主干，见 5.7.3。
+
 20 类模型有个结构性问题：清单外的中餐没有「出口」。端一盘宫保鸡丁进去，它只能在 20 个名字里挑最像的那个，答成辣子鸡、置信度 98%——上面那套双头交叉验证能挡掉一部分，但宫保鸡丁差 0.005 就漏了。根子不在阈值，在于模型从来没有被允许回答「这不是清单里的菜」。这一节把它训成第 21 类。
 
 **数据。** 从 CNFOOD-241 剩下的 175 个类里抽「别的中餐」拼成 `other_cn` 桶，每类最多 12 张（防止几个大类主导桶的后验）：训练 2,100 / 验证 350 / 测试 1,396，与 20 类硬链接拼成 `data/splits/cn241_21`（训练 18,817 / 验证 2,214 / 测试 3,858）。`scripts/prepare_cn241_other.py` 排除了三块：20 道本菜、17 个西式/甜点类（汉堡、披萨、蛋糕——那属于「别的菜系」），以及 29 个留出类（宫保鸡丁、麻婆豆腐、北京烤鸭、饺子……），后者单独放进 `data/splits/cn241_21_ood`，专门当「训练时从没见过的清单外中餐」。
@@ -539,6 +541,8 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 ```
 
 #### 5.7.2 先问「这是不是食堂菜」：域判别头
+
+> 同上：本节是**第一版主干**上的域头；现行版本在新主干上重抽特征、重拟合（阈值 0.3524、AUC 0.9857），见 5.7.3。
 
 上一版把真实西餐照的误接受从 44% 压到 21%，剩下的全是「看起来像某道菜」的：一盘鸡翅被塞进可乐鸡翅，一块蛋糕被当成糖醋里脊。桶救不了它们——桶里装的是**别的中餐**，而披萨根本不是中餐。21 个类全是中餐，「别的菜系」没有出口。
 
@@ -585,6 +589,44 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 .\.venv\Scripts\python.exe scripts/pick_domain_threshold.py
 ```
 
+#### 5.7.3 换主干：241 类预训练（现行上线）
+
+5.7.1 的代价里最刺眼的一条是白斩鸡 76.5% → 58.8%：21 路从 Food-101N 主干热启动，主干从没见过大多数中餐，分类头只能靠 12,000 张图现学。把 CNFOOD-241 的全部 241 类先学一遍，再回到 21 路，是更直接的修法。
+
+**预训练。** `scripts/prepare_cn241_all.py` 把 train600x600.zip 按 90/10 切成 train 153,746 / val 17,122，val600x600.zip 原样当 test 20,943（与 5.7 同一协议，21 路测试集不在其中）。5 epoch、从 `resnet18_last_stage_aug_f101n/best.pt` 热启动、分类头重初始化，8 GB 卡上 783–874 s/epoch，整轮约 2 小时 32 分。验证 70.94%，test Top-1 **69.27%** / Top-5 91.54% / ECE 2.56%，`T = 0.822`（241 类、每类约 700 张，这个数已经够当主干用；见 `results/tables/cn241_all_pretrain.json`）。
+
+**回到 21 路。** 同一个 `train_cn241.py --mode finetune`，只把 `--init` 换成 `cn241_all_pre/best.pt`；8 epoch，best epoch 7，验证 87.08% / macro-F1 88.45%，test Top-1 **79.83%** / Top-5 97.64% / ECE 5.11%，`T = 0.778`——比第一版的 75.40% 高 4.43 pt，也高于 20 类模型 87.73% 在 21 路上的应有水平。
+
+**弱类回来了。** 白斩鸡 77.1%（第一版 58.8%）、木须肉 83.5%、糖醋排骨 71.0%（64.1%）、青椒肉丝 72.5%（70.2%）、农家小炒肉 76.3%；桶自己的召回 66.5%（第一版 59.2%）。仍在 70% 附近的是番茄炒蛋一类「本来就靠颜色/形态混」的菜，不是结构性缺陷。
+
+**门控与域头都要重测。** 门控仍是 5.7.1 那条扣桶质量的最差视图规则，但分数分布变了：验证集清单内 5% 分位从 0.3445 移到 **0.4088**（另两种规则 rob21 / rob20 分别是 0.4008 / 0.2626，见 `scripts/search_cn_other_rule.py` 与 `results/_search_pre.log`）。域判别头按 5.7.2 的方法在**新主干**上重抽特征、重拟合（`results/tables/domain_feats_pre.npz`，37,550 条）：C=0.1，阈值 0.3524，验证 AUC **0.9857**（第一版 0.974），该阈值保留 95.0% 中餐、拒掉 92.6% 西餐；单头 cn_te 90.4% / f101_te **6.8%**（第一版 14.4%）/ 真实食堂照 30.0% / 负样本 29.0%。
+
+**完整决策链**（`scripts/eval_domain_gate.py`，五个集合同 5.7.2）：
+
+| 规则 | 清单内（2,462） | 清单外中餐（360） | 没见过的中餐（232） | 非中餐（808） | 真实西餐照（100） |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 第一版 21 类 + 域判别 | 89.6% | 20.8% | 31.5% | 9.7% | 13.0% |
+| **241 预训练 21 类 + 新域头**（上线） | **88.9%** | **16.1%** | **22.8%** | **5.1%** | **12.0%** |
+
+清单内再让 0.7 pt，换清单外中餐 −4.7 pt、没见过的中餐 −8.7 pt、非中餐 −4.6 pt、真实西餐照 −1.0 pt；而被接受的清单内照片 Top-1 高了 4.4 pt——**同样的「不在清单里」误报率下，答对的比例明显更高**。分菜看，饺子 8.3% → 8.3%、汤包 41.7% → 33.3%、糖醋里脊 87.5% → 83.3%、回锅肉 79.2% → 75.0%，仍是「长得太像」那几组（5.7.1 末尾）；清单外中餐整体从 24.2% 降到 16.1%。
+
+**复现。**
+
+```powershell
+# 1) 241 类语料（约 1 分钟，硬链接）
+.\.venv\Scripts\python.exe scripts/prepare_cn241_all.py
+# 2) 预训练（约 2.5 小时）
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_all --classes results/tables/cn241_all_classes.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 5 --batch-size 64 --workers 0 --out results/tables/cn241_all_pretrain.json --save-dir results/runs/cn241_all_pre
+# 3) 21 路微调（约 35 分钟）
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/cn241_all_pre/best.pt --epochs 8 --batch-size 64 --workers 0 --out results/tables/cn241_21_pre.json --save-dir results/runs/cn241_21_pre
+# 4) 门控扫阈值、重抽域头特征并重拟合、五集决策链
+.\.venv\Scripts\python.exe scripts/search_cn_other_rule.py
+.\.venv\Scripts\python.exe scripts/extract_domain_features.py --views 1
+.\.venv\Scripts\python.exe scripts/fit_domain_head.py --mode mean
+.\.venv\Scripts\python.exe scripts/eval_domain_gate.py
+```
+
+**踩过的坑。** ① 21 路训练第 5 个 epoch 记了 36,412 s，是机器在 00:18 进入 Modern Standby、10:02 才唤醒，墙钟被算进了 epoch 计时；真实算力没变（其余 epoch 228–411 s），重训前先看电源/睡眠设置。② 241 类预训练第 5 个 epoch 也异常到 1723 s（其余 783–874 s），原因未定，重跑时留意后台扫描/页文件。③ **换主干必须重抽域头特征并重拟合**（5.7.2 局限②），否则域头判的是旧主干的空间。④ 打包脚本里食堂 run 目录、门控阈值、域头 JSON 三处要一起改，漏一处就是「新权重配旧阈值」。⑤ PowerShell 5.1 的 `>` 与 `Tee-Object` 写 **UTF-16LE**，日志直接用 read 工具会报 binary file——重定向改用 `| Out-File -Encoding utf8`，存量日志用 `scripts/fix_log_encoding.py` 一次转成 UTF-8。
 ### 5.8 测试时增强与代理域抽样波动
 
 代理域是 1,000 张 clean 图按固定随机种子退化出来的**单次抽样**，因此有两个问题值得单独量化：换一种推理方式（TTA）还能补多少？换一个随机种子重抽代理域，绝对数会漂多少？`scripts/eval_tta.py` 把这两件事一起测了，结果写 `results/tables/tta.json`（每个模型 × 每个 split × 6 种视图组合，含 ECE）。
@@ -672,10 +714,10 @@ cd src
 - **范围提示**：若这张照片三个取景下的判断互相矛盾（见 5.4），标题会变成"大概不是这 20 道菜"，候选标"仅供参考"，并说明哪些菜不在支持范围内；页面上也有"看看这 20 类都是哪些菜"可展开对照。
 - 手机照片按 EXIF 自动转正；上传上限 15 MB、分辨率上限 4,000 万像素（超过直接 413，防解压炸弹），非图片或损坏文件会返回中文错误提示；窄屏自动单栏。
 - **116 类模式**：第三个标签"全部菜系 · 116 类"切到 Food-101 + 15 道中餐的宽模型（见 5.5），适合拍食堂以外、甚至国外的菜（北京烤鸭、西班牙海鲜饭、石锅拌饭、越南河粉），中餐名菜（麻婆豆腐、宫保鸡丁、回锅肉、水煮鱼等）也能认；示例缩略图来自官方 test 集与中餐实拍。这一模式只用于扩大覆盖面，课程协议与论文里的数字仍以 20 类模型为准。
-- **食堂家常菜模式**：第四个标签「食堂家常菜 · 20 道」切到 CNFOOD-241 上训的家常菜模型（见 5.7、5.7.1），拍西红柿炒鸡蛋、酸辣土豆丝、红烧肉、地三鲜这类窗口菜时用它，比前两个模式准得多（20 类版本 test Top-1 87.73%）。分类头是 21 路：除 20 道菜之外还有一类「其它中餐」，专门接住清单外的中餐——`p(其它中餐) >= 0.40` 或它直接夺冠时，页面会说「这张看起来不在食堂模式的 20 道清单里」，并建议切到 116 类标签；门控分数先扣掉桶的质量再取最差视角，阈值 0.3445，清单内接受 89.6%（只算门控 + 桶是 91.3%），清单外中餐只有 20.8% 仍被硬套成某道菜。它**只认识这 20 道**，饺子/汤包仍会被认成包子、回锅肉会被认成农家小炒肉（分菜数字在 5.7.1 末尾）。示例缩略图来自 CNFOOD-241 test 集（未参与训练），深链 `?csample=<类名>__0000.jpg` 可直接打开某道菜的示例。它还多了一道**域判别**（5.7.2）：用同一份主干特征判断「这像不像食堂中餐」，p < 0.2554 就直说「这张看起来不是食堂窗口的家常菜」并建议换标签——披萨、汉堡、薯条、蛋糕基本全挡，真实西餐照被硬套成炒菜的比例从 21% 降到 13%，清单内代价约 1.7 pt（见 5.7.2 的表）。域判别只看菜系、不看「是不是清单里的菜」，宫保鸡丁这类仍是桶的活；**标签仍然要手动切**，自动切换没做。
+- **食堂家常菜模式**：第四个标签「食堂家常菜 · 20 道」切到 CNFOOD-241 上训的家常菜模型（见 5.7、5.7.3），拍西红柿炒鸡蛋、酸辣土豆丝、红烧肉、地三鲜这类窗口菜时用它，比前两个模式准得多（主干先在 241 类上预训练，21 路 test Top-1 79.83%，第一版 75.40%）。分类头是 21 路：除 20 道菜之外还有一类「其它中餐」，专门接住清单外的中餐——`p(其它中餐) >= 0.40` 或它直接夺冠时，页面会说「这张看起来不在食堂模式的 20 道清单里」，并建议切到 116 类标签；门控分数先扣掉桶的质量再取最差视角，阈值 0.4088，清单内接受 88.9%（只算门控 + 桶是 91.6%），清单外中餐只有 16.1% 仍被硬套成某道菜。它**只认识这 20 道**，饺子/汤包仍会被认成包子、回锅肉会被认成农家小炒肉（分菜数字在 5.7.1 末尾）。示例缩略图来自 CNFOOD-241 test 集（未参与训练），深链 `?csample=<类名>__0000.jpg` 可直接打开某道菜的示例。它还多了一道**域判别**（5.7.2）：用同一份主干特征判断「这像不像食堂中餐」，p < 0.3524 就直说「这张看起来不是食堂窗口的家常菜」并建议换标签——披萨、汉堡、薯条、蛋糕基本全挡，真实西餐照被硬套成炒菜的比例从 21% 降到 12%，清单内再让 2.7 pt（见 5.7.3 的表）。域判别只看菜系、不看「是不是清单里的菜」，宫保鸡丁这类仍是桶的活；**标签仍然要手动切**，自动切换没做。
 - **连锁参考**：每个候选下方给出最接近的麦当劳（中国）菜单项实测热量（见 5.6），结果区下方还可展开完整菜单（89 项，可搜索、按类别筛选）；这一栏只作对照，不改变上面的区间计算。
 - **结果不对？**：四种模式的结果卡底部都有"结果不对？点这里告诉我们正确的菜"，选好真实类别（或"照片里没有菜""我也说不准"）提交，图片和这一对标签会存进 `data/splits/feedback/`（`labels.csv` 一行 + 同名 jpg）。可选类别跟着模式走：单菜 20 类、全部菜系 116 类、食堂 20 道、混合餐盘**可多选**。食堂模式的纠正以 `mode=cn` 落库，跟着 20 道清单走，可直接用于以后微调（选一样加进小标签，点标签移除）。混合餐盘还会把模型判断出的每样菜列成橙色小标签（"模型说这盘里有"），**点一下就划掉**——用于"这盘里其实没有这道菜"的负反馈，再点一次恢复；划掉的菜和加进来的菜互斥，提交时分别写进 `corrected`（分号连接，可留空）和 `removed`，两者至少填一个。文件名规则：有正确菜时 `<首个类名>+<其余数量>`，只有划掉时 `minus_<首个类名>`。接口是 `POST /api/feedback`（multipart：`file` 或 `sample`、`predicted`、`corrected`、`removed`、`note`、`mode`），`GET /api/feedback` 返回总条数、分模式条数（`by_mode`）和带划除的条数（`with_removal`）。CSV 列：`timestamp,file,predicted,corrected,removed,note,source,mode`；表头与当前列不一致时旧文件会被改名为 `labels_legacy_<时间>.csv` 保留。示例图也能提交（服务端按三个图库依次解析文件名）。这是唯一能把"真实食堂域 + 人工真值"攒起来的入口，所以只记录、不自动训练。结果不确定（门控说“大概不是”或 top-1 低于 0.55）时，top-3 列表本身就是一张表：每个候选后面变成可点的“其实盘里是”，点一下就算提交（`predicted` 是模型的第一名，`corrected` 是点的那道菜），省掉展开表单那一步。攒到一批之后跑 `python scripts/feedback_report.py`，输出 `results/REPORT_feedback.md`（最常被认错的配对、被划掉的菜、按被纠正次数排序的补拍清单）与 `results/tables/feedback_report.json`。
-- 指定其他权重：设置环境变量 `FOODCLS_CKPT`（单菜）、`FOODCLS_MIXED_CKPT`（混合）、`FOODCLS_WIDE_CKPT`（116 类）与 `FOODCLS_CN_CKPT`（食堂 21 路权重）；端口：`PORT`；监听地址：`FOODCLS_HOST`（默认 0.0.0.0）；访问口令：`FOODCLS_TOKEN`（不设就是开放的，见下一条）；其它中餐阈值用 `FOODCLS_CN_OTHER`（默认 0.40），21 路门控阈值用 `FOODCLS_CN_SCOPE_21`（默认 0.3445），域判别头路径用 `FOODCLS_DOMAIN_HEAD`（默认 results/tables/domain_head.json）、阈值覆盖用 `FOODCLS_DOMAIN_THRESHOLD`（默认 0 = 用文件里的 5% 分位值）；门控文件路径 `FOODCLS_GATE` / `FOODCLS_PACK`（默认跟着 `FOODCLS_CKPT` 所在 run 目录走，换主干时一并改）。
+- 指定其他权重：设置环境变量 `FOODCLS_CKPT`（单菜）、`FOODCLS_MIXED_CKPT`（混合）、`FOODCLS_WIDE_CKPT`（116 类）与 `FOODCLS_CN_CKPT`（食堂 21 路权重）；端口：`PORT`；监听地址：`FOODCLS_HOST`（默认 0.0.0.0）；访问口令：`FOODCLS_TOKEN`（不设就是开放的，见下一条）；其它中餐阈值用 `FOODCLS_CN_OTHER`（默认 0.40），21 路门控阈值用 `FOODCLS_CN_SCOPE_21`（默认 0.4088），域判别头路径用 `FOODCLS_DOMAIN_HEAD`（默认 results/tables/domain_head.json）、阈值覆盖用 `FOODCLS_DOMAIN_THRESHOLD`（默认 0 = 用文件里的 5% 分位值）；门控文件路径 `FOODCLS_GATE` / `FOODCLS_PACK`（默认跟着 `FOODCLS_CKPT` 所在 run 目录走，换主干时一并改）。
 - **默认没有登录/鉴权**：能连到这个端口的人都能上传图片、看识别结果和热量估算。绑 0.0.0.0 只适合可信的局域网（比如自己宿舍的 Wi-Fi）或自己临时开的隧道，演示结束把进程关掉即可。要在公网放几天，启动前设 `FOODCLS_TOKEN=一串随机字符`：之后第一次访问用 `https://…/?token=那串字符`，服务会种一个 7 天有效的 cookie，以后的请求（含页面里的上传）都带它；没口令的请求一律 401。
 - 一键启动（绑定 0.0.0.0，并把本机全部可用 IP 打印出来）：
 

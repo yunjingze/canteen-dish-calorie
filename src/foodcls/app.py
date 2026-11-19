@@ -86,7 +86,10 @@ WIDE_SAMPLES = ROOT / "data/wide/splits/test"
 #: optional canteen-Chinese head, 20 everyday dishes from CNFOOD-241 plus a 21st
 #: "other Chinese dish" bucket (CNFOOD-241 is non-commercial; see NOTICE).  Its
 #: own checkpoint, its own class table.  The 20-dish checkpoint still loads.
-DEFAULT_CN_CKPT = ROOT / "results/runs/cn241_21/best.pt"
+#: This is the second-generation head: a 241-class CNFOOD-241 backbone pretrained
+#: on 153,746 images and then finetuned on the 21-way split (README 5.7.3); test
+#: top-1 79.83 % against 75.40 % for the f101n-initialised one.
+DEFAULT_CN_CKPT = ROOT / "results/runs/cn241_21_pre/best.pt"
 CN_CKPT = Path(os.environ.get("FOODCLS_CN_CKPT", DEFAULT_CN_CKPT))
 if not CN_CKPT.is_absolute():
     CN_CKPT = (ROOT / CN_CKPT).resolve()
@@ -163,10 +166,12 @@ CN_OTHER_THRESHOLD = float(os.environ.get("FOODCLS_CN_OTHER", "0.40"))
 
 #: The bucket steals probability mass from the 20 dishes, so the gate is measured
 #: on the dish mass after dividing it back out: per view p_dish / (1 - p_other),
-#: worst view, 5th percentile of the in-scope validation split = 0.3445
-#: (scripts/search_cn_other_rule.py).  With the 20-dish checkpoint the divisor is
-#: 1 and the threshold stays CN_SCOPE_THRESHOLD, so old weights behave as before.
-CN_SCOPE_THRESHOLD_21 = float(os.environ.get("FOODCLS_CN_SCOPE_21", "0.3445"))
+#: worst view, 5th percentile of the in-scope validation split = 0.4088 with the
+#: 241-class-pretrained backbone (0.3445 with the f101n-initialised one;
+#: scripts/search_cn_other_rule.py re-measures both).  With the 20-dish
+#: checkpoint the divisor is 1 and the threshold stays CN_SCOPE_THRESHOLD, so old
+#: weights behave as before.
+CN_SCOPE_THRESHOLD_21 = float(os.environ.get("FOODCLS_CN_SCOPE_21", "0.4088"))
 
 #: Optional domain probe: "is this even a canteen-style Chinese dish?"  The
 #: 21-class head can only answer "which of the 21", so a pizza still comes back
