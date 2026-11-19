@@ -173,6 +173,18 @@ CN_OTHER_THRESHOLD = float(os.environ.get("FOODCLS_CN_OTHER", "0.40"))
 #: weights behave as before.
 CN_SCOPE_THRESHOLD_21 = float(os.environ.get("FOODCLS_CN_SCOPE_21", "0.4088"))
 
+#: One gate for every photo leaves ~1.5 pt on the table.  The two questions are
+#: not independent: when the domain probe is certain the photo is canteen food,
+#: a dish score just under the gate is still worth a name instead of a refusal.
+#: "0.90:0.36" loosens the gate to 0.36 above 0.90 domain probability; "0" turns
+#: it off.  Tuned on data/splits/cn241_full/val and reported on test by
+#: scripts/eval_domain_gate.py: in-scope +1.46 pt for +0.87 pt of the 29 held-out
+#: Chinese classes, with the other three out-of-scope columns flat.
+CN_SCOPE_TRUST = os.environ.get("FOODCLS_CN_TRUST", "0.90:0.36")
+_TRUST_AT, _TRUST_GATE = 1.01, 9.99
+if CN_SCOPE_TRUST.strip() not in ("", "0"):
+    _TRUST_AT, _TRUST_GATE = (float(x) for x in CN_SCOPE_TRUST.split(":"))
+
 #: Optional domain probe: "is this even a canteen-style Chinese dish?"  The
 #: 21-class head can only answer "which of the 21", so a pizza still comes back
 #: as some stir-fry with a straight face -- the bucket catches 79 % of the real
@@ -669,6 +681,11 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
         robust = float(min(np.max(v) for v in renorm[:_GATE_VIEWS]))
     else:
         robust = float(min(np.max(v) for v in gate_views))
+    # A trusted probe buys a lower bar, not a free pass: the bucket, the veto and
+    # "no food here" still apply, and the relaxed number is what the payload
+    # reports back so the UI can explain why a 0.37 photo was accepted.
+    if cn and cn_domain_prob is not None and cn_domain_prob >= _TRUST_AT:
+        threshold = min(threshold, _TRUST_GATE)
     # Two questions, two answers: the gate asks "is there food here at all?",
     # the robust score asks "is it one of the supported dishes?".  A menu board
     # clears neither, but it does clear the second one often enough to matter.

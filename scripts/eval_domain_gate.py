@@ -51,6 +51,10 @@ def wide_test_glob(cls, k):
 
 def build_sets():
     sets = {}
+    # Same source as test but held out twice: once for the head, and here for
+    # tuning a decision rule that is then reported on test.
+    sets["val"] = [p for c in CN_CLASS_NAMES
+                   for p in sorted((ROOT / "data/splits/cn241_full/val" / c).glob("*.jpg"))]
     sets["in"] = [p for c in CN_CLASS_NAMES
                   for p in sorted((ROOT / "data/splits/cn241_full/test" / c).glob("*.jpg"))]
     sets["out_cn"] = [p for c in CN_LIKE for p in wide_test_glob(c, 24)]
@@ -61,6 +65,15 @@ def build_sets():
                          for p in sorted(d.glob("*.jpg"))[:8]]
     sets["real"] = sorted((ROOT / "data/splits/canteen_real").rglob("*.jpg"))
     return sets
+
+
+def veto_fired(veto, fused):
+    """The same predicate scope_of applies, kept here so the dump is exact."""
+    if veto is None:
+        return False
+    return bool(veto["class"] in A.CN_VETO_CLASSES
+                and veto["prob"] >= A.CN_VETO_THRESHOLD
+                and veto["prob"] >= float(np.max(fused)) + A.CN_VETO_MARGIN)
 
 
 def decide(views, fused, veto, want_domain):
@@ -94,6 +107,8 @@ def run(paths, tag):
             "p_other": round(float(other), 4) if other is not None else None,
             "top": A.CN_CLASS_NAMES[top],
             "domain_fired": bool((on.get("domain") or {}).get("fired")),
+            "veto": veto_fired(veto, fused),
+            "other_top": bool(int(np.argmax(fused)) == A.CN_NUM_CLASSES),
         })
         if (i + 1) % 50 == 0:
             el = time.time() - t0
@@ -107,7 +122,9 @@ def run(paths, tag):
              p_domain=np.array([r["p_domain"] if r["p_domain"] is not None else np.nan for r in rows]),
              robust=np.array([r["robust"] for r in rows]),
              p_other=np.array([r["p_other"] if r["p_other"] is not None else np.nan for r in rows]),
-             accept_off=np.array([r["accept_off"] for r in rows]))
+             accept_off=np.array([r["accept_off"] for r in rows]),
+             veto=np.array([r["veto"] for r in rows]),
+             other_top=np.array([r["other_top"] for r in rows]))
     return rows
 
 

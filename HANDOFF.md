@@ -15,24 +15,24 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 | ① 20 类西餐 | results/runs/resnet18_last_stage_aug_f101n/best.pt | 门 0.32 + 食物门 0.20 + 包装否决 0.80 | test 单视图 91.66% / 六视图 93.4%；真实照 top-1 95.0%；123 张真负样本只放 2 张 |
 | ② 混合餐盘 40 类 | results/runs/resnet18_multilabel_plate40/best.pt | sigmoid 0.35 | val plate-F1 54.54（西 53.17 / 食堂 55.89） |
 | ③ 116 类宽头 | results/runs/resnet18_food101_cn116/best.pt | T=0.819，融合 0.20 | test top-1 80.58%，中餐 15 类 89.7% |
-| ④ 食堂 21 路 | results/runs/cn241_21_pre/best.pt | T=0.778；rob20r 门 **0.4088**；桶闸 0.40；域头 **0.3524** | test top-1 **79.83%** / top-5 97.64% / ECE 5.11% |
+| ④ 食堂 21 路 | results/runs/cn241_21_pre/best.pt | T=0.778；rob20r 门 **0.4088**（域头 ≥ 0.90 → 0.36）；桶闸 0.40；域头 **0.3524** | test top-1 **79.83%** / top-5 97.64% / ECE 5.11% |
 
-食堂完整决策链（五集，results/tables/domain_gate_pre.json）：清单内 **88.9%** / 清单外中餐 16.1% / 没见过的中餐 22.8% / 其它中餐桶 5.1% / 真实西餐照 12.0%。第一版（cn241_21，门 0.3445、域头 0.2554）仍在盘上做对照，已被取代。
+食堂完整决策链（五集，results/tables/domain_gate_pre.json）：清单内 **90.3%** / 清单外中餐 16.1% / 没见过的中餐 23.7% / 其它中餐桶 5.2% / 真实西餐照 13.0%；验证集 92.0%。第一版（cn241_21，门 0.3445、域头 0.2554）仍在盘上做对照，已被取代；旧五集数字在 domain_gate_pre_backup.json。外部集只有一道菜可测：16chinese 糖醋里脊 392 张 Top-1 88.5%（cn_external.json）。
 
 ## 2. 服务与分发包
 
 - 服务：http://127.0.0.1:8000，后台 job **pwsh-468e548ea11a4a1a**，日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088 / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
 - 分发包：dist/FoodDemo.zip 168.9 MB / 278 项，含 4 份 best.pt（f101n、plate40、cn116、**cn241_21_pre**）+ 新版 domain_head.json + 4 份 calibration.json；**不含**旧 cn241_21、不含旧 resnet18_last_stage_aug。
-- git：HEAD 098f768，第七轮的改动尚未提交。
+- git：本轮「Loosen the canteen gate when the domain probe is sure」已推送 origin/main；上一轮 9a398ea。
 - 测试：python -m pytest tests -q → **78 passed**（约 7 s）。
 
 ## 3. 待办（只列还没做的）
 
 1. **弱类增广**：241 类预训练已把白斩鸡 58.8→77.1%、糖醋排骨 64.1→71.0%，色温/亮度/容器增广是否还有增量未验证。
 2. **三套门控收口**：单菜/宽头/食堂各有一套阈值与文案，可统一成一个 scope 模块；按域概率自动切标签（现在要手动点标签）。
-3. **真实托盘反馈闭环**：labels.csv 至今 0 条；「一步纠正」只在 top-1 < 0.55 或拒识时出现；一顿饭的份量先验（米饭整碗）没建模。
+3. **真实托盘反馈闭环**：labels.csv 只有 2 条自测样本（source=sample，2026-11-18）；「一步纠正」只在 top-1 < 0.55 或拒识时出现；一顿饭的份量先验（米饭整碗）没建模。
 4. **份量回归**：固定份量先验 ±15%，真实差异 ±50%。
-5. **外部测试集**：test 2,462 张是 CNFOOD 官方 val 同分布，79.83% 偏乐观；用 ChineseFoodNet 交集类做外部验证。
+5. **外部测试集**：16chinese 与 20 道只有糖醋里脊重合，已出 392 张 88.5%（cn_external.json）；要真正的对外数字还需新增拍摄或 ChineseFoodNet 208 类（Kaggle yihfeng/chinesefoodnet，18.6 万张，需登录）。
 6. **小程序部署**：蒸馏 MobileNetV3 + int8（约 45 MB）；服务需要守护进程。
 7. 宽头换 f101n 主干 **已试并否掉**（README §5.5.1），不要再试。
 
@@ -45,6 +45,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 - veto：13 类宽头原始后验，阈值 0.50、margin 0.02；刻意排除糖醋里脊、回锅肉。
 - other_cn 桶**只做否决不加分**，不进 topk_with_calories。
 - 域头：三视图特征先 mean 再标准化点积，p < 阈值即否决；头文件缺失时打印一行并退回「门控+桶」。
+- 可信域头：p_domain ≥ 0.90 时门控阈值降到 0.36（FOODCLS_CN_TRUST=0.90:0.36，设 0 关闭）；只在扣桶 robust 之后生效，桶/清单外/veto 三道闸不受影响。
 - 混合餐盘：只接受 20 类 == CLASS_NAMES 或 40 类且前 20 对齐的权重，形状不符直接 RuntimeError。
 - env：FOODCLS_CKPT / MIXED_CKPT / WIDE_CKPT / CN_CKPT / CN_OTHER / CN_SCOPE_21 / DOMAIN_HEAD / DOMAIN_THRESHOLD / GATE / PACK。
 
@@ -55,6 +56,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 - 测试：python -m pytest tests -q
 - 食堂评测：python scripts/eval_cn_other.py → eval_cn_other_extra.py → search_cn_other_rule.py（EVAL_CN_CKPT / EVAL_TAG 可换 ckpt）
 - 域头链：extract_domain_features.py --views 1 → fit_domain_head.py --mode mean --tag pre → eval_domain_gate.py（TAG=pre）
+- 外部集：python scripts/eval_external_cn.py（16chinese，仅糖醋里脊；依赖 results/tables/_fingerprint_cn241_21.json）
 - 训食堂头：prepare_cn241_all.py → train_cn241.py --mode finetune（data-root data/splits/cn241_all）→ 再 --init <all>/best.pt 训 21 路
 - 打包：powershell -File scripts/package_demo.ps1 → dist/FoodDemo.zip
 - 日志：python scripts/fix_log_encoding.py（把 PowerShell 写出的 UTF-16 日志转成 UTF-8）

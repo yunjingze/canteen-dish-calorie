@@ -1,10 +1,15 @@
 {
   "domain_threshold": 0.3524,
   "sets": {
+    "val": {
+      "n": 1864,
+      "accept_domain_off": 0.926,
+      "accept_domain_on": 0.9201
+    },
     "in": {
       "n": 2462,
       "accept_domain_off": 0.9155,
-      "accept_domain_on": 0.8887
+      "accept_domain_on": 0.9033
     },
     "out_cn": {
       "n": 360,
@@ -76,21 +81,21 @@
     "out_ood": {
       "n": 232,
       "accept_domain_off": 0.2716,
-      "accept_domain_on": 0.2284
+      "accept_domain_on": 0.2371
     },
     "out_other": {
       "n": 808,
       "accept_domain_off": 0.151,
-      "accept_domain_on": 0.0507
+      "accept_domain_on": 0.052
     },
     "real": {
       "n": 100,
       "accept_domain_off": 0.18,
-      "accept_domain_on": 0.12,
+      "accept_domain_on": 0.13,
       "per_class": {
         "chicken_wings": {
           "n": 8,
-          "accept_on": 0.5
+          "accept_on": 0.625
         },
         "chocolate_cake": {
           "n": 8,

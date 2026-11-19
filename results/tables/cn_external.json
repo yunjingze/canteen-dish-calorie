@@ -1,0 +1,36 @@
+{
+  "map": {
+    "Sweet_and_Sour_Pork": "sweet_sour_pork"
+  },
+  "source": "Kaggle 16-famous-chinese-dishes (test/val/train)",
+  "dedup": {
+    "md5": 0,
+    "near": 6
+  },
+  "all": {
+    "n": 392,
+    "top1": 0.8852,
+    "accept_rate": 0.9209,
+    "top1_accepted": 0.9058
+  },
+  "per_split": {
+    "train": {
+      "n": 314,
+      "top1": 0.8854,
+      "accept_rate": 0.9299,
+      "top1_accepted": 0.9041
+    },
+    "val": {
+      "n": 41,
+      "top1": 0.8293,
+      "accept_rate": 0.878,
+      "top1_accepted": 0.8889
+    },
+    "test": {
+      "n": 37,
+      "top1": 0.9459,
+      "accept_rate": 0.8919,
+      "top1_accepted": 0.9394
+    }
+  }
+}

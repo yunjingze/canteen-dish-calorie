@@ -107,6 +107,22 @@ class DomainGateTest(unittest.TestCase):
                         cn_other_prob=0.01, cn_domain_prob=0.99)
         self.assertFalse(sc["in_scope"])
 
+    def test_trusted_probe_buys_a_lower_gate(self):
+        weak = A.scope_of(views_with(0.37), fused(3, 0.6, 0.05), cn=True,
+                          cn_other_prob=0.05, cn_domain_prob=0.6)
+        self.assertFalse(weak["in_scope"])
+        self.assertAlmostEqual(weak["threshold"], A.CN_SCOPE_THRESHOLD_21, places=6)
+        strong = A.scope_of(views_with(0.37), fused(3, 0.6, 0.05), cn=True,
+                            cn_other_prob=0.05, cn_domain_prob=0.95)
+        self.assertTrue(strong["in_scope"])
+        self.assertAlmostEqual(strong["threshold"], 0.36, places=6)
+
+    def test_trusted_probe_still_fails_the_other_gates(self):
+        sc = A.scope_of(views_with(0.37), fused(3, 0.4, min(0.95, A.CN_OTHER_THRESHOLD + 0.1)),
+                        cn=True, cn_other_prob=min(0.95, A.CN_OTHER_THRESHOLD + 0.1),
+                        cn_domain_prob=0.99)
+        self.assertFalse(sc["in_scope"])
+
     def test_payload_reads_the_same_frames_once(self):
         """The probe must not need a second forward pass: payload takes the frames."""
         p = np.full(CN_NUM_CLASSES + 1, 0.01)
