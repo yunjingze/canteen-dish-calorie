@@ -149,7 +149,13 @@ def run_finetune(args, names, table, device):
 
     root = Path(args.data_root)
     set_seed(args.seed)
-    train_ds = SplitDataset(root / "train", names, build_transforms(True, True))
+    train_tf = build_transforms(True, True)
+    if args.aug == "strong":
+        # Canteen photos are shot under mixed lamps and on coloured trays; the
+        # baseline jitter assumes daylight and clean plates, which is why the
+        # pale dishes (white-cut chicken) were the ones that stayed weak.
+        train_tf = build_transforms(True, True, crop_scale=0.45, jitter=0.5, hue=0.08, gray_p=0.10)
+    train_ds = SplitDataset(root / "train", names, train_tf)
     val_ds = SplitDataset(root / "val", names, build_transforms(False, False))
     test_ds = SplitDataset(root / "test", names, build_transforms(False, False))
     loaders = {
@@ -287,6 +293,7 @@ def main(argv=None) -> int:
     ap.add_argument("--lr-backbone", type=float, default=2e-4)
     ap.add_argument("--weight-decay", type=float, default=5e-4)
     ap.add_argument("--label-smoothing", type=float, default=0.1)
+    ap.add_argument("--aug", default="base", choices=["base", "strong"])
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--out", default=str(ROOT / "results/tables/cn241_probe.json"))
     ap.add_argument("--save-dir", default=str(ROOT / "results/runs/cn241_last_stage"))

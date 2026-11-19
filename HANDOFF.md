@@ -21,7 +21,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 
 ## 2. 服务与分发包
 
-- 服务：http://127.0.0.1:8000，后台 job **pwsh-9424262517cb4ad7**，日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
+- 服务：http://127.0.0.1:8000，后台 job **pwsh-ffe2e0bdf8a14157**，日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
 - 分发包：dist/FoodDemo.zip 168.9 MB / 278 项，含 4 份 best.pt（f101n、plate40、cn116、**cn241_21_pre**）+ 新版 domain_head.json + 4 份 calibration.json；**不含**旧 cn241_21、不含旧 resnet18_last_stage_aug。
 - git：本轮「Loosen the canteen gate when the domain probe is sure」已推送 origin/main；上一轮 9a398ea。
 - 测试：python -m pytest tests -q → **78 passed**（约 7 s）。

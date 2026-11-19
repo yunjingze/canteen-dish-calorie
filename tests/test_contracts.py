@@ -43,6 +43,12 @@ class TransformTest(unittest.TestCase):
         out = build_transforms(True, True)(img)
         self.assertEqual(tuple(out.shape), (3, 224, 224))
 
+    def test_strong_aug_keeps_the_contract(self):
+        img = Image.new("RGB", (400, 400), color=(10, 200, 90))
+        out = build_transforms(True, True, crop_scale=0.45, jitter=0.5, hue=0.08, gray_p=0.10)(img)
+        self.assertEqual(tuple(out.shape), (3, 224, 224))
+        self.assertTrue(torch.isfinite(out).all())
+
 
 class ModelFactoryTest(unittest.TestCase):
     def test_every_architecture_maps_to_the_head(self):

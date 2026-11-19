@@ -64,17 +64,20 @@ class SplitDataset(_BASE):
         return img, label
 
 
-def build_transforms(train: bool, color_aug: bool):
+def build_transforms(train: bool, color_aug: bool, crop_scale: float = 0.55,
+                     jitter: float = 0.35, hue: float = 0.06, gray_p: float = 0.0):
     from torchvision import transforms
 
     if train:
         ops = [
-            transforms.RandomResizedCrop(IMG_SIZE, scale=(0.55, 1.0), ratio=(0.8, 1.25)),
+            transforms.RandomResizedCrop(IMG_SIZE, scale=(crop_scale, 1.0), ratio=(0.8, 1.25)),
             transforms.RandomHorizontalFlip(),
         ]
+        if gray_p > 0:
+            ops.append(transforms.RandomApply([transforms.RandomGrayscale(p=1.0)], p=gray_p))
         if color_aug:
             ops.append(
-                transforms.ColorJitter(brightness=0.35, contrast=0.35, saturation=0.35, hue=0.06)
+                transforms.ColorJitter(brightness=jitter, contrast=jitter, saturation=jitter, hue=hue)
             )
         ops += [
             transforms.ToTensor(),
