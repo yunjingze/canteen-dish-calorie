@@ -194,7 +194,12 @@ in the same tab; mixed demo plates live in data\splits\mixed.
    instead of being forced into the closest one, and a small cuisine probe
    rejects Western food, desserts and drinks outright. Switch back to the
    20-class tab for the course menu.
-   Canteen demo images live in data\splits\cn241_full\test.
+   Canteen demo images live in data\splits\cn241_full\test. When a photo is
+   refused, the result card offers a button to retry that same photo on the tab
+   that is likely to know it (a Western dish photo -> the 116-class tab, a
+   canteen-looking photo -> the 20-class tab). It is offered, never applied
+   silently: a refusal because the dish is an unsupported Chinese dish gets no
+   button, since switching tabs would only force it into a wrong class.
    Each result also shows a "chain reference": the measured per-serving calories
    of the closest McDonald's China menu item (Big Mac 513 kcal, medium fries
    279 kcal, ...), scraped from the official nutrition calculator. The panel

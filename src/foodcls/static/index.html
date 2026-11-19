@@ -531,14 +531,20 @@ function renderResults(data){
     const warn = document.createElement("div");
     warn.className = "scope-warn";
     const canTryWide = !pkg && mode === "single" && window.__wideEnabled && lastSource && lastSource.kind === "file";
+    // The server tells us which tab would accept this photo; only offer the
+    // button for real uploads, because sample galleries are per-tab.
+    const sug = (!pkg && !notFood && sc && sc.suggest && lastSource && lastSource.kind === "file") ? sc.suggest : null;
     warn.innerHTML = '<b>' + (pkg ? '包装食品照，不给候选'
                                  : notFood ? '画面里没有菜' : '未识别为支持的菜品') + '</b>：' +
       (sc.message || '模型不确定这张图属于清单里的哪道菜。') +
       (pkg ? '' : ' <span class="hintline">（点开上方“支持的 ' + nClass + ' 类”核对一下）</span>') +
-      (canTryWide ? '<button class="trywide" id="tryWide">用 ' + WIDE_N + ' 类模型再试一次</button>' : '');
+      (canTryWide ? '<button class="trywide" id="tryWide">用 ' + WIDE_N + ' 类模型再试一次</button>' : '') +
+      (sug ? '<button class="trywide" id="tryTab">换到「' + sug.tab + '」再试一次</button>' : '');
     wrap.appendChild(warn);
     const tw = $("#tryWide");
     if (tw) tw.onclick = () => { setMode("wide"); predictWideFile(lastSource.file); };
+    const tt = $("#tryTab");
+    if (tt) tt.onclick = () => { setMode(sug.mode); predictFile(lastSource.file); };
   }
   if (!data.top3 || !data.top3.length) {
     const none = document.createElement("div");

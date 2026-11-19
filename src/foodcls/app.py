@@ -637,6 +637,29 @@ def infer(img: Image.Image) -> np.ndarray:
     return analyse(img)[1]
 
 
+#: One table for the three tabs: names, the calibrated gate, and the one line
+#: that says what the tab does *not* cover.  Keeping them side by side is what
+#: makes "which tab does this photo belong to?" a lookup instead of three copies
+#: of the same branch (see suggest_tab() below).
+_SCOPE_SPECS = {
+    "single": {
+        "names": CLASS_NAMES, "zh": ZH_LABELS, "threshold": SCOPE_THRESHOLD,
+        "label": "20 类", "tab": "单菜识别",
+        "examples": "整只烤鸡/烤鸭、火锅、家常炒菜等都不在支持的 20 类里",
+    },
+    "wide": {
+        "names": WIDE_CLASS_NAMES, "zh": WIDE_ZH, "threshold": WIDE_SCOPE_THRESHOLD,
+        "label": f"{WIDE_NUM_CLASSES} 类", "tab": "116 类",
+        "examples": f"火锅、麻辣烫、家常炒菜等中式吃法都不在这 {WIDE_NUM_CLASSES} 类里",
+    },
+    "cn": {
+        "names": CN_CLASS_NAMES, "zh": CN_ZH, "threshold": CN_SCOPE_THRESHOLD,
+        "label": f"{CN_NUM_CLASSES} 道", "tab": "食堂菜",
+        "examples": "牛肉面、麻辣烫、米线、手抓饼、清蒸鱼这些食堂主食和小吃不在这 20 道里",
+    },
+}
+
+
 def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
              food_prob: float | None = None,
              packaging_prob: float | None = None, cn: bool = False,
@@ -650,22 +673,15 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     worst single view, because one frame that looks like another dish is exactly
     the failure this flag exists to catch.
     """
-    if wide:
-        names, zh, threshold = WIDE_CLASS_NAMES, WIDE_ZH, WIDE_SCOPE_THRESHOLD
-        label = f"{WIDE_NUM_CLASSES} 类"
-        examples = f"火锅、麻辣烫、家常炒菜等中式吃法都不在这 {WIDE_NUM_CLASSES} 类里"
-    elif cn:
-        names, zh = CN_CLASS_NAMES, CN_ZH
+    mode = "cn" if cn else "wide" if wide else "single"
+    spec = _SCOPE_SPECS[mode]
+    names, zh, label, examples = spec["names"], spec["zh"], spec["label"], spec["examples"]
+    threshold = spec["threshold"]
+    if cn and cn_other_prob is not None:
         # With the bucket the gate must ignore it: an in-scope dish can put 40 %
         # on "some other dish" and still be the right one, and the old threshold
         # would then throw the photo away for the wrong reason.
-        threshold = (CN_SCOPE_THRESHOLD_21 if cn_other_prob is not None
-                     else CN_SCOPE_THRESHOLD)
-        label = f"{CN_NUM_CLASSES} 道"
-        examples = "牛肉面、麻辣烫、米线、手抓饼、清蒸鱼这些食堂主食和小吃不在这 20 道里"
-    else:
-        names, zh, threshold, label = CLASS_NAMES, ZH_LABELS, SCOPE_THRESHOLD, "20 类"
-        examples = "整只烤鸡/烤鸭、火锅、家常炒菜等都不在支持的 20 类里"
+        threshold = CN_SCOPE_THRESHOLD_21
     top1 = float(np.max(probs))
     # Mirrored views sharpen the fused posterior but lower the worst-view score
     # on every photo, so the gate keeps the three original framings only; that
@@ -815,6 +831,80 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     return scope
 
 
+#: Where a refused photo is worth trying next, most likely first.  The tray tab
+#: is deliberately absent: it is a correction tool, not a classifier.
+_TAB_ORDER = {"cn": ("single", "wide"), "single": ("cn",), "wide": ("cn",)}
+
+
+def _tab_scope(img: Image.Image, mode: str) -> Optional[dict]:
+    """The verdict the *other* tab would show for this photo.
+
+    It runs that tab's own decision path -- its head, its gate, its bucket, its
+    veto -- rather than asking the current head for a second opinion.  That
+    costs one extra forward pass per candidate, but only on photos this tab
+    refused, and the button it produces is a promise the other tab can keep.
+    """
+    if mode == "single":
+        views, fused, frames = analyse_full(img)
+        pack = _state.get("packaging")
+        return scope_of(views, fused, food_prob=_food_prob(frames),
+                        packaging_prob=pack.prob(frames) if pack is not None else None)
+    if mode == "wide":
+        if _state.get("wide_model") is None:
+            return None
+        views, fused, frames = analyse_wide(img, want_feats=True)
+        return scope_of(views, fused, wide=True, food_prob=_food_prob(frames))
+    if _state.get("cn_model") is None:
+        return None
+    views, fused, frames = analyse_cn(img, want_feats=True)
+    other = float(fused[CN_NUM_CLASSES]) if fused.size > CN_NUM_CLASSES else None
+    other_top = bool(int(np.argmax(fused)) == CN_NUM_CLASSES) if other is not None else False
+    dish = fused[:CN_NUM_CLASSES] if other is not None else fused
+    return scope_of(views, dish, cn=True, cn_veto_result=cn_veto(img),
+                    cn_other_prob=other, cn_other_top=other_top,
+                    cn_domain_prob=_domain_prob(frames))
+
+
+def _refusal_reason(scope: dict) -> str:
+    """Why this tab said no, in the order scope_of checks the cues."""
+    if (scope.get("domain") or {}).get("fired"):
+        return "domain"
+    if (scope.get("other") or {}).get("fired"):
+        return "other"
+    if (scope.get("veto") or {}).get("fired"):
+        return "veto"
+    return "weak"
+
+
+def suggest_tab(img: Image.Image | None, mode: str, scope: dict) -> Optional[dict]:
+    """Which tab would recognise this photo, when this one would not.
+
+    A refusal is not the end of the story: a pizza is out of scope for the 20
+    canteen dishes but in scope for 单菜识别, and a 红烧肉 photo is the reverse.
+    The answer is the tab whose *own* gate accepted the photo, so the UI can
+    offer one button that will not refuse it a second time.
+    """
+    if img is None or scope.get("in_scope"):
+        return None
+    # "No dish in the frame" and "this is a package" are not tab problems: the
+    # advice is about the photo or the tray tab, and the message already says it.
+    if scope.get("not_food") or scope.get("packaging"):
+        return None
+    # A canteen refusal on the veto/weak cues means the photo *is* canteen food
+    # that this tab simply could not name -- the probe was quiet and the bucket
+    # was empty.  Sending it to the Western tabs there is how a bowl of 木须肉
+    # comes back as a hamburger, so no button is offered for those.
+    if mode == "cn" and _refusal_reason(scope) in ("veto", "weak"):
+        return None
+    for alt in _TAB_ORDER.get(mode, ()):
+        other = _tab_scope(img, alt)
+        if other is not None and other["in_scope"]:
+            spec = _SCOPE_SPECS[alt]
+            return {"mode": alt, "label": spec["label"], "tab": spec["tab"],
+                    "reason": _refusal_reason(scope)}
+    return None
+
+
 def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None, views=None,
             wide: bool = False, img: Image.Image | None = None, food_prob: float | None = None,
             packaging_prob: float | None = None, cn: bool = False,
@@ -860,6 +950,10 @@ def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None,
         # A package is not a plate: say so instead of naming the nearest dish.
         items = []
         weight_source = "portion"
+    # Which tab would recognise it instead?  Only asked when this tab refused,
+    # and only after the packaging cue is settled, so a package photo keeps its
+    # "拆开装盘" message rather than being sent to another classifier.
+    scope["suggest"] = suggest_tab(img, "cn" if cn else "wide" if wide else "single", scope)
     if in_scope:
         if weight_source == "user":
             note = "热量 = 每 100 g 热量先验 × 你输入的重量（±15% 反映做法差异，低置信度时进一步放宽），仅供参考。"

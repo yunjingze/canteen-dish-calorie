@@ -1,4 +1,4 @@
-# FoodCLS 历轮记录与细节（归档，截至 2026-11-19 第七轮）
+# FoodCLS 历轮记录与细节（归档，截至 2026-11-19 第十轮）
 
 > 归档文件：这里是 2026-11-19 第七轮结束时 HANDOFF.md 的完整内容——历轮过程、被否掉的方案、每轮的数字都在这里。**现行状态见 ../HANDOFF.md**。除补写历史细节外不再更新。
 
@@ -213,3 +213,13 @@ E:\项目作业\food_project\
 - build_transforms 增 crop_scale/jitter/hue/gray_p（默认不变），train_cn241.py --aug strong：裁剪 0.45、jitter 0.5、hue 0.08、10% 灰度。8 epoch 同 init 同日种子：val 87.08→87.13、test 79.83→79.86（+0.03）、top-5 97.64→98.37、ECE 5.11→5.64。
 - 分菜：白斩鸡 82.4→79.4、木须肉 90.7→86.6，糖醋里脊 87.8→90.8、青椒肉丝 72.5→74.8、手撕包菜 89.3→91.6，互相抵消。结论：瓶颈是类内差异（切法/配菜/酱色），不是拍照色温；权重未上线（results/runs/cn241_21_strong）。
 - 单测：test_contracts 加强增广形状契约（81 passed）。
+## 13. 2026-11-19 第十轮：三套门控收口 + 拒识后换标签（上线）
+- **收口**：src/foodcls/app.py 新增 _SCOPE_SPECS 一张表（三套 names/zh/threshold/label/tab/examples），scope_of 开头按 mode 查表，判定逻辑一行未动；三个模式的名字/阈值/文案从此只在一处。
+- **换标签**：_TAB_ORDER（cn→single,wide；single/wide→cn；tray 不参与，not_food/包装也不参与）、_tab_scope()（在目标标签上跑完整判定链，不是二次意见）、_refusal_reason()（domain/other/veto/weak）、suggest_tab()；payload 在拒识路径带 scope.suggest。前端 index.html 拒识卡片加按钮「换到 X 再试一次」（仅真实上传，点后 setMode + 同一文件重跑）。
+- **规则**：只有目标标签自己 in_scope 才给按钮；食堂拒识原因 veto/weak 不给（那张本来就是食堂菜、只是认不出），domain/other 才给。
+- **实测**（scripts/eval_tab_route.py，150/150/150/100/150/100 分层抽样，results/tables/tab_route.json）：食堂→(单菜,116 类)：真实西餐 87 拒 / 84 给 / 79 对（94%）；清单内 val 9/4/0、test 9/6/0（误给 10/300，全部答错）；out_cn 113/52、out_other 98/38、out_ood 57/0（外部集类名跨清单不同，这几列不适用）。单菜→食堂：val 36/35（97%）、test 50/47（94%）、out_cn 8/0、真实 0。
+- **域概率当开关：否**。被食堂拒掉的 val 照片 p_domain 中位数 0.859、test 0.299、real 0.052，三组重叠；t=0.10 时 val 0/9、real 53/87。改用"为什么拒"之后清单内误给 12→10（val 8→4、test 9→6），西餐少给 1 张（85→84）。
+- **延迟**：单次 verdict 均值 cn 67.8 ms / wide 67.4 / single 33.9（最差 320 ms），加在每次拒识上（不是只在点按钮时）。
+- **测试**：新增 tests/test_tab_route.py 9 个（refusal reason 顺序、_TAB_ORDER 形状、suggest 门槛与 veto/weak 跳过），全套 90 passed。
+- **文档**：README §5.7.5 新增；§5.7 第 484 行"手动切换、不做自动路由"改为指向 5.7.5；HANDOFF 第十轮、§7 地图。
+- **教训**：用 read 全文 + write 回写会截断大文件（README 831 行曾被写成 336 行）；改大文档一律用按行处理的 Python 脚本，并先 git checkout 兜底。
