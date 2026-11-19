@@ -632,6 +632,19 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 ```
 
 **踩过的坑。** ① 21 路训练第 5 个 epoch 记了 36,412 s，是机器在 00:18 进入 Modern Standby、10:02 才唤醒，墙钟被算进了 epoch 计时；真实算力没变（其余 epoch 228–411 s），重训前先看电源/睡眠设置。② 241 类预训练第 5 个 epoch 也异常到 1723 s（其余 783–874 s），原因未定，重跑时留意后台扫描/页文件。③ **换主干必须重抽域头特征并重拟合**（5.7.2 局限②），否则域头判的是旧主干的空间。④ 打包脚本里食堂 run 目录、门控阈值、域头 JSON 三处要一起改，漏一处就是「新权重配旧阈值」。⑤ PowerShell 5.1 的 `>` 与 `Tee-Object` 写 **UTF-16LE**，日志直接用 read 工具会报 binary file——重定向改用 `| Out-File -Encoding utf8`，存量日志用 `scripts/fix_log_encoding.py` 一次转成 UTF-8。
+#### 5.7.4 强增广 A/B（否）
+
+`build_transforms` 现在接受 crop_scale / jitter / hue / gray_p，`train_cn241.py --aug strong` 是食堂配方：裁剪下限 0.45、亮度/对比度/饱和度 0.5、色相 0.08、10% 灰度——假设是白斩鸡这类浅色菜吃亏在拍照光线下，强增广应该把差距补回来。同 init、同种子重训 8 epoch：
+
+| 版本 | val | test top-1 | top-5 | ECE | 白斩鸡 | 木须肉 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 基线（上线） | 87.08 | 79.83 | 97.64 | 5.11 | 82.4 | 90.7 |
+| 强增广 | 87.13 | 79.86 | **98.37** | 5.64 | 79.4 | 86.6 |
+
+**结论是否。** 总 top-1 只多 0.03 pt（噪声级），val 持平，top-5 多 0.73；但白斩鸡反而 −3.0、木须肉 −4.1，糖醋里脊 +3.0、青椒肉丝 +2.3、手撕包菜 +2.3，几项互相抵消。所以瓶颈不是拍照的色温/亮度，而是这些菜的类内差异（切法、配菜、酱色深浅）——要再往上得动数据或标签，增广这条路到此为止。权重留在 `results/runs/cn241_21_strong`，未上线。
+
+复现：`python scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/cn241_all_pre/best.pt --epochs 8 --batch-size 64 --workers 0 --aug strong --out results/tables/cn241_21_strong.json --save-dir results/runs/cn241_21_strong`
+
 ### 5.8 测试时增强与代理域抽样波动
 
 代理域是 1,000 张 clean 图按固定随机种子退化出来的**单次抽样**，因此有两个问题值得单独量化：换一种推理方式（TTA）还能补多少？换一个随机种子重抽代理域，绝对数会漂多少？`scripts/eval_tta.py` 把这两件事一起测了，结果写 `results/tables/tta.json`（每个模型 × 每个 split × 6 种视图组合，含 ECE）。

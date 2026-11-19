@@ -208,3 +208,8 @@ E:\项目作业\food_project\
 - eval_domain_gate.py 增 val 集与 veto/other_top 字段（旧 npz 缺这两个字段，离线重扫与线上差 0.7 pt）。
 - 16chinese 外部核查：与 20 道只有糖醋里脊 1 类重合；md5 + dHash 去重后 392 张，Top-1 88.52%、接受率 92.09%、被接受照片 Top-1 90.58%。新脚本 eval_external_cn.py + 指纹 _fingerprint_cn241_21.json（21,031 张）。
 - 教训：16chinese 的 txt 是 Windows 绝对路径，截 .jpg 之后要保留扩展名再拼 images 目录，否则 0 候选。
+
+## 12. 2026-11-19 第九轮：强增广 A/B（否）
+- build_transforms 增 crop_scale/jitter/hue/gray_p（默认不变），train_cn241.py --aug strong：裁剪 0.45、jitter 0.5、hue 0.08、10% 灰度。8 epoch 同 init 同日种子：val 87.08→87.13、test 79.83→79.86（+0.03）、top-5 97.64→98.37、ECE 5.11→5.64。
+- 分菜：白斩鸡 82.4→79.4、木须肉 90.7→86.6，糖醋里脊 87.8→90.8、青椒肉丝 72.5→74.8、手撕包菜 89.3→91.6，互相抵消。结论：瓶颈是类内差异（切法/配菜/酱色），不是拍照色温；权重未上线（results/runs/cn241_21_strong）。
+- 单测：test_contracts 加强增广形状契约（81 passed）。
