@@ -705,6 +705,34 @@ $env:PYTHONPATH="E:\项目作业\.venv\Lib\site-packages"   # 见下面踩坑 �
 3. 本文档早先的复现命令写 `--workers 4`，照着跑会慢 2.4 倍——已全部改成 `--workers 4`。
 4. 本机电源方案是 OEM 的 **Silent**（CPU 固定 2.2 GHz 无 turbo、GPU 在 P4、功率上限 100 W），所以 epoch 337–438 s 是正常值；之前 `cn241_21_pre` 那轮 228–411 s 同量级，别把「机器降频」误判成代码退化。
 
+#### 5.7.7 自己筛一套对外测试集：`scripts/ingest_web.py`
+
+前面的外部集只有一道菜（16chinese 的糖醋里脊 392 张，88.5%），报告里最缺的一栏是「20 道菜整体对外多少」。补这一栏只能自己收图，而收图真正难的不是下载，是**判断哪些图能算「外部」**：九宫格拼图、带水印的菜单图、自己 test 集里的同一张照片，混进去一张，报出去的准确率就是假的。工具把这一步做成可复现的流程，人只负责最后看一眼。
+
+按菜名把图丢进 `data/external/web20/inbox/<slug>/`（slug 与 `data/splits/cn241_21/train` 的目录名一致，`other_cn` 也可以，用来收困难负样本），然后三条命令：
+
+```powershell
+.\.venv\Scripts\python.exe scripts/ingest_web.py scan --fresh   # 体检 + 去重 + 出联系表
+.\.venv\Scripts\python.exe scripts/ingest_web.py apply           # 按 review.csv 的判定写 accepted/
+.\.venv\Scripts\python.exe scripts/ingest_web.py status          # 每道菜还差几张
+```
+
+`scan` 直接判死的四类（写进 `review.csv` 的 `verdict`，不再浪费人的时间）：分辨率短边 < 400、长宽比 > 2.6 或 < 0.38（截图/全景）、动图、以及**三层去重**——本批内 md5 相同、本批内 dHash 汉明距离 ≤ 4（同一张图换尺寸/重压）、与 `results/tables/_fingerprint_cn241_21.json` 里任何一张距离 ≤ 4。指纹现在覆盖 **24,889 张**（train 18,817 + val 2,214 + test 3,858），补 test 是这一轮专门做的：外部集若撞上自己的 test，等于拿测试集给自己打分。目录名写错或缺类名同样判死（`reject:unknown_class` / `reject:no_class`）——没标签的图收进来只是垃圾。
+
+`scan` 只标记、不判死的三类，写进 `flags` 供人眼判断：`collage`（检测窄幅纯色接缝 + 贯穿全图的强边，九宫格最容易漏的就是这种）、`frame`（外圈 ≥ 3/4 是纯白/纯黑边，截图和菜单卡）、`blurry`（拉普拉斯方差 < 40）。每道菜每 96 张拼成一张带编号的联系表 `review/sheets/<slug>_01.png`，编号与 `review.csv` 的 `idx` 一一对应——看图上第 12 号不对，就在表里把 12 行改成 `reject`。
+
+`apply` 只认 `verdict` 以 `k` 开头的行：重编码成 JPEG（长边 ≤ 1600、`optimize`、渐进式）并**剥掉 EXIF**（相机型号、GPS 对模型没用，却会让不同机器上的读图行为不一致），写 `accepted/<slug>/`；被拒的**移动**到 `rejected/<slug>/` 而不是删除——当初为什么扔掉它，下一批还会遇到同类问题。同时写 `manifest.csv`（md5、原始尺寸、来源 URL），报告里要交代「这 N 张是 2026-11 从公开图库筛的」时用得上。若在 `inbox/<slug>/` 放一个 `sources.csv`（列 `file,url`），URL 会自动进 manifest。
+
+两条纪律，工具管不了、只能靠人：
+
+1. **筛测试集的标准只能是「这是不是一张真实的、非摆拍、非修图的家常菜照片」，不能是「我认不认得这道菜」。** 认不出的那张恰恰最该留——模型的错误正好发生在人也不确定的地方。要严筛的是训练补充，不是测试集。
+2. **测试集一次定死。** 报出数字之后再往里加图、删图，就是在测试集上调参，这一栏也就没意义了。要扩就新开一套（`--out data/external/web20_v2`），两套都报。
+
+网图只放 `data/external/`（已被 `.gitignore` 的 `data/*` 挡住），**不进 `dist/FoodDemo.zip`**——分发包是要给别人跑的，不能带来源不明的图片。
+
+工具本身有 8 个测试（`tests/test_ingest_web.py`）：dHash 在半尺寸重压下仍 ≤ 4 位差异、拉普拉斯能分开清晰与模糊、拼贴检测在 2×2 网格上触发而在单张照片上不触发、白边卡片 `frame_frac` ≥ 0.75、汉明距离与空指纹的边界、`scan` 把重复/过小/极端长宽比/缺类名分别判成不同 `reject:` 前缀、`apply` 输出无 EXIF 的 JPEG 且把拒收项移走、空目录返回 2。
+
+
 ### 5.8 测试时增强与代理域抽样波动
 
 代理域是 1,000 张 clean 图按固定随机种子退化出来的**单次抽样**，因此有两个问题值得单独量化：换一种推理方式（TTA）还能补多少？换一个随机种子重抽代理域，绝对数会漂多少？`scripts/eval_tta.py` 把这两件事一起测了，结果写 `results/tables/tta.json`（每个模型 × 每个 split × 6 种视图组合，含 ECE）。

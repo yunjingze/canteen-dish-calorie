@@ -1,6 +1,6 @@
 # FoodCLS 食品识别与热量估计 —— 项目交接文档（现状）
 
-> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-21（第十一轮：类平衡/focal A/B 否 + 训练管线三个坑）。
+> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-21（第十二轮：网图筛选工具 ingest_web.py、指纹补 test）。
 
 ## 0. 一句话
 
@@ -27,8 +27,8 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 
 - 服务：http://127.0.0.1:8000，后台 job **pwsh-b06b4e0e15a441b7**（2026-11-21 16:16 重启），日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
 - 分发包：dist/FoodDemo.zip 168.9 MB / 278 项，含 4 份 best.pt（f101n、plate40、cn116、**cn241_21_pre**）+ 新版 domain_head.json + 4 份 calibration.json；**不含**旧 cn241_21、不含旧 resnet18_last_stage_aug。
-- git：本轮「Loosen the canteen gate when the domain probe is sure」已推送 origin/main；上一轮 9a398ea。
-- 测试：python -m pytest tests -q → **90 passed**（约 5 s）。
+- git：最新 c177910（类平衡/focal A/B 否），已推送 origin/main；再往前 b973d67（换标签按钮）、296f003（可信域头放宽）。
+- 测试：python -m pytest tests -q → **104 passed**（约 10 s）。
 
 ## 3. 待办（只列还没做的）
 
@@ -36,7 +36,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 2. **三套门控收口 + 换标签按钮**：已完成（README §5.7.5）——三套阈值/文案进 _SCOPE_SPECS 一张表，拒识后按目标标签自己的门控给「换到 X」；域概率当开关已试并否掉（拒绝原因 overlap）。**仍未做**：上传即自动切标签（无感路由）。
 3. **真实托盘反馈闭环**：labels.csv 只有 2 条自测样本（source=sample，2026-11-18）；「一步纠正」只在 top-1 < 0.55 或拒识时出现；一顿饭的份量先验（米饭整碗）没建模。
 4. **份量回归**：固定份量先验 ±15%，真实差异 ±50%。
-5. **外部测试集**：16chinese 与 20 道只有糖醋里脊重合，已出 392 张 88.5%（cn_external.json）；要真正的对外数字还需新增拍摄或 ChineseFoodNet 208 类（Kaggle yihfeng/chinesefoodnet，18.6 万张，需登录）。
+5. **外部测试集**：16chinese 与 20 道只有糖醋里脊重合，已出 392 张 88.5%（cn_external.json）；要真正的对外数字只能自己收图，工具已就绪（scripts/ingest_web.py，README §5.7.7）：丢进 data/external/web20/inbox/<slug>/ → scan → 看联系表改 review.csv → apply。**尚未开始收图。** 指纹已扩到 24,889 张（含 test），重跑 16chinese 仍是 392 张 88.5%。
 6. **小程序部署**：蒸馏 MobileNetV3 + int8（约 45 MB）；服务需要守护进程。
 7. 宽头换 f101n 主干 **已试并否掉**（README §5.5.1），不要再试。
 
@@ -62,6 +62,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 - 食堂评测：python scripts/eval_cn_other.py → eval_cn_other_extra.py → search_cn_other_rule.py（EVAL_CN_CKPT / EVAL_TAG 可换 ckpt）
 - 域头链：extract_domain_features.py --views 1 → fit_domain_head.py --mode mean --tag pre → eval_domain_gate.py（TAG=pre）
 - 外部集：python scripts/eval_external_cn.py（16chinese，仅糖醋里脊；依赖 results/tables/_fingerprint_cn241_21.json）
+- 收网图做外部集：python scripts/ingest_web.py scan --fresh → 改 review.csv → apply → status（data/external/web20/）
 - 训食堂头：prepare_cn241_all.py → train_cn241.py --mode finetune（data-root data/splits/cn241_all）→ 再 --init <all>/best.pt 训 21 路
 - 打包：powershell -File scripts/package_demo.ps1 → dist/FoodDemo.zip
 - 换标签评测：python scripts/eval_tab_route.py（写 results/tables/tab_route.json，约 50 s）
@@ -80,6 +81,6 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 
 ## 7. 文档地图
 
-- README.md：§5.7.3 食堂 241 类预训练（现行）、§5.7.4 强增广 A/B（否）、§5.7.5 拒识后换标签、§5.7.6 类平衡/focal A/B（否 + 训练管线坑）、§5.7.1/§5.7.2 第一版历史、§5.5.1 宽头换主干实验、§5.4.1 食物门控。
-- docs/HISTORY.md：历轮完整记录（第一~第十一轮、被否方案、每轮数字）。
+- README.md：§5.7.3 食堂 241 类预训练（现行）、§5.7.4 强增广 A/B（否）、§5.7.5 拒识后换标签、§5.7.6 类平衡/focal A/B（否 + 训练管线坑）、§5.7.7 网图筛选工具（ingest_web.py）、§5.7.1/§5.7.2 第一版历史、§5.5.1 宽头换主干实验、§5.4.1 食物门控。
+- docs/HISTORY.md：历轮完整记录（第一~第十二轮、被否方案、每轮数字）。
 - docs/复现路径.md、docs/微信小程序上手指南.md、docs/永久公网地址.md、NOTICE（数据许可）。

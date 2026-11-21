@@ -231,3 +231,17 @@ E:\项目作业\food_project\
 - **结论**：类权重把菜认准了（白斩鸡 82.4→94.1、糖醋排骨 71.0→77.9、糖醋里脊 87.8→93.1）但把「不是这些菜」认废了（other_cn −9.2，占总 top-1 −2.18，因为兜底类占 test 36%）；把 other_cn 钉 1.0 后兜底类回到 65.3、菜的增益缩到 +0.61、总 −0.05（白干）；focal 只换到校准（top5 +1.01、ECE −0.38，val −0.86）。**三条都不上线**，默认仍是 cn241_21_pre/best.pt。瓶颈确认为类内差异 + other_cn 边界，不在损失函数——与第九轮强增广否掉同一结论。
 - **时间黑洞（根因）**：① Windows 下 DataLoader worker 用 sys._base_executable 启动，venv 的 base 是 E:\Python\python.exe（CPU-only torch 2.14.1），子进程 import 错 torch 后**静默死锁**（父等 data、worker 0% CPU、无异常）；解 = $env:PYTHONPATH=<venv>\Lib\site-packages。② torch 默认 24 intra-op 线程空转：10 s 烧 206 CPU 秒、GPU 0–9%；解 = OMP/MKL=1 + workers 4，实测 124 张/s（单进程 51）。③ README 旧复现命令写 --workers 0，照跑慢 2.4 倍（已 7 处改为 4）。④ 电源方案 OEM Silent：CPU 2.2 GHz 无 turbo、GPU P4 / 100 W，epoch 337–438 s 属正常（pre 那轮 228–411 s 同量级）。
 - **产物**：results/tables/cn241_21_{bal,focal,bal_noother}.json（权重目录 results/runs/cn241_21_* 被 .gitignore 忽略）；results/_run_bal_suite.ps1 / _run_bal_noother.ps1 / _cmp_bal.py / _cmp_dish.py。文档：README §5.7.6、HANDOFF 第十一轮与 §6 训练坑重写。
+
+## 12. 第十二轮：网图筛选工具与指纹补 test（2026-11-21）
+
+- **动机**：外部测试集只有 16chinese 的糖醋里脊一道菜（392 张，88.5%），报告里缺「20 道菜整体对外多少」这一栏。补它只能自己收图；而收图真正的难点不是下载，是判断哪些图能算「外部」——拼贴、水印菜单、自己 test 里的同一张，混进一张，数字就是假的。
+- **先补的漏洞**：results/tables/_fingerprint_cn241_21.json 原来只含 data/splits/cn241_21/{train,val} 的 21,031 张，**没有 test 的 3,858 张**。改了 results/_hash_cn241.py 的 split 循环为 ("train", "val", "test")，重跑得 **24,889 张**（2.8 MB，229 张/s）。用新指纹重跑 scripts/eval_external_cn.py，16chinese 仍是 398 候选 / md5 重 0 / 近似重 6 / 用 392 张、top-1 88.52%、accept 92.09%、accepted top-1 90.58%，结论不变——说明旧结果没被污染，但漏洞是真实的。
+- **新工具 scripts/ingest_web.py**（三个子命令，共用参数放到 argparse parent parser，否则 --inbox 等要写在子命令后面才能被识别）：
+  - \`scan\`：每图测 md5、64 位 dHash（与 results/_hash_cn241.py 同一配方）、拉普拉斯方差（_gray 到 320 宽）、collage_cues（窄幅近均匀带 _flat_runs + 贯穿全图强边）、frame_frac（外圈 4 条边里纯白/纯黑且低方差的比例）。直接判死：dup_cn241 / dup_batch / near_dup_batch / near_dup_cn241(h≤4) / small(<400) / aspect(>2.6 或 <0.38) / animated / unreadable / unknown_class / no_class。只标记：collage / seam / frame(≥0.75) / blurry(<40) / tiny_file(<15 KB)。输出 review.csv（utf-8-sig，Excel 直接开）+ review/sheets/<slug>_NN.png（每 96 张一页，8 列，编号与 idx 对应，红框=判死、黄框=有 flag）。
+  - \`apply\`：只认 verdict 以 k 开头的行；重编码 JPEG（长边 ≤1600、optimize、progressive）并剥 EXIF（RGBA/P 先贴白底）；写 accepted/<slug>/，被拒的 shutil.move 到 rejected/<slug>/（不删，留着看当初为什么扔）；写 manifest.csv（file/label/w/h/kb/md5/verdict/url/note）。inbox/<slug>/sources.csv（file,url）里的 URL 自动进 manifest。
+  - \`status\`：按 load_dishes() 的 20 道菜对 --target 打进度条。
+- **修掉的三个真 bug**（都是自测抓出来的）：① 参数定义在顶层 parser 上，子命令后面传 --inbox 报 unrecognized arguments；② Path.relative_to(ROOT) 在相对路径入参时抛 ValueError（改为先 .resolve()，并加 _rel 兜底）；③ apply 的 load_dishes 改名后漏改一处，short 列表 NameError。
+- **一处语义修正**：类名写错/缺类名原来只是 flags（会被 apply 当成 _unlabeled 收进去），改成 reject:unknown_class / reject:no_class。同时区分 load_dishes()（20 道计分菜）与 load_labels()（含 other_cn，困难负样本要收）。
+- **测试 tests/test_ingest_web.py 8 个**：dHash 在半尺寸重压下 ≤4 位差异（用高斯模糊的合成图，比真照片更严苛）、拉普拉斯分得开清晰/模糊、2×2 网格触发 collage_cues 而单张不触发、白边卡片 frame_frac ≥0.75、nearest 的汉明距离与空指纹边界（返回 64）、scan 把重复/过小/极端长宽比/缺类名判成不同 reject 前缀、apply 输出无 EXIF 的 JPEG 且拒收项被移走而保留项原地不动、空目录返回 2。全套 **104 passed**。
+- **自测脚本**：results/_web_selftest_build.py 造 9 张假图（正常、副本、半尺寸、2×2 拼贴、300×200、1600×400 全景、未知类、无类名、以及从 data/splits/cn241_21/test/baozi 直接拷的一张），results/_web_selftest_check.py 验输出。实测：借来的 test 图被判 reject:dup_cn241 并指出撞的是哪张，拼贴标 collage，全景 reject:aspect，副本 reject:dup_batch，缩图 reject:near_dup_batch(h=0)。
+- **文档**：README §5.7.7（新增）、HANDOFF 待办 5 与复现命令、HISTORY 本节。

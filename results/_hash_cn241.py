@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Fingerprint the 21-way head's training images so an outside photo set can be
-checked for duplicates before it is called "external"."""
+"""Fingerprint every image the 21-way head was fitted or scored on (train, val,
+test) so an outside photo set can be checked for duplicates before it is called
+"external". Test matters: an external image that also sits in our own test split
+would leak the number we are trying to report."""
 import hashlib, json, sys, time
 from pathlib import Path
 import numpy as np
@@ -23,7 +25,7 @@ def main():
     rows = {}
     t0 = time.time()
     files = []
-    for split in ("train", "val"):
+    for split in ("train", "val", "test"):
         files += sorted((ROOT / "data/splits/cn241_21" / split).rglob("*.jpg"))
     print(len(files), "images", flush=True)
     for i, p in enumerate(files):
