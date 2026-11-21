@@ -1,0 +1,5721 @@
+{
+  "source": "Bing Images, screened by scripts/ingest_web.py",
+  "note": "external test set; never used for training",
+  "all": {
+    "n": 623,
+    "top1": 0.9567,
+    "accept_rate": 0.8443,
+    "top1_accepted": 0.9677,
+    "per_class": {
+      "baozi": {
+        "n": 19,
+        "top1": 1.0,
+        "accept": 0.3158
+      },
+      "boiled_chicken": {
+        "n": 39,
+        "top1": 0.9744,
+        "accept": 0.6154
+      },
+      "boiled_pork": {
+        "n": 31,
+        "top1": 0.9677,
+        "accept": 0.871
+      },
+      "braised_chicken": {
+        "n": 32,
+        "top1": 0.75,
+        "accept": 0.75
+      },
+      "braised_pork": {
+        "n": 39,
+        "top1": 0.8462,
+        "accept": 0.7692
+      },
+      "cola_wings": {
+        "n": 42,
+        "top1": 1.0,
+        "accept": 0.7619
+      },
+      "di_san_xian": {
+        "n": 24,
+        "top1": 1.0,
+        "accept": 0.9583
+      },
+      "dry_fried_beans": {
+        "n": 19,
+        "top1": 0.9474,
+        "accept": 1.0
+      },
+      "farmhouse_pork": {
+        "n": 37,
+        "top1": 1.0,
+        "accept": 0.9459
+      },
+      "fried_noodles": {
+        "n": 43,
+        "top1": 1.0,
+        "accept": 0.7209
+      },
+      "hand_torn_cabbage": {
+        "n": 41,
+        "top1": 1.0,
+        "accept": 0.9268
+      },
+      "hot_sour_potato": {
+        "n": 41,
+        "top1": 1.0,
+        "accept": 0.9268
+      },
+      "mu_xi_pork": {
+        "n": 38,
+        "top1": 0.8947,
+        "accept": 0.9211
+      },
+      "pepper_pork": {
+        "n": 28,
+        "top1": 1.0,
+        "accept": 0.9643
+      },
+      "spicy_chicken": {
+        "n": 35,
+        "top1": 0.9714,
+        "accept": 0.9429
+      },
+      "steamed_egg": {
+        "n": 15,
+        "top1": 1.0,
+        "accept": 0.8
+      },
+      "stir_fried_greens": {
+        "n": 26,
+        "top1": 0.9615,
+        "accept": 0.9615
+      },
+      "sweet_sour_pork": {
+        "n": 38,
+        "top1": 0.9211,
+        "accept": 0.8684
+      },
+      "sweet_sour_ribs": {
+        "n": 19,
+        "top1": 0.9474,
+        "accept": 0.8947
+      },
+      "tomato_egg": {
+        "n": 17,
+        "top1": 1.0,
+        "accept": 1.0
+      }
+    }
+  },
+  "rows": [
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.7576,
+      "p_other": 0.0517,
+      "p_domain": 0.0033,
+      "file": "data/external/web20/accepted/baozi/0001.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.6002,
+      "p_other": 0.2691,
+      "p_domain": 0.0375,
+      "file": "data/external/web20/accepted/baozi/0002.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.507,
+      "p_other": 0.3058,
+      "p_domain": 0.1925,
+      "file": "data/external/web20/accepted/baozi/0005.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.5667,
+      "p_other": 0.8498,
+      "p_domain": 0.09,
+      "file": "data/external/web20/accepted/baozi/0006.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.7794,
+      "p_other": 0.0483,
+      "p_domain": 0.0413,
+      "file": "data/external/web20/accepted/baozi/0007.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.9644,
+      "p_other": 0.0069,
+      "p_domain": 0.4045,
+      "file": "data/external/web20/accepted/baozi/0010.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": true,
+      "robust": 0.7073,
+      "p_other": 0.0178,
+      "p_domain": 0.7992,
+      "file": "data/external/web20/accepted/baozi/0011.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.9225,
+      "p_other": 0.0125,
+      "p_domain": 0.9822,
+      "file": "data/external/web20/accepted/baozi/0012.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": true,
+      "robust": 0.9675,
+      "p_other": 0.0015,
+      "p_domain": 0.5065,
+      "file": "data/external/web20/accepted/baozi/0014.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": true,
+      "robust": 0.9429,
+      "p_other": 0.0072,
+      "p_domain": 0.8567,
+      "file": "data/external/web20/accepted/baozi/0015.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": true,
+      "robust": 0.9793,
+      "p_other": 0.0039,
+      "p_domain": 0.6657,
+      "file": "data/external/web20/accepted/baozi/0016.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.3617,
+      "p_other": 0.6462,
+      "p_domain": 0.8458,
+      "file": "data/external/web20/accepted/baozi/0017.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": true,
+      "robust": 0.9668,
+      "p_other": 0.0009,
+      "p_domain": 0.8465,
+      "file": "data/external/web20/accepted/baozi/0019.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.8296,
+      "p_other": 0.0067,
+      "p_domain": 0.0891,
+      "file": "data/external/web20/accepted/baozi/0021.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.7761,
+      "p_other": 0.0098,
+      "p_domain": 0.0234,
+      "file": "data/external/web20/accepted/baozi/0023.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.9218,
+      "p_other": 0.203,
+      "p_domain": 0.2287,
+      "file": "data/external/web20/accepted/baozi/0024.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.6989,
+      "p_other": 0.9917,
+      "p_domain": 0.26,
+      "file": "data/external/web20/accepted/baozi/0025.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": false,
+      "robust": 0.9131,
+      "p_other": 0.0506,
+      "p_domain": 0.8872,
+      "file": "data/external/web20/accepted/baozi/0027.jpg"
+    },
+    {
+      "label": "baozi",
+      "top": "baozi",
+      "accept": true,
+      "robust": 0.9824,
+      "p_other": 0.0085,
+      "p_domain": 0.6479,
+      "file": "data/external/web20/accepted/baozi/0034.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.94,
+      "p_other": 0.0091,
+      "p_domain": 0.9802,
+      "file": "data/external/web20/accepted/boiled_chicken/0001.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.3689,
+      "p_other": 0.4764,
+      "p_domain": 0.9264,
+      "file": "data/external/web20/accepted/boiled_chicken/0002.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9489,
+      "p_other": 0.0852,
+      "p_domain": 0.6575,
+      "file": "data/external/web20/accepted/boiled_chicken/0003.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.3582,
+      "p_other": 0.0712,
+      "p_domain": 0.8609,
+      "file": "data/external/web20/accepted/boiled_chicken/0004.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.909,
+      "p_other": 0.0074,
+      "p_domain": 0.9577,
+      "file": "data/external/web20/accepted/boiled_chicken/0005.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9587,
+      "p_other": 0.0006,
+      "p_domain": 0.964,
+      "file": "data/external/web20/accepted/boiled_chicken/0006.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.8724,
+      "p_other": 0.0673,
+      "p_domain": 0.7232,
+      "file": "data/external/web20/accepted/boiled_chicken/0008.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.8026,
+      "p_other": 0.0389,
+      "p_domain": 0.8009,
+      "file": "data/external/web20/accepted/boiled_chicken/0009.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.4772,
+      "p_other": 0.1108,
+      "p_domain": 0.1321,
+      "file": "data/external/web20/accepted/boiled_chicken/0010.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.4968,
+      "p_other": 0.1216,
+      "p_domain": 0.4223,
+      "file": "data/external/web20/accepted/boiled_chicken/0011.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.9196,
+      "p_other": 0.255,
+      "p_domain": 0.2917,
+      "file": "data/external/web20/accepted/boiled_chicken/0012.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9216,
+      "p_other": 0.0121,
+      "p_domain": 0.9697,
+      "file": "data/external/web20/accepted/boiled_chicken/0013.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.6109,
+      "p_other": 0.0609,
+      "p_domain": 0.6012,
+      "file": "data/external/web20/accepted/boiled_chicken/0016.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.8777,
+      "p_other": 0.0115,
+      "p_domain": 0.7598,
+      "file": "data/external/web20/accepted/boiled_chicken/0017.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9973,
+      "p_other": 0.0003,
+      "p_domain": 0.9743,
+      "file": "data/external/web20/accepted/boiled_chicken/0018.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.4465,
+      "p_other": 0.4145,
+      "p_domain": 0.0868,
+      "file": "data/external/web20/accepted/boiled_chicken/0019.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.7625,
+      "p_other": 0.0213,
+      "p_domain": 0.0712,
+      "file": "data/external/web20/accepted/boiled_chicken/0020.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.553,
+      "p_other": 0.0324,
+      "p_domain": 0.2478,
+      "file": "data/external/web20/accepted/boiled_chicken/0021.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9864,
+      "p_other": 0.0009,
+      "p_domain": 0.3969,
+      "file": "data/external/web20/accepted/boiled_chicken/0022.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.4272,
+      "p_other": 0.7269,
+      "p_domain": 0.1,
+      "file": "data/external/web20/accepted/boiled_chicken/0023.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.5783,
+      "p_other": 0.1306,
+      "p_domain": 0.9864,
+      "file": "data/external/web20/accepted/boiled_chicken/0024.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.997,
+      "p_other": 0.0013,
+      "p_domain": 0.9977,
+      "file": "data/external/web20/accepted/boiled_chicken/0025.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.9165,
+      "p_other": 0.4519,
+      "p_domain": 0.9546,
+      "file": "data/external/web20/accepted/boiled_chicken/0026.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.2413,
+      "p_other": 0.8366,
+      "p_domain": 0.2725,
+      "file": "data/external/web20/accepted/boiled_chicken/0027.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.4822,
+      "p_other": 0.439,
+      "p_domain": 0.5982,
+      "file": "data/external/web20/accepted/boiled_chicken/0028.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9828,
+      "p_other": 0.0314,
+      "p_domain": 0.697,
+      "file": "data/external/web20/accepted/boiled_chicken/0031.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9562,
+      "p_other": 0.0153,
+      "p_domain": 0.8867,
+      "file": "data/external/web20/accepted/boiled_chicken/0032.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.4238,
+      "p_other": 0.2969,
+      "p_domain": 0.8773,
+      "file": "data/external/web20/accepted/boiled_chicken/0033.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9547,
+      "p_other": 0.1085,
+      "p_domain": 0.8195,
+      "file": "data/external/web20/accepted/boiled_chicken/0034.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "hand_torn_cabbage",
+      "accept": false,
+      "robust": 0.2268,
+      "p_other": 0.2922,
+      "p_domain": 0.3149,
+      "file": "data/external/web20/accepted/boiled_chicken/0035.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9402,
+      "p_other": 0.006,
+      "p_domain": 0.9946,
+      "file": "data/external/web20/accepted/boiled_chicken/0036.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9287,
+      "p_other": 0.1999,
+      "p_domain": 0.9353,
+      "file": "data/external/web20/accepted/boiled_chicken/0037.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.8194,
+      "p_other": 0.0316,
+      "p_domain": 0.2953,
+      "file": "data/external/web20/accepted/boiled_chicken/0038.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.544,
+      "p_other": 0.1161,
+      "p_domain": 0.9347,
+      "file": "data/external/web20/accepted/boiled_chicken/0039.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.4623,
+      "p_other": 0.6408,
+      "p_domain": 0.1064,
+      "file": "data/external/web20/accepted/boiled_chicken/0040.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9825,
+      "p_other": 0.0017,
+      "p_domain": 0.8324,
+      "file": "data/external/web20/accepted/boiled_chicken/0041.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": false,
+      "robust": 0.8994,
+      "p_other": 0.3046,
+      "p_domain": 0.0402,
+      "file": "data/external/web20/accepted/boiled_chicken/0042.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.4383,
+      "p_other": 0.1377,
+      "p_domain": 0.8946,
+      "file": "data/external/web20/accepted/boiled_chicken/0044.jpg"
+    },
+    {
+      "label": "boiled_chicken",
+      "top": "boiled_chicken",
+      "accept": true,
+      "robust": 0.9916,
+      "p_other": 0.0014,
+      "p_domain": 0.9973,
+      "file": "data/external/web20/accepted/boiled_chicken/0045.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8884,
+      "p_other": 0.001,
+      "p_domain": 0.9967,
+      "file": "data/external/web20/accepted/boiled_pork/0001.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.7328,
+      "p_other": 0.0653,
+      "p_domain": 0.9554,
+      "file": "data/external/web20/accepted/boiled_pork/0002.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8312,
+      "p_other": 0.0007,
+      "p_domain": 0.9954,
+      "file": "data/external/web20/accepted/boiled_pork/0003.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9125,
+      "p_other": 0.0018,
+      "p_domain": 0.9652,
+      "file": "data/external/web20/accepted/boiled_pork/0004.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9377,
+      "p_other": 0.0311,
+      "p_domain": 0.9462,
+      "file": "data/external/web20/accepted/boiled_pork/0005.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9489,
+      "p_other": 0.0398,
+      "p_domain": 0.985,
+      "file": "data/external/web20/accepted/boiled_pork/0006.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9584,
+      "p_other": 0.0038,
+      "p_domain": 0.9989,
+      "file": "data/external/web20/accepted/boiled_pork/0008.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9139,
+      "p_other": 0.0297,
+      "p_domain": 0.9884,
+      "file": "data/external/web20/accepted/boiled_pork/0009.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.6743,
+      "p_other": 0.1063,
+      "p_domain": 0.9924,
+      "file": "data/external/web20/accepted/boiled_pork/0010.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": false,
+      "robust": 0.863,
+      "p_other": 0.3181,
+      "p_domain": 0.9812,
+      "file": "data/external/web20/accepted/boiled_pork/0012.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "spicy_chicken",
+      "accept": false,
+      "robust": 0.438,
+      "p_other": 0.3559,
+      "p_domain": 0.9396,
+      "file": "data/external/web20/accepted/boiled_pork/0013.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9654,
+      "p_other": 0.0047,
+      "p_domain": 0.9941,
+      "file": "data/external/web20/accepted/boiled_pork/0014.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.4919,
+      "p_other": 0.0074,
+      "p_domain": 0.9421,
+      "file": "data/external/web20/accepted/boiled_pork/0018.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9284,
+      "p_other": 0.0261,
+      "p_domain": 0.9924,
+      "file": "data/external/web20/accepted/boiled_pork/0019.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.7416,
+      "p_other": 0.0816,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/boiled_pork/0021.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8982,
+      "p_other": 0.0021,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/boiled_pork/0022.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8666,
+      "p_other": 0.0126,
+      "p_domain": 0.9955,
+      "file": "data/external/web20/accepted/boiled_pork/0023.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9886,
+      "p_other": 0.0005,
+      "p_domain": 0.9993,
+      "file": "data/external/web20/accepted/boiled_pork/0024.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.7961,
+      "p_other": 0.0186,
+      "p_domain": 0.3768,
+      "file": "data/external/web20/accepted/boiled_pork/0025.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8071,
+      "p_other": 0.038,
+      "p_domain": 0.9948,
+      "file": "data/external/web20/accepted/boiled_pork/0026.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": false,
+      "robust": 0.9615,
+      "p_other": 0.5317,
+      "p_domain": 0.9588,
+      "file": "data/external/web20/accepted/boiled_pork/0027.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9737,
+      "p_other": 0.0238,
+      "p_domain": 0.9961,
+      "file": "data/external/web20/accepted/boiled_pork/0028.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8775,
+      "p_other": 0.0258,
+      "p_domain": 0.9709,
+      "file": "data/external/web20/accepted/boiled_pork/0029.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9525,
+      "p_other": 0.0006,
+      "p_domain": 0.9953,
+      "file": "data/external/web20/accepted/boiled_pork/0033.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.5651,
+      "p_other": 0.0023,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/boiled_pork/0034.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9781,
+      "p_other": 0.0054,
+      "p_domain": 0.9761,
+      "file": "data/external/web20/accepted/boiled_pork/0035.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8073,
+      "p_other": 0.0857,
+      "p_domain": 0.8908,
+      "file": "data/external/web20/accepted/boiled_pork/0036.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9485,
+      "p_other": 0.0053,
+      "p_domain": 0.9952,
+      "file": "data/external/web20/accepted/boiled_pork/0039.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.9211,
+      "p_other": 0.0087,
+      "p_domain": 0.9142,
+      "file": "data/external/web20/accepted/boiled_pork/0041.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": false,
+      "robust": 0.9068,
+      "p_other": 0.0944,
+      "p_domain": 0.9749,
+      "file": "data/external/web20/accepted/boiled_pork/0043.jpg"
+    },
+    {
+      "label": "boiled_pork",
+      "top": "boiled_pork",
+      "accept": true,
+      "robust": 0.8524,
+      "p_other": 0.2055,
+      "p_domain": 0.922,
+      "file": "data/external/web20/accepted/boiled_pork/0045.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9894,
+      "p_other": 0.0003,
+      "p_domain": 0.9914,
+      "file": "data/external/web20/accepted/braised_chicken/0001.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9543,
+      "p_other": 0.0007,
+      "p_domain": 0.9991,
+      "file": "data/external/web20/accepted/braised_chicken/0002.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9141,
+      "p_other": 0.0031,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/braised_chicken/0003.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.5814,
+      "p_other": 0.0189,
+      "p_domain": 0.9753,
+      "file": "data/external/web20/accepted/braised_chicken/0004.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.6678,
+      "p_other": 0.002,
+      "p_domain": 0.9983,
+      "file": "data/external/web20/accepted/braised_chicken/0005.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.7233,
+      "p_other": 0.0929,
+      "p_domain": 0.9948,
+      "file": "data/external/web20/accepted/braised_chicken/0006.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9917,
+      "p_other": 0.0045,
+      "p_domain": 0.8096,
+      "file": "data/external/web20/accepted/braised_chicken/0007.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9959,
+      "p_other": 0.0003,
+      "p_domain": 0.9989,
+      "file": "data/external/web20/accepted/braised_chicken/0008.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9293,
+      "p_other": 0.0038,
+      "p_domain": 0.6192,
+      "file": "data/external/web20/accepted/braised_chicken/0010.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.6074,
+      "p_other": 0.0385,
+      "p_domain": 0.9626,
+      "file": "data/external/web20/accepted/braised_chicken/0011.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9779,
+      "p_other": 0.0002,
+      "p_domain": 0.9971,
+      "file": "data/external/web20/accepted/braised_chicken/0013.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9849,
+      "p_other": 0.0,
+      "p_domain": 0.9317,
+      "file": "data/external/web20/accepted/braised_chicken/0014.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.3892,
+      "p_other": 0.1298,
+      "p_domain": 0.9983,
+      "file": "data/external/web20/accepted/braised_chicken/0015.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.5949,
+      "p_other": 0.1651,
+      "p_domain": 0.9768,
+      "file": "data/external/web20/accepted/braised_chicken/0016.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.5166,
+      "p_other": 0.0399,
+      "p_domain": 0.9909,
+      "file": "data/external/web20/accepted/braised_chicken/0017.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9369,
+      "p_other": 0.0174,
+      "p_domain": 0.9976,
+      "file": "data/external/web20/accepted/braised_chicken/0018.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.57,
+      "p_other": 0.0001,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/braised_chicken/0019.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": false,
+      "robust": 0.8299,
+      "p_other": 0.5012,
+      "p_domain": 0.9947,
+      "file": "data/external/web20/accepted/braised_chicken/0020.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": false,
+      "robust": 0.1925,
+      "p_other": 0.7245,
+      "p_domain": 0.706,
+      "file": "data/external/web20/accepted/braised_chicken/0021.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": false,
+      "robust": 0.2323,
+      "p_other": 0.9829,
+      "p_domain": 0.3947,
+      "file": "data/external/web20/accepted/braised_chicken/0022.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "farmhouse_pork",
+      "accept": false,
+      "robust": 0.4992,
+      "p_other": 0.98,
+      "p_domain": 0.9947,
+      "file": "data/external/web20/accepted/braised_chicken/0023.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.4693,
+      "p_other": 0.0159,
+      "p_domain": 0.3878,
+      "file": "data/external/web20/accepted/braised_chicken/0024.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.715,
+      "p_other": 0.0229,
+      "p_domain": 0.9682,
+      "file": "data/external/web20/accepted/braised_chicken/0025.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.8262,
+      "p_other": 0.1245,
+      "p_domain": 0.8265,
+      "file": "data/external/web20/accepted/braised_chicken/0026.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "sweet_sour_ribs",
+      "accept": false,
+      "robust": 0.8317,
+      "p_other": 0.6947,
+      "p_domain": 0.9737,
+      "file": "data/external/web20/accepted/braised_chicken/0027.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": false,
+      "robust": 0.3638,
+      "p_other": 0.1951,
+      "p_domain": 0.8819,
+      "file": "data/external/web20/accepted/braised_chicken/0028.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.4348,
+      "p_other": 0.1702,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/braised_chicken/0029.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.995,
+      "p_other": 0.0002,
+      "p_domain": 0.9146,
+      "file": "data/external/web20/accepted/braised_chicken/0032.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.9993,
+      "p_other": 0.0006,
+      "p_domain": 0.9799,
+      "file": "data/external/web20/accepted/braised_chicken/0033.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": false,
+      "robust": 0.2647,
+      "p_other": 0.6427,
+      "p_domain": 0.1553,
+      "file": "data/external/web20/accepted/braised_chicken/0036.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.6072,
+      "p_other": 0.0006,
+      "p_domain": 0.9929,
+      "file": "data/external/web20/accepted/braised_chicken/0037.jpg"
+    },
+    {
+      "label": "braised_chicken",
+      "top": "farmhouse_pork",
+      "accept": false,
+      "robust": 0.3084,
+      "p_other": 0.7765,
+      "p_domain": 0.9893,
+      "file": "data/external/web20/accepted/braised_chicken/0040.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.8531,
+      "p_other": 0.0022,
+      "p_domain": 0.9967,
+      "file": "data/external/web20/accepted/braised_pork/0001.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9223,
+      "p_other": 0.0068,
+      "p_domain": 0.9982,
+      "file": "data/external/web20/accepted/braised_pork/0002.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.7344,
+      "p_other": 0.0012,
+      "p_domain": 0.9427,
+      "file": "data/external/web20/accepted/braised_pork/0003.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9792,
+      "p_other": 0.0006,
+      "p_domain": 0.999,
+      "file": "data/external/web20/accepted/braised_pork/0004.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": false,
+      "robust": 0.9957,
+      "p_other": 0.0038,
+      "p_domain": 0.212,
+      "file": "data/external/web20/accepted/braised_pork/0005.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": false,
+      "robust": 0.2538,
+      "p_other": 0.2155,
+      "p_domain": 0.4268,
+      "file": "data/external/web20/accepted/braised_pork/0006.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.8704,
+      "p_other": 0.0237,
+      "p_domain": 0.9787,
+      "file": "data/external/web20/accepted/braised_pork/0007.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.979,
+      "p_other": 0.0033,
+      "p_domain": 0.994,
+      "file": "data/external/web20/accepted/braised_pork/0008.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.7706,
+      "p_other": 0.013,
+      "p_domain": 0.9761,
+      "file": "data/external/web20/accepted/braised_pork/0009.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9861,
+      "p_other": 0.0003,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/braised_pork/0010.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.6392,
+      "p_other": 0.0017,
+      "p_domain": 0.4296,
+      "file": "data/external/web20/accepted/braised_pork/0011.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "sweet_sour_ribs",
+      "accept": false,
+      "robust": 0.3535,
+      "p_other": 0.1718,
+      "p_domain": 0.8662,
+      "file": "data/external/web20/accepted/braised_pork/0013.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.8791,
+      "p_other": 0.0047,
+      "p_domain": 0.9872,
+      "file": "data/external/web20/accepted/braised_pork/0014.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.8795,
+      "p_other": 0.0084,
+      "p_domain": 0.9721,
+      "file": "data/external/web20/accepted/braised_pork/0016.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.494,
+      "p_other": 0.0053,
+      "p_domain": 0.9996,
+      "file": "data/external/web20/accepted/braised_pork/0017.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9317,
+      "p_other": 0.0628,
+      "p_domain": 0.9824,
+      "file": "data/external/web20/accepted/braised_pork/0018.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": false,
+      "robust": 0.6723,
+      "p_other": 0.366,
+      "p_domain": 0.3374,
+      "file": "data/external/web20/accepted/braised_pork/0019.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.5799,
+      "p_other": 0.0411,
+      "p_domain": 0.9701,
+      "file": "data/external/web20/accepted/braised_pork/0020.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9672,
+      "p_other": 0.0039,
+      "p_domain": 0.8644,
+      "file": "data/external/web20/accepted/braised_pork/0022.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9926,
+      "p_other": 0.0019,
+      "p_domain": 0.8836,
+      "file": "data/external/web20/accepted/braised_pork/0023.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.942,
+      "p_other": 0.0027,
+      "p_domain": 0.9732,
+      "file": "data/external/web20/accepted/braised_pork/0024.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": false,
+      "robust": 0.4679,
+      "p_other": 0.0576,
+      "p_domain": 0.3004,
+      "file": "data/external/web20/accepted/braised_pork/0025.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9023,
+      "p_other": 0.016,
+      "p_domain": 0.9945,
+      "file": "data/external/web20/accepted/braised_pork/0027.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9793,
+      "p_other": 0.0031,
+      "p_domain": 0.9988,
+      "file": "data/external/web20/accepted/braised_pork/0028.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.4688,
+      "p_other": 0.0885,
+      "p_domain": 0.9989,
+      "file": "data/external/web20/accepted/braised_pork/0029.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "sweet_sour_ribs",
+      "accept": false,
+      "robust": 0.4839,
+      "p_other": 0.0274,
+      "p_domain": 0.9763,
+      "file": "data/external/web20/accepted/braised_pork/0030.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": false,
+      "robust": 0.4426,
+      "p_other": 0.3735,
+      "p_domain": 0.9967,
+      "file": "data/external/web20/accepted/braised_pork/0031.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.981,
+      "p_other": 0.0002,
+      "p_domain": 0.9985,
+      "file": "data/external/web20/accepted/braised_pork/0032.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.4862,
+      "p_other": 0.2622,
+      "p_domain": 0.9596,
+      "file": "data/external/web20/accepted/braised_pork/0033.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.463,
+      "p_other": 0.0307,
+      "p_domain": 0.9976,
+      "file": "data/external/web20/accepted/braised_pork/0034.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.5786,
+      "p_other": 0.0056,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/braised_pork/0035.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9444,
+      "p_other": 0.008,
+      "p_domain": 0.9957,
+      "file": "data/external/web20/accepted/braised_pork/0036.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.9751,
+      "p_other": 0.0003,
+      "p_domain": 0.9977,
+      "file": "data/external/web20/accepted/braised_pork/0037.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": false,
+      "robust": 0.3419,
+      "p_other": 0.0724,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/braised_pork/0038.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.7942,
+      "p_other": 0.0055,
+      "p_domain": 0.995,
+      "file": "data/external/web20/accepted/braised_pork/0039.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.6043,
+      "p_other": 0.0031,
+      "p_domain": 0.9994,
+      "file": "data/external/web20/accepted/braised_pork/0040.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": false,
+      "robust": 0.4128,
+      "p_other": 0.3077,
+      "p_domain": 0.998,
+      "file": "data/external/web20/accepted/braised_pork/0042.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.8623,
+      "p_other": 0.0454,
+      "p_domain": 0.9986,
+      "file": "data/external/web20/accepted/braised_pork/0043.jpg"
+    },
+    {
+      "label": "braised_pork",
+      "top": "braised_pork",
+      "accept": true,
+      "robust": 0.8752,
+      "p_other": 0.0021,
+      "p_domain": 0.9993,
+      "file": "data/external/web20/accepted/braised_pork/0044.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.8369,
+      "p_other": 0.0001,
+      "p_domain": 0.9325,
+      "file": "data/external/web20/accepted/cola_wings/0001.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.922,
+      "p_other": 0.0007,
+      "p_domain": 0.9934,
+      "file": "data/external/web20/accepted/cola_wings/0002.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9882,
+      "p_other": 0.0004,
+      "p_domain": 0.7431,
+      "file": "data/external/web20/accepted/cola_wings/0003.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9918,
+      "p_other": 0.0002,
+      "p_domain": 0.689,
+      "file": "data/external/web20/accepted/cola_wings/0004.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9889,
+      "p_other": 0.0003,
+      "p_domain": 0.7568,
+      "file": "data/external/web20/accepted/cola_wings/0005.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.8534,
+      "p_other": 0.0073,
+      "p_domain": 0.3412,
+      "file": "data/external/web20/accepted/cola_wings/0006.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.7266,
+      "p_other": 0.004,
+      "p_domain": 0.8858,
+      "file": "data/external/web20/accepted/cola_wings/0007.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.4823,
+      "p_other": 0.0034,
+      "p_domain": 0.7821,
+      "file": "data/external/web20/accepted/cola_wings/0008.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9772,
+      "p_other": 0.0003,
+      "p_domain": 0.9656,
+      "file": "data/external/web20/accepted/cola_wings/0009.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9777,
+      "p_other": 0.0006,
+      "p_domain": 0.9934,
+      "file": "data/external/web20/accepted/cola_wings/0010.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.723,
+      "p_other": 0.0023,
+      "p_domain": 0.7336,
+      "file": "data/external/web20/accepted/cola_wings/0011.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.9823,
+      "p_other": 0.0008,
+      "p_domain": 0.3078,
+      "file": "data/external/web20/accepted/cola_wings/0012.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9871,
+      "p_other": 0.0001,
+      "p_domain": 0.9934,
+      "file": "data/external/web20/accepted/cola_wings/0013.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.986,
+      "p_other": 0.0003,
+      "p_domain": 0.8594,
+      "file": "data/external/web20/accepted/cola_wings/0014.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.9103,
+      "p_other": 0.0058,
+      "p_domain": 0.2202,
+      "file": "data/external/web20/accepted/cola_wings/0015.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.2502,
+      "p_other": 0.798,
+      "p_domain": 0.3799,
+      "file": "data/external/web20/accepted/cola_wings/0016.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.8892,
+      "p_other": 0.0129,
+      "p_domain": 0.6942,
+      "file": "data/external/web20/accepted/cola_wings/0017.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.7905,
+      "p_other": 0.0019,
+      "p_domain": 0.9606,
+      "file": "data/external/web20/accepted/cola_wings/0018.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9419,
+      "p_other": 0.0033,
+      "p_domain": 0.9054,
+      "file": "data/external/web20/accepted/cola_wings/0019.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.9764,
+      "p_other": 0.0055,
+      "p_domain": 0.2059,
+      "file": "data/external/web20/accepted/cola_wings/0020.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.1965,
+      "p_other": 0.2398,
+      "p_domain": 0.2471,
+      "file": "data/external/web20/accepted/cola_wings/0021.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9741,
+      "p_other": 0.0003,
+      "p_domain": 0.707,
+      "file": "data/external/web20/accepted/cola_wings/0022.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.9832,
+      "p_other": 0.0073,
+      "p_domain": 0.0954,
+      "file": "data/external/web20/accepted/cola_wings/0023.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.8512,
+      "p_other": 0.0825,
+      "p_domain": 0.7325,
+      "file": "data/external/web20/accepted/cola_wings/0024.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.8031,
+      "p_other": 0.0989,
+      "p_domain": 0.0291,
+      "file": "data/external/web20/accepted/cola_wings/0026.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.489,
+      "p_other": 0.0426,
+      "p_domain": 0.7321,
+      "file": "data/external/web20/accepted/cola_wings/0027.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.5265,
+      "p_other": 0.0007,
+      "p_domain": 0.8445,
+      "file": "data/external/web20/accepted/cola_wings/0028.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9712,
+      "p_other": 0.0001,
+      "p_domain": 0.9328,
+      "file": "data/external/web20/accepted/cola_wings/0029.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9708,
+      "p_other": 0.0001,
+      "p_domain": 0.6083,
+      "file": "data/external/web20/accepted/cola_wings/0030.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9402,
+      "p_other": 0.0017,
+      "p_domain": 0.9203,
+      "file": "data/external/web20/accepted/cola_wings/0031.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9206,
+      "p_other": 0.0064,
+      "p_domain": 0.9953,
+      "file": "data/external/web20/accepted/cola_wings/0032.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9814,
+      "p_other": 0.0012,
+      "p_domain": 0.9624,
+      "file": "data/external/web20/accepted/cola_wings/0033.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.3954,
+      "p_other": 0.0013,
+      "p_domain": 0.3299,
+      "file": "data/external/web20/accepted/cola_wings/0034.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9485,
+      "p_other": 0.0086,
+      "p_domain": 0.8656,
+      "file": "data/external/web20/accepted/cola_wings/0035.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.4762,
+      "p_other": 0.0145,
+      "p_domain": 0.7149,
+      "file": "data/external/web20/accepted/cola_wings/0037.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9709,
+      "p_other": 0.0005,
+      "p_domain": 0.8921,
+      "file": "data/external/web20/accepted/cola_wings/0038.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.6435,
+      "p_other": 0.1816,
+      "p_domain": 0.4379,
+      "file": "data/external/web20/accepted/cola_wings/0039.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.4326,
+      "p_other": 0.0123,
+      "p_domain": 0.3747,
+      "file": "data/external/web20/accepted/cola_wings/0040.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9733,
+      "p_other": 0.0002,
+      "p_domain": 0.9067,
+      "file": "data/external/web20/accepted/cola_wings/0042.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.9223,
+      "p_other": 0.2691,
+      "p_domain": 0.8938,
+      "file": "data/external/web20/accepted/cola_wings/0043.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.4885,
+      "p_other": 0.1706,
+      "p_domain": 0.2436,
+      "file": "data/external/web20/accepted/cola_wings/0044.jpg"
+    },
+    {
+      "label": "cola_wings",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.8299,
+      "p_other": 0.01,
+      "p_domain": 0.9506,
+      "file": "data/external/web20/accepted/cola_wings/0045.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.965,
+      "p_other": 0.003,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/di_san_xian/0001.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.8981,
+      "p_other": 0.0028,
+      "p_domain": 0.9985,
+      "file": "data/external/web20/accepted/di_san_xian/0002.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9707,
+      "p_other": 0.0037,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/di_san_xian/0003.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9555,
+      "p_other": 0.0104,
+      "p_domain": 0.9968,
+      "file": "data/external/web20/accepted/di_san_xian/0004.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9421,
+      "p_other": 0.0224,
+      "p_domain": 0.996,
+      "file": "data/external/web20/accepted/di_san_xian/0005.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9755,
+      "p_other": 0.0069,
+      "p_domain": 0.9932,
+      "file": "data/external/web20/accepted/di_san_xian/0006.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.5397,
+      "p_other": 0.0015,
+      "p_domain": 0.9989,
+      "file": "data/external/web20/accepted/di_san_xian/0008.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.8827,
+      "p_other": 0.0008,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/di_san_xian/0010.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.6158,
+      "p_other": 0.01,
+      "p_domain": 0.9993,
+      "file": "data/external/web20/accepted/di_san_xian/0013.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9939,
+      "p_other": 0.0002,
+      "p_domain": 0.9967,
+      "file": "data/external/web20/accepted/di_san_xian/0015.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9931,
+      "p_other": 0.0003,
+      "p_domain": 0.9979,
+      "file": "data/external/web20/accepted/di_san_xian/0017.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.5807,
+      "p_other": 0.1001,
+      "p_domain": 0.988,
+      "file": "data/external/web20/accepted/di_san_xian/0018.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.7017,
+      "p_other": 0.0009,
+      "p_domain": 0.9881,
+      "file": "data/external/web20/accepted/di_san_xian/0021.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9558,
+      "p_other": 0.001,
+      "p_domain": 0.9992,
+      "file": "data/external/web20/accepted/di_san_xian/0023.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9194,
+      "p_other": 0.0006,
+      "p_domain": 0.9492,
+      "file": "data/external/web20/accepted/di_san_xian/0025.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9832,
+      "p_other": 0.0091,
+      "p_domain": 0.612,
+      "file": "data/external/web20/accepted/di_san_xian/0026.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9776,
+      "p_other": 0.0025,
+      "p_domain": 0.9993,
+      "file": "data/external/web20/accepted/di_san_xian/0027.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9526,
+      "p_other": 0.0032,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/di_san_xian/0029.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.6895,
+      "p_other": 0.0029,
+      "p_domain": 0.9878,
+      "file": "data/external/web20/accepted/di_san_xian/0034.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9758,
+      "p_other": 0.0018,
+      "p_domain": 0.9128,
+      "file": "data/external/web20/accepted/di_san_xian/0038.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9708,
+      "p_other": 0.0002,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/di_san_xian/0039.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9581,
+      "p_other": 0.0167,
+      "p_domain": 0.9905,
+      "file": "data/external/web20/accepted/di_san_xian/0041.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": false,
+      "robust": 0.2904,
+      "p_other": 0.1784,
+      "p_domain": 0.9898,
+      "file": "data/external/web20/accepted/di_san_xian/0042.jpg"
+    },
+    {
+      "label": "di_san_xian",
+      "top": "di_san_xian",
+      "accept": true,
+      "robust": 0.9031,
+      "p_other": 0.0053,
+      "p_domain": 0.9965,
+      "file": "data/external/web20/accepted/di_san_xian/0045.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9843,
+      "p_other": 0.0008,
+      "p_domain": 0.9963,
+      "file": "data/external/web20/accepted/dry_fried_beans/0001.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.8629,
+      "p_other": 0.0011,
+      "p_domain": 0.995,
+      "file": "data/external/web20/accepted/dry_fried_beans/0002.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9622,
+      "p_other": 0.0002,
+      "p_domain": 0.9996,
+      "file": "data/external/web20/accepted/dry_fried_beans/0003.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9555,
+      "p_other": 0.0006,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/dry_fried_beans/0004.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9507,
+      "p_other": 0.0013,
+      "p_domain": 0.999,
+      "file": "data/external/web20/accepted/dry_fried_beans/0005.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.982,
+      "p_other": 0.0005,
+      "p_domain": 0.998,
+      "file": "data/external/web20/accepted/dry_fried_beans/0006.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9744,
+      "p_other": 0.0009,
+      "p_domain": 0.9921,
+      "file": "data/external/web20/accepted/dry_fried_beans/0007.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9916,
+      "p_other": 0.0,
+      "p_domain": 0.8912,
+      "file": "data/external/web20/accepted/dry_fried_beans/0008.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9655,
+      "p_other": 0.0006,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/dry_fried_beans/0011.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9852,
+      "p_other": 0.0009,
+      "p_domain": 0.9947,
+      "file": "data/external/web20/accepted/dry_fried_beans/0012.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9789,
+      "p_other": 0.0002,
+      "p_domain": 0.9992,
+      "file": "data/external/web20/accepted/dry_fried_beans/0014.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.8546,
+      "p_other": 0.0123,
+      "p_domain": 0.9697,
+      "file": "data/external/web20/accepted/dry_fried_beans/0015.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.5465,
+      "p_other": 0.0121,
+      "p_domain": 0.9528,
+      "file": "data/external/web20/accepted/dry_fried_beans/0017.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.8961,
+      "p_other": 0.0009,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/dry_fried_beans/0018.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9784,
+      "p_other": 0.0013,
+      "p_domain": 0.9986,
+      "file": "data/external/web20/accepted/dry_fried_beans/0019.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9407,
+      "p_other": 0.0004,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/dry_fried_beans/0020.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9654,
+      "p_other": 0.0002,
+      "p_domain": 0.998,
+      "file": "data/external/web20/accepted/dry_fried_beans/0021.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.9777,
+      "p_other": 0.0007,
+      "p_domain": 0.997,
+      "file": "data/external/web20/accepted/dry_fried_beans/0022.jpg"
+    },
+    {
+      "label": "dry_fried_beans",
+      "top": "dry_fried_beans",
+      "accept": true,
+      "robust": 0.991,
+      "p_other": 0.0005,
+      "p_domain": 0.9888,
+      "file": "data/external/web20/accepted/dry_fried_beans/0026.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9882,
+      "p_other": 0.0004,
+      "p_domain": 0.9915,
+      "file": "data/external/web20/accepted/farmhouse_pork/0001.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.983,
+      "p_other": 0.0025,
+      "p_domain": 0.9983,
+      "file": "data/external/web20/accepted/farmhouse_pork/0002.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9405,
+      "p_other": 0.0006,
+      "p_domain": 0.998,
+      "file": "data/external/web20/accepted/farmhouse_pork/0003.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9907,
+      "p_other": 0.0004,
+      "p_domain": 0.9913,
+      "file": "data/external/web20/accepted/farmhouse_pork/0004.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9922,
+      "p_other": 0.0004,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/farmhouse_pork/0005.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9887,
+      "p_other": 0.0053,
+      "p_domain": 0.9981,
+      "file": "data/external/web20/accepted/farmhouse_pork/0006.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9494,
+      "p_other": 0.0033,
+      "p_domain": 0.9987,
+      "file": "data/external/web20/accepted/farmhouse_pork/0007.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9473,
+      "p_other": 0.0081,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/farmhouse_pork/0008.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.5604,
+      "p_other": 0.019,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/farmhouse_pork/0009.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9931,
+      "p_other": 0.0214,
+      "p_domain": 0.9662,
+      "file": "data/external/web20/accepted/farmhouse_pork/0010.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9912,
+      "p_other": 0.0008,
+      "p_domain": 0.9942,
+      "file": "data/external/web20/accepted/farmhouse_pork/0011.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.8026,
+      "p_other": 0.0088,
+      "p_domain": 0.9991,
+      "file": "data/external/web20/accepted/farmhouse_pork/0013.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.6252,
+      "p_other": 0.0216,
+      "p_domain": 0.9983,
+      "file": "data/external/web20/accepted/farmhouse_pork/0014.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9315,
+      "p_other": 0.0021,
+      "p_domain": 0.9948,
+      "file": "data/external/web20/accepted/farmhouse_pork/0015.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.846,
+      "p_other": 0.002,
+      "p_domain": 0.9971,
+      "file": "data/external/web20/accepted/farmhouse_pork/0016.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.993,
+      "p_other": 0.0008,
+      "p_domain": 0.9967,
+      "file": "data/external/web20/accepted/farmhouse_pork/0017.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9954,
+      "p_other": 0.0006,
+      "p_domain": 0.9937,
+      "file": "data/external/web20/accepted/farmhouse_pork/0018.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.7804,
+      "p_other": 0.002,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/farmhouse_pork/0019.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.6816,
+      "p_other": 0.0062,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/farmhouse_pork/0021.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.6207,
+      "p_other": 0.0319,
+      "p_domain": 0.9788,
+      "file": "data/external/web20/accepted/farmhouse_pork/0022.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.5058,
+      "p_other": 0.1578,
+      "p_domain": 0.9877,
+      "file": "data/external/web20/accepted/farmhouse_pork/0023.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9846,
+      "p_other": 0.0006,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/farmhouse_pork/0025.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.663,
+      "p_other": 0.1649,
+      "p_domain": 0.9993,
+      "file": "data/external/web20/accepted/farmhouse_pork/0029.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.995,
+      "p_other": 0.0011,
+      "p_domain": 0.9977,
+      "file": "data/external/web20/accepted/farmhouse_pork/0030.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.8743,
+      "p_other": 0.0098,
+      "p_domain": 0.9398,
+      "file": "data/external/web20/accepted/farmhouse_pork/0032.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.8214,
+      "p_other": 0.0939,
+      "p_domain": 0.6249,
+      "file": "data/external/web20/accepted/farmhouse_pork/0033.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9058,
+      "p_other": 0.0012,
+      "p_domain": 0.9913,
+      "file": "data/external/web20/accepted/farmhouse_pork/0034.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.4952,
+      "p_other": 0.0063,
+      "p_domain": 0.9983,
+      "file": "data/external/web20/accepted/farmhouse_pork/0035.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9322,
+      "p_other": 0.0041,
+      "p_domain": 0.9715,
+      "file": "data/external/web20/accepted/farmhouse_pork/0036.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9473,
+      "p_other": 0.005,
+      "p_domain": 0.9979,
+      "file": "data/external/web20/accepted/farmhouse_pork/0037.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.365,
+      "p_other": 0.0835,
+      "p_domain": 0.9174,
+      "file": "data/external/web20/accepted/farmhouse_pork/0038.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": false,
+      "robust": 0.2981,
+      "p_other": 0.3509,
+      "p_domain": 0.9989,
+      "file": "data/external/web20/accepted/farmhouse_pork/0039.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.8419,
+      "p_other": 0.1384,
+      "p_domain": 0.9944,
+      "file": "data/external/web20/accepted/farmhouse_pork/0040.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.6745,
+      "p_other": 0.0186,
+      "p_domain": 0.9982,
+      "file": "data/external/web20/accepted/farmhouse_pork/0041.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9052,
+      "p_other": 0.0509,
+      "p_domain": 0.7769,
+      "file": "data/external/web20/accepted/farmhouse_pork/0042.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": false,
+      "robust": 0.3759,
+      "p_other": 0.5057,
+      "p_domain": 0.9607,
+      "file": "data/external/web20/accepted/farmhouse_pork/0044.jpg"
+    },
+    {
+      "label": "farmhouse_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.7281,
+      "p_other": 0.0039,
+      "p_domain": 0.9978,
+      "file": "data/external/web20/accepted/farmhouse_pork/0045.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9642,
+      "p_other": 0.0115,
+      "p_domain": 0.8742,
+      "file": "data/external/web20/accepted/fried_noodles/0001.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9092,
+      "p_other": 0.0729,
+      "p_domain": 0.4413,
+      "file": "data/external/web20/accepted/fried_noodles/0002.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.7378,
+      "p_other": 0.0607,
+      "p_domain": 0.5346,
+      "file": "data/external/web20/accepted/fried_noodles/0003.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.8575,
+      "p_other": 0.0083,
+      "p_domain": 0.9881,
+      "file": "data/external/web20/accepted/fried_noodles/0004.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9892,
+      "p_other": 0.0012,
+      "p_domain": 0.8577,
+      "file": "data/external/web20/accepted/fried_noodles/0005.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9469,
+      "p_other": 0.0065,
+      "p_domain": 0.664,
+      "file": "data/external/web20/accepted/fried_noodles/0006.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9925,
+      "p_other": 0.0024,
+      "p_domain": 0.429,
+      "file": "data/external/web20/accepted/fried_noodles/0007.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9836,
+      "p_other": 0.003,
+      "p_domain": 0.5294,
+      "file": "data/external/web20/accepted/fried_noodles/0008.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9861,
+      "p_other": 0.0004,
+      "p_domain": 0.9881,
+      "file": "data/external/web20/accepted/fried_noodles/0009.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9699,
+      "p_other": 0.0028,
+      "p_domain": 0.8235,
+      "file": "data/external/web20/accepted/fried_noodles/0010.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9387,
+      "p_other": 0.0037,
+      "p_domain": 0.6908,
+      "file": "data/external/web20/accepted/fried_noodles/0011.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.6578,
+      "p_other": 0.0324,
+      "p_domain": 0.9097,
+      "file": "data/external/web20/accepted/fried_noodles/0012.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9664,
+      "p_other": 0.014,
+      "p_domain": 0.9194,
+      "file": "data/external/web20/accepted/fried_noodles/0013.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.2936,
+      "p_other": 0.9857,
+      "p_domain": 0.1303,
+      "file": "data/external/web20/accepted/fried_noodles/0014.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.8012,
+      "p_other": 0.0681,
+      "p_domain": 0.9431,
+      "file": "data/external/web20/accepted/fried_noodles/0015.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9175,
+      "p_other": 0.0318,
+      "p_domain": 0.6517,
+      "file": "data/external/web20/accepted/fried_noodles/0016.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.94,
+      "p_other": 0.0049,
+      "p_domain": 0.7256,
+      "file": "data/external/web20/accepted/fried_noodles/0017.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.929,
+      "p_other": 0.0449,
+      "p_domain": 0.877,
+      "file": "data/external/web20/accepted/fried_noodles/0018.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9813,
+      "p_other": 0.0022,
+      "p_domain": 0.9177,
+      "file": "data/external/web20/accepted/fried_noodles/0019.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.2019,
+      "p_other": 0.7258,
+      "p_domain": 0.4897,
+      "file": "data/external/web20/accepted/fried_noodles/0021.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.8906,
+      "p_other": 0.2986,
+      "p_domain": 0.0443,
+      "file": "data/external/web20/accepted/fried_noodles/0022.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.923,
+      "p_other": 0.0057,
+      "p_domain": 0.2975,
+      "file": "data/external/web20/accepted/fried_noodles/0023.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9851,
+      "p_other": 0.0255,
+      "p_domain": 0.9809,
+      "file": "data/external/web20/accepted/fried_noodles/0024.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9892,
+      "p_other": 0.0002,
+      "p_domain": 0.9829,
+      "file": "data/external/web20/accepted/fried_noodles/0025.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.9137,
+      "p_other": 0.2649,
+      "p_domain": 0.9562,
+      "file": "data/external/web20/accepted/fried_noodles/0026.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.3342,
+      "p_other": 0.6617,
+      "p_domain": 0.9775,
+      "file": "data/external/web20/accepted/fried_noodles/0027.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.8327,
+      "p_other": 0.0029,
+      "p_domain": 0.9946,
+      "file": "data/external/web20/accepted/fried_noodles/0028.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.938,
+      "p_other": 0.1551,
+      "p_domain": 0.7185,
+      "file": "data/external/web20/accepted/fried_noodles/0029.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.8766,
+      "p_other": 0.2386,
+      "p_domain": 0.0897,
+      "file": "data/external/web20/accepted/fried_noodles/0030.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9915,
+      "p_other": 0.0017,
+      "p_domain": 0.7872,
+      "file": "data/external/web20/accepted/fried_noodles/0032.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.4064,
+      "p_other": 0.0019,
+      "p_domain": 0.9996,
+      "file": "data/external/web20/accepted/fried_noodles/0033.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.9288,
+      "p_other": 0.1646,
+      "p_domain": 0.2361,
+      "file": "data/external/web20/accepted/fried_noodles/0034.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9648,
+      "p_other": 0.0004,
+      "p_domain": 0.9952,
+      "file": "data/external/web20/accepted/fried_noodles/0035.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.3068,
+      "p_other": 0.4893,
+      "p_domain": 0.9713,
+      "file": "data/external/web20/accepted/fried_noodles/0036.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9329,
+      "p_other": 0.0076,
+      "p_domain": 0.403,
+      "file": "data/external/web20/accepted/fried_noodles/0037.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.8136,
+      "p_other": 0.003,
+      "p_domain": 0.9946,
+      "file": "data/external/web20/accepted/fried_noodles/0038.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9877,
+      "p_other": 0.0037,
+      "p_domain": 0.7419,
+      "file": "data/external/web20/accepted/fried_noodles/0039.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.948,
+      "p_other": 0.019,
+      "p_domain": 0.868,
+      "file": "data/external/web20/accepted/fried_noodles/0040.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.3444,
+      "p_other": 0.0019,
+      "p_domain": 0.9461,
+      "file": "data/external/web20/accepted/fried_noodles/0041.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.926,
+      "p_other": 0.0238,
+      "p_domain": 0.0723,
+      "file": "data/external/web20/accepted/fried_noodles/0042.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9755,
+      "p_other": 0.0036,
+      "p_domain": 0.958,
+      "file": "data/external/web20/accepted/fried_noodles/0043.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.9938,
+      "p_other": 0.0005,
+      "p_domain": 0.9126,
+      "file": "data/external/web20/accepted/fried_noodles/0044.jpg"
+    },
+    {
+      "label": "fried_noodles",
+      "top": "fried_noodles",
+      "accept": false,
+      "robust": 0.9194,
+      "p_other": 0.0387,
+      "p_domain": 0.1668,
+      "file": "data/external/web20/accepted/fried_noodles/0045.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9692,
+      "p_other": 0.0121,
+      "p_domain": 0.9053,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0001.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.8873,
+      "p_other": 0.0018,
+      "p_domain": 0.9981,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0002.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9836,
+      "p_other": 0.0009,
+      "p_domain": 0.9794,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0003.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9484,
+      "p_other": 0.0008,
+      "p_domain": 0.9979,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0004.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.454,
+      "p_other": 0.0242,
+      "p_domain": 0.9057,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0005.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9763,
+      "p_other": 0.0082,
+      "p_domain": 0.9844,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0006.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.7907,
+      "p_other": 0.0163,
+      "p_domain": 0.9286,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0007.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9515,
+      "p_other": 0.0011,
+      "p_domain": 0.9972,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0008.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9671,
+      "p_other": 0.0027,
+      "p_domain": 0.9905,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0009.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9351,
+      "p_other": 0.005,
+      "p_domain": 0.9951,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0010.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.8564,
+      "p_other": 0.0152,
+      "p_domain": 0.7928,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0011.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.6452,
+      "p_other": 0.1357,
+      "p_domain": 0.8908,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0012.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9314,
+      "p_other": 0.0063,
+      "p_domain": 0.9926,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0013.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9201,
+      "p_other": 0.0785,
+      "p_domain": 0.9414,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0014.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9317,
+      "p_other": 0.0108,
+      "p_domain": 0.9804,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0015.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9222,
+      "p_other": 0.0056,
+      "p_domain": 0.8518,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0016.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9753,
+      "p_other": 0.007,
+      "p_domain": 0.9682,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0017.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9897,
+      "p_other": 0.0054,
+      "p_domain": 0.6868,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0019.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9907,
+      "p_other": 0.0019,
+      "p_domain": 0.8184,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0020.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9852,
+      "p_other": 0.0009,
+      "p_domain": 0.9641,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0021.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9825,
+      "p_other": 0.0003,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0022.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.7144,
+      "p_other": 0.0175,
+      "p_domain": 0.5927,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0023.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9832,
+      "p_other": 0.0049,
+      "p_domain": 0.7349,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0024.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9544,
+      "p_other": 0.0904,
+      "p_domain": 0.8995,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0026.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9855,
+      "p_other": 0.0017,
+      "p_domain": 0.9555,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0027.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.983,
+      "p_other": 0.0014,
+      "p_domain": 0.9771,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0028.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": false,
+      "robust": 0.8257,
+      "p_other": 0.8275,
+      "p_domain": 0.9569,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0029.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.4674,
+      "p_other": 0.2114,
+      "p_domain": 0.8641,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0030.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.5412,
+      "p_other": 0.021,
+      "p_domain": 0.9792,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0031.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.8721,
+      "p_other": 0.0108,
+      "p_domain": 0.9806,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0032.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9854,
+      "p_other": 0.0001,
+      "p_domain": 0.9851,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0033.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.981,
+      "p_other": 0.0015,
+      "p_domain": 0.9183,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0034.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": false,
+      "robust": 0.6499,
+      "p_other": 0.6598,
+      "p_domain": 0.0238,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0035.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": false,
+      "robust": 0.8921,
+      "p_other": 0.3512,
+      "p_domain": 0.0273,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0036.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.8214,
+      "p_other": 0.0057,
+      "p_domain": 0.973,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0037.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.8378,
+      "p_other": 0.0213,
+      "p_domain": 0.7752,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0038.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.5737,
+      "p_other": 0.0488,
+      "p_domain": 0.668,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0040.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9876,
+      "p_other": 0.0003,
+      "p_domain": 0.9729,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0041.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.7389,
+      "p_other": 0.0167,
+      "p_domain": 0.8923,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0042.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.9914,
+      "p_other": 0.0022,
+      "p_domain": 0.9826,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0043.jpg"
+    },
+    {
+      "label": "hand_torn_cabbage",
+      "top": "hand_torn_cabbage",
+      "accept": true,
+      "robust": 0.5645,
+      "p_other": 0.0541,
+      "p_domain": 0.9748,
+      "file": "data/external/web20/accepted/hand_torn_cabbage/0045.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9854,
+      "p_other": 0.0005,
+      "p_domain": 0.9945,
+      "file": "data/external/web20/accepted/hot_sour_potato/0001.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.991,
+      "p_other": 0.0007,
+      "p_domain": 0.9717,
+      "file": "data/external/web20/accepted/hot_sour_potato/0002.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9747,
+      "p_other": 0.002,
+      "p_domain": 0.9668,
+      "file": "data/external/web20/accepted/hot_sour_potato/0004.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9676,
+      "p_other": 0.0388,
+      "p_domain": 0.8604,
+      "file": "data/external/web20/accepted/hot_sour_potato/0005.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": false,
+      "robust": 0.7856,
+      "p_other": 0.0254,
+      "p_domain": 0.1894,
+      "file": "data/external/web20/accepted/hot_sour_potato/0006.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9625,
+      "p_other": 0.016,
+      "p_domain": 0.9004,
+      "file": "data/external/web20/accepted/hot_sour_potato/0007.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9486,
+      "p_other": 0.0013,
+      "p_domain": 0.9992,
+      "file": "data/external/web20/accepted/hot_sour_potato/0008.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9847,
+      "p_other": 0.0022,
+      "p_domain": 0.9908,
+      "file": "data/external/web20/accepted/hot_sour_potato/0009.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9847,
+      "p_other": 0.0056,
+      "p_domain": 0.6704,
+      "file": "data/external/web20/accepted/hot_sour_potato/0010.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9842,
+      "p_other": 0.0055,
+      "p_domain": 0.924,
+      "file": "data/external/web20/accepted/hot_sour_potato/0011.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9724,
+      "p_other": 0.1255,
+      "p_domain": 0.978,
+      "file": "data/external/web20/accepted/hot_sour_potato/0012.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9914,
+      "p_other": 0.0011,
+      "p_domain": 0.9959,
+      "file": "data/external/web20/accepted/hot_sour_potato/0013.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9781,
+      "p_other": 0.0074,
+      "p_domain": 0.9765,
+      "file": "data/external/web20/accepted/hot_sour_potato/0014.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.974,
+      "p_other": 0.0009,
+      "p_domain": 0.9721,
+      "file": "data/external/web20/accepted/hot_sour_potato/0015.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.974,
+      "p_other": 0.0009,
+      "p_domain": 0.989,
+      "file": "data/external/web20/accepted/hot_sour_potato/0016.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9699,
+      "p_other": 0.0019,
+      "p_domain": 0.8464,
+      "file": "data/external/web20/accepted/hot_sour_potato/0017.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9877,
+      "p_other": 0.009,
+      "p_domain": 0.8646,
+      "file": "data/external/web20/accepted/hot_sour_potato/0018.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9769,
+      "p_other": 0.0005,
+      "p_domain": 0.9766,
+      "file": "data/external/web20/accepted/hot_sour_potato/0019.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9597,
+      "p_other": 0.0034,
+      "p_domain": 0.962,
+      "file": "data/external/web20/accepted/hot_sour_potato/0020.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.969,
+      "p_other": 0.0008,
+      "p_domain": 0.9957,
+      "file": "data/external/web20/accepted/hot_sour_potato/0021.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9642,
+      "p_other": 0.0037,
+      "p_domain": 0.9675,
+      "file": "data/external/web20/accepted/hot_sour_potato/0022.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9795,
+      "p_other": 0.0029,
+      "p_domain": 0.9141,
+      "file": "data/external/web20/accepted/hot_sour_potato/0023.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9298,
+      "p_other": 0.0112,
+      "p_domain": 0.9688,
+      "file": "data/external/web20/accepted/hot_sour_potato/0024.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9842,
+      "p_other": 0.0029,
+      "p_domain": 0.9981,
+      "file": "data/external/web20/accepted/hot_sour_potato/0025.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9799,
+      "p_other": 0.0009,
+      "p_domain": 0.9909,
+      "file": "data/external/web20/accepted/hot_sour_potato/0026.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9743,
+      "p_other": 0.005,
+      "p_domain": 0.9881,
+      "file": "data/external/web20/accepted/hot_sour_potato/0027.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9831,
+      "p_other": 0.0014,
+      "p_domain": 0.9977,
+      "file": "data/external/web20/accepted/hot_sour_potato/0028.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9818,
+      "p_other": 0.0502,
+      "p_domain": 0.4229,
+      "file": "data/external/web20/accepted/hot_sour_potato/0029.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9765,
+      "p_other": 0.003,
+      "p_domain": 0.9112,
+      "file": "data/external/web20/accepted/hot_sour_potato/0030.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9814,
+      "p_other": 0.0532,
+      "p_domain": 0.7022,
+      "file": "data/external/web20/accepted/hot_sour_potato/0031.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9239,
+      "p_other": 0.171,
+      "p_domain": 0.9898,
+      "file": "data/external/web20/accepted/hot_sour_potato/0032.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9658,
+      "p_other": 0.0018,
+      "p_domain": 0.9765,
+      "file": "data/external/web20/accepted/hot_sour_potato/0033.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9356,
+      "p_other": 0.0098,
+      "p_domain": 0.5531,
+      "file": "data/external/web20/accepted/hot_sour_potato/0034.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": false,
+      "robust": 0.7981,
+      "p_other": 0.4145,
+      "p_domain": 0.3473,
+      "file": "data/external/web20/accepted/hot_sour_potato/0035.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9618,
+      "p_other": 0.0126,
+      "p_domain": 0.7353,
+      "file": "data/external/web20/accepted/hot_sour_potato/0038.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9812,
+      "p_other": 0.0055,
+      "p_domain": 0.9805,
+      "file": "data/external/web20/accepted/hot_sour_potato/0039.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9662,
+      "p_other": 0.0041,
+      "p_domain": 0.9968,
+      "file": "data/external/web20/accepted/hot_sour_potato/0040.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": false,
+      "robust": 0.305,
+      "p_other": 0.1579,
+      "p_domain": 0.7815,
+      "file": "data/external/web20/accepted/hot_sour_potato/0041.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.958,
+      "p_other": 0.1035,
+      "p_domain": 0.5451,
+      "file": "data/external/web20/accepted/hot_sour_potato/0043.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9665,
+      "p_other": 0.0042,
+      "p_domain": 0.9864,
+      "file": "data/external/web20/accepted/hot_sour_potato/0044.jpg"
+    },
+    {
+      "label": "hot_sour_potato",
+      "top": "hot_sour_potato",
+      "accept": true,
+      "robust": 0.9811,
+      "p_other": 0.0008,
+      "p_domain": 0.8792,
+      "file": "data/external/web20/accepted/hot_sour_potato/0045.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9665,
+      "p_other": 0.0007,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/mu_xi_pork/0001.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9434,
+      "p_other": 0.0056,
+      "p_domain": 0.8492,
+      "file": "data/external/web20/accepted/mu_xi_pork/0002.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9527,
+      "p_other": 0.0004,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/mu_xi_pork/0004.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9229,
+      "p_other": 0.0007,
+      "p_domain": 0.9952,
+      "file": "data/external/web20/accepted/mu_xi_pork/0005.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9415,
+      "p_other": 0.0029,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/mu_xi_pork/0006.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.835,
+      "p_other": 0.0015,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/mu_xi_pork/0007.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9629,
+      "p_other": 0.0004,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/mu_xi_pork/0008.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.5079,
+      "p_other": 0.0038,
+      "p_domain": 0.8624,
+      "file": "data/external/web20/accepted/mu_xi_pork/0009.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.6658,
+      "p_other": 0.0034,
+      "p_domain": 0.9957,
+      "file": "data/external/web20/accepted/mu_xi_pork/0010.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9149,
+      "p_other": 0.0009,
+      "p_domain": 0.998,
+      "file": "data/external/web20/accepted/mu_xi_pork/0011.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.8625,
+      "p_other": 0.0017,
+      "p_domain": 0.9992,
+      "file": "data/external/web20/accepted/mu_xi_pork/0012.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.7808,
+      "p_other": 0.0043,
+      "p_domain": 0.9885,
+      "file": "data/external/web20/accepted/mu_xi_pork/0013.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9671,
+      "p_other": 0.001,
+      "p_domain": 0.9954,
+      "file": "data/external/web20/accepted/mu_xi_pork/0015.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "farmhouse_pork",
+      "accept": false,
+      "robust": 0.2796,
+      "p_other": 0.2318,
+      "p_domain": 0.9971,
+      "file": "data/external/web20/accepted/mu_xi_pork/0016.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9718,
+      "p_other": 0.004,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/mu_xi_pork/0017.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9307,
+      "p_other": 0.0002,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/mu_xi_pork/0018.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9124,
+      "p_other": 0.0002,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/mu_xi_pork/0019.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9008,
+      "p_other": 0.0089,
+      "p_domain": 0.9993,
+      "file": "data/external/web20/accepted/mu_xi_pork/0020.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9898,
+      "p_other": 0.0006,
+      "p_domain": 0.9982,
+      "file": "data/external/web20/accepted/mu_xi_pork/0021.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.4978,
+      "p_other": 0.0338,
+      "p_domain": 0.9987,
+      "file": "data/external/web20/accepted/mu_xi_pork/0022.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9283,
+      "p_other": 0.0004,
+      "p_domain": 0.9992,
+      "file": "data/external/web20/accepted/mu_xi_pork/0023.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.959,
+      "p_other": 0.0008,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/mu_xi_pork/0024.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.5798,
+      "p_other": 0.0142,
+      "p_domain": 0.9024,
+      "file": "data/external/web20/accepted/mu_xi_pork/0025.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.962,
+      "p_other": 0.0012,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/mu_xi_pork/0026.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9672,
+      "p_other": 0.0006,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/mu_xi_pork/0028.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.6445,
+      "p_other": 0.0015,
+      "p_domain": 0.9993,
+      "file": "data/external/web20/accepted/mu_xi_pork/0029.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "fried_noodles",
+      "accept": true,
+      "robust": 0.4833,
+      "p_other": 0.022,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/mu_xi_pork/0030.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.8524,
+      "p_other": 0.0335,
+      "p_domain": 0.8753,
+      "file": "data/external/web20/accepted/mu_xi_pork/0031.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.5048,
+      "p_other": 0.0094,
+      "p_domain": 0.9996,
+      "file": "data/external/web20/accepted/mu_xi_pork/0032.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.4262,
+      "p_other": 0.0406,
+      "p_domain": 0.944,
+      "file": "data/external/web20/accepted/mu_xi_pork/0034.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": false,
+      "robust": 0.3567,
+      "p_other": 0.0197,
+      "p_domain": 0.9289,
+      "file": "data/external/web20/accepted/mu_xi_pork/0036.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.4414,
+      "p_other": 0.1274,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/mu_xi_pork/0037.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.4485,
+      "p_other": 0.0455,
+      "p_domain": 0.4911,
+      "file": "data/external/web20/accepted/mu_xi_pork/0038.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.9873,
+      "p_other": 0.0024,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/mu_xi_pork/0039.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.8704,
+      "p_other": 0.0054,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/mu_xi_pork/0042.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.878,
+      "p_other": 0.0054,
+      "p_domain": 0.9772,
+      "file": "data/external/web20/accepted/mu_xi_pork/0043.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": false,
+      "robust": 0.4285,
+      "p_other": 0.4315,
+      "p_domain": 0.9953,
+      "file": "data/external/web20/accepted/mu_xi_pork/0044.jpg"
+    },
+    {
+      "label": "mu_xi_pork",
+      "top": "mu_xi_pork",
+      "accept": true,
+      "robust": 0.916,
+      "p_other": 0.0065,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/mu_xi_pork/0045.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9794,
+      "p_other": 0.0022,
+      "p_domain": 0.9975,
+      "file": "data/external/web20/accepted/pepper_pork/0001.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9375,
+      "p_other": 0.0108,
+      "p_domain": 0.9987,
+      "file": "data/external/web20/accepted/pepper_pork/0002.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9174,
+      "p_other": 0.003,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/pepper_pork/0003.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.8957,
+      "p_other": 0.0057,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/pepper_pork/0004.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9501,
+      "p_other": 0.0007,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/pepper_pork/0005.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.8019,
+      "p_other": 0.0188,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/pepper_pork/0007.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9364,
+      "p_other": 0.0104,
+      "p_domain": 0.9945,
+      "file": "data/external/web20/accepted/pepper_pork/0009.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9308,
+      "p_other": 0.0008,
+      "p_domain": 0.999,
+      "file": "data/external/web20/accepted/pepper_pork/0010.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.8953,
+      "p_other": 0.1274,
+      "p_domain": 0.9994,
+      "file": "data/external/web20/accepted/pepper_pork/0012.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.5792,
+      "p_other": 0.0516,
+      "p_domain": 0.9942,
+      "file": "data/external/web20/accepted/pepper_pork/0013.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9556,
+      "p_other": 0.0111,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/pepper_pork/0015.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.4324,
+      "p_other": 0.3027,
+      "p_domain": 0.993,
+      "file": "data/external/web20/accepted/pepper_pork/0016.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9148,
+      "p_other": 0.0008,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/pepper_pork/0018.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.7523,
+      "p_other": 0.0181,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/pepper_pork/0019.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9557,
+      "p_other": 0.0024,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/pepper_pork/0020.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.8315,
+      "p_other": 0.0676,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/pepper_pork/0022.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.8523,
+      "p_other": 0.0193,
+      "p_domain": 0.9989,
+      "file": "data/external/web20/accepted/pepper_pork/0023.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.7515,
+      "p_other": 0.0372,
+      "p_domain": 0.9966,
+      "file": "data/external/web20/accepted/pepper_pork/0024.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9443,
+      "p_other": 0.0024,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/pepper_pork/0025.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.6204,
+      "p_other": 0.2013,
+      "p_domain": 0.9931,
+      "file": "data/external/web20/accepted/pepper_pork/0026.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9758,
+      "p_other": 0.0076,
+      "p_domain": 0.9983,
+      "file": "data/external/web20/accepted/pepper_pork/0027.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9689,
+      "p_other": 0.0059,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/pepper_pork/0028.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9792,
+      "p_other": 0.0006,
+      "p_domain": 0.9998,
+      "file": "data/external/web20/accepted/pepper_pork/0029.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.6691,
+      "p_other": 0.0467,
+      "p_domain": 0.9969,
+      "file": "data/external/web20/accepted/pepper_pork/0030.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": false,
+      "robust": 0.3558,
+      "p_other": 0.3108,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/pepper_pork/0033.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9347,
+      "p_other": 0.0045,
+      "p_domain": 0.9999,
+      "file": "data/external/web20/accepted/pepper_pork/0034.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.9164,
+      "p_other": 0.0162,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/pepper_pork/0035.jpg"
+    },
+    {
+      "label": "pepper_pork",
+      "top": "pepper_pork",
+      "accept": true,
+      "robust": 0.8522,
+      "p_other": 0.0016,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/pepper_pork/0036.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.5279,
+      "p_other": 0.031,
+      "p_domain": 0.996,
+      "file": "data/external/web20/accepted/spicy_chicken/0001.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9606,
+      "p_other": 0.0142,
+      "p_domain": 0.9986,
+      "file": "data/external/web20/accepted/spicy_chicken/0002.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9825,
+      "p_other": 0.0031,
+      "p_domain": 0.9449,
+      "file": "data/external/web20/accepted/spicy_chicken/0003.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.902,
+      "p_other": 0.0095,
+      "p_domain": 0.9995,
+      "file": "data/external/web20/accepted/spicy_chicken/0004.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.7931,
+      "p_other": 0.0763,
+      "p_domain": 0.9814,
+      "file": "data/external/web20/accepted/spicy_chicken/0005.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9812,
+      "p_other": 0.0082,
+      "p_domain": 0.9837,
+      "file": "data/external/web20/accepted/spicy_chicken/0006.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9603,
+      "p_other": 0.0181,
+      "p_domain": 0.9891,
+      "file": "data/external/web20/accepted/spicy_chicken/0007.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9552,
+      "p_other": 0.0018,
+      "p_domain": 0.9983,
+      "file": "data/external/web20/accepted/spicy_chicken/0008.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9793,
+      "p_other": 0.0023,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/spicy_chicken/0009.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.8642,
+      "p_other": 0.0863,
+      "p_domain": 0.9638,
+      "file": "data/external/web20/accepted/spicy_chicken/0010.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9746,
+      "p_other": 0.0067,
+      "p_domain": 0.9984,
+      "file": "data/external/web20/accepted/spicy_chicken/0011.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9875,
+      "p_other": 0.0086,
+      "p_domain": 0.977,
+      "file": "data/external/web20/accepted/spicy_chicken/0012.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9613,
+      "p_other": 0.0034,
+      "p_domain": 0.9916,
+      "file": "data/external/web20/accepted/spicy_chicken/0013.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.704,
+      "p_other": 0.0055,
+      "p_domain": 0.9568,
+      "file": "data/external/web20/accepted/spicy_chicken/0014.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.879,
+      "p_other": 0.096,
+      "p_domain": 0.9944,
+      "file": "data/external/web20/accepted/spicy_chicken/0015.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9316,
+      "p_other": 0.0056,
+      "p_domain": 0.9956,
+      "file": "data/external/web20/accepted/spicy_chicken/0016.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": false,
+      "robust": 0.9215,
+      "p_other": 0.1633,
+      "p_domain": 0.9972,
+      "file": "data/external/web20/accepted/spicy_chicken/0017.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9392,
+      "p_other": 0.0134,
+      "p_domain": 0.9769,
+      "file": "data/external/web20/accepted/spicy_chicken/0019.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": false,
+      "robust": 0.392,
+      "p_other": 0.9802,
+      "p_domain": 0.7994,
+      "file": "data/external/web20/accepted/spicy_chicken/0020.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.5897,
+      "p_other": 0.2941,
+      "p_domain": 0.9658,
+      "file": "data/external/web20/accepted/spicy_chicken/0021.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9723,
+      "p_other": 0.0015,
+      "p_domain": 0.9974,
+      "file": "data/external/web20/accepted/spicy_chicken/0022.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9817,
+      "p_other": 0.0009,
+      "p_domain": 0.9976,
+      "file": "data/external/web20/accepted/spicy_chicken/0023.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "braised_chicken",
+      "accept": true,
+      "robust": 0.8746,
+      "p_other": 0.1364,
+      "p_domain": 0.9997,
+      "file": "data/external/web20/accepted/spicy_chicken/0024.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.949,
+      "p_other": 0.0088,
+      "p_domain": 0.9055,
+      "file": "data/external/web20/accepted/spicy_chicken/0025.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9464,
+      "p_other": 0.0019,
+      "p_domain": 0.9996,
+      "file": "data/external/web20/accepted/spicy_chicken/0026.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9709,
+      "p_other": 0.0005,
+      "p_domain": 0.9976,
+      "file": "data/external/web20/accepted/spicy_chicken/0027.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9305,
+      "p_other": 0.0067,
+      "p_domain": 0.9923,
+      "file": "data/external/web20/accepted/spicy_chicken/0028.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.719,
+      "p_other": 0.0028,
+      "p_domain": 0.9981,
+      "file": "data/external/web20/accepted/spicy_chicken/0029.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9637,
+      "p_other": 0.0214,
+      "p_domain": 0.9991,
+      "file": "data/external/web20/accepted/spicy_chicken/0030.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.8418,
+      "p_other": 0.0562,
+      "p_domain": 0.9799,
+      "file": "data/external/web20/accepted/spicy_chicken/0034.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.8379,
+      "p_other": 0.0053,
+      "p_domain": 0.9939,
+      "file": "data/external/web20/accepted/spicy_chicken/0036.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.8417,
+      "p_other": 0.0636,
+      "p_domain": 0.7358,
+      "file": "data/external/web20/accepted/spicy_chicken/0038.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9877,
+      "p_other": 0.1195,
+      "p_domain": 0.9821,
+      "file": "data/external/web20/accepted/spicy_chicken/0039.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9516,
+      "p_other": 0.0088,
+      "p_domain": 0.9207,
+      "file": "data/external/web20/accepted/spicy_chicken/0042.jpg"
+    },
+    {
+      "label": "spicy_chicken",
+      "top": "spicy_chicken",
+      "accept": true,
+      "robust": 0.9593,
+      "p_other": 0.0139,
+      "p_domain": 0.9846,
+      "file": "data/external/web20/accepted/spicy_chicken/0045.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.976,
+      "p_other": 0.0004,
+      "p_domain": 0.9344,
+      "file": "data/external/web20/accepted/steamed_egg/0001.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9421,
+      "p_other": 0.0026,
+      "p_domain": 0.9892,
+      "file": "data/external/web20/accepted/steamed_egg/0003.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.703,
+      "p_other": 0.102,
+      "p_domain": 0.6189,
+      "file": "data/external/web20/accepted/steamed_egg/0004.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": false,
+      "robust": 0.8509,
+      "p_other": 0.1614,
+      "p_domain": 0.1175,
+      "file": "data/external/web20/accepted/steamed_egg/0005.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9221,
+      "p_other": 0.0035,
+      "p_domain": 0.9843,
+      "file": "data/external/web20/accepted/steamed_egg/0007.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9859,
+      "p_other": 0.0003,
+      "p_domain": 0.7398,
+      "file": "data/external/web20/accepted/steamed_egg/0008.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9876,
+      "p_other": 0.0013,
+      "p_domain": 0.9664,
+      "file": "data/external/web20/accepted/steamed_egg/0009.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": false,
+      "robust": 0.302,
+      "p_other": 0.2354,
+      "p_domain": 0.3656,
+      "file": "data/external/web20/accepted/steamed_egg/0011.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9435,
+      "p_other": 0.0795,
+      "p_domain": 0.3593,
+      "file": "data/external/web20/accepted/steamed_egg/0012.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9804,
+      "p_other": 0.0001,
+      "p_domain": 0.9328,
+      "file": "data/external/web20/accepted/steamed_egg/0013.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9714,
+      "p_other": 0.0059,
+      "p_domain": 0.9882,
+      "file": "data/external/web20/accepted/steamed_egg/0014.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": false,
+      "robust": 0.4517,
+      "p_other": 0.0009,
+      "p_domain": 0.2056,
+      "file": "data/external/web20/accepted/steamed_egg/0015.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9912,
+      "p_other": 0.0035,
+      "p_domain": 0.9691,
+      "file": "data/external/web20/accepted/steamed_egg/0018.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9113,
+      "p_other": 0.0325,
+      "p_domain": 0.7313,
+      "file": "data/external/web20/accepted/steamed_egg/0019.jpg"
+    },
+    {
+      "label": "steamed_egg",
+      "top": "steamed_egg",
+      "accept": true,
+      "robust": 0.9865,
+      "p_other": 0.0068,
+      "p_domain": 0.9806,
+      "file": "data/external/web20/accepted/steamed_egg/0020.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9629,
+      "p_other": 0.0004,
+      "p_domain": 0.9932,
+      "file": "data/external/web20/accepted/stir_fried_greens/0002.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9679,
+      "p_other": 0.0001,
+      "p_domain": 1.0,
+      "file": "data/external/web20/accepted/stir_fried_greens/0003.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9887,
+      "p_other": 0.0258,
+      "p_domain": 0.8897,
+      "file": "data/external/web20/accepted/stir_fried_greens/0004.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.8011,
+      "p_other": 0.001,
+      "p_domain": 0.9975,
+      "file": "data/external/web20/accepted/stir_fried_greens/0007.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.5615,
+      "p_other": 0.0412,
+      "p_domain": 0.7559,
+      "file": "data/external/web20/accepted/stir_fried_greens/0008.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9529,
+      "p_other": 0.0397,
+      "p_domain": 0.9928,
+      "file": "data/external/web20/accepted/stir_fried_greens/0009.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9451,
+      "p_other": 0.0053,
+      "p_domain": 0.9944,
+      "file": "data/external/web20/accepted/stir_fried_greens/0010.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.6141,
+      "p_other": 0.1187,
+      "p_domain": 0.8954,
+      "file": "data/external/web20/accepted/stir_fried_greens/0011.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.6662,
+      "p_other": 0.0448,
+      "p_domain": 0.6963,
+      "file": "data/external/web20/accepted/stir_fried_greens/0012.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9587,
+      "p_other": 0.0059,
+      "p_domain": 0.9557,
+      "file": "data/external/web20/accepted/stir_fried_greens/0015.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9271,
+      "p_other": 0.158,
+      "p_domain": 0.9394,
+      "file": "data/external/web20/accepted/stir_fried_greens/0016.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9058,
+      "p_other": 0.0668,
+      "p_domain": 0.9968,
+      "file": "data/external/web20/accepted/stir_fried_greens/0017.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9216,
+      "p_other": 0.0112,
+      "p_domain": 0.9767,
+      "file": "data/external/web20/accepted/stir_fried_greens/0018.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9561,
+      "p_other": 0.002,
+      "p_domain": 0.9963,
+      "file": "data/external/web20/accepted/stir_fried_greens/0022.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9852,
+      "p_other": 0.121,
+      "p_domain": 0.9076,
+      "file": "data/external/web20/accepted/stir_fried_greens/0023.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9839,
+      "p_other": 0.0032,
+      "p_domain": 0.9913,
+      "file": "data/external/web20/accepted/stir_fried_greens/0024.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9363,
+      "p_other": 0.0134,
+      "p_domain": 0.9503,
+      "file": "data/external/web20/accepted/stir_fried_greens/0025.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "farmhouse_pork",
+      "accept": true,
+      "robust": 0.9818,
+      "p_other": 0.0113,
+      "p_domain": 0.9521,
+      "file": "data/external/web20/accepted/stir_fried_greens/0026.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.935,
+      "p_other": 0.0004,
+      "p_domain": 0.9985,
+      "file": "data/external/web20/accepted/stir_fried_greens/0027.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9889,
+      "p_other": 0.0002,
+      "p_domain": 0.9988,
+      "file": "data/external/web20/accepted/stir_fried_greens/0029.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9916,
+      "p_other": 0.003,
+      "p_domain": 0.9729,
+      "file": "data/external/web20/accepted/stir_fried_greens/0031.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9813,
+      "p_other": 0.0209,
+      "p_domain": 0.999,
+      "file": "data/external/web20/accepted/stir_fried_greens/0033.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9528,
+      "p_other": 0.0002,
+      "p_domain": 0.9992,
+      "file": "data/external/web20/accepted/stir_fried_greens/0034.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": false,
+      "robust": 0.7945,
+      "p_other": 0.7652,
+      "p_domain": 0.9951,
+      "file": "data/external/web20/accepted/stir_fried_greens/0038.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9827,
+      "p_other": 0.0002,
+      "p_domain": 0.9877,
+      "file": "data/external/web20/accepted/stir_fried_greens/0039.jpg"
+    },
+    {
+      "label": "stir_fried_greens",
+      "top": "stir_fried_greens",
+      "accept": true,
+      "robust": 0.9751,
+      "p_other": 0.0013,
+      "p_domain": 0.9728,
+      "file": "data/external/web20/accepted/stir_fried_greens/0040.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9283,
+      "p_other": 0.1829,
+      "p_domain": 0.9712,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0001.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9672,
+      "p_other": 0.0025,
+      "p_domain": 0.9985,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0002.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": false,
+      "robust": 0.7684,
+      "p_other": 0.7114,
+      "p_domain": 0.9918,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0003.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9817,
+      "p_other": 0.001,
+      "p_domain": 0.9923,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0004.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9488,
+      "p_other": 0.0089,
+      "p_domain": 0.9956,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0005.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9904,
+      "p_other": 0.0026,
+      "p_domain": 0.8384,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0006.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": false,
+      "robust": 0.3403,
+      "p_other": 0.5024,
+      "p_domain": 0.8605,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0007.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9646,
+      "p_other": 0.0046,
+      "p_domain": 0.9863,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0008.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9097,
+      "p_other": 0.002,
+      "p_domain": 0.9642,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0009.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.5705,
+      "p_other": 0.0096,
+      "p_domain": 0.9859,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0010.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9556,
+      "p_other": 0.1362,
+      "p_domain": 0.9945,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0011.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.963,
+      "p_other": 0.126,
+      "p_domain": 0.9852,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0012.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9831,
+      "p_other": 0.0073,
+      "p_domain": 0.9774,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0013.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9536,
+      "p_other": 0.0151,
+      "p_domain": 0.9715,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0014.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9623,
+      "p_other": 0.1766,
+      "p_domain": 0.9839,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0015.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.4756,
+      "p_other": 0.4521,
+      "p_domain": 0.8238,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0016.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9095,
+      "p_other": 0.2885,
+      "p_domain": 0.9873,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0017.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9864,
+      "p_other": 0.0012,
+      "p_domain": 0.9858,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0018.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9872,
+      "p_other": 0.3149,
+      "p_domain": 0.9893,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0019.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9427,
+      "p_other": 0.0895,
+      "p_domain": 0.7666,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0020.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9001,
+      "p_other": 0.245,
+      "p_domain": 0.9911,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0021.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9718,
+      "p_other": 0.0056,
+      "p_domain": 0.9807,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0024.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": false,
+      "robust": 0.6048,
+      "p_other": 0.9124,
+      "p_domain": 0.9821,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0025.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9595,
+      "p_other": 0.0185,
+      "p_domain": 0.963,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0027.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.937,
+      "p_other": 0.1378,
+      "p_domain": 0.9861,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0028.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.8596,
+      "p_other": 0.2448,
+      "p_domain": 0.9963,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0029.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": false,
+      "robust": 0.3649,
+      "p_other": 0.9417,
+      "p_domain": 0.8243,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0031.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.5355,
+      "p_other": 0.1125,
+      "p_domain": 0.5637,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0032.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.979,
+      "p_other": 0.0061,
+      "p_domain": 0.942,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0033.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.6991,
+      "p_other": 0.3488,
+      "p_domain": 0.989,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0034.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9516,
+      "p_other": 0.0151,
+      "p_domain": 0.9357,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0035.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.6121,
+      "p_other": 0.0155,
+      "p_domain": 0.9624,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0036.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9826,
+      "p_other": 0.0002,
+      "p_domain": 0.9742,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0037.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9881,
+      "p_other": 0.0045,
+      "p_domain": 0.9968,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0040.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9096,
+      "p_other": 0.0291,
+      "p_domain": 0.7404,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0041.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "cola_wings",
+      "accept": true,
+      "robust": 0.5912,
+      "p_other": 0.0562,
+      "p_domain": 0.6553,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0042.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.6848,
+      "p_other": 0.0604,
+      "p_domain": 0.9714,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0043.jpg"
+    },
+    {
+      "label": "sweet_sour_pork",
+      "top": "sweet_sour_pork",
+      "accept": true,
+      "robust": 0.9767,
+      "p_other": 0.0033,
+      "p_domain": 0.9942,
+      "file": "data/external/web20/accepted/sweet_sour_pork/0044.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.8728,
+      "p_other": 0.002,
+      "p_domain": 0.9421,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0001.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "cola_wings",
+      "accept": false,
+      "robust": 0.2669,
+      "p_other": 0.119,
+      "p_domain": 0.1241,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0002.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.6023,
+      "p_other": 0.002,
+      "p_domain": 0.984,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0003.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.986,
+      "p_other": 0.0003,
+      "p_domain": 0.9973,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0005.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.5456,
+      "p_other": 0.0012,
+      "p_domain": 0.7137,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0006.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.7862,
+      "p_other": 0.0019,
+      "p_domain": 0.9978,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0007.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.9784,
+      "p_other": 0.0005,
+      "p_domain": 0.9704,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0009.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.9814,
+      "p_other": 0.0002,
+      "p_domain": 0.9717,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0010.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.4557,
+      "p_other": 0.0334,
+      "p_domain": 0.9684,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0015.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.6723,
+      "p_other": 0.0141,
+      "p_domain": 0.6491,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0016.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.8176,
+      "p_other": 0.0006,
+      "p_domain": 0.7563,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0017.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.5335,
+      "p_other": 0.0012,
+      "p_domain": 0.9547,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0019.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.9001,
+      "p_other": 0.0028,
+      "p_domain": 0.945,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0027.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.4358,
+      "p_other": 0.2767,
+      "p_domain": 0.9148,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0029.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.9893,
+      "p_other": 0.0001,
+      "p_domain": 0.9649,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0031.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.7789,
+      "p_other": 0.0222,
+      "p_domain": 0.8609,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0032.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.8342,
+      "p_other": 0.0015,
+      "p_domain": 0.9494,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0034.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": false,
+      "robust": 0.3393,
+      "p_other": 0.0106,
+      "p_domain": 0.6276,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0035.jpg"
+    },
+    {
+      "label": "sweet_sour_ribs",
+      "top": "sweet_sour_ribs",
+      "accept": true,
+      "robust": 0.9241,
+      "p_other": 0.018,
+      "p_domain": 0.9826,
+      "file": "data/external/web20/accepted/sweet_sour_ribs/0041.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9763,
+      "p_other": 0.0005,
+      "p_domain": 0.9892,
+      "file": "data/external/web20/accepted/tomato_egg/0001.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9435,
+      "p_other": 0.0309,
+      "p_domain": 0.9965,
+      "file": "data/external/web20/accepted/tomato_egg/0002.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9408,
+      "p_other": 0.0048,
+      "p_domain": 0.9691,
+      "file": "data/external/web20/accepted/tomato_egg/0003.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9683,
+      "p_other": 0.0235,
+      "p_domain": 0.9381,
+      "file": "data/external/web20/accepted/tomato_egg/0004.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.8727,
+      "p_other": 0.0079,
+      "p_domain": 0.8216,
+      "file": "data/external/web20/accepted/tomato_egg/0005.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9778,
+      "p_other": 0.001,
+      "p_domain": 0.9895,
+      "file": "data/external/web20/accepted/tomato_egg/0006.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.4934,
+      "p_other": 0.0069,
+      "p_domain": 0.5441,
+      "file": "data/external/web20/accepted/tomato_egg/0007.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9842,
+      "p_other": 0.0013,
+      "p_domain": 0.9974,
+      "file": "data/external/web20/accepted/tomato_egg/0008.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9793,
+      "p_other": 0.0008,
+      "p_domain": 0.9987,
+      "file": "data/external/web20/accepted/tomato_egg/0009.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9958,
+      "p_other": 0.0009,
+      "p_domain": 0.9411,
+      "file": "data/external/web20/accepted/tomato_egg/0010.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9918,
+      "p_other": 0.0003,
+      "p_domain": 0.9777,
+      "file": "data/external/web20/accepted/tomato_egg/0011.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9909,
+      "p_other": 0.0026,
+      "p_domain": 0.9311,
+      "file": "data/external/web20/accepted/tomato_egg/0012.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9785,
+      "p_other": 0.0006,
+      "p_domain": 0.9689,
+      "file": "data/external/web20/accepted/tomato_egg/0013.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9581,
+      "p_other": 0.0018,
+      "p_domain": 0.9894,
+      "file": "data/external/web20/accepted/tomato_egg/0015.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.5599,
+      "p_other": 0.0122,
+      "p_domain": 0.9452,
+      "file": "data/external/web20/accepted/tomato_egg/0016.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9812,
+      "p_other": 0.0009,
+      "p_domain": 0.987,
+      "file": "data/external/web20/accepted/tomato_egg/0018.jpg"
+    },
+    {
+      "label": "tomato_egg",
+      "top": "tomato_egg",
+      "accept": true,
+      "robust": 0.9896,
+      "p_other": 0.0003,
+      "p_domain": 0.9858,
+      "file": "data/external/web20/accepted/tomato_egg/0021.jpg"
+    }
+  ]
+}

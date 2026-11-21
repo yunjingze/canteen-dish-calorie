@@ -732,6 +732,46 @@ $env:PYTHONPATH="E:\项目作业\.venv\Lib\site-packages"   # 见下面踩坑 �
 
 工具本身有 8 个测试（`tests/test_ingest_web.py`）：dHash 在半尺寸重压下仍 ≤ 4 位差异、拉普拉斯能分开清晰与模糊、拼贴检测在 2×2 网格上触发而在单张照片上不触发、白边卡片 `frame_frac` ≥ 0.75、汉明距离与空指纹的边界、`scan` 把重复/过小/极端长宽比/缺类名分别判成不同 `reject:` 前缀、`apply` 输出无 EXIF 的 JPEG 且把拒收项移走、空目录返回 2。
 
+#### 5.7.8 20 道菜的整体对外数字：623 张网图，95.7%
+
+上一节只有工具，没有数字。这一轮把图收齐了，报告里那栏空着的位置可以填了。
+
+**收图。** `scripts/fetch_web.py` 用 Bing 图片搜索当索引（`cn.bing.com/images/async` 分页，每页 35 条，3 页 ≈ 100 个候选），20 道菜各 45 张，8 线程下载、按提交顺序回放保证编号确定：**817 张，370 s**。查询模板只有一个 `{zh}`，试过加「食堂 快餐」这类语境词，Bing 会返回握手照和商务会议图——**查询只能用菜名本身**。
+
+**筛。** `ingest_web.py scan` 判死 87 张（过小 54、与本批或 CNFOOD-241 重复 33），剩 730 张进 `accepted/`。然后人工过 38 张逐类联系表（`review/sheets/_cls_<slug>_<page>.png`，每格标文件名和模型 top），按两条规则再删 107 张：
+
+- **删**「模型判成别的菜、我目视也确认是别的菜」的图（我自己标错的：糖醋排骨那批里大半是无骨里脊、包子那批混了烧麦和小笼、水煮肉片里混了蒜泥白肉和毛血旺）；
+- **删**非成品菜照片：九宫格拼贴 26 张（机械判定）、大字水印/步骤图/卡通线稿/白底产品图、只有番茄没蛋的「番茄炒蛋」。
+
+**留**「模型判错、但图上确实是该类」的图——这些才是模型真错，必须计入。
+
+剩 **623 张**（每类 15–43 张），逐张过 `scripts/eval_web20.py`（完整判定链：域头 + other 头 + veto + 弱门）：
+
+| 指标 | 数值 |
+|---|---|
+| 20 道菜整体 top-1 | **95.67%**（596/623） |
+| 接受率 | **84.43%** |
+| 被接受图的 top-1 | **96.77%** |
+
+逐类最弱的是 braised_chicken 75.0%（n=32）、braised_pork 84.6%（n=39）、mu_xi_pork 89.5%（n=38）、sweet_sour_pork 92.1%（n=38）；其余 16 类 94.7%–100%。**接受率**最差的是 baozi 31.6%（19 张只放行 6 张）、boiled_chicken 61.5%、fried_noodles 72.1%、cola_wings 76.2%、braised_pork 76.9%。
+
+**误拒来自哪。** 623 张里 537 接受、47 域头、25 other 头、14 弱门。域头仍是最大误拒源，且集中在包子（19 张里 9 张被判「不是中餐菜」）和白斩鸡、炒面、可乐鸡翅——这四类的 `p_domain` 均值只有 0.44/0.65/0.71/0.69，其余 16 类都在 0.85 以上。去掉域头的反事实：接受率 84.4% → 90.2%，top-1 不变。域头在内部五集上是净赚的（§5.7.3），在网图上却是净亏的——**因为网图是浅景深棚拍特写，域头学到的是「食堂托盘/深色桌布」这个场景**，不是菜本身。
+
+**27 张错在哪。** 一半以上是红烧类互相串：braised_pork → sweet_sour_ribs 6 张、braised_chicken → sweet_sour_ribs 4 张（重糖色 + 小块肉，和糖醋排骨视觉上确实接近）；其次是黄焖鸡 → 农家小炒肉 3 张、木须肉 → 炒面/小炒肉 4 张。
+
+**这个数字不能直接和内部 test 比。** 内部 test 的 79.83% 里有 1,396 张是 `other_cn` 兜底类（占 36%）；只算 20 道菜是 87.41%。即便如此，外部 95.67% 仍高于内部 87.41%，原因是网图全是**单菜特写、主体占满画面、光线干净**，而内部 test 是食堂实拍——同一模型在两个域上的差距，恰好量化了「摆拍 vs 托盘」这件事本身有多难，也就是 §5.7.5 那 44.0% 托盘 F1 的另一种说法。
+
+复现：
+
+```powershell
+.\.venv\Scripts\python.exe scripts/fetch_web.py --per-dish 45 --pages 3   # 收图
+.\.venv\Scripts\python.exe scripts/ingest_web.py scan --fresh              # 体检 + 联系表
+# 人工改 review.csv 的 verdict，再 apply；人工判定另存 results/tables/web20_review.json
+.\.venv\Scripts\python.exe scripts/ingest_web.py apply
+.\.venv\Scripts\python.exe scripts/eval_web20.py                          # -> results/tables/cn_web20.json
+```
+
+图片本身不进 git（`.gitignore` 的 `data/*` 挡住），入库的是**冻结清单** `results/tables/web20_manifest.csv`（623 行：文件名、标签、模型 top、是否接受、两个头概率）和 `results/tables/web20_review.json`（每一张被删的理由）。清单里的顺序和内容此后不再改——这就是这一栏的可复现边界。
 
 ### 5.8 测试时增强与代理域抽样波动
 

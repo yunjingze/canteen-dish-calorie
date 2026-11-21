@@ -245,3 +245,21 @@ E:\项目作业\food_project\
 - **测试 tests/test_ingest_web.py 8 个**：dHash 在半尺寸重压下 ≤4 位差异（用高斯模糊的合成图，比真照片更严苛）、拉普拉斯分得开清晰/模糊、2×2 网格触发 collage_cues 而单张不触发、白边卡片 frame_frac ≥0.75、nearest 的汉明距离与空指纹边界（返回 64）、scan 把重复/过小/极端长宽比/缺类名判成不同 reject 前缀、apply 输出无 EXIF 的 JPEG 且拒收项被移走而保留项原地不动、空目录返回 2。全套 **104 passed**。
 - **自测脚本**：results/_web_selftest_build.py 造 9 张假图（正常、副本、半尺寸、2×2 拼贴、300×200、1600×400 全景、未知类、无类名、以及从 data/splits/cn241_21/test/baozi 直接拷的一张），results/_web_selftest_check.py 验输出。实测：借来的 test 图被判 reject:dup_cn241 并指出撞的是哪张，拼贴标 collage，全景 reject:aspect，副本 reject:dup_batch，缩图 reject:near_dup_batch(h=0)。
 - **文档**：README §5.7.7（新增）、HANDOFF 待办 5 与复现命令、HISTORY 本节。
+
+## 13. 第十三轮：20 道菜对外测试集（623 张，95.7%）（2026-11-21）
+
+- **动机**：第十二轮只做了工具，没有数字；报告里最缺的一栏仍是「20 道菜整体对外多少」。这一轮把图收齐、逐张过目、跑出诚实数字。
+- **收图 scripts/fetch_web.py**：Bing 图片搜索当索引。**关键坑**：普通 `/images/search` 只回首批 34 格，`first=36/71/106` 仍是同一页 → 改打 `cn.bing.com/images/async`（参数 q/first/count=35/mkt=zh-CN/qft=+filterui:imagesize-large，Referer cn.bing.com/images/search），first=35 才拿到新的一页；`search_many` 按 1+page*35 翻页、页间 sleep 0.4。**第二个坑**：查询模板一度写成 `["{zh}", "{zh} 食堂 快餐"]`，后者让 Bing 返回握手照、商务会议、地球插画（hot_sour_potato 联系表 133–150 号全是谈判照片）→ **查询只能用菜名本身**，删掉变体后清空重抓。下载改 ThreadPoolExecutor(max_workers=8)，`_grab` 并行取字节后按提交顺序回放以保持编号确定。实测 20 菜 817 张 **370 s**（旧串行版本同量级要 20+ 分钟）。
+- **scan**：817 张 → 730 keep / 87 判死（small 54、near_dup_cn241 3+1、dup_batch 2、near_dup_batch 27），51 张带 flag（collage 26、seam 12、frame 2）。来源域名统计（results/_host_stats.py）：pic.nximg.cn 336、n.sinaimg.cn 160、img95.699pic.com 130、materials.cdn.bcebos.com 35…大量来自图库/资讯站，摆拍与错标风险高。
+- **人工清洗（这一轮的主要工作量）**：先出 20 张总联系表看污染，再出 38 张逐类联系表 `review/sheets/_cls_<slug>_<page>.png`（results/_web20_cls_sheet.py，6 列×4 行、tile 250、每格标文件名与模型 top，top==slug 用暖黄、错标用红并加 `X <top>`），把 72 张错例另拼 4 张大图（results/_web20_wrong_big.py → _aud2_1..4.png）逐张核对。
+  - **判据**：① 模型判成别的菜且目视确实是别的菜（我自己标错）→ 删；② 非成品菜照片（九宫格拼贴、大字水印/步骤图、卡通线稿、白底产品图、生食材）→ 删；③ **模型判错但图上确实是该类 → 留**，这些是模型真错，必须计入诚实数字。
+  - 具体错标（举例）：sweet_sour_ribs 那批 19 张是无骨里脊/咕咾肉；baozi 18 张是烧麦/小笼/素材站棚拍/卡通；boiled_pork 10 张是蒜泥白肉、夫妻肺片、毛血旺、水煮牛肉；braised_pork 4 张是生五花肉/回锅肉；mu_xi_pork 3 张是青椒炒肉/韭黄肉丝；pepper_pork 5 张是农家小炒肉/生肉丝；di_san_xian 4 张是小炒肉/干煸豆角/大字水印；dry_fried_beans 6 张是扁豆/焯水过程/生豆角；farmhouse_pork 5 张是豆角炒肉/葱爆肉。
+  - 判定存 `results/_web20_decisions.json`（提交时复制为 results/tables/web20_review.json），由 results/_web20_apply_manual.py + _web20_apply_manual2.py 把 107 张 **移动**到 `data/external/web20/rejected_manual/<slug>/`（不删）。
+- **第一版数字（730 张）**：top-1 90.14% / 接受率 80.68% / 被接受 93.21%。清洗后两轮（730 → 630 → **623**）：**top-1 95.67%（596/623）、接受率 84.43%、被接受 96.77%**（results/tables/cn_web20.json）。第二轮又删 7 张：baozi 白底剖面产品图/花卷/卡通线稿、braised_chicken 菠萝咕咾鸡/蒸整鸡、tomato_egg 只有番茄块没有蛋。
+- **逐类**：最弱 braised_chicken 75.0%（n=32）、braised_pork 84.6%、mu_xi_pork 89.5%、sweet_sour_pork 92.1%，其余 16 类 94.7–100%。接受率最差 baozi 31.6%（19 张只放 6 张）、boiled_chicken 61.5%、fried_noodles 72.1%、cola_wings 76.2%。
+- **误拒分解（results/_web20_reasons.py）**：537 accept / 47 domain / 25 other / 14 weak。域头仍是最大误拒源，集中在 baozi（19 张里 9 张）、boiled_chicken 11、cola_wings 9、fried_noodles 7；这四类 p_domain 均值 0.44/0.65/0.69/0.71，其余 16 类 ≥0.85。反事实（_web20_counterfactual.py）：去掉域头接受率 84.4→90.2%、top-1 不变；去掉 other 头 87.8%；去掉弱门 87.5%。→ **域头在内部五集净赚（§5.7.3），在网图上净亏**，因为网图是浅景深棚拍特写，域头学到的是「食堂托盘/深色桌布」场景而非菜本身（results/_web20_vs_test.py：web20 median_blur 802 vs 内部 test 505，plain_frame 0.003 vs 0.005，mean_frame 0.027 vs 0.32）。
+- **27 张错例**：braised_pork→sweet_sour_ribs 6、braised_chicken→sweet_sour_ribs 4（重糖色小块肉）、braised_chicken→farmhouse_pork 3、mu_xi_pork→farmhouse_pork/fried_noodles 4、sweet_sour_pork→cola_wings 2。
+- **和内部 test 的关系**：内部 test 79.83% 含 1,396 张 other_cn（36%），只算 20 道菜是 87.41%；外部 95.67% 更高，是因为网图全是单菜特写、主体占满、光线干净——这个差距正好量化「摆拍 vs 托盘」有多难（对应 §5.7.5 托盘 F1 44.0%）。
+- **冻结**：图片不进 git（.gitignore 的 data/*），入库 results/tables/web20_manifest.csv（623 行：file/label/top/accept/p_other/p_domain）与 results/tables/web20_review.json（每张被删的理由）。此后不再增删——要扩就新开 data/external/web20_v2，两套都报。
+- **测试**：tests/test_fetch_web.py 的 test_query_templates_cover_every_dish 还在引用已删除的 QUERY_TEMPLATES 列表（重命名成单数后没改），修为 QUERY_TEMPLATE 并加注释说明为什么不加语境词。全套 **114 passed**。
+- **文档**：README §5.7.8（新增）、HANDOFF（标题/§1 外部集行/§3 待办 5/§5 复现命令/§7 地图）、HISTORY 本节。
