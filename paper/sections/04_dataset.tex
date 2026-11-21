@@ -1,0 +1,99 @@
+\section{Dataset and Splits}
+\label{sec:data}
+\subsection{Chinese Dish Data}
+Our main source is CNFOOD-241 \cite{cnfood241}, a Chinese dish dataset released
+with 241 categories and 191\,811 images at $600\times600$ pixels, together with
+the fine-grained recognition study of \cite{xiong2026cnfood}. Part of its imagery
+derives from ChineseFoodNet \cite{chen2017chinesefoodnet}; the release is
+licensed CC BY-NC 3.0 and is used here for non-commercial research only, and no
+image is redistributed with this paper. The release ships \cnPrePoolN{} training and
+\cnPreTestN{} validation images, \cnAllN{} in total. We re-partition the training
+portion into
+\cnPreTrainN{} training and \cnPreValN{} validation images so that the validation
+set that drives checkpoint selection is never the one used for reporting, and we
+report on the released validation portion as our test split. All counts are exact directory counts and are emitted
+into the paper by the build script, so they cannot drift from the code.
+
+\subsection{The Twenty Canteen Dishes and the Catch-All Bucket}
+A canteen menu is short. We select twenty dishes that are served in Chinese
+campus canteens and that span the cooking methods a tray actually contains:
+stir-fried potato shreds, di san xian (potato, aubergine and pepper), hand-torn
+cabbage, stir-fried greens, dry-fried green beans, tomato and egg, steamed egg,
+sweet-and-sour ribs, cola chicken wings, poached chicken, braised chicken, spicy
+chicken, braised pork, chilli pork, sweet-and-sour pork, farmhouse pork, pepper
+pork, mu xi pork, baozi and fried noodles. The selection deliberately contains
+pairs that a diner distinguishes by one cue only---ribs against pork, braised
+against twice-cooked pork, three cuts of pork in the same sauce family---because
+those pairs are where a deployed system actually fails.
+
+Twenty classes are not a closed world, and a canteen serves more than twenty
+dishes. We therefore add a twenty-first class, \emph{other Chinese dish}, whose
+training images are drawn from the 175 categories of CNFOOD-241 that remain after
+removing the twenty dishes, seventeen Western dessert classes and twenty-nine
+held-out classes reserved for a separate out-of-distribution probe. At most
+twelve images are taken from each remaining category, giving 2\,100 training,
+350 validation and 1\,396 test images. The bucket is not a junk drawer: it makes
+"some other dish" an explicit, trained outcome, so that a confident wrong answer
+inside the menu and an honest abstention are different events that can be counted
+separately. Table \ref{tab:cndata} lists the resulting splits.
+
+\begin{table}[t]
+\centering
+\caption{Chinese canteen data. The 21-way task is twenty dishes plus a catch-all
+bucket; the 241-class stage uses the full label space. Counts are exact.}
+\label{tab:cndata}
+\begin{tabular}{llrr}
+\toprule
+Stage & Split & Classes & Images \\
+\midrule
+Pre-training & train & 241 & \cnPreTrainN \\
+             & val   & 241 & \cnPreValN \\
+             & test  & 241 & \cnPreTestN \\
+\midrule
+Canteen head & train & 21 & \cnTrainN \\
+             & val   & 21 & \cnValN \\
+             & test  & 21 & \cnTestN \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{External Test Sets}
+Every number computed on the splits above shares a source with the training data,
+so we add two external sets that no part of the pipeline has seen.
+
+\textbf{Web images of the twenty dishes.} We query an image search engine with
+each dish name in Chinese, download the first three result pages, and keep
+\webN{} images after screening. Screening removes collages, watermarked stock
+photography, illustrations, price tags, images whose short side is below 400
+pixels, and images whose subject occupies less than a third of the frame. Every
+candidate is then compared against a fingerprint of all 24\,889 images in the
+21-way training, validation and test splits: an MD5 match or a 64-bit dHash
+within Hamming distance four is rejected, which removed four exact and 27 near
+duplicates. The remaining images were reviewed one by one; 100 were removed
+because the label was wrong or the picture was not a plated dish, and the labels
+were corrected before any model was evaluated on them. The set is frozen and its
+manifest is part of the released artefacts.
+
+\textbf{Sixteen famous Chinese dishes.} A public Kaggle set of sixteen dishes
+\cite{patzer16chinese} overlaps our menu in exactly one class,
+sweet-and-sour pork. After the same duplicate screening, \extN{} images remain,
+which is enough to sanity-check one class and not enough to characterise the
+system; we report it as such.
+
+\subsection{Real Photographs and the Western Baseline}
+The project began on a Western menu, and we keep that study as a baseline rather
+than deleting it. It uses a twenty-class subset of Food-101
+\cite{bossard2014food101} with the official split, and a hundred real
+photographs taken in a campus cafeteria of sixteen of those classes
+(\texttt{canteen\_real}), which serve as a genuine domain shift for that branch.
+The canteen branch of this paper uses no synthetic proxy: its domain shift is the
+real one between curated dish photography and hand-held photographs, measured on
+the web set above.
+
+\subsection{Energy Priors}
+Each of the twenty dishes carries an energy density in kcal per 100\,g and a
+typical canteen portion mass, taken from public food-composition tables and
+rounded to one representative value per class. The point estimate is their
+product; the interval is described in Section \ref{sec:calorie}. These are
+population averages, not measurements of the photographed plate, and the
+interface states this explicitly.

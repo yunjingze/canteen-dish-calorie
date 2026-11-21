@@ -1,0 +1,188 @@
+\section{Western Baseline}
+\label{sec:baseline}
+The project began on a Western menu, and the canteen branch inherits its
+methodology: the noise floor, the calibration procedure, the interface and the
+complexity measurement were all established here. We report the branch in
+compressed form because it answers a different question---how much adaptation
+depth and augmentation are worth when the source and target domains are both
+curated---and because that answer is the yardstick against which the
+pre-training gain of Section \ref{sec:pretrain} should be read.
+
+\subsection{Setup and Main Results}
+A twenty-class subset of Food-101 \cite{bossard2014food101} uses the official
+split: 600 training, 100 validation and 50 probe images per class from the
+official training partition, and the 250 official test images per class as the
+in-domain test set (5\,000 images). A proxy canteen domain of 1\,000 images is
+synthesized from the probe images with a randomized chain that models a hand-held
+phone capture: in-plane rotation up to $\pm7^\circ$, a crop keeping 72--92\% of
+each side, a small perspective warp, warm/fluorescent/cool white balance,
+brightness in $[0.72,1.25]$, contrast in $[0.78,1.20]$, saturation in
+$[0.70,1.30]$, Gaussian and motion blur, vignetting, additive noise,
+down-sampling to $320\times320$ and JPEG re-compression at quality 35--65.
+
+Each configuration trains for \epochsFour{} epochs with AdamW, weight decay
+$5\times10^{-4}$, head learning rate $10^{-3}$, backbone learning rate
+$10^{-4}$, cosine annealing, batch size 64, label smoothing 0.1 and mixed
+precision; a run takes \trainTimeFour{} minutes (\epochSecFour{} seconds per
+epoch). Table \ref{tab:main} reports the selected checkpoint of every
+configuration.
+
+\begin{table*}[t]
+\centering
+\caption{Western baseline. Accuracy and macro-F1 are percentages on the
+5\,000-image official test set and on the 1\,000-image proxy domain; the gap is
+test accuracy minus proxy accuracy in points; ECE is computed on the test set;
+time is wall-clock training time for \epochsFour{} epochs.}
+\label{tab:main}
+\begin{tabular}{lccccccrr}
+\toprule
+ID & Configuration & Test acc. & Test F1 & Proxy acc. & Proxy F1 & Gap & ECE & Time (min) \\
+\midrule
+E1 & ResNet-18, frozen & \accTestOne & \foneTestOne & \accCanOne & \foneCanOne & \gapOne & \eceTestOne & \trainTimeOne \\
+E2 & ResNet-18, frozen + color & \accTestTwo & \foneTestTwo & \accCanTwo & \foneCanTwo & \gapTwo & \eceTestTwo & \trainTimeTwo \\
+E3 & ResNet-18, last stage & \accTestThree & \foneTestThree & \accCanThree & \foneCanThree & \gapThree & \eceTestThree & \trainTimeThree \\
+E4 & ResNet-18, last stage + color & \accTestFour & \foneTestFour & \accCanFour & \foneCanFour & \gapFour & \eceTestFour & \trainTimeFour \\
+E5 & MobileNetV3-S, last stage + color & \accTestFive & \foneTestFive & \accCanFive & \foneCanFive & \gapFive & \eceTestFive & \trainTimeFive \\
+E6 & ResNet-18, from scratch (full) & \accTestSix & \foneTestSix & \accCanSix & \foneCanSix & \gapSix & \eceTestSix & \trainTimeSix \\
+E7 & E4 + Food-101N (69\,512) & \accTestSeven & \foneTestSeven & \accCanSeven & \foneCanSeven & \gapSeven & \eceTestSeven & \trainTimeSeven \\
+E8 & E7 without de-duplication & \accTestEight & \foneTestEight & \accCanEight & \foneCanEight & \gapEight & \eceTestEight & \trainTimeEight \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The frozen baseline reaches \accTestOne\% with only 10\,260 trainable parameters,
+which already shows how much ImageNet supplies. Unfreezing the last stage raises
+accuracy to \accTestFour\% and macro-F1 to \foneTestFour\%, the best of the six
+controlled configurations, at zero inference cost. On the proxy domain every
+model loses between \gapTwo{} and \gapThree{} points, so photometric and
+geometric degradation dominates class confusion within the clean domain.
+
+\subsection{Depth, Colour and Initialisation}
+Moving from frozen to last stage is worth \gainFinetuneNoaug{} points without
+augmentation (E1 to E3) and \gainFinetuneAug{} points with it (E2 to E4), but
+only \gainCanFinetuneNoaug{} and \gainCanFinetuneAug{} points across domains, so
+most of the in-domain gain is specific to the clean distribution. Colour jitter
+stays inside noise in-domain (\gainAugFrozen{} and \gainAugFinetune) and is the
+only factor with a consistently positive cross-domain sign (\gainCanAugFrozen{}
+and \gainCanAugFinetune), but the absolute gain is small next to the
+\gapFour-point gap it would have to close, which suggests the proxy bottleneck is
+geometric rather than photometric.
+
+E6 answers the obvious objection, namely that frozen features already encode
+ImageNet. Trained from random initialisation on the same 12\,000 images with every
+parameter trainable, the same ResNet-18 reaches \accTestSix\% and \accCanSix\%,
+i.e.\ \scratchDrop{} points below E4 in-domain and \scratchDropCan{} across
+domains. Twelve thousand images are not enough to learn twenty fine-grained
+categories from pixels; the value of the frozen baseline is the prior, not the
+10\,260 parameters.
+
+\subsection{External Data and Leakage}
+Food-101N \cite{lee2018cleannet} re-releases the same 101 categories from the web
+with noisy labels; restricted to our twenty classes it contributes 72\,467
+candidates. A candidate is kept only if its released verification label is not
+zero and its 64-bit dHash differs by more than a Hamming distance of six from
+every validation, test and probe image. The filter removes 2\,495 verified
+mislabels and 460 near-duplicates, leaving 69\,512 images, drawn at half weight
+against the official images.
+
+E7 moves in-domain accuracy from \accTestFour\% to \accTestSeven\%
+(\gainExternal{} points) and proxy accuracy from \accCanFour\% to \accCanSeven\%
+(\gainCanExternal{} points), contracting the gap from \gapFour{} to \gapSeven{}
+points. The largest cross-domain gain of the study therefore comes from the
+photographic diversity of the data rather than from the adaptation policy: web
+images vary in exposure, white balance, framing and compression far more than
+curated images, which is the effect colour jitter only approximates. E8 repeats
+E7 without the near-duplicate filter and gains \leakTest{} points in-domain while
+losing 4.6 across domains, so the filter costs nothing and E7 is the configuration
+we report.
+
+\subsection{Architecture and Efficiency}
+Table \ref{tab:complex} reports complexity and latency. ResNet-18 needs
+\paramsFour\,M parameters and \macsFour\,GMACs; MobileNetV3-Small needs
+\paramsFive\,M and \macsFive\,GMACs, roughly $30\times$ less arithmetic and
+$7\times$ fewer parameters. Latency does not follow the FLOP ratio:
+MobileNetV3-Small takes \latGpuFive\,ms against \latGpuFour\,ms on the GPU and
+\latCpuFive\,ms against \latCpuFour\,ms on the CPU, so it is \speedCpuFive\%
+faster on the CPU but \slowGpuFive\% slower on the GPU, because at batch size one
+the cost is dominated by the launch and memory-traffic overhead of many small
+depthwise layers. The FLOP saving buys memory and energy rather than wall-clock
+time, and the accuracy is \gainMobile{} points lower. This is why the canteen
+branch stays on ResNet-18: the compact model buys nothing on the hardware the
+service runs on.
+
+\begin{table}[t]
+\centering
+\caption{Complexity at $224\times224$ input. Params are in millions, MACs in
+GMACs (THOP); latency is the mean of 50 single-image forward passes after 10
+warm-up iterations.}
+\label{tab:complex}
+\small
+\begin{tabular*}{\columnwidth}{@{}lrrrr@{}}
+\toprule
+Model & Params & MACs & GPU (ms) & CPU (ms) \\
+\midrule
+ResNet-18 (E4) & \paramsFour & \macsFour & \latGpuFour & \latCpuFour \\
+MobileNetV3-S (E5) & \paramsFive & \macsFive & \latGpuFive & \latCpuFive \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\subsection{Cross-Domain Behaviour and Calibration}
+Figure \ref{fig:confusion} contrasts the confusion matrices of E4 on the test and
+proxy sets. In-domain errors concentrate on the visually similar pairs that
+motivated the class selection (dumplings against sushi, pancakes against waffles,
+the two salads). On the proxy the diagonal loses mass, the same semantic pairs
+survive, and new pairs that share no semantics appear (grilled salmon to caesar
+salad, hamburger to french fries). Recall collapses unevenly: french fries keeps
+0.84 while hamburger drops to 0.18, consistent with the model losing the evidence
+for the class-defining texture and falling back on colour and context.
+
+Both domains stay above the reliability diagonal, so label smoothing plus twelve
+epochs leaves the models under-confident rather than over-confident, and the
+fine-tuned models are the better calibrated ones (ECE \eceTestFour{} and
+\eceCanFour). Post-hoc temperature scaling with one scalar fitted on validation
+($T=\tempFour$) lowers test ECE to \eceTestCalFour{} and proxy ECE to
+\eceCanCalFour{} without changing a single predicted class. The same procedure,
+fitted per branch, is what the canteen head uses.
+
+\begin{figure*}[t]
+\centering
+\begin{subfigure}{0.44\textwidth}
+\includegraphics[width=\linewidth]{confusion_test.png}
+\caption{In-domain test set}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.44\textwidth}
+\includegraphics[width=\linewidth]{confusion_canteen.png}
+\caption{Proxy canteen domain}
+\end{subfigure}
+\caption{Row-normalized confusion matrices of the best Western configuration
+(E4). Class order follows the class list in the released code.}
+\label{fig:confusion}
+\end{figure*}
+
+Averaging the softmax over a horizontal flip raises E7 from \accTestSeven\% to
+\ttaHflipTestSeven\% in-domain and from \accCanSeven\% to \ttaHflipCanSeven\% on
+the proxy; a five-crop average reaches \ttaFiveTestSeven\% and \ttaFiveCanSeven\%,
+while multi-scale averaging reaches \ttaScalesTestSeven\% in-domain but falls to
+\ttaScalesCanSeven\% on the proxy, because re-rendering at a larger short side
+removes part of the evidence the proxy was designed to withhold. Test-time
+augmentation is worth about one point here, not the \gapSeven-point gap, which is
+why the canteen branch invests in six views rather than in scales: the canteen
+shift is compositional, not a loss of resolution.
+
+\subsection{Deployed Interface}
+The service is a FastAPI backend that loads the checkpoint once and a single page
+that lets the user upload a photograph or pick a bundled sample. The response
+contains the top-3 dishes with posteriors, the energy interval of
+Eq.~\ref{eq:interval} for each entry, and an uncertainty flag; a portion selector
+and a mass field rescale every entry on the client without a new forward pass, so
+the user sees how much of the range is recognition uncertainty and how much is
+serving size. A second tab handles mixed trays with 20 independent sigmoids
+trained on composited plates, and a third exposes the 116-class wide head. Two
+learned vetoes sit in front of the classifier, both logistic regressions on the
+pooled 512-dimensional feature the classifier already computes: the food veto
+rejects 96.9\% of 131 non-food photographs while keeping 95\% of 100 real
+canteen dishes, and the packaging veto rejects all 62 audited product cartons at
+the price of 0.5\% of dish images. Corrections are collected under every result
+as a JPEG plus a CSV row, which is the mechanism the canteen branch inherits.

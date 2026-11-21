@@ -448,8 +448,11 @@ module.exports = { BASE_URL: "http://192.168.1.23:8000" };
 
 `paper/main.tex` 为 IEEE Conference 模板的英文论文，正文中的每个数字都由 `paper/numbers.tex` 的宏提供，该文件由 `scripts/make_paper_numbers.py` 从实验结果自动生成，保证论文与代码结果一致。
 
+正文按节拆在 `paper/sections/`（`00_preamble` … `08_conclusion`），`paper/main.tex` 由 `paper/_assemble.py` 拼出来：改节文件再重拼，**不要手改 main.tex**，否则下次拼装会覆盖。
+
 ```powershell
-python scripts/make_paper_numbers.py
+python scripts/make_paper_numbers.py   # refresh the numeric macros in paper/numbers.tex
+python paper/_assemble.py              # glue paper/sections/*.tex into paper/main.tex
 cd paper
 pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```

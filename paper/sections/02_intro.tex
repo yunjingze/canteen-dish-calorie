@@ -1,0 +1,63 @@
+\section{Introduction}
+\IEEEPARstart{C}{anteen} meals are the main source of daily energy for most
+Chinese university students, yet the energy content of a dish is rarely visible
+at the point of choice. A system that takes a single photograph of a tray and
+returns the three most likely dishes together with a rough energy interval would
+make calorie awareness immediate, requires no wearable sensor and no manual
+logging, and can run on a commodity laptop or an edge device.
+
+Building such a system is not simply an image-classification exercise, and the
+difficulty is not the one a Western benchmark suggests. First, the menu is
+Chinese: the dishes a canteen serves---mapo tofu, braised pork, stir-fried potato
+shreds, steamed egg---are almost absent from Food-101, so a model trained on the
+usual benchmark answers a question nobody asked. Second, the photographs are
+taken with hand-held phones under mixed artificial light, at oblique angles, with
+cluttered trays, partially eaten portions and steam, and a classifier trained on
+curated studio photographs degrades sharply under this shift
+\cite{hendrycks2019robustness}. Third, and most awkwardly for a deployed system,
+a softmax classifier always returns a class: when the tray holds a dish outside
+the menu, or no dish at all, the model still produces a confident answer. Since
+the number of dishes a canteen serves is large and the frequency distribution is
+skewed, the useful question is not only \emph{which} dish but \emph{whether to
+answer at all}.
+
+This paper therefore studies three things that a course-scale project can
+actually control. We ask how much Chinese pre-training is worth by fitting the
+same canteen head twice, once from ImageNet weights and once from a backbone
+pre-trained on 241 Chinese dish classes. We ask how much test-time fusion of
+several framings is worth, since a tray photograph has no canonical crop. And we
+ask how a deployed system should decline to answer, which we treat as a
+measurable quantity on five evaluation sets rather than as a threshold chosen by
+eye.
+
+Our contributions are:
+\begin{itemize}
+\item a 21-way Chinese canteen protocol built on CNFOOD-241 \cite{cnfood241}
+with a leak-free split, a 241-class pre-training stage, and a catch-all bucket
+that makes "some other dish" an explicit class instead of a silent error;
+\item a controlled measurement of pre-training scale: the identical recipe and
+head move from \cnNoPreTest\% to \cnTest\% test accuracy when the backbone is
+pre-trained on Chinese dishes (\cnGainPretrain{} points), which is larger than
+any adaptation-policy change we could obtain on the Western benchmark;
+\item a six-view test-time fusion whose gain (\cnFuseGain{} points) is measured
+against the single-view protocol used for model selection, and a per-class error
+analysis that locates the residual error in intra-class variation
+(sweet-and-sour ribs versus sweet-and-sour pork, twice-cooked pork versus
+braised pork) rather than in class imbalance;
+\item an open-set gate that combines a logistic domain probe on pooled features,
+a Chinese-dish veto from a wider head, and a catch-all posterior, evaluated on
+five sets (canteen validation, canteen test, fifteen unseen Chinese dishes,
+non-Chinese food, non-food scenes and real photographs) with the coverage it
+costs on the supported set reported alongside the rejections it buys;
+\item an external evaluation on \webN{} web images of the twenty dishes,
+screened for exact and near duplicates against the training data, which is the
+only number in this paper produced by images that no part of the pipeline has
+ever seen;
+\item three negative results---stronger photometric augmentation,
+class-balanced loss and focal loss---each of which we report with the same
+protocol that produced the positive ones.
+\end{itemize}
+
+Section \ref{sec:data} describes the data and the splits, Section
+\ref{sec:method} the pipeline, Section \ref{sec:exp} the experiments, and
+Section \ref{sec:lim} the limitations we consider binding.

@@ -1,0 +1,42 @@
+\section{Related Work}
+\subsection{Chinese Food Recognition}
+Food-101 \cite{bossard2014food101} remains the standard Western benchmark, and
+DeepFood \cite{liu2016deepfood} established that ImageNet pre-training plus
+fine-tuning beats hand-crafted pipelines for dietary assessment. Chinese menus
+are covered by separate resources: ChineseFoodNet \cite{chen2017chinesefoodnet}
+collected 185\,628 images over 208 categories, and CNFOOD-241 \cite{cnfood241},
+the dataset used here, provides 241 categories with a fine-grained study of
+category-level discrimination \cite{xiong2026cnfood}. Surveys of food computing
+\cite{zhang2023foodsurvey} list cross-domain generalization, portion estimation
+and multi-dish scenes as the open problems, which is exactly the setting of a
+canteen tray; our contribution is not a new dataset but a controlled measurement
+on an existing one, with the deployment constraints made explicit.
+
+\subsection{Transfer Learning and Pre-Training Scale}
+Features learned on ImageNet \cite{deng2009imagenet} transfer well to
+fine-grained targets, but the benefit depends on source-target similarity and on
+how many layers are adapted \cite{yosinski2014transfer}, and better source models
+do not always transfer better \cite{kornblith2019better}. The usual lever in a
+course-scale project is adaptation depth; we keep that lever fixed and vary the
+source domain instead, replacing ImageNet features with features learned on 241
+Chinese dishes. The comparison is only meaningful because the recipe, the head
+capacity and the schedule are identical between the two runs.
+
+\subsection{Open-Set Recognition}
+Open-set recognition asks a classifier to reject inputs from classes it was not
+trained on \cite{scheirer2013openset}, and OpenMax \cite{bendale2016openset}
+introduced the activation-based formulation that most later work builds on. Our
+gate is deliberately simpler and closer to a deployment artefact than to a
+benchmark method: a logistic probe on pooled features, a veto from a wider head,
+and a trained catch-all class. We evaluate it by acceptance rate on five sets
+rather than by a single open-set score, because the quantity a user experiences
+is whether the system answers, not the area under a curve.
+
+\subsection{Calibration and Explainability}
+Modern networks are over-confident \cite{guo2017calibration}, which matters when
+a system reports an energy range derived from its confidence, so we report
+expected calibration error and fit one temperature per branch on validation.
+Robustness to common corruptions \cite{hendrycks2019robustness} motivates the
+proxy domain of the baseline branch. Grad-CAM \cite{selvaraju2017gradcam}
+provides the localization maps we use to check that the network attends to food
+rather than to the tray.

@@ -1,0 +1,229 @@
+\section{Experiments}
+\label{sec:exp}
+\subsection{Setup}
+All runs use one laptop with an NVIDIA RTX 4060 Laptop GPU (8\,GB), PyTorch 2.11
+and CUDA 12.8. The 241-class stage trains \cnPreEpochs{} epochs over
+\cnPreTrainN{} images at 823\,s per epoch, 69 minutes in total; the 21-way head
+trains \cnEpochs{} epochs over \cnTrainN{} images at 282\,s per epoch, 38 minutes
+in total. One epoch of the second stage was lost to machine standby and is
+excluded from the timing but not from the weights, because the checkpoint
+selected by validation accuracy is unaffected. Every configuration uses the same
+seed; the spread of a re-run with a different seed on the Western baseline is
+0.5 points, which we use as the noise floor throughout. Thresholds and the
+temperature are fitted on the validation split and then frozen.
+
+\subsection{Pre-Training on Chinese Dishes}
+\label{sec:pretrain}
+Table \ref{tab:cnmain} reports the canteen head with and without the 241-class
+stage. The two runs differ only in the initialisation of the trunk, so the
+\cnGainPretrain-point difference is the value of Chinese pre-training under this
+recipe: \cnNoPreTest\% against \cnTest\% on \cnTestN{} test images, with validation
+accuracy moving from \cnNoPreVal\% to \cnVal\%. The gain is larger than any
+adaptation-policy change we could obtain on the Western benchmark, where the same
+kind of intervention (unfreezing one stage) is worth 6.4 points and the largest
+data intervention is worth 1.2. It is also the cheapest: the pre-training stage
+costs 69 minutes once and adds no parameters and no inference cost.
+
+What pre-training does not fix is the boundary of the catch-all class. The
+twenty-dish rows of the confusion matrix reach \cnDishAcc\% while the catch-all
+bucket is recalled at \cnOtherRecall\%, and the gap between those two numbers is
+the honest measure of how far a menu-only classifier is from a deployed one.
+
+\begin{table}[t]
+\centering
+\caption{The 21-way canteen head. Val is the split used for checkpoint
+selection; test is the held-out split of \cnTestN{} images. ECE is computed with
+fifteen bins on the single-view protocol.}
+\label{tab:cnmain}
+\small
+\begin{tabular*}{\columnwidth}{@{}lrrrr@{}}
+\toprule
+Configuration & Val & Test & Top-5 & ECE \\
+\midrule
+No Chinese pre-training & \cnNoPreVal & \cnNoPreTest & \cnNoPreTopFive & \cnNoPreEce \\
+Chinese pre-training (deployed) & \cnVal & \cnTest & \cnTopFive & \cnEce \\
+\quad + stronger photometric aug. & \ablStrongVal & \ablStrongTest & \ablStrongTopFive & \ablStrongEce \\
+\quad + class-balanced loss & \ablBalVal & \ablBalTest & \ablBalTopFive & \ablBalEce \\
+\quad + balanced, catch-all unweighted & \ablBalNoOtherVal & \ablBalNoOtherTest & \ablBalNoOtherTopFive & \ablBalNoOtherEce \\
+\quad + focal loss ($\gamma=1$) & \ablFocalVal & \ablFocalTest & \ablFocalTopFive & \ablFocalEce \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\subsection{Six-View Fusion and Per-Class Error}
+Table \ref{tab:cnfuse} separates the two protocols. The single-view number is
+what checkpoint selection optimises and what the training script reports; the
+six-view number is what the service actually computes. Fusion is worth
+\cnFuseGain{} points, which is more than the seed spread, and it lifts top-5 to
+\cnFuseTopFive\%: at that point the correct dish is in the top three for almost
+every photograph that the gate accepts.
+
+Figure \ref{fig:cnconf} shows where the remaining error sits. The diagonal is
+clean for the dishes with a distinctive colour or texture---potato shreds,
+di san xian, tomato and egg, steamed egg all above 94\%---and it degrades exactly
+where the menu is redundant: farmhouse pork against pepper pork (75.5\% and
+77.1\% recall, with fifteen farmhouse images answered as pepper pork),
+sweet-and-sour ribs against sweet-and-sour pork, braised chicken against braised
+pork. The catch-all row is the most informative: its mass leaks into farmhouse
+pork, fried noodles, stir-fried greens and braised chicken, i.e.\ into the
+generic-looking stir-fries, which is what one expects when 175 categories are
+compressed into one bucket.
+
+\begin{table}[t]
+\centering
+\caption{Single-view protocol (used for model selection) against the six-view
+fusion used by the service, on \cnTestN{} test images. The last three columns
+are computed from the fused confusion matrix.}
+\label{tab:cnfuse}
+\small
+\begin{tabular*}{\columnwidth}{@{}lrrrrr@{}}
+\toprule
+Protocol & Top-1 & Top-5 & 20 dishes & Catch-all & Macro-F1 \\
+\midrule
+Single view & \cnTest & \cnTopFive & -- & -- & -- \\
+Six views & \cnFuseTop & \cnFuseTopFive & \cnDishAcc & \cnOtherRecall & \cnMacroFone \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{cn21_confusion.png}
+\caption{Row-normalised confusion matrix of the 21-way canteen head on its test
+split, six-view protocol. The red frame marks the catch-all row; its mass leaks
+into the generic stir-fries rather than spreading uniformly.}
+\label{fig:cnconf}
+\end{figure}
+
+\subsection{Open-Set Behaviour}
+\label{sec:openset}
+Table \ref{tab:gate} and Figure \ref{fig:gate} report acceptance on six sets.
+Without the domain probe the gate is already useful: it rejects 85\% of non-food
+scenes, 77\% of fifteen unseen Chinese dishes and 82\% of real photographs of
+sixteen Western dishes, while keeping \gateInOff\% of the supported test set. The
+domain probe then removes a further 7.2 points of unseen Chinese dishes and 9.9
+points of non-food scenes, at a cost of \gateInCost{} points of coverage on the
+supported set and \gateValCost{} points on validation.
+
+The trade is the one a deployed system wants: a rejected photograph costs the
+user one retry, an accepted wrong dish corrupts the energy estimate silently.
+The cost is not uniform across the menu, and that is the honest weakness of the
+design: on the supported set the probe is confident for most dishes, but it
+rejects the ones whose photographs look least like a plated canteen dish, which
+is why acceptance is 84\% on the test split and only 31\% on the web images of
+baozi (Section \ref{sec:web}).
+
+\begin{table}[t]
+\centering
+\caption{Acceptance rate (\%) of the deployed gate, with and without the domain
+probe, at threshold \gateThr. Higher is better only for the first two rows.}
+\label{tab:gate}
+\small
+\begin{tabular*}{\columnwidth}{@{}lrrr@{}}
+\toprule
+Evaluation set & w/o probe & deployed & $\Delta$ \\
+\midrule
+Canteen validation (\cnValN) & \gateValOff & \gateVal & $-$\gateValCost \\
+Canteen test, 20 dishes (\cnDishN) & \gateInOff & \gateIn & $-$\gateInCost \\
+Fifteen unseen Chinese dishes & \gateOutCnOff & \gateOutCn & $-$\gateOutCnGain \\
+Non-Chinese food & \gateOutOodOff & \gateOutOod & $-4.5$ \\
+Non-food and clutter & \gateOutOtherOff & \gateOutOther & $-9.9$ \\
+Real photographs, 16 dishes & \gateRealOff & \gateReal & $-5.0$ \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{cn_gate.png}
+\caption{What the system agrees to name, with and without the domain probe. The
+supported sets stay above 90\%, the unsupported ones drop to 5--24\%. The
+dashed line is 50\% and has no meaning of its own; it only makes the two groups
+visually separable.}
+\label{fig:gate}
+\end{figure}
+
+\subsection{External Evaluation on Web Images}
+\label{sec:web}
+The \webN{} web images are the only photographs in this paper that no part of
+the pipeline has seen. The system is \webTop\% top-1 accurate on them and accepts
+\webAccept\%, with \webTopAcc\% top-1 among the accepted ones. Two classes drag
+the accuracy down: braised chicken at 75\% and braised pork at 84.6\%, both
+confused with sweet-and-sour ribs, which is the same confusion the test split
+shows and therefore a property of the classes rather than of the domain.
+
+The acceptance rate is where the web set earns its place. It is \webAccept\%
+against \gateIn\% on the test split overall, and the distribution is inverted:
+baozi is
+accepted 31.6\% of the time and poached chicken 61.5\%, because the domain probe
+was fitted on photographs of plated dishes and web images of steamed buns and
+poached chicken are shallow-depth-of-field studio shots with no table, no tray
+and no context. Measured directly, the web images have a plain border in 0.3\%
+of cases against 0.5\% for the test split but a median Laplacian variance of 802
+against 505, i.e.\ they are sharper and more isolated than the photographs the
+probe was trained on. Removing the domain probe would raise acceptance to 90.2\%
+on this set, but it also raises non-food acceptance from 5.2\% to 15.1\%, so we
+report the gap rather than tune the threshold on the very set we are reporting.
+This is the one place where our external set is not representative: it measures
+the menu, not the canteen.
+
+\subsection{Negative Results}
+The last four rows of Table \ref{tab:cnmain} are interventions that a reasonable
+practitioner would try, and none of them survives.
+
+\textbf{Stronger photometric augmentation} (crop scale 0.45 instead of 0.55,
+jitter 0.5 instead of 0.35, hue 0.08, random grayscale with probability 0.1)
+moves test accuracy from \cnTest\% to \ablStrongTest\% and top-5 to
+\ablStrongTopFive\%, inside the seed spread, while costing three points on
+poached chicken and four on mu xi pork. The failure mode is that canteen
+variation is not photometric: the same dish is cut differently, garnished
+differently and cooked to a different sauce colour, and none of those is a
+colour jitter.
+
+\textbf{Class-balanced loss} is the more interesting negative. Inverse-frequency
+weights capped at four lift the twenty dishes from 87.4\% to 89.2\% and the macro
+average from 86.3 to 88.0, and they fix precisely the weak classes: poached
+chicken 82.4 to 94.1, sweet-and-sour ribs 71.0 to 77.9. But the catch-all bucket
+loses 9.2 points, from 66.5\% to 57.2\%, and because it holds 36\% of the test
+split the total falls to \ablBalTest\%. Pinning the catch-all weight back to one
+restores it to 65.3\% and shrinks the dish gain to 0.6 points, netting
+\ablBalNoOtherTest\%---a wash. The trade is therefore not in the weights but in
+the decision boundary between "one of the twenty" and "something else", and
+moving that boundary is exactly what the gate of Section \ref{sec:openset} is
+for, with a knob that can be set per deployment instead of baked into the loss.
+
+\textbf{Focal loss} ($\gamma=1$) trades accuracy for calibration: top-5 rises to
+\ablFocalTopFive\% and ECE falls to \ablFocalEce, but validation accuracy drops
+to \ablFocalVal\% and top-1 is unchanged. Since the displayed top-3 list and the
+gate thresholds are both fitted on validation, we keep the cross-entropy model.
+
+\subsection{Complexity, Latency and the Interface}
+The deployed model is the ResNet-18 of the Western baseline, so its cost is
+unchanged: \paramsFour\,M parameters, \macsFour\,GMACs at $224\times224$, and
+\latGpuFour\,ms per forward pass on the GPU. Six views cost six forward passes,
+which is still below 25\,ms on this GPU and around 100\,ms on the CPU. The
+decision chain that surrounds the forward passes---gate, veto, catch-all test and
+threshold comparison---takes \routeCn\,ms per request in the canteen tab against
+\routeSingle\,ms in the single-dish tab, both measured on the same machine and
+both dominated by the wide-head veto rather than by arithmetic.
+
+The service exposes the three behaviours this paper measures. A supported
+photograph returns the top three dishes with posteriors, the energy interval of
+Eq.~\ref{eq:interval} and a portion selector; an unsupported one is refused with
+the reason (not food, not a Chinese dish, another dish) and, when the refusal
+comes from the domain or catch-all test rather than from a weak posterior, the
+page offers to retry the same photograph in the single-dish or the 116-class tab.
+That suggestion was evaluated offline on 19\,928 requests: when the canteen
+tab refuses a real photograph the other tab names the right dish 94\% of the
+time, and when it refuses a canteen test image the suggestion is right in only
+10 of 300 cases, which is the expected asymmetry---the suggestion is for
+photographs that were never canteen food.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{demo_cn.png}
+\caption{The deployed interface on the canteen tab: top-3 dishes with posteriors,
+energy intervals, portion control, and the gate's verdict in the response
+payload.}
+\label{fig:demo}
+\end{figure}

@@ -1,0 +1,38 @@
+\section{Discussion and Limitations}
+\label{sec:lim}
+\textbf{The external set measures the menu, not the canteen.} The \webN{} web
+images are the strongest evidence in this paper that the twenty-dish head
+generalises, and they are also its weakest link: they are studio-lit photographs
+of single dishes, so they share the capture style of the training data and not the
+capture style of a tray. The acceptance rate exposes the mismatch (31.6\% on
+baozi against 84.4\% overall) precisely because the domain probe was fitted on
+plated dishes. A real canteen test set of a few hundred trays remains the
+missing experiment, and no amount of web screening substitutes for it.
+
+\textbf{Portions are not measured.} The energy interval covers recipe variability
+and, through the confidence term, recognition uncertainty, but the mass comes from
+a reference value or from the user. Reported intervals are therefore correct
+about the dish and optimistic about the plate.
+
+\textbf{One seed per configuration.} The Western baseline was re-run with a second
+seed and moved half a point, which we use as the noise floor. Every canteen
+number is a single draw, and the three negative results are negative partly
+because their effects are smaller than that floor. The 24-epoch control on the
+baseline (E12) shows that the budget is not the binding constraint, and the two
+pre-training runs differ by \cnGainPretrain{} points, far above the floor, so the
+main claim does not depend on the seed.
+
+\textbf{The gate is a heuristic stack.} A logistic probe, a veto from a wider
+head, a catch-all posterior and two auxiliary detectors are combined by
+thresholds fitted on validation. Each component is simple and inspectable, but
+the composition is not a single calibrated open-set model, and the thresholds do
+not transfer to a new canteen without refitting. Reporting coverage alongside
+rejection is our attempt to keep this honest; a proper treatment would calibrate
+the gate on a held-out tray set, which we do not have.
+
+\textbf{The Western baseline is kept, not discarded.} The twenty Food-101 classes
+and the synthetic proxy answer a different question from the one a Chinese
+canteen asks, and we report them as the baseline branch rather than as
+contributions. Their value here is methodological: the noise floor, the
+calibration procedure and the interface were all established there, and the
+pre-training gain reported above is only interpretable against that background.

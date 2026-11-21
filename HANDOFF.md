@@ -1,6 +1,6 @@
 # FoodCLS 食品识别与热量估计 —— 项目交接文档（现状）
 
-> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-21（第十三轮：20 道菜对外测试集 623 张，top-1 95.7%）。
+> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-21（第十四轮：论文按食堂主线重写，10 页压到 9 页）。
 
 ## 0. 一句话
 
@@ -28,6 +28,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 - 服务：http://127.0.0.1:8000，后台 job **pwsh-37106c8931ae47fe**（2026-11-21 傍晚重启，health 已验），日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
 - 分发包：dist/FoodDemo.zip 168.9 MB / 278 项，含 4 份 best.pt（f101n、plate40、cn116、**cn241_21_pre**）+ 新版 domain_head.json + 4 份 calibration.json；**不含**旧 cn241_21、不含旧 resnet18_last_stage_aug。
 - git：最新 **ee8384d**（623 张网图外部测试集），已推送 origin/main；再往前 362a540（网图筛选工具 + 指纹补 test）、c177910（类平衡/focal 否）、b973d67（换标签按钮）。
+- 论文：paper/main.pdf **9 页**（IEEE conference，要求 6–9 页），正文由 paper/sections/ 十个节文件经 paper/_assemble.py 拼成；**旧的 paper/_build_tex.py 已删除**（全文见 git 历史，别再手改 main.tex）。
 - 测试：python -m pytest tests -q → **114 passed**（约 6 s）。
 
 ## 3. 待办（只列还没做的）
@@ -67,6 +68,8 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 - 训食堂头：prepare_cn241_all.py → train_cn241.py --mode finetune（data-root data/splits/cn241_all）→ 再 --init <all>/best.pt 训 21 路
 - 打包：powershell -File scripts/package_demo.ps1 → dist/FoodDemo.zip
 - 换标签评测：python scripts/eval_tab_route.py（写 results/tables/tab_route.json，约 50 s）
+- 论文：python scripts/make_paper_numbers.py（刷新 paper/numbers.tex）→ python paper/_assemble.py（拼 main.tex）→ cd paper; pdflatex main && bibtex main && pdflatex main && pdflatex main
+- 论文新图：python scripts/make_cn_figures.py（21 路混淆矩阵 cn21_confusion.png + 门控六集 cn_gate.png）
 - 日志：python scripts/fix_log_encoding.py（把 PowerShell 写出的 UTF-16 日志转成 UTF-8）
 
 ## 6. 环境坑（新对话必读）
@@ -82,6 +85,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 
 ## 7. 文档地图
 
+- paper/：sections/ 十个节文件（00_preamble … 08_conclusion）+ _assemble.py 拼装 + numbers.tex 数字宏 + references.bib；main.tex 是产物。
 - README.md：§5.7.3 食堂 241 类预训练（现行）、§5.7.4 强增广 A/B（否）、§5.7.5 拒识后换标签、§5.7.6 类平衡/focal A/B（否 + 训练管线坑）、§5.7.7 网图筛选工具（ingest_web.py / fetch_web.py）、§5.7.8 20 道菜对外数字（623 张 95.7%）、§5.7.1/§5.7.2 第一版历史、§5.5.1 宽头换主干实验、§5.4.1 食物门控。
 - docs/HISTORY.md：历轮完整记录（第一~第十二轮、被否方案、每轮数字）。
 - docs/复现路径.md、docs/微信小程序上手指南.md、docs/永久公网地址.md、NOTICE（数据许可）。

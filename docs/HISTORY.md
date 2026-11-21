@@ -263,3 +263,16 @@ E:\项目作业\food_project\
 - **冻结**：图片不进 git（.gitignore 的 data/*），入库 results/tables/web20_manifest.csv（623 行：file/label/top/accept/p_other/p_domain）与 results/tables/web20_review.json（每张被删的理由）。此后不再增删——要扩就新开 data/external/web20_v2，两套都报。
 - **测试**：tests/test_fetch_web.py 的 test_query_templates_cover_every_dish 还在引用已删除的 QUERY_TEMPLATES 列表（重命名成单数后没改），修为 QUERY_TEMPLATE 并加注释说明为什么不加语境词。全套 **114 passed**。
 - **文档**：README §5.7.8（新增）、HANDOFF（标题/§1 外部集行/§3 待办 5/§5 复现命令/§7 地图）、HISTORY 本节。
+
+## 14. 第十四轮：论文按食堂主线重写（2026-11-21）
+
+- **动机**：课程要求英文 IEEE 论文 6–9 页、正文五节、定量结果必须真实运行。旧 paper/main.tex 全文 **0 行**写食堂线（CNFOOD / 21-way / domain probe / 623 张网图全部 0 命中），只讲 20 类 Food-101 + 1000 张合成代理域，最后构建停在 2026-11-15；10 页也超出 6–9 页建议。六天实验全没进论文。
+- **结构改造**：把 paper 拆成 paper/sections/ 十个节文件（00_preamble / 01_abstract / 02_intro / 03_related / 04_dataset / 05_method / 06_experiments / 06_baseline / 07_discussion / 08_conclusion），新增 paper/_assemble.py 按序拼成 main.tex。**paper/_build_tex.py 已删除**（旧的 @→反斜杠真源，全文见 git 历史），改节文件后重拼，别手改 main.tex。
+- **主线替换**：标题改为「Chinese Canteen Dish Recognition with Calorie-Range Estimation: Pre-Training Scale, Open-Set Gating and Cross-Domain Evaluation」；摘要/引言/相关工作/数据/方法/实验/局限/结论全部以 21 路食堂头为主线，西餐 20 类降级为第 VI 节基线（压缩后保留 E1–E8 主表与复杂度表）。
+- **砍掉的内容**：原 §Distillation 整节（含 tab:distill）、§Qualitative Analysis 整节、Grad-CAM 图、calibration 图、TTA 段，共约 3 页；页数从 10 压到 **9**（达标）。
+- **新增图**：results/figures/cn21_confusion.png（21 路行归一化混淆矩阵，红框标 other_cn 行）、results/figures/cn_gate.png（六集接受率双柱，域头开/关）。两张都由 scripts/make_cn_figures.py 代码生成，与 §V-C/§V-D 的数字同源。
+- **新增数字宏**：scripts/make_paper_numbers.py 追加 cn*/gate*/web*/ext*/abl*/route* 约 70 个宏，全部从 results/tables/*.json 读，不手写。其中 cnDishAcc / cnOtherRecall / cnMacroFone 由 21×21 混淆矩阵复算（不是读 per_class 均值）。
+- **三个编译坑**：① **TeX 控制词不能含数字**——\cn21Test 会被解析成 \cn + 21 + Test，报 Undefined control sequence，全部改名 \cnNoPreTest / \cnNoPreVal；② 表格行尾被写成三个反斜杠报 Misplaced \noalign，用正则收成两个；③ numbers.tex 里的千分位曾写成 18@{,}817（那是已废弃的 _build_tex.py 的转义约定），改为 {,}。
+- **数字一致性**：正文里写死的 97.5 / 5.4 / 96.4 / 5.9 / 97.2 / 5.0 / 5.6 全部换成宏；接受率那句「84.4% against 84.4%」是笔误（应为 web 84.4 vs test 90.3），已改。
+- **引用**：references.bib 新增 6 条——cnfood241（Mendeley DOI 10.17632/fspyss5zbb.1）、xiong2026cnfood（PLOS One 21(9):e0358248）、chen2017chinesefoodnet（arXiv:1705.02743）、scheirer2013openset、bendale2016openset、patzer16chinese；scheirer 的 @inproceedings 字段用 journal 会报 empty booktitle，改 @article。
+- **构建命令**：python scripts/make_paper_numbers.py → python paper/_assemble.py → cd paper; pdflatex main && bibtex main && pdflatex main && pdflatex main。README §7 与 scripts/README_template.md 同步。

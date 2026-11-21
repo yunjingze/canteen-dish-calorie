@@ -176,6 +176,122 @@ def main() -> None:
                 f"{{{100.0 * (seven['base']['accuracy'] - four['base']['accuracy']):.1f}}}",
             ]
 
+    # --- Chinese canteen head (21-way) -------------------------------------
+    # The canteen runs have no results.json: their metrics live in
+    # results/tables/cn241_*.json, written by scripts/train_cn241.py.
+    tab = ROOT / "results/tables"
+
+    def tj(name: str) -> dict:
+        return json.loads((tab / name).read_text(encoding="utf-8"))
+
+    sc = tj("split_counts.json")
+    pre = tj("cn241_all_pretrain.json")
+    c21 = tj("cn241_21.json")
+    dep = tj("cn241_21_pre.json")
+    fus = tj("cn241_21_confusion.json")
+    lines += [
+        f"\\newcommand{{\\cnPreTest}}{{{pct(pre['test']['top1'])}}}",
+        f"\\newcommand{{\\cnPreTopFive}}{{{pct(pre['test']['top5'])}}}",
+        f"\\newcommand{{\\cnPreEce}}{{{100.0 * pre['test']['ece']:.1f}}}",
+        f"\\newcommand{{\\cnPreVal}}{{{pct(pre['best_val_acc'])}}}",
+        f"\\newcommand{{\\cnPreEpochs}}{{{len(pre['history'])}}}",
+        f"\\newcommand{{\\cnPreTrainN}}{{{sc['cn241_all/train']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnPreTestN}}{{{pre['test']['n']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnNoPreTest}}{{{pct(c21['test']['top1'])}}}",
+        f"\\newcommand{{\\cnNoPreVal}}{{{pct(c21['best_val_acc'])}}}",
+        f"\\newcommand{{\\cnNoPreTopFive}}{{{pct(c21['test']['top5'])}}}",
+        f"\\newcommand{{\\cnNoPreEce}}{{{100.0 * c21['test']['ece']:.1f}}}",
+        f"\\newcommand{{\\cnTest}}{{{pct(dep['test']['top1'])}}}",
+        f"\\newcommand{{\\cnVal}}{{{pct(dep['best_val_acc'])}}}",
+        f"\\newcommand{{\\cnTopFive}}{{{pct(dep['test']['top5'])}}}",
+        f"\\newcommand{{\\cnEce}}{{{100.0 * dep['test']['ece']:.1f}}}",
+        f"\\newcommand{{\\cnTrainN}}{{{sc['cn241_21/train']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnTestN}}{{{sc['cn241_21/test']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnValN}}{{{sc['cn241_21/val']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnPreValN}}{{{sc['cn241_all/val']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnPrePoolN}}"
+        f"{{{sc['cn241_all/train'] + sc['cn241_all/val']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnAllN}}"
+        f"{{{sc['cn241_all/train'] + sc['cn241_all/val'] + sc['cn241_all/test']:,}}}".replace(",", "{,}"),
+        f"\\newcommand{{\\cnEpochs}}{{{len(dep['history'])}}}",
+        f"\\newcommand{{\\cnFuseTop}}{{{pct(fus['top1'])}}}",
+        f"\\newcommand{{\\cnFuseTopFive}}{{{pct(fus['top5'])}}}",
+        f"\\newcommand{{\\cnFuseSingle}}{{{pct(fus['top1_single_view'])}}}",
+    ]
+    gain_pre = 100.0 * (dep["test"]["top1"] - c21["test"]["top1"])
+    lines += [
+        f"\\newcommand{{\\cnGainPretrain}}{{{gain_pre:+.1f}}}",
+        f"\\newcommand{{\\cnFuseGain}}"
+        f"{{{100.0 * (fus['top1'] - fus['top1_single_view']):+.1f}}}",
+    ]
+    # accuracy restricted to the twenty dish rows of the 21x21 matrix
+    import numpy as _np
+
+    cm = _np.array(fus["confusion"], dtype=float)
+    names = fus["classes"]
+    other = names.index("other_cn")
+    keep = [i for i in range(len(names)) if i != other]
+    dish_acc = cm[_np.ix_(keep, keep)].trace() / cm[keep].sum()
+    lines += [
+        f"\\newcommand{{\\cnDishAcc}}{{{100.0 * dish_acc:.1f}}}",
+        f"\\newcommand{{\\cnOtherRecall}}{{{100.0 * cm[other, other] / cm[other].sum():.1f}}}",
+        f"\\newcommand{{\\cnDishN}}{{{int(cm[keep].sum()):,}}}".replace(",", "{,}"),
+    ]
+    tp = _np.diag(cm)
+    prec = tp / cm.sum(0)
+    rec = tp / cm.sum(1)
+    macro_f1 = (2 * prec * rec / (prec + rec)).mean()
+    lines.append(f"\\newcommand{{\\cnMacroFone}}{{{100.0 * macro_f1:.1f}}}")
+
+    gate = tj("domain_gate_pre.json")
+    for key, macro in (
+        ("val", "Val"), ("in", "In"), ("out_cn", "OutCn"),
+        ("out_ood", "OutOod"), ("out_other", "OutOther"), ("real", "Real"),
+    ):
+        s = gate["sets"][key]
+        lines += [
+            f"\\newcommand{{\\gate{macro}}}{{{pct(s['accept_domain_on'])}}}",
+            f"\\newcommand{{\\gate{macro}Off}}{{{pct(s['accept_domain_off'])}}}",
+        ]
+    lines += [
+        f"\\newcommand{{\\gateThr}}{{{gate['domain_threshold']:.4f}}}",
+        f"\\newcommand{{\\gateInTop}}{{{pct(gate['in_top1_21class'])}}}",
+        f"\\newcommand{{\\gateInCost}}"
+        f"{{{100.0 * (gate['sets']['in']['accept_domain_off'] - gate['sets']['in']['accept_domain_on']):.1f}}}",
+        f"\\newcommand{{\\gateValCost}}"
+        f"{{{100.0 * (gate['sets']['val']['accept_domain_off'] - gate['sets']['val']['accept_domain_on']):.1f}}}",
+        f"\\newcommand{{\\gateOutCnGain}}"
+        f"{{{100.0 * (gate['sets']['out_cn']['accept_domain_off'] - gate['sets']['out_cn']['accept_domain_on']):.1f}}}",
+    ]
+
+    web = tj("cn_web20.json")
+    ext = tj("cn_external.json")
+    lines += [
+        f"\\newcommand{{\\webN}}{{{web['all']['n']}}}",
+        f"\\newcommand{{\\webTop}}{{{pct(web['all']['top1'])}}}",
+        f"\\newcommand{{\\webAccept}}{{{pct(web['all']['accept_rate'])}}}",
+        f"\\newcommand{{\\webTopAcc}}{{{pct(web['all']['top1_accepted'])}}}",
+        f"\\newcommand{{\\extN}}{{{ext['all']['n']}}}",
+        f"\\newcommand{{\\extTop}}{{{pct(ext['all']['top1'])}}}",
+        f"\\newcommand{{\\extAccept}}{{{pct(ext['all']['accept_rate'])}}}",
+    ]
+
+    abl = {}
+    for name, macro in (("cn241_21_strong", "Strong"), ("cn241_21_bal", "Bal"),
+                        ("cn241_21_focal", "Focal"), ("cn241_21_bal_noother", "BalNoOther")):
+        abl[macro] = tj(name + ".json")
+        lines += [
+            f"\\newcommand{{\\abl{macro}Test}}{{{pct(abl[macro]['test']['top1'])}}}",
+            f"\\newcommand{{\\abl{macro}Val}}{{{pct(abl[macro]['best_val_acc'])}}}",
+            f"\\newcommand{{\\abl{macro}TopFive}}{{{pct(abl[macro]['test']['top5'])}}}",
+            f"\\newcommand{{\\abl{macro}Ece}}{{{100.0 * abl[macro]['test']['ece']:.1f}}}",
+        ]
+    route = tj("tab_route.json")["verdict_time"]
+    lines += [
+        f"\\newcommand{{\\routeCn}}{{{route['cn']['mean_ms']:.0f}}}",
+        f"\\newcommand{{\\routeSingle}}{{{route['single']['mean_ms']:.0f}}}",
+    ]
+
     PAPER.mkdir(parents=True, exist_ok=True)
     (PAPER / "numbers.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))

@@ -1,0 +1,95 @@
+\section{Method}
+\label{sec:method}
+\subsection{Two-Stage Training}
+The pipeline has two stages, both using ResNet-18 \cite{he2016resnet}. The first
+stage fits a 241-way classifier on \cnPreTrainN{} images for \cnPreEpochs{}
+epochs starting from the ImageNet weights of our Western baseline, so that the
+trunk has already seen Chinese food before it sees the twenty dishes. The second
+stage replaces the classifier with a 21-way head and fine-tunes for
+\cnEpochs{} epochs from the first stage's best checkpoint, keeping the last
+residual stage and the head trainable and freezing the rest. Both stages share
+one recipe: AdamW with weight decay $5\times10^{-4}$, head learning rate
+$10^{-3}$, backbone learning rate $2\times10^{-4}$, cosine annealing over the
+epoch budget, batch size 64, label smoothing 0.1
+\cite{szegedy2016inception}, mixed precision, and input resolution
+$224\times224$. Training uses a random resized crop to $224\times224$ with scale
+range $[0.55,1.0]$, a horizontal flip, and a photometric jitter with brightness,
+contrast and saturation in $[0.65,1.35]$ and hue in $[-0.06,0.06]$. Checkpoints
+are selected by validation accuracy and evaluated once on the test split.
+
+The two stages are deliberately identical apart from the label space and the
+initialisation, which is what makes the pre-training comparison in
+Section \ref{sec:pretrain} a controlled one: the same images, the same schedule
+and the same head capacity, differing only in whether the trunk arrived with
+Chinese dish features or with ImageNet features.
+
+\subsection{Six-View Test-Time Fusion}
+A tray photograph has no canonical crop. The plate may fill the frame, or the
+frame may include the whole tray with rice, soup and a table edge. Instead of
+committing to one preprocessing convention, we average the posteriors of six
+deterministic views: a $256$-pixel short-side resize with a $224$ centre crop, a
+direct $224\times224$ resize, and a $320$-pixel short-side resize with a $224$
+centre crop, each also in horizontal mirror. The six posteriors are averaged in
+probability space, and the result is divided by a temperature fitted on the
+validation split. We report both the single-view protocol used for model
+selection and the fused protocol, because the difference between them is a
+deployment choice rather than a property of the weights.
+
+\subsection{Open-Set Gate}
+\label{sec:gate}
+A softmax head always answers, so the deployed system decides separately whether
+to answer at all. Three signals are combined, all computed from the same forward
+passes:
+
+\textbf{Domain probe.} A logistic regression on the pooled 512-dimensional
+features of the three unmirrored views, trained on canteen training images
+against a mixture of non-canteen photographs, outputs the probability that the
+input belongs to the canteen domain at all. Because it reads pooled features
+rather than logits, it is cheap and it does not need the twenty-one classes to be
+correct.
+
+\textbf{Chinese-dish veto.} A second, wider head covers 116 Chinese dishes
+including our twenty. If that head, with the canteen classes masked out,
+confidently names a dish that the canteen head did not, the input is more likely
+to be one of the other ninety-six dishes, and the answer is withheld.
+
+\textbf{Catch-all posterior.} The twenty-first class is a trained outcome, so a
+high posterior on it is itself evidence that the plate holds something outside
+the menu. A separate food-versus-non-food gate and a packaging detector remove
+photographs of menus, wrappers and empty trays before any dish is named.
+
+A photograph is answered only if the fused posterior passes a threshold on the
+twenty-dish mass, the domain probe is above its threshold, the veto did not fire,
+the catch-all posterior is low, and both auxiliary gates agree. Every threshold
+is fitted on the canteen validation split, never on the test split, and the
+coverage that this costs on supported inputs is reported together with the
+rejections it buys in Section \ref{sec:openset}.
+
+\subsection{Energy Interval}
+\label{sec:calorie}
+Let $k_c$ be the energy density of class $c$ in kcal per 100\,g and $m_c$ its
+typical portion mass in grams. The point estimate is
+\begin{equation}
+\hat{E}_c = \frac{k_c\, m_c}{100}.
+\end{equation}
+Because the portion is unknown, we report
+\begin{equation}
+\hat{E}_c\left[1-s_c,\; 1+s_c\right], \quad
+s_c = 0.15+0.10\cdot\mathbf{1}[p_{\max}<0.55],
+\label{eq:interval}
+\end{equation}
+where $p_{\max}$ is the posterior of the top-1 class. The first term
+acknowledges recipe and portion variability, the second widens the interval when
+the classifier itself is uncertain, so that a wrong but confident guess is not
+presented as a precise number. The interface offers a small, regular or large
+portion, which scales $m_c$ by $0.7$, $1$ or $1.35$, and accepts a measured mass
+when the user has one, in which case only the density prior is used.
+
+\subsection{Metrics and Complexity}
+We report top-1 and top-5 accuracy, macro-F1 over the twenty-one classes, and
+expected calibration error with fifteen equal-width confidence bins, together
+with parameter count, multiply-accumulate operations at $224\times224$ measured
+with THOP, and single-image latency on the GPU and on the CPU after warm-up. For
+the gate we report acceptance rate per evaluation set rather than a single
+accuracy, because a gate that accepts everything and a gate that accepts nothing
+have the same accuracy on a set of unseen dishes.

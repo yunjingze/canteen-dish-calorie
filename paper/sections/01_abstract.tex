@@ -1,0 +1,33 @@
+\begin{abstract}
+Photographing a canteen tray and receiving a rough energy range is a practical
+way to raise nutritional awareness among students, but a canteen serves a menu
+that no public dataset contains: the dishes are Chinese, the photographs are
+hand-held, and a twenty-way classifier always answers, even when the plate holds
+something it has never seen. This paper reports a controlled study of that
+setting. We start from CNFOOD-241, a 241-class Chinese dish dataset, and
+pre-train a ResNet-18 on \cnPreTrainN{} images before fitting a 21-way canteen
+head (twenty dishes plus a catch-all bucket) on \cnTrainN{} images. Pre-training
+raises test accuracy from \cnNoPreTest\% to \cnTest\% with the same recipe, and a
+six-view test-time fusion adds \cnFuseGain{} points on top, reaching
+\cnFuseTop\% top-1 and \cnFuseTopFive\% top-5 on \cnTestN{} held-out photographs.
+The twenty dish rows of the confusion matrix reach \cnDishAcc\%, but the
+catch-all bucket is only \cnOtherRecall\% recalled, which is why we treat
+open-set behaviour as a first-class result rather than a footnote: a domain
+probe on pooled features plus a Chinese-dish veto decides whether the system
+names a dish at all. On five evaluation sets the gate keeps \gateIn\% of canteen
+photographs, \gateVal\% of the validation split, but admits only \gateOutCn\% of
+fifteen unseen Chinese dishes, \gateOutOther\% of non-food scenes and
+\gateReal\% of a real-photograph probe, at the cost of \gateInCost{} points of
+coverage on the supported set. On \webN{} web images of the twenty dishes,
+screened for near-duplicates against the training data, the system is
+\webTop\% top-1 accurate and accepts \webAccept\%. Three follow-up experiments
+are negative: stronger photometric augmentation, class-balanced and focal losses
+move accuracy by less than the seed spread, which locates the remaining error in
+intra-class variation and in the boundary of the catch-all class rather than in
+the optimisation.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Chinese food recognition, canteen tray, transfer learning, pre-training scale,
+open-set recognition, calibration, calorie estimation
+\end{IEEEkeywords}

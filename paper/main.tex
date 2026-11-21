@@ -13,7 +13,7 @@
 
 \begin{document}
 
-\title{Campus Canteen Dish Recognition with Calorie-Range Estimation: A Controlled Study of Transfer-Learning Depth and Color Augmentation}
+\title{Chinese Canteen Dish Recognition with Calorie-Range Estimation: Pre-Training Scale, Open-Set Gating and Cross-Domain Evaluation}
 
 \author{\IEEEauthorblockN{Student Name}
 \IEEEauthorblockA{School of Computer Science and Technology \\
@@ -24,242 +24,312 @@ student@example.edu}
 \maketitle
 
 \begin{abstract}
-Photographing a canteen tray and receiving an approximate energy range is a
-practical, low-cost way to raise nutritional awareness among students, but it
-combines two hard problems: fine-grained food recognition under strong domain
-shift, and energy estimation from a single image without volume measurement.
-This paper reports a controlled transfer-learning study on a 20-class subset of
-Food-101 that is relevant to Chinese campus canteens. We keep the official
-Food-101 split, carve a validation set and a held-out probe set out of the
-official training images, and build a 1000-image phone-photograph proxy domain
-by applying a physically motivated degradation chain (rotation, perspective,
-crop, white balance, exposure, blur, vignetting, sensor noise and JPEG
-compression) to images that never participate in training or model selection.
-Using a single training recipe, we compare a frozen backbone with last-stage
-fine-tuning, cross this factor with the presence or absence of photometric
-augmentation, and benchmark ResNet-18 against MobileNetV3-Small.
-The best ResNet-18 configuration reaches \accTestFour\% top-1 accuracy and
-\foneTestFour\% macro-F1 on the 5000-image in-domain test set, but only
-\accCanFour\% on the proxy domain, a drop of \gapFour{} points that no amount of
-head-only training removes. Adding 69\,500 web images of the same twenty classes,
-filtered for label noise and near-duplicates, raises proxy accuracy to
-\accCanSeven\% (\gainCanExternal{} points) for \gainExternal{} points in-domain. Unfreezing the last stage improves in-domain
-accuracy by \gainFinetuneAug{} points over the frozen backbone trained with the
-same augmentation, at no inference cost, whereas color augmentation changes
-accuracy by \gainAugFrozen
-points when the backbone is frozen and by \gainAugFinetune{} points after
-unfreezing. MobileNetV3-Small retains \accTestFive\% accuracy with \paramsFive\,M
-parameters and \latGpuFive\,ms per image. Training the same ResNet-18 from
-random initialisation instead of ImageNet weights costs \scratchDrop{} points of
-in-domain accuracy, so pre-training, not the adaptation policy, is what makes the
-task tractable at this data scale. We finally describe a web demo that
-returns the top-3 dishes with energy intervals and states the uncertainty of
-each entry.
+Photographing a canteen tray and receiving a rough energy range is a practical
+way to raise nutritional awareness among students, but a canteen serves a menu
+that no public dataset contains: the dishes are Chinese, the photographs are
+hand-held, and a twenty-way classifier always answers, even when the plate holds
+something it has never seen. This paper reports a controlled study of that
+setting. We start from CNFOOD-241, a 241-class Chinese dish dataset, and
+pre-train a ResNet-18 on \cnPreTrainN{} images before fitting a 21-way canteen
+head (twenty dishes plus a catch-all bucket) on \cnTrainN{} images. Pre-training
+raises test accuracy from \cnNoPreTest\% to \cnTest\% with the same recipe, and a
+six-view test-time fusion adds \cnFuseGain{} points on top, reaching
+\cnFuseTop\% top-1 and \cnFuseTopFive\% top-5 on \cnTestN{} held-out photographs.
+The twenty dish rows of the confusion matrix reach \cnDishAcc\%, but the
+catch-all bucket is only \cnOtherRecall\% recalled, which is why we treat
+open-set behaviour as a first-class result rather than a footnote: a domain
+probe on pooled features plus a Chinese-dish veto decides whether the system
+names a dish at all. On five evaluation sets the gate keeps \gateIn\% of canteen
+photographs, \gateVal\% of the validation split, but admits only \gateOutCn\% of
+fifteen unseen Chinese dishes, \gateOutOther\% of non-food scenes and
+\gateReal\% of a real-photograph probe, at the cost of \gateInCost{} points of
+coverage on the supported set. On \webN{} web images of the twenty dishes,
+screened for near-duplicates against the training data, the system is
+\webTop\% top-1 accurate and accepts \webAccept\%. Three follow-up experiments
+are negative: stronger photometric augmentation, class-balanced and focal losses
+move accuracy by less than the seed spread, which locates the remaining error in
+intra-class variation and in the boundary of the catch-all class rather than in
+the optimisation.
 \end{abstract}
 
 \begin{IEEEkeywords}
-food recognition, transfer learning, fine-tuning, domain shift, calorie
-estimation, Food-101, Grad-CAM
+Chinese food recognition, canteen tray, transfer learning, pre-training scale,
+open-set recognition, calibration, calorie estimation
 \end{IEEEkeywords}
 
 \section{Introduction}
 \IEEEPARstart{C}{anteen} meals are the main source of daily energy for most
-Chinese university students, yet the energy content of a dish is rarely
-visible at the point of choice. A system that takes a single photograph of a
-tray and returns the three most likely dishes together with a rough energy
-interval would make calorie awareness immediate, requires no wearable sensor
-and no manual logging, and can run on a commodity laptop or an edge device.
+Chinese university students, yet the energy content of a dish is rarely visible
+at the point of choice. A system that takes a single photograph of a tray and
+returns the three most likely dishes together with a rough energy interval would
+make calorie awareness immediate, requires no wearable sensor and no manual
+logging, and can run on a commodity laptop or an edge device.
 
-Building such a system is not simply an image-classification exercise. Three
-difficulties dominate. First, canteen photographs are taken with hand-held
-phones under mixed artificial light, at oblique angles, with cluttered trays,
-partially eaten portions and steam; a classifier trained on the carefully
-curated Food-101 photographs degrades sharply under this shift
-\cite{hendrycks2019robustness}. Second, the number of dish categories in a
-canteen is large but the frequency distribution is extremely skewed, so
-macro-averaged metrics matter more than plain accuracy. Third, energy cannot be
-read off an image: portion size is unknown, recipes differ between canteens,
-and the mapping from pixels to kilocalories is ill-posed. A system should
-therefore output an interval rather than a point estimate, and it should expose
-its uncertainty.
+Building such a system is not simply an image-classification exercise, and the
+difficulty is not the one a Western benchmark suggests. First, the menu is
+Chinese: the dishes a canteen serves---mapo tofu, braised pork, stir-fried potato
+shreds, steamed egg---are almost absent from Food-101, so a model trained on the
+usual benchmark answers a question nobody asked. Second, the photographs are
+taken with hand-held phones under mixed artificial light, at oblique angles, with
+cluttered trays, partially eaten portions and steam, and a classifier trained on
+curated studio photographs degrades sharply under this shift
+\cite{hendrycks2019robustness}. Third, and most awkwardly for a deployed system,
+a softmax classifier always returns a class: when the tray holds a dish outside
+the menu, or no dish at all, the model still produces a confident answer. Since
+the number of dishes a canteen serves is large and the frequency distribution is
+skewed, the useful question is not only \emph{which} dish but \emph{whether to
+answer at all}.
 
-This paper takes the position that, for a course-scale project with limited
-compute, the most informative questions are not about novel architectures but
-about how much of a pretrained network should be adapted and how the training
-distribution should be perturbed. We therefore fix one training recipe and vary
-only two factors, the fine-tuning depth and the presence of photometric
-augmentation, and we measure every model twice: once on the official Food-101
-test images and once on a proxy domain that mimics hand-held canteen
-photography.
+This paper therefore studies three things that a course-scale project can
+actually control. We ask how much Chinese pre-training is worth by fitting the
+same canteen head twice, once from ImageNet weights and once from a backbone
+pre-trained on 241 Chinese dish classes. We ask how much test-time fusion of
+several framings is worth, since a tray photograph has no canonical crop. And we
+ask how a deployed system should decline to answer, which we treat as a
+measurable quantity on five evaluation sets rather than as a threshold chosen by
+eye.
 
 Our contributions are:
 \begin{itemize}
-\item a reproducible 20-class Food-101 protocol for campus canteens with an
-explicit, leak-free split (official training images for training, validation
-and the proxy generator; official test images kept untouched for final
-reporting) and per-dish energy priors;
-\item a controlled comparison of frozen and last-stage fine-tuning crossed
-with color augmentation, reported with accuracy, macro-F1, expected
-calibration error, cross-domain gap, parameter count, MACs and measured
-latency;
-\item an external-data experiment that separates photographic diversity from
-adaptation policy: 69\,512 label-filtered, near-duplicate-free web images
-\cite{lee2018cleannet} raise proxy accuracy by \gainCanExternal{} points, with an
-ablation that prices the \leakTest-point inflation near-duplicates would add;
-\item a negative result on knowledge distillation from the external-data
-teacher into a 1.5\,M-parameter student: the student configurations that differ
-only in the loss are statistically indistinguishable, so the cross-domain gain
-is attributable to data rather than to the training procedure;
-\item a quantitative analysis of the in-domain to proxy-domain gap, including
-per-class confusion structure, calibration drift and Grad-CAM evidence;
-\item an end-to-end web application that maps a photograph to a top-3 list
-with energy intervals, used to produce the demonstration material.
+\item a 21-way Chinese canteen protocol built on CNFOOD-241 \cite{cnfood241}
+with a leak-free split, a 241-class pre-training stage, and a catch-all bucket
+that makes "some other dish" an explicit class instead of a silent error;
+\item a controlled measurement of pre-training scale: the identical recipe and
+head move from \cnNoPreTest\% to \cnTest\% test accuracy when the backbone is
+pre-trained on Chinese dishes (\cnGainPretrain{} points), which is larger than
+any adaptation-policy change we could obtain on the Western benchmark;
+\item a six-view test-time fusion whose gain (\cnFuseGain{} points) is measured
+against the single-view protocol used for model selection, and a per-class error
+analysis that locates the residual error in intra-class variation
+(sweet-and-sour ribs versus sweet-and-sour pork, twice-cooked pork versus
+braised pork) rather than in class imbalance;
+\item an open-set gate that combines a logistic domain probe on pooled features,
+a Chinese-dish veto from a wider head, and a catch-all posterior, evaluated on
+five sets (canteen validation, canteen test, fifteen unseen Chinese dishes,
+non-Chinese food, non-food scenes and real photographs) with the coverage it
+costs on the supported set reported alongside the rejections it buys;
+\item an external evaluation on \webN{} web images of the twenty dishes,
+screened for exact and near duplicates against the training data, which is the
+only number in this paper produced by images that no part of the pipeline has
+ever seen;
+\item three negative results---stronger photometric augmentation,
+class-balanced loss and focal loss---each of which we report with the same
+protocol that produced the positive ones.
 \end{itemize}
 
+Section \ref{sec:data} describes the data and the splits, Section
+\ref{sec:method} the pipeline, Section \ref{sec:exp} the experiments, and
+Section \ref{sec:lim} the limitations we consider binding.
+
 \section{Related Work}
-\subsection{Food Recognition Benchmarks}
-Food-101 \cite{bossard2014food101} contains 101 dish classes with 750 training
-and 250 test images per class, collected from food-sharing websites. It remains
-the standard pre-training and benchmarking resource for food recognition, and
-its official split is the one we preserve. DeepFood \cite{liu2016deepfood}
-demonstrated that convolutional networks pretrained on ImageNet and fine-tuned
-on food images outperform hand-crafted pipelines for dietary assessment, and
-\cite{zhou2016food} reached the same conclusion with a smaller network.
-Surveys of food computing \cite{zhang2023foodsurvey} emphasize that
-cross-domain generalization, portion estimation and multi-dish scenes remain
-open problems, which is precisely the setting of a canteen tray.
+\subsection{Chinese Food Recognition}
+Food-101 \cite{bossard2014food101} remains the standard Western benchmark, and
+DeepFood \cite{liu2016deepfood} established that ImageNet pre-training plus
+fine-tuning beats hand-crafted pipelines for dietary assessment. Chinese menus
+are covered by separate resources: ChineseFoodNet \cite{chen2017chinesefoodnet}
+collected 185\,628 images over 208 categories, and CNFOOD-241 \cite{cnfood241},
+the dataset used here, provides 241 categories with a fine-grained study of
+category-level discrimination \cite{xiong2026cnfood}. Surveys of food computing
+\cite{zhang2023foodsurvey} list cross-domain generalization, portion estimation
+and multi-dish scenes as the open problems, which is exactly the setting of a
+canteen tray; our contribution is not a new dataset but a controlled measurement
+on an existing one, with the deployment constraints made explicit.
 
-\subsection{Transfer Learning and Fine-Tuning Depth}
+\subsection{Transfer Learning and Pre-Training Scale}
 Features learned on ImageNet \cite{deng2009imagenet} transfer well to
-fine-grained targets, but the benefit depends on the similarity between source
-and target and on how many layers are adapted \cite{yosinski2014transfer}.
-\cite{kornblith2019better} showed that better source models do not always
-transfer better, and that the optimal adaptation depth is dataset dependent.
-For food images, which share low-level texture and color statistics with
-ImageNet but differ in composition, the practical question is whether adapting
-only the classifier is enough. We answer it with a controlled ablation rather
-than with a new architecture.
+fine-grained targets, but the benefit depends on source-target similarity and on
+how many layers are adapted \cite{yosinski2014transfer}, and better source models
+do not always transfer better \cite{kornblith2019better}. The usual lever in a
+course-scale project is adaptation depth; we keep that lever fixed and vary the
+source domain instead, replacing ImageNet features with features learned on 241
+Chinese dishes. The comparison is only meaningful because the recipe, the head
+capacity and the schedule are identical between the two runs.
 
-\subsection{Calibration, Robustness and Explainability}
-Modern networks are over-confident \cite{guo2017calibration}, which is
-problematic when a system reports an energy range derived from its confidence.
-We therefore report expected calibration error alongside accuracy. Robustness
-to common corruptions \cite{hendrycks2019robustness} motivates our proxy
-domain, which applies a corruption chain rather than a single synthetic
-perturbation. Finally, Grad-CAM \cite{selvaraju2017gradcam} provides
-gradient-weighted localization maps that show whether the network attends to the
-food or to the tray; we use them offline in Section V to inspect the failures of
-the best configuration.
+\subsection{Open-Set Recognition}
+Open-set recognition asks a classifier to reject inputs from classes it was not
+trained on \cite{scheirer2013openset}, and OpenMax \cite{bendale2016openset}
+introduced the activation-based formulation that most later work builds on. Our
+gate is deliberately simpler and closer to a deployment artefact than to a
+benchmark method: a logistic probe on pooled features, a veto from a wider head,
+and a trained catch-all class. We evaluate it by acceptance rate on five sets
+rather than by a single open-set score, because the quantity a user experiences
+is whether the system answers, not the area under a curve.
+
+\subsection{Calibration and Explainability}
+Modern networks are over-confident \cite{guo2017calibration}, which matters when
+a system reports an energy range derived from its confidence, so we report
+expected calibration error and fit one temperature per branch on validation.
+Robustness to common corruptions \cite{hendrycks2019robustness} motivates the
+proxy domain of the baseline branch. Grad-CAM \cite{selvaraju2017gradcam}
+provides the localization maps we use to check that the network attends to food
+rather than to the tray.
 
 \section{Dataset and Splits}
-\subsection{Class Selection}
-Food-101 contains 101 classes; a canteen deployed in a Chinese university
-serves a much smaller menu. We select 20 classes that are either commonly
-served on campus (fried rice, dumplings, ramen, sushi, pancakes, waffles) or
-representative of Western fast food that appears in campus cafeterias (pizza,
-hamburger, french fries, hot dog, steak, chicken wings, caesar salad, greek
-salad, grilled salmon, spaghetti bolognese, lasagna, donuts, ice cream,
-chocolate cake). The selection deliberately mixes visually similar pairs
-(dumplings vs.\ sushi, pancakes vs.\ waffles, caesar vs.\ greek salad) so that
-the confusion structure is informative.
+\label{sec:data}
+\subsection{Chinese Dish Data}
+Our main source is CNFOOD-241 \cite{cnfood241}, a Chinese dish dataset released
+with 241 categories and 191\,811 images at $600\times600$ pixels, together with
+the fine-grained recognition study of \cite{xiong2026cnfood}. Part of its imagery
+derives from ChineseFoodNet \cite{chen2017chinesefoodnet}; the release is
+licensed CC BY-NC 3.0 and is used here for non-commercial research only, and no
+image is redistributed with this paper. The release ships \cnPrePoolN{} training and
+\cnPreTestN{} validation images, \cnAllN{} in total. We re-partition the training
+portion into
+\cnPreTrainN{} training and \cnPreValN{} validation images so that the validation
+set that drives checkpoint selection is never the one used for reporting, and we
+report on the released validation portion as our test split. All counts are exact directory counts and are emitted
+into the paper by the build script, so they cannot drift from the code.
 
-\subsection{Splits}
-We keep the official Food-101 partition: the 750 official training images per
-class are used for training, validation and proxy generation, and the 250
-official test images per class form the in-domain test set (5000 images). From
-the official training images of each class we draw, with a fixed seed, 600
-training, 100 validation and 50 probe images. The probe images are used only to
-generate the proxy domain; they are never seen during training or model
-selection, and the validation set alone drives checkpoint selection. Table
-\ref{tab:data} summarizes the splits. Because the test images come from the
-official test partition, no image used to fit any model appears in the reported
-evaluation.
+\subsection{The Twenty Canteen Dishes and the Catch-All Bucket}
+A canteen menu is short. We select twenty dishes that are served in Chinese
+campus canteens and that span the cooking methods a tray actually contains:
+stir-fried potato shreds, di san xian (potato, aubergine and pepper), hand-torn
+cabbage, stir-fried greens, dry-fried green beans, tomato and egg, steamed egg,
+sweet-and-sour ribs, cola chicken wings, poached chicken, braised chicken, spicy
+chicken, braised pork, chilli pork, sweet-and-sour pork, farmhouse pork, pepper
+pork, mu xi pork, baozi and fried noodles. The selection deliberately contains
+pairs that a diner distinguishes by one cue only---ribs against pork, braised
+against twice-cooked pork, three cuts of pork in the same sauce family---because
+those pairs are where a deployed system actually fails.
+
+Twenty classes are not a closed world, and a canteen serves more than twenty
+dishes. We therefore add a twenty-first class, \emph{other Chinese dish}, whose
+training images are drawn from the 175 categories of CNFOOD-241 that remain after
+removing the twenty dishes, seventeen Western dessert classes and twenty-nine
+held-out classes reserved for a separate out-of-distribution probe. At most
+twelve images are taken from each remaining category, giving 2\,100 training,
+350 validation and 1\,396 test images. The bucket is not a junk drawer: it makes
+"some other dish" an explicit, trained outcome, so that a confident wrong answer
+inside the menu and an honest abstention are different events that can be counted
+separately. Table \ref{tab:cndata} lists the resulting splits.
 
 \begin{table}[t]
 \centering
-\caption{Dataset partitions. All images are disjoint; the proxy domain is
-derived from the probe images only.}
-\label{tab:data}
+\caption{Chinese canteen data. The 21-way task is twenty dishes plus a catch-all
+bucket; the 241-class stage uses the full label space. Counts are exact.}
+\label{tab:cndata}
 \begin{tabular}{llrr}
 \toprule
-Split & Purpose & Classes & Images \\
+Stage & Split & Classes & Images \\
 \midrule
-Train & parameter fitting & 20 & 12000 \\
-Validation & checkpoint selection & 20 & 2000 \\
-Probe & proxy generation only & 20 & 1000 \\
-Test (official) & in-domain reporting & 20 & 5000 \\
-Canteen proxy & cross-domain reporting & 20 & 1000 \\
+Pre-training & train & 241 & \cnPreTrainN \\
+             & val   & 241 & \cnPreValN \\
+             & test  & 241 & \cnPreTestN \\
+\midrule
+Canteen head & train & 21 & \cnTrainN \\
+             & val   & 21 & \cnValN \\
+             & test  & 21 & \cnTestN \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Proxy Canteen Domain}
-Real canteen photographs cannot be published with this report, so we synthesize
-a proxy domain from the probe images. Each image is resized so that its short
-side is 512 pixels, then passed through a randomized chain that models a
-hand-held phone capture: in-plane rotation of up to $\pm 7^\circ$, a random crop
-that keeps 72--92\% of each side, a small perspective warp (up to 3.5\% of the
-short side), a warm, fluorescent or cool white-balance cast, brightness in
-$[0.72,1.25]$, contrast in $[0.78,1.20]$ and saturation in $[0.70,1.30]$,
-Gaussian blur with probability 0.55 (radius 0.4--1.4), motion blur with
-probability 0.35, radial vignetting, additive Gaussian noise
-($\sigma = 1.5$--$6$), down-sampling to $320\times320$ and JPEG re-compression
-with quality 35--65. Figure \ref{fig:pipeline} illustrates the effect. This proxy is not a substitute for a real canteen test
-set; it isolates the effect of photometric and geometric degradation while
-holding semantics fixed, and Section \ref{sec:lim} explains where real
-photographs enter the same evaluation script.
+\subsection{External Test Sets}
+Every number computed on the splits above shares a source with the training data,
+so we add two external sets that no part of the pipeline has seen.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{architecture.png}
-\caption{Pipeline of the proposed system. A photograph is resized to
-$224\times224$, passed through a pretrained backbone with a 20-way head, and
-the resulting distribution is converted into a top-3 list; each dish carries an
-energy prior, and the interval width grows when the posterior is flat.}
-\label{fig:pipeline}
-\end{figure*}
+\textbf{Web images of the twenty dishes.} We query an image search engine with
+each dish name in Chinese, download the first three result pages, and keep
+\webN{} images after screening. Screening removes collages, watermarked stock
+photography, illustrations, price tags, images whose short side is below 400
+pixels, and images whose subject occupies less than a third of the frame. Every
+candidate is then compared against a fingerprint of all 24\,889 images in the
+21-way training, validation and test splits: an MD5 match or a 64-bit dHash
+within Hamming distance four is rejected, which removed four exact and 27 near
+duplicates. The remaining images were reviewed one by one; 100 were removed
+because the label was wrong or the picture was not a plated dish, and the labels
+were corrected before any model was evaluated on them. The set is frozen and its
+manifest is part of the released artefacts.
+
+\textbf{Sixteen famous Chinese dishes.} A public Kaggle set of sixteen dishes
+\cite{patzer16chinese} overlaps our menu in exactly one class,
+sweet-and-sour pork. After the same duplicate screening, \extN{} images remain,
+which is enough to sanity-check one class and not enough to characterise the
+system; we report it as such.
+
+\subsection{Real Photographs and the Western Baseline}
+The project began on a Western menu, and we keep that study as a baseline rather
+than deleting it. It uses a twenty-class subset of Food-101
+\cite{bossard2014food101} with the official split, and a hundred real
+photographs taken in a campus cafeteria of sixteen of those classes
+(\texttt{canteen\_real}), which serve as a genuine domain shift for that branch.
+The canteen branch of this paper uses no synthetic proxy: its domain shift is the
+real one between curated dish photography and hand-held photographs, measured on
+the web set above.
 
 \subsection{Energy Priors}
-Each class is assigned an energy density (kcal per 100\,g) and a typical
-canteen portion mass, both taken from public food-composition tables and
-rounded to a single representative value. The point estimate for a dish is the
-product of the two; the interval is described in Section \ref{sec:calorie}.
-These priors are population averages, not measurements of the photographed
-plate, and the demo states this limitation explicitly.
+Each of the twenty dishes carries an energy density in kcal per 100\,g and a
+typical canteen portion mass, taken from public food-composition tables and
+rounded to one representative value per class. The point estimate is their
+product; the interval is described in Section \ref{sec:calorie}. These are
+population averages, not measurements of the photographed plate, and the
+interface states this explicitly.
 
 \section{Method}
-\subsection{Backbones and Adaptation Policies}
-We study ResNet-18 \cite{he2016resnet} and MobileNetV3-Small
-\cite{howard2019mobilenetv3}, both initialized with ImageNet-1k weights. The
-final classifier is replaced by a linear layer with 20 outputs. Two
-adaptation policies are compared:
-\begin{itemize}
-\item \textbf{Frozen}: only the new classifier is trained; all backbone
-parameters, including batch-normalization statistics, are fixed. This policy
-trains only $10\,260$ parameters, 0.09\% of the $11.19$\,M of ResNet-18.
-\item \textbf{Last stage}: the fourth residual stage (or the last inverted-
-residual block group for MobileNetV3) and the classifier are trained, the rest
-is frozen.
-\end{itemize}
-\emph{Last stage} is the main configuration because it follows the assignment
-requirement of training a new head and then unfreezing the last stage, while
-keeping optimization stable on 12\,000 images and leaving inference cost
-unchanged. Full-network fine-tuning is supported by the released code but is
-not part of the comparison, since it changes neither the parameter count nor the
-latency and adds a third axis to an already controlled design.
+\label{sec:method}
+\subsection{Two-Stage Training}
+The pipeline has two stages, both using ResNet-18 \cite{he2016resnet}. The first
+stage fits a 241-way classifier on \cnPreTrainN{} images for \cnPreEpochs{}
+epochs starting from the ImageNet weights of our Western baseline, so that the
+trunk has already seen Chinese food before it sees the twenty dishes. The second
+stage replaces the classifier with a 21-way head and fine-tunes for
+\cnEpochs{} epochs from the first stage's best checkpoint, keeping the last
+residual stage and the head trainable and freezing the rest. Both stages share
+one recipe: AdamW with weight decay $5\times10^{-4}$, head learning rate
+$10^{-3}$, backbone learning rate $2\times10^{-4}$, cosine annealing over the
+epoch budget, batch size 64, label smoothing 0.1
+\cite{szegedy2016inception}, mixed precision, and input resolution
+$224\times224$. Training uses a random resized crop to $224\times224$ with scale
+range $[0.55,1.0]$, a horizontal flip, and a photometric jitter with brightness,
+contrast and saturation in $[0.65,1.35]$ and hue in $[-0.06,0.06]$. Checkpoints
+are selected by validation accuracy and evaluated once on the test split.
 
-\subsection{Training Recipe}
-All runs share one recipe so that only the intended factors vary: AdamW with
-weight decay $5\times10^{-4}$, head learning rate $10^{-3}$, backbone learning
-rate $10^{-4}$, cosine annealing over \epochsFour{} epochs, batch size 64, label
-smoothing 0.1 \cite{szegedy2016inception}, mixed precision, and input
-resolution $224\times224$. The training transform is a random resized crop to
-$224\times224$ with scale range $[0.55,1.0]$ followed by a horizontal flip. The
-photometric variant adds a color jitter with brightness, contrast and
-saturation factors in $[0.65,1.35]$ and hue in $[-0.06,0.06]$. Validation and
-test transforms resize the short side to 256, center crop to 224, and normalize
-with ImageNet statistics. Checkpoints are selected by validation macro-F1, and
-the selected checkpoint is evaluated once on the test and proxy sets.
+The two stages are deliberately identical apart from the label space and the
+initialisation, which is what makes the pre-training comparison in
+Section \ref{sec:pretrain} a controlled one: the same images, the same schedule
+and the same head capacity, differing only in whether the trunk arrived with
+Chinese dish features or with ImageNet features.
+
+\subsection{Six-View Test-Time Fusion}
+A tray photograph has no canonical crop. The plate may fill the frame, or the
+frame may include the whole tray with rice, soup and a table edge. Instead of
+committing to one preprocessing convention, we average the posteriors of six
+deterministic views: a $256$-pixel short-side resize with a $224$ centre crop, a
+direct $224\times224$ resize, and a $320$-pixel short-side resize with a $224$
+centre crop, each also in horizontal mirror. The six posteriors are averaged in
+probability space, and the result is divided by a temperature fitted on the
+validation split. We report both the single-view protocol used for model
+selection and the fused protocol, because the difference between them is a
+deployment choice rather than a property of the weights.
+
+\subsection{Open-Set Gate}
+\label{sec:gate}
+A softmax head always answers, so the deployed system decides separately whether
+to answer at all. Three signals are combined, all computed from the same forward
+passes:
+
+\textbf{Domain probe.} A logistic regression on the pooled 512-dimensional
+features of the three unmirrored views, trained on canteen training images
+against a mixture of non-canteen photographs, outputs the probability that the
+input belongs to the canteen domain at all. Because it reads pooled features
+rather than logits, it is cheap and it does not need the twenty-one classes to be
+correct.
+
+\textbf{Chinese-dish veto.} A second, wider head covers 116 Chinese dishes
+including our twenty. If that head, with the canteen classes masked out,
+confidently names a dish that the canteen head did not, the input is more likely
+to be one of the other ninety-six dishes, and the answer is withheld.
+
+\textbf{Catch-all posterior.} The twenty-first class is a trained outcome, so a
+high posterior on it is itself evidence that the plate holds something outside
+the menu. A separate food-versus-non-food gate and a packaging detector remove
+photographs of menus, wrappers and empty trays before any dish is named.
+
+A photograph is answered only if the fused posterior passes a threshold on the
+twenty-dish mass, the domain probe is above its threshold, the veto did not fire,
+the catch-all posterior is low, and both auxiliary gates agree. Every threshold
+is fitted on the canteen validation split, never on the test split, and the
+coverage that this costs on supported inputs is reported together with the
+rejections it buys in Section \ref{sec:openset}.
 
 \subsection{Energy Interval}
 \label{sec:calorie}
@@ -271,56 +341,290 @@ typical portion mass in grams. The point estimate is
 Because the portion is unknown, we report
 \begin{equation}
 \hat{E}_c\left[1-s_c,\; 1+s_c\right], \quad
-s_c = 0.15+0.10\cdot\mathbf{1}[p_{\max}<0.55].
+s_c = 0.15+0.10\cdot\mathbf{1}[p_{\max}<0.55],
 \label{eq:interval}
 \end{equation}
 where $p_{\max}$ is the posterior of the top-1 class. The first term
-acknowledges recipe and portion variability, the second widens the interval
-when the classifier itself is uncertain, so that a wrong but confident guess is
-not presented as a precise number. The same rule is applied to classes ranked
-second and third.
+acknowledges recipe and portion variability, the second widens the interval when
+the classifier itself is uncertain, so that a wrong but confident guess is not
+presented as a precise number. The interface offers a small, regular or large
+portion, which scales $m_c$ by $0.7$, $1$ or $1.35$, and accepts a measured mass
+when the user has one, in which case only the density prior is used.
 
-\subsection{Metrics}
-We report top-1 accuracy and macro-F1 on the in-domain test set and on the
-proxy domain, the cross-domain gap (in-domain accuracy minus proxy accuracy),
-expected calibration error with 15 equal-width confidence bins, parameter
-count, multiply-accumulate operations at $224\times224$ measured with THOP, and
-single-image latency on the GPU and on the CPU after warm-up.
+\subsection{Metrics and Complexity}
+We report top-1 and top-5 accuracy, macro-F1 over the twenty-one classes, and
+expected calibration error with fifteen equal-width confidence bins, together
+with parameter count, multiply-accumulate operations at $224\times224$ measured
+with THOP, and single-image latency on the GPU and on the CPU after warm-up. For
+the gate we report acceptance rate per evaluation set rather than a single
+accuracy, because a gate that accepts everything and a gate that accepts nothing
+have the same accuracy on a set of unseen dishes.
 
 \section{Experiments}
+\label{sec:exp}
 \subsection{Setup}
-Experiments run on a laptop with an NVIDIA RTX 4060 Laptop GPU (8\,GB), PyTorch
-2.11 and CUDA 12.8. Each configuration is trained for \epochsFour{} epochs with a
-fixed seed; a run takes \trainTimeFour{} minutes on average (\epochSecFour{}
-seconds per epoch). Six configurations are compared: frozen without color
-augmentation (E1), frozen with color augmentation (E2), last stage without
-(E3), last stage with (E4), and MobileNetV3-Small last stage with color
-augmentation (E5). E6 repeats the ResNet-18 recipe with random initialisation
-instead of ImageNet weights; because a randomly initialised frozen trunk cannot
-learn, E6 trains every parameter (full mode) for the same \epochsSix{} epochs,
-which makes it a deliberately generous estimate of what data alone can do.
-Two further rows reuse the E4 recipe and change only the data: E7 adds 69\,512
-web images of the same twenty classes, and E8 repeats that run without the
-near-duplicate filter, which isolates the leakage the filter removes
-(Sec.~\ref{sec:extdata}).
+All runs use one laptop with an NVIDIA RTX 4060 Laptop GPU (8\,GB), PyTorch 2.11
+and CUDA 12.8. The 241-class stage trains \cnPreEpochs{} epochs over
+\cnPreTrainN{} images at 823\,s per epoch, 69 minutes in total; the 21-way head
+trains \cnEpochs{} epochs over \cnTrainN{} images at 282\,s per epoch, 38 minutes
+in total. One epoch of the second stage was lost to machine standby and is
+excluded from the timing but not from the weights, because the checkpoint
+selected by validation accuracy is unaffected. Every configuration uses the same
+seed; the spread of a re-run with a different seed on the Western baseline is
+0.5 points, which we use as the noise floor throughout. Thresholds and the
+temperature are fitted on the validation split and then frozen.
 
-\subsection{Main Results}
-Table \ref{tab:main} reports the selected checkpoint of every configuration.
-The frozen baseline reaches \accTestOne\% accuracy on the official test set,
-which already shows how much ImageNet features carry: with only 10\,260
-trainable parameters, the classifier separates 20 dish classes far better than
-chance. Unfreezing the last stage raises accuracy to \accTestFour\% and macro-F1
-to \foneTestFour\%, the best result among the six controlled configurations. On the proxy domain all models
-lose a large amount of accuracy, between \gapTwo{} and \gapThree{} points, confirming
-that photometric and geometric degradation is the dominant difficulty rather
-than class confusion within the clean domain.
+\subsection{Pre-Training on Chinese Dishes}
+\label{sec:pretrain}
+Table \ref{tab:cnmain} reports the canteen head with and without the 241-class
+stage. The two runs differ only in the initialisation of the trunk, so the
+\cnGainPretrain-point difference is the value of Chinese pre-training under this
+recipe: \cnNoPreTest\% against \cnTest\% on \cnTestN{} test images, with validation
+accuracy moving from \cnNoPreVal\% to \cnVal\%. The gain is larger than any
+adaptation-policy change we could obtain on the Western benchmark, where the same
+kind of intervention (unfreezing one stage) is worth 6.4 points and the largest
+data intervention is worth 1.2. It is also the cheapest: the pre-training stage
+costs 69 minutes once and adds no parameters and no inference cost.
+
+What pre-training does not fix is the boundary of the catch-all class. The
+twenty-dish rows of the confusion matrix reach \cnDishAcc\% while the catch-all
+bucket is recalled at \cnOtherRecall\%, and the gap between those two numbers is
+the honest measure of how far a menu-only classifier is from a deployed one.
+
+\begin{table}[t]
+\centering
+\caption{The 21-way canteen head. Val is the split used for checkpoint
+selection; test is the held-out split of \cnTestN{} images. ECE is computed with
+fifteen bins on the single-view protocol.}
+\label{tab:cnmain}
+\small
+\begin{tabular*}{\columnwidth}{@{}lrrrr@{}}
+\toprule
+Configuration & Val & Test & Top-5 & ECE \\
+\midrule
+No Chinese pre-training & \cnNoPreVal & \cnNoPreTest & \cnNoPreTopFive & \cnNoPreEce \\
+Chinese pre-training (deployed) & \cnVal & \cnTest & \cnTopFive & \cnEce \\
+\quad + stronger photometric aug. & \ablStrongVal & \ablStrongTest & \ablStrongTopFive & \ablStrongEce \\
+\quad + class-balanced loss & \ablBalVal & \ablBalTest & \ablBalTopFive & \ablBalEce \\
+\quad + balanced, catch-all unweighted & \ablBalNoOtherVal & \ablBalNoOtherTest & \ablBalNoOtherTopFive & \ablBalNoOtherEce \\
+\quad + focal loss ($\gamma=1$) & \ablFocalVal & \ablFocalTest & \ablFocalTopFive & \ablFocalEce \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\subsection{Six-View Fusion and Per-Class Error}
+Table \ref{tab:cnfuse} separates the two protocols. The single-view number is
+what checkpoint selection optimises and what the training script reports; the
+six-view number is what the service actually computes. Fusion is worth
+\cnFuseGain{} points, which is more than the seed spread, and it lifts top-5 to
+\cnFuseTopFive\%: at that point the correct dish is in the top three for almost
+every photograph that the gate accepts.
+
+Figure \ref{fig:cnconf} shows where the remaining error sits. The diagonal is
+clean for the dishes with a distinctive colour or texture---potato shreds,
+di san xian, tomato and egg, steamed egg all above 94\%---and it degrades exactly
+where the menu is redundant: farmhouse pork against pepper pork (75.5\% and
+77.1\% recall, with fifteen farmhouse images answered as pepper pork),
+sweet-and-sour ribs against sweet-and-sour pork, braised chicken against braised
+pork. The catch-all row is the most informative: its mass leaks into farmhouse
+pork, fried noodles, stir-fried greens and braised chicken, i.e.\ into the
+generic-looking stir-fries, which is what one expects when 175 categories are
+compressed into one bucket.
+
+\begin{table}[t]
+\centering
+\caption{Single-view protocol (used for model selection) against the six-view
+fusion used by the service, on \cnTestN{} test images. The last three columns
+are computed from the fused confusion matrix.}
+\label{tab:cnfuse}
+\small
+\begin{tabular*}{\columnwidth}{@{}lrrrrr@{}}
+\toprule
+Protocol & Top-1 & Top-5 & 20 dishes & Catch-all & Macro-F1 \\
+\midrule
+Single view & \cnTest & \cnTopFive & -- & -- & -- \\
+Six views & \cnFuseTop & \cnFuseTopFive & \cnDishAcc & \cnOtherRecall & \cnMacroFone \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{cn21_confusion.png}
+\caption{Row-normalised confusion matrix of the 21-way canteen head on its test
+split, six-view protocol. The red frame marks the catch-all row; its mass leaks
+into the generic stir-fries rather than spreading uniformly.}
+\label{fig:cnconf}
+\end{figure}
+
+\subsection{Open-Set Behaviour}
+\label{sec:openset}
+Table \ref{tab:gate} and Figure \ref{fig:gate} report acceptance on six sets.
+Without the domain probe the gate is already useful: it rejects 85\% of non-food
+scenes, 77\% of fifteen unseen Chinese dishes and 82\% of real photographs of
+sixteen Western dishes, while keeping \gateInOff\% of the supported test set. The
+domain probe then removes a further 7.2 points of unseen Chinese dishes and 9.9
+points of non-food scenes, at a cost of \gateInCost{} points of coverage on the
+supported set and \gateValCost{} points on validation.
+
+The trade is the one a deployed system wants: a rejected photograph costs the
+user one retry, an accepted wrong dish corrupts the energy estimate silently.
+The cost is not uniform across the menu, and that is the honest weakness of the
+design: on the supported set the probe is confident for most dishes, but it
+rejects the ones whose photographs look least like a plated canteen dish, which
+is why acceptance is 84\% on the test split and only 31\% on the web images of
+baozi (Section \ref{sec:web}).
+
+\begin{table}[t]
+\centering
+\caption{Acceptance rate (\%) of the deployed gate, with and without the domain
+probe, at threshold \gateThr. Higher is better only for the first two rows.}
+\label{tab:gate}
+\small
+\begin{tabular*}{\columnwidth}{@{}lrrr@{}}
+\toprule
+Evaluation set & w/o probe & deployed & $\Delta$ \\
+\midrule
+Canteen validation (\cnValN) & \gateValOff & \gateVal & $-$\gateValCost \\
+Canteen test, 20 dishes (\cnDishN) & \gateInOff & \gateIn & $-$\gateInCost \\
+Fifteen unseen Chinese dishes & \gateOutCnOff & \gateOutCn & $-$\gateOutCnGain \\
+Non-Chinese food & \gateOutOodOff & \gateOutOod & $-4.5$ \\
+Non-food and clutter & \gateOutOtherOff & \gateOutOther & $-9.9$ \\
+Real photographs, 16 dishes & \gateRealOff & \gateReal & $-5.0$ \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{cn_gate.png}
+\caption{What the system agrees to name, with and without the domain probe. The
+supported sets stay above 90\%, the unsupported ones drop to 5--24\%. The
+dashed line is 50\% and has no meaning of its own; it only makes the two groups
+visually separable.}
+\label{fig:gate}
+\end{figure}
+
+\subsection{External Evaluation on Web Images}
+\label{sec:web}
+The \webN{} web images are the only photographs in this paper that no part of
+the pipeline has seen. The system is \webTop\% top-1 accurate on them and accepts
+\webAccept\%, with \webTopAcc\% top-1 among the accepted ones. Two classes drag
+the accuracy down: braised chicken at 75\% and braised pork at 84.6\%, both
+confused with sweet-and-sour ribs, which is the same confusion the test split
+shows and therefore a property of the classes rather than of the domain.
+
+The acceptance rate is where the web set earns its place. It is \webAccept\%
+against \gateIn\% on the test split overall, and the distribution is inverted:
+baozi is
+accepted 31.6\% of the time and poached chicken 61.5\%, because the domain probe
+was fitted on photographs of plated dishes and web images of steamed buns and
+poached chicken are shallow-depth-of-field studio shots with no table, no tray
+and no context. Measured directly, the web images have a plain border in 0.3\%
+of cases against 0.5\% for the test split but a median Laplacian variance of 802
+against 505, i.e.\ they are sharper and more isolated than the photographs the
+probe was trained on. Removing the domain probe would raise acceptance to 90.2\%
+on this set, but it also raises non-food acceptance from 5.2\% to 15.1\%, so we
+report the gap rather than tune the threshold on the very set we are reporting.
+This is the one place where our external set is not representative: it measures
+the menu, not the canteen.
+
+\subsection{Negative Results}
+The last four rows of Table \ref{tab:cnmain} are interventions that a reasonable
+practitioner would try, and none of them survives.
+
+\textbf{Stronger photometric augmentation} (crop scale 0.45 instead of 0.55,
+jitter 0.5 instead of 0.35, hue 0.08, random grayscale with probability 0.1)
+moves test accuracy from \cnTest\% to \ablStrongTest\% and top-5 to
+\ablStrongTopFive\%, inside the seed spread, while costing three points on
+poached chicken and four on mu xi pork. The failure mode is that canteen
+variation is not photometric: the same dish is cut differently, garnished
+differently and cooked to a different sauce colour, and none of those is a
+colour jitter.
+
+\textbf{Class-balanced loss} is the more interesting negative. Inverse-frequency
+weights capped at four lift the twenty dishes from 87.4\% to 89.2\% and the macro
+average from 86.3 to 88.0, and they fix precisely the weak classes: poached
+chicken 82.4 to 94.1, sweet-and-sour ribs 71.0 to 77.9. But the catch-all bucket
+loses 9.2 points, from 66.5\% to 57.2\%, and because it holds 36\% of the test
+split the total falls to \ablBalTest\%. Pinning the catch-all weight back to one
+restores it to 65.3\% and shrinks the dish gain to 0.6 points, netting
+\ablBalNoOtherTest\%---a wash. The trade is therefore not in the weights but in
+the decision boundary between "one of the twenty" and "something else", and
+moving that boundary is exactly what the gate of Section \ref{sec:openset} is
+for, with a knob that can be set per deployment instead of baked into the loss.
+
+\textbf{Focal loss} ($\gamma=1$) trades accuracy for calibration: top-5 rises to
+\ablFocalTopFive\% and ECE falls to \ablFocalEce, but validation accuracy drops
+to \ablFocalVal\% and top-1 is unchanged. Since the displayed top-3 list and the
+gate thresholds are both fitted on validation, we keep the cross-entropy model.
+
+\subsection{Complexity, Latency and the Interface}
+The deployed model is the ResNet-18 of the Western baseline, so its cost is
+unchanged: \paramsFour\,M parameters, \macsFour\,GMACs at $224\times224$, and
+\latGpuFour\,ms per forward pass on the GPU. Six views cost six forward passes,
+which is still below 25\,ms on this GPU and around 100\,ms on the CPU. The
+decision chain that surrounds the forward passes---gate, veto, catch-all test and
+threshold comparison---takes \routeCn\,ms per request in the canteen tab against
+\routeSingle\,ms in the single-dish tab, both measured on the same machine and
+both dominated by the wide-head veto rather than by arithmetic.
+
+The service exposes the three behaviours this paper measures. A supported
+photograph returns the top three dishes with posteriors, the energy interval of
+Eq.~\ref{eq:interval} and a portion selector; an unsupported one is refused with
+the reason (not food, not a Chinese dish, another dish) and, when the refusal
+comes from the domain or catch-all test rather than from a weak posterior, the
+page offers to retry the same photograph in the single-dish or the 116-class tab.
+That suggestion was evaluated offline on 19\,928 requests: when the canteen
+tab refuses a real photograph the other tab names the right dish 94\% of the
+time, and when it refuses a canteen test image the suggestion is right in only
+10 of 300 cases, which is the expected asymmetry---the suggestion is for
+photographs that were never canteen food.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{demo_cn.png}
+\caption{The deployed interface on the canteen tab: top-3 dishes with posteriors,
+energy intervals, portion control, and the gate's verdict in the response
+payload.}
+\label{fig:demo}
+\end{figure}
+
+\section{Western Baseline}
+\label{sec:baseline}
+The project began on a Western menu, and the canteen branch inherits its
+methodology: the noise floor, the calibration procedure, the interface and the
+complexity measurement were all established here. We report the branch in
+compressed form because it answers a different question---how much adaptation
+depth and augmentation are worth when the source and target domains are both
+curated---and because that answer is the yardstick against which the
+pre-training gain of Section \ref{sec:pretrain} should be read.
+
+\subsection{Setup and Main Results}
+A twenty-class subset of Food-101 \cite{bossard2014food101} uses the official
+split: 600 training, 100 validation and 50 probe images per class from the
+official training partition, and the 250 official test images per class as the
+in-domain test set (5\,000 images). A proxy canteen domain of 1\,000 images is
+synthesized from the probe images with a randomized chain that models a hand-held
+phone capture: in-plane rotation up to $\pm7^\circ$, a crop keeping 72--92\% of
+each side, a small perspective warp, warm/fluorescent/cool white balance,
+brightness in $[0.72,1.25]$, contrast in $[0.78,1.20]$, saturation in
+$[0.70,1.30]$, Gaussian and motion blur, vignetting, additive noise,
+down-sampling to $320\times320$ and JPEG re-compression at quality 35--65.
+
+Each configuration trains for \epochsFour{} epochs with AdamW, weight decay
+$5\times10^{-4}$, head learning rate $10^{-3}$, backbone learning rate
+$10^{-4}$, cosine annealing, batch size 64, label smoothing 0.1 and mixed
+precision; a run takes \trainTimeFour{} minutes (\epochSecFour{} seconds per
+epoch). Table \ref{tab:main} reports the selected checkpoint of every
+configuration.
 
 \begin{table*}[t]
 \centering
-\caption{Main results. Accuracy and macro-F1 are percentages on the 5000-image
-official test set and on the 1000-image proxy domain; the gap is in percentage
-points (test accuracy minus proxy accuracy); ECE is computed on the test set;
-time is the wall-clock training time for \epochsFour{} epochs.}
+\caption{Western baseline. Accuracy and macro-F1 are percentages on the
+5\,000-image official test set and on the 1\,000-image proxy domain; the gap is
+test accuracy minus proxy accuracy in points; ECE is computed on the test set;
+time is wall-clock training time for \epochsFour{} epochs.}
 \label{tab:main}
 \begin{tabular}{lccccccrr}
 \toprule
@@ -332,137 +636,82 @@ E3 & ResNet-18, last stage & \accTestThree & \foneTestThree & \accCanThree & \fo
 E4 & ResNet-18, last stage + color & \accTestFour & \foneTestFour & \accCanFour & \foneCanFour & \gapFour & \eceTestFour & \trainTimeFour \\
 E5 & MobileNetV3-S, last stage + color & \accTestFive & \foneTestFive & \accCanFive & \foneCanFive & \gapFive & \eceTestFive & \trainTimeFive \\
 E6 & ResNet-18, from scratch (full) & \accTestSix & \foneTestSix & \accCanSix & \foneCanSix & \gapSix & \eceTestSix & \trainTimeSix \\
-E7 & E4 + Food-101N ($69\,512$) & \accTestSeven & \foneTestSeven & \accCanSeven & \foneCanSeven & \gapSeven & \eceTestSeven & \trainTimeSeven \\
+E7 & E4 + Food-101N (69\,512) & \accTestSeven & \foneTestSeven & \accCanSeven & \foneCanSeven & \gapSeven & \eceTestSeven & \trainTimeSeven \\
 E8 & E7 without de-duplication & \accTestEight & \foneTestEight & \accCanEight & \foneCanEight & \gapEight & \eceTestEight & \trainTimeEight \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
-\subsection{Effect of Fine-Tuning Depth}
-Moving from the frozen backbone to the last stage changes in-domain accuracy by
-\gainFinetuneNoaug{} points without augmentation (E1 to E3) and by
-\gainFinetuneAug{} points with it (E2 to E4), and it lifts macro-F1 in the same
-proportion. The improvement is obtained at zero inference cost: the architecture
-is identical, and only the number of parameters that receive gradients changes.
-Figure \ref{fig:curves} shows that the frozen models converge to a plateau of
-about 79\% validation accuracy within four epochs, whereas the last-stage models
-keep climbing until the eighth to eleventh epoch, when checkpoint selection
-fires; the cosine schedule therefore ends before the last-stage models visibly
-overfit, and a longer budget would likely favour them further. The picture is
-different across domains: the same intervention moves proxy accuracy only by
-\gainCanFinetuneNoaug{} and \gainCanFinetuneAug{} points, so the gap widens from
-\gapTwo{} points for the frozen model with colour augmentation to \gapFour{} points
-for the fine-tuned one. Most of the in-domain gain is therefore specific to the
-clean distribution rather than a general improvement of the features.
+The frozen baseline reaches \accTestOne\% with only 10\,260 trainable parameters,
+which already shows how much ImageNet supplies. Unfreezing the last stage raises
+accuracy to \accTestFour\% and macro-F1 to \foneTestFour\%, the best of the six
+controlled configurations, at zero inference cost. On the proxy domain every
+model loses between \gapTwo{} and \gapThree{} points, so photometric and
+geometric degradation dominates class confusion within the clean domain.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.95\textwidth]{training_curves.png}
-\caption{Training loss (a) and validation accuracy (b) for the six
-configurations. Every point is a full pass over the 12\,000 training images.}
-\label{fig:curves}
-\end{figure*}
+\subsection{Depth, Colour and Initialisation}
+Moving from frozen to last stage is worth \gainFinetuneNoaug{} points without
+augmentation (E1 to E3) and \gainFinetuneAug{} points with it (E2 to E4), but
+only \gainCanFinetuneNoaug{} and \gainCanFinetuneAug{} points across domains, so
+most of the in-domain gain is specific to the clean distribution. Colour jitter
+stays inside noise in-domain (\gainAugFrozen{} and \gainAugFinetune) and is the
+only factor with a consistently positive cross-domain sign (\gainCanAugFrozen{}
+and \gainCanAugFinetune), but the absolute gain is small next to the
+\gapFour-point gap it would have to close, which suggests the proxy bottleneck is
+geometric rather than photometric.
 
-\subsection{Effect of Color Augmentation}
-Color jitter is intended to make the model invariant to white balance and
-exposure, which are precisely the factors that change between the clean and the
-proxy domain. In-domain its effect stays within run-to-run noise:
-\gainAugFrozen{} points with a frozen backbone and \gainAugFinetune{} points
-after unfreezing. On the proxy domain the sign is consistently positive
-(\gainCanAugFrozen{} and \gainCanAugFinetune{} points) and augmentation is the
-only factor in this study that improves cross-domain accuracy, but the absolute
-gain is small next to the \gapFour-point gap it would have to close. The flat
-proxy column between E1 and E3, where a \gainFinetuneNoaug-point in-domain gain
-translates into \gainCanFinetuneNoaug{} points across domains, suggests that the
-bottleneck of the proxy domain is geometric (crop, perspective, resolution) more
-than photometric, and a jitter that only perturbs colour cannot address it.
+E6 answers the obvious objection, namely that frozen features already encode
+ImageNet. Trained from random initialisation on the same 12\,000 images with every
+parameter trainable, the same ResNet-18 reaches \accTestSix\% and \accCanSix\%,
+i.e.\ \scratchDrop{} points below E4 in-domain and \scratchDropCan{} across
+domains. Twelve thousand images are not enough to learn twenty fine-grained
+categories from pixels; the value of the frozen baseline is the prior, not the
+10\,260 parameters.
 
-\subsection{Effect of ImageNet Pre-Training}
-E6 answers the obvious objection to the other five rows, namely that frozen
-features already encode ImageNet, so the comparison says little about the data.
-Trained from random initialisation on the same 12\,000 images with every
-parameter trainable, the same ResNet-18 reaches \accTestSix\% test accuracy and
-\foneTestSix\% macro-F1, i.e.\ \scratchDrop{} points below E4 on the clean
-domain, and \accCanSix\% on the proxy, \gapSix-point behind its in-domain score
-and \scratchDropCan-point behind E4. Figure \ref{fig:curves} shows the mechanism:
-the from-scratch curve is still rising steeply at the end of the budget, having
-passed only 67\% training accuracy, whereas the pre-trained models converge
-within four to six epochs. Twelve thousand images are therefore not enough to
-learn twenty fine-grained categories from pixels, and the value of the frozen
-baseline (\accTestOne\%) is the prior that ImageNet supplies, not the 10\,260
-trainable parameters. Because E6 updates eleven million parameters and E4 only
-the last stage, the $\scratchDrop{}$-point margin is a lower bound on the
-pre-training effect rather than an artefact of capacity.
+\subsection{External Data and Leakage}
+Food-101N \cite{lee2018cleannet} re-releases the same 101 categories from the web
+with noisy labels; restricted to our twenty classes it contributes 72\,467
+candidates. A candidate is kept only if its released verification label is not
+zero and its 64-bit dHash differs by more than a Hamming distance of six from
+every validation, test and probe image. The filter removes 2\,495 verified
+mislabels and 460 near-duplicates, leaving 69\,512 images, drawn at half weight
+against the official images.
 
-\subsection{Effect of External Data}
-\label{sec:extdata}
-Every row so far trains on the same 12\,000 images, which is what makes the six
-configurations comparable and also what caps any of them. Food-101N
-\cite{lee2018cleannet} re-releases the same 101 categories from the web with noisy
-labels; restricted to the twenty
-classes of this study it contributes 72\,467 candidates. A candidate is kept only
-if its released verification label is not $0$ and if its 64-bit dHash differs by
-more than a Hamming distance of six from every image of the validation, test and
-proxy sets. The filter removes 2\,495 human-verified mislabels and 460
-near-duplicates, leaving 69\,512 images, which enter training through a weighted
-sampler that draws the official images at weight one and the external ones at
-weight one half: an epoch still sees 12\,000 official samples and 69\,512 weighted
-external draws, 81\,512 samples in total.
-
-E7 keeps the E4 recipe and changes only the data. In-domain accuracy moves from
-\accTestFour\% to \accTestSeven\% (\gainExternal{} points), of the same order as
-the color augmentation. On the proxy domain it moves from \accCanFour\% to
-\accCanSeven\% (\gainCanExternal{} points), roughly five times the in-domain gain,
-and the cross-domain gap contracts from \gapFour{} to \gapSeven{} points. The
-largest cross-domain improvement of the study therefore comes not from the
-adaptation policy but from the photographic diversity of the data: web images
-vary in exposure, white balance, framing and compression far more than the
-curated official images, so the model cannot lock onto a single capture style.
-That is the effect color jitter approximates on a much smaller scale. The price is
-training time: \trainTimeSeven{} minutes for E7 against \trainTimeFour{} for E4,
-because an epoch is almost seven times longer. E7 still peaks on the last epoch,
-which suggested that the optimization budget rather than the data might be the
-limit. It is not: doubling the schedule to 24 epochs (E12, same recipe and data,
-cosine annealing over 24 epochs) raises training accuracy from \trainAccSeven\% to
-\trainAccTwelve\% but leaves validation at \accValTwelve\% (\accValSeven\% for
-E7), test at \accTestTwelve\% (\accTestSeven\%) and the proxy at \accCanTwelve\%
-(\accCanSeven\%). The extra epochs are absorbed by the training set, so the recipe
-reaches its local optimum well before twelve epochs and the gain of E7 is not an
-artefact of an early stop.
-
-E8 asks how much of the in-domain gain is reconstruction leakage. Without the
-near-duplicate filter test accuracy rises to \accTestEight\% (\leakTest{} points),
-the equivalent of about six of the 5\,000 test images, while proxy accuracy falls
-from \accCanSeven\% to \accCanEight\%. The filter therefore costs nothing and E7
-is the configuration we report. Calibration moves in the same direction only after
-rescaling: raw proxy error is higher for E7 (\eceCanSeven) than for E4
-(\eceCanFour), because the validation temperature \tempSeven{} is fitted to a
-sharper in-domain distribution, but once scaled the proxy error drops to
-\eceCanCalSeven{} against \eceCanCalFour{} for E4.
+E7 moves in-domain accuracy from \accTestFour\% to \accTestSeven\%
+(\gainExternal{} points) and proxy accuracy from \accCanFour\% to \accCanSeven\%
+(\gainCanExternal{} points), contracting the gap from \gapFour{} to \gapSeven{}
+points. The largest cross-domain gain of the study therefore comes from the
+photographic diversity of the data rather than from the adaptation policy: web
+images vary in exposure, white balance, framing and compression far more than
+curated images, which is the effect colour jitter only approximates. E8 repeats
+E7 without the near-duplicate filter and gains \leakTest{} points in-domain while
+losing 4.6 across domains, so the filter costs nothing and E7 is the configuration
+we report.
 
 \subsection{Architecture and Efficiency}
 Table \ref{tab:complex} reports complexity and latency. ResNet-18 needs
-\paramsFour\,M parameters and \macsFour\,GMACs, whereas MobileNetV3-Small needs
-\paramsFive\,M and \macsFive\,GMACs, a reduction of roughly $30\times$ in
-arithmetic and $7\times$ in parameters. Latency does not follow the FLOP ratio:
-MobileNetV3-Small takes \latGpuFive\,ms against \latGpuFour\,ms for ResNet-18 on
-the GPU, and \latCpuFive\,ms against \latCpuFour\,ms on the CPU, so it is
-\speedCpuFive\% faster on the CPU but \slowGpuFive\% slower on the GPU. At batch
-size one the cost is dominated by the launch and memory-traffic overhead of many
-small depthwise layers rather than by arithmetic, so the $30\times$ saving in
-FLOPs buys memory and energy rather than uniform wall-clock time, and the
-accuracy is \gainMobile{} points lower.
+\paramsFour\,M parameters and \macsFour\,GMACs; MobileNetV3-Small needs
+\paramsFive\,M and \macsFive\,GMACs, roughly $30\times$ less arithmetic and
+$7\times$ fewer parameters. Latency does not follow the FLOP ratio:
+MobileNetV3-Small takes \latGpuFive\,ms against \latGpuFour\,ms on the GPU and
+\latCpuFive\,ms against \latCpuFour\,ms on the CPU, so it is \speedCpuFive\%
+faster on the CPU but \slowGpuFive\% slower on the GPU, because at batch size one
+the cost is dominated by the launch and memory-traffic overhead of many small
+depthwise layers. The FLOP saving buys memory and energy rather than wall-clock
+time, and the accuracy is \gainMobile{} points lower. This is why the canteen
+branch stays on ResNet-18: the compact model buys nothing on the hardware the
+service runs on.
 
 \begin{table}[t]
 \centering
-\caption{Complexity at $224\times224$ input. Params are in millions, MACs
-in GMACs (THOP); latency is the mean of 50 single-image forward passes after 10
+\caption{Complexity at $224\times224$ input. Params are in millions, MACs in
+GMACs (THOP); latency is the mean of 50 single-image forward passes after 10
 warm-up iterations.}
 \label{tab:complex}
 \small
 \begin{tabular*}{\columnwidth}{@{}lrrrr@{}}
 \toprule
-Model & Params & MACs & GPU & CPU \\
+Model & Params & MACs & GPU (ms) & CPU (ms) \\
 \midrule
 ResNet-18 (E4) & \paramsFour & \macsFour & \latGpuFour & \latCpuFour \\
 MobileNetV3-S (E5) & \paramsFive & \macsFive & \latGpuFive & \latCpuFive \\
@@ -470,334 +719,137 @@ MobileNetV3-S (E5) & \paramsFive & \macsFive & \latGpuFive & \latCpuFive \\
 \end{tabular*}
 \end{table}
 
-\subsection{Distillation to a Compact Student}
-\label{sec:distill}
-The architecture comparison above leaves the compact model \gainMobileCost{} points
-behind. Knowledge distillation is the obvious remedy: the smaller network is
-trained to match both the labels and the softened output distribution of a larger
-one. We test it with E7 as the teacher (\accTestSeven\% in-domain, \accCanSeven\%
-on the proxy, \paramsFour\,M parameters) and the MobileNetV3-Small student
-(\paramsFive\,M), keeping everything else identical to the data-only control
-E9: the same 12\,000
-official plus 69\,512 external images, the same schedule, seed and augmentation.
-Only the loss changes, $\mathcal{L} = (1-\alpha)\,H(y,p) + \alpha\,T^2
-\,KL(p_T\,\|\,p^s_T)$, with ($\alpha$,T) = (0.5,4) for E10 and (0.2,3) for E11. Table
-\ref{tab:distill} reports all four configurations.
+\subsection{Cross-Domain Behaviour and Calibration}
+Figure \ref{fig:confusion} contrasts the confusion matrices of E4 on the test and
+proxy sets. In-domain errors concentrate on the visually similar pairs that
+motivated the class selection (dumplings against sushi, pancakes against waffles,
+the two salads). On the proxy the diagonal loses mass, the same semantic pairs
+survive, and new pairs that share no semantics appear (grilled salmon to caesar
+salad, hamburger to french fries). Recall collapses unevenly: french fries keeps
+0.84 while hamburger drops to 0.18, consistent with the model losing the evidence
+for the class-defining texture and falling back on colour and context.
 
-E9 is the control that isolates the data: the same student trained on the same
-images without a teacher reaches \accTestNine\% in-domain and \accCanNine\% on the
-proxy, \gainDataMobile{} and \gainCanDataMobile{} over E5. Against that control,
-distillation does not help. E10 moves test accuracy by \kdOneTest{} points and
-proxy accuracy by \kdOneCan{}; E11, with the soft term weighted at $0.2$ instead of $0.5$,
-moves them by \kdTwoTest{} and \kdTwoCan{}. Lowering the weight of the soft targets
-shrinks both the in-domain loss and the cross-domain gain, which is the signature
-of an effect that is not resolvable at this scale: the binomial standard error is
-$0.5$ points on the 5\,000 test images and $1.5$ points on the 1\,000 proxy images,
-and every difference above is smaller than its own error bar. The gap contracts
-from \gapFive{} to \gapNine{} points with the data alone; distillation adds nothing
-measurable to that contraction.
-
-Three properties of the setup explain the outcome. The teacher is only eight points
-stronger than the student and was trained on the same images with the same recipe,
-so the dark knowledge it can transfer is the weakest form of the signal. The
-student is capacity-limited rather than label-limited: it saturates near 78.5\%
-validation accuracy with or without a teacher, and its training accuracy moves only
-from 66.8\% to 67.2\% between E10 and E9, so the soft targets neither starve nor
-unlock it. And the effect that does survive, the \gainCanDataMobile{}-point proxy
-gain from the external images, is larger than any distillation effect we could
-detect at this student size on curated data. Calibration is unaffected: after
-temperature scaling the test error of the three students converges to
-\eceTestCalNine{}, \eceTestCalTen{} and \eceTestCalEleven{}. We therefore report
-distillation as a negative result and read it as further evidence that at this data
-scale the binding constraint is the photographic distribution of the training
-images rather than the training procedure.
-
-\begin{table}[t]
-\centering
-\caption{Distillation from the E7 ResNet-18 teacher into MobileNetV3-Small on the
-same 81\,512-sample mixture. E9 is the data-only control; the distilled runs differ
-from it only in the loss.}
-\label{tab:distill}
-\small
-\begin{tabular*}{\columnwidth}{@{}lrrrr@{}}
-\toprule
-Configuration & Test & Proxy & Gap & ECE \\
-\midrule
-E5 (official only) & \accTestFive & \accCanFive & \gapFive & \eceTestFive \\
-E9 (data only) & \accTestNine & \accCanNine & \gapNine & \eceTestNine \\
-E10 ($\alpha$=0.5, T=4) & \accTestTen & \accCanTen & \gapTen & \eceTestTen \\
-E11 ($\alpha$=0.2, T=3) & \accTestEleven & \accCanEleven & \gapEleven & \eceTestEleven \\
-\bottomrule
-\end{tabular*}
-\end{table}
-
-\subsection{Cross-Domain Behaviour}
-\label{sec:crossdomain}
-Figure \ref{fig:confusion} contrasts the confusion matrices of E4 on the test
-and proxy sets. In-domain errors concentrate on the visually similar pairs that
-motivated the class selection: dumplings and sushi share a pale, low-contrast
-appearance, pancakes and waffles share a gridded texture, and the two salads
-share a bowl of green leaves. On the proxy domain the diagonal loses mass, the
-same semantic pairs survive (caesar to greek salad, steak to grilled salmon),
-and new pairs that share no semantics appear (grilled salmon to caesar salad,
-hamburger to french fries, ice cream to chocolate cake). Recall collapses
-unevenly across classes: french fries keeps 0.84 while hamburger drops to 0.18,
-which is consistent with the model losing the evidence for the class-defining
-texture and falling back on colour and context, cues that the degradation
-preserves.
-
-Figure \ref{fig:calibration} shows the reliability diagrams of all six models.
-Both domains stay above the diagonal, so label smoothing combined with twelve
-epochs of training leaves the models under-confident rather than over-confident,
-and the fine-tuned models are the better calibrated ones in both domains (ECE
-\eceTestFour{} and \eceCanFour). On the proxy domain the mean confidence falls
-from 0.781 to 0.583 while accuracy falls from \accTestFour\% to \accCanFour\%,
-so the two move together; 48\% of the proxy images have a posterior below the
-0.55 threshold and therefore receive a widened energy interval, which is exactly
-the behaviour the interface was designed to show. The frozen models start from a
-larger calibration error (\eceTestOne{} in-domain, \eceCanOne{} on the proxy) and
-do not benefit from this coupling.
-
-Because the models are under-confident rather than over-confident, post-hoc
-temperature scaling (Guo et al., 2017) corrects them: one scalar fitted on the
-validation split, $T=\tempFour{}$ for E4, sharpens the posteriors and lowers ECE
-from \eceTestFour{} to \eceTestCalFour on the test set and from \eceCanFour{} to
-\eceCanCalFour on the proxy, without changing a single predicted class. The
-dashed curves of Figure \ref{fig:calibration} are the recalibrated E4
-reliability diagram. The temperature is stored next to the checkpoint and applied
-by the demo before the top-3 list is built, so the confidence shown to the user
-is the calibrated one. A value below one quantifies the under-confidence noted above.
-
-Two inference-time questions remain. The first is whether test-time augmentation
-closes part of the gap. Averaging the softmax over a horizontal flip raises E7
-from \accTestSeven\% to \ttaHflipTestSeven\% in-domain and from \accCanSeven\% to
-\ttaHflipCanSeven\% on the proxy; a five-crop average reaches \ttaFiveTestSeven\%
-and \ttaFiveCanSeven\%, while multi-scale averaging (short side 256, 288 and 320)
-reaches \ttaScalesTestSeven\% in-domain but falls to \ttaScalesCanSeven\% on the
-proxy. The pattern follows the mechanism above: the proxy is defined by blur and
-downsampling, so re-rendering the input at a larger short side removes part of the
-evidence the proxy was designed to withhold, whereas a flip leaves the image
-statistics unchanged. Test-time augmentation is therefore worth about one point,
-not the \gapSeven-point gap, and the multi-scale variant is harmful on this domain.
-
-The second question is how much one draw of the proxy costs. The proxy is a single
-random degradation of the 1\,000 clean images, so its level is itself a sample.
-Re-running the same generator with a different seed lowers E4 from \accCanFour\%
-to \redrawCanFour\% and E7 from \accCanSeven\% to \redrawCanSeven\%, a spread of
-two to four points, while the difference between the two models contracts only
-from \gainCanExternal{} to \redrawGapSeven{} points. Comparisons between models on
-this proxy are therefore meaningful; comparisons of the absolute level with other
-studies are not, which is why the gap is reported alongside the level throughout.
-
-Because every number here is a point estimate on a finite sample, we also report
-intervals and paired tests rather than bare differences. Bootstrapping the 5,000
-test images (4,000 resamples) gives E7 91.7\% (95\% CI 90.9--92.4) against E4
-90.5\% (89.7--91.4), and an exact McNemar test on the same images fixes 223 that
-E4 misses and breaks 167 that E4 gets, $p=0.005$. On the two proxy draws the same
-comparison reads 71.6\% against 66.0\% ($p<0.001$) and 67.6\% against 63.6\%
-($p=0.005$), so under the single-view protocol the external-data gain survives
-both draws; it is the only intervention in the study that does. De-duplication is
-not detectable: E8 against E7 flips 119/125, 65/58 and 63/72 images on test,
-proxy and the redraw, with $p$ between 0.49 and 0.75. An ensemble of the five
-fine-tuned models is reliably better than any one of them---93.4\% in-domain,
-74.2\% and 71.4\% on the two proxy draws, $p\le0.003$ against E7 throughout---and
-is left out of the deployment only because it costs five forward passes; it is
-the first item of the deployment backlog. On the 100 real photographs E7 scores
-91\% (85--96) under this protocol and 95\% (90--99) with the six-view fusion the
-demo uses; both intervals overlap the test-set interval, which is the statistical
-form of the observation that the batch behaves like a clean photograph rather than
-like a canteen tray.
+Both domains stay above the reliability diagonal, so label smoothing plus twelve
+epochs leaves the models under-confident rather than over-confident, and the
+fine-tuned models are the better calibrated ones (ECE \eceTestFour{} and
+\eceCanFour). Post-hoc temperature scaling with one scalar fitted on validation
+($T=\tempFour$) lowers test ECE to \eceTestCalFour{} and proxy ECE to
+\eceCanCalFour{} without changing a single predicted class. The same procedure,
+fitted per branch, is what the canteen head uses.
 
 \begin{figure*}[t]
 \centering
-\begin{subfigure}{0.48\textwidth}
+\begin{subfigure}{0.44\textwidth}
 \includegraphics[width=\linewidth]{confusion_test.png}
 \caption{In-domain test set}
 \end{subfigure}
 \hfill
-\begin{subfigure}{0.48\textwidth}
+\begin{subfigure}{0.44\textwidth}
 \includegraphics[width=\linewidth]{confusion_canteen.png}
 \caption{Proxy canteen domain}
 \end{subfigure}
-\caption{Row-normalized confusion matrices of the best configuration (E4).
-Class order follows the class list in the released code.}
+\caption{Row-normalized confusion matrices of the best Western configuration
+(E4). Class order follows the class list in the released code.}
 \label{fig:confusion}
 \end{figure*}
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{calibration.png}
-\caption{Reliability diagrams of the six configurations on the test (a) and the
-proxy (b) domains. The dashed line is perfect calibration; ECE is computed with
-15 equal-width bins.}
-\label{fig:calibration}
-\end{figure*}
+Averaging the softmax over a horizontal flip raises E7 from \accTestSeven\% to
+\ttaHflipTestSeven\% in-domain and from \accCanSeven\% to \ttaHflipCanSeven\% on
+the proxy; a five-crop average reaches \ttaFiveTestSeven\% and \ttaFiveCanSeven\%,
+while multi-scale averaging reaches \ttaScalesTestSeven\% in-domain but falls to
+\ttaScalesCanSeven\% on the proxy, because re-rendering at a larger short side
+removes part of the evidence the proxy was designed to withhold. Test-time
+augmentation is worth about one point here, not the \gapSeven-point gap, which is
+why the canteen branch invests in six views rather than in scales: the canteen
+shift is compositional, not a loss of resolution.
 
-\subsection{Qualitative Analysis}
-Figure \ref{fig:qual} shows Grad-CAM maps and the top-1 prediction with its
-energy interval for six proxy images. For correctly classified dishes the
-evidence concentrates on the food itself (the noodles in the fried rice, the
-folded dough of the dumplings, the fish on the sushi rice); for the images whose
-map is diffuse, the activation spreads over the plate rim and the background,
-which is the visual counterpart of the loss of evidence measured in
-Figure \ref{fig:confusion}. The top-3 list absorbs much of the error: on the
-proxy the correct class appears in the top-3 for 85\% of the images although
-top-1 accuracy is \accCanFour\%, and the interface flags the 48\% of cases whose
-posterior falls below the widening threshold.
+\subsection{Deployed Interface}
+The service is a FastAPI backend that loads the checkpoint once and a single page
+that lets the user upload a photograph or pick a bundled sample. The response
+contains the top-3 dishes with posteriors, the energy interval of
+Eq.~\ref{eq:interval} for each entry, and an uncertainty flag; a portion selector
+and a mass field rescale every entry on the client without a new forward pass, so
+the user sees how much of the range is recognition uncertainty and how much is
+serving size. A second tab handles mixed trays with 20 independent sigmoids
+trained on composited plates, and a third exposes the 116-class wide head. Two
+learned vetoes sit in front of the classifier, both logistic regressions on the
+pooled 512-dimensional feature the classifier already computes: the food veto
+rejects 96.9\% of 131 non-food photographs while keeping 95\% of 100 real
+canteen dishes, and the packaging veto rejects all 62 audited product cartons at
+the price of 0.5\% of dish images. Corrections are collected under every result
+as a JPEG plus a CSV row, which is the mechanism the canteen branch inherits.
 
-\begin{figure*}[t]
-\centering
-\begin{subfigure}{0.38\textwidth}
-\includegraphics[width=\linewidth]{gradcam_canteen.png}
-\caption{Grad-CAM overlays}
-\end{subfigure}
-\hfill
-\begin{subfigure}{0.38\textwidth}
-\includegraphics[width=\linewidth]{predictions_canteen.png}
-\caption{Top-1 prediction and energy interval}
-\end{subfigure}
-\caption{Qualitative results on the proxy domain for the best configuration
-(E4).}
-\label{fig:qual}
-\end{figure*}
-
-\subsection{Deployed Web Interface}
-The pipeline is a small web service: a FastAPI backend loads the checkpoint once,
-and a single page lets the user upload a photograph or pick a bundled proxy
-sample. The response contains the
-top-3 classes with their posteriors, the energy interval of (2) for each entry,
-and the uncertainty flag. Figure \ref{fig:demo} is a screenshot of the running
-system on a proxy image of Caesar salad: the correct dish is ranked first with a
-posterior of 0.98 and an interval of 220--300\,kcal, while the runner-up (Greek
-salad) stays below 0.1; with the weight field set to 350\,g every entry is
-rescaled to the typed mass, giving 390--520\,kcal here. A forward pass takes
-0.01\,s on the RTX 4060, within the budget of a phone browser.
-
-The interface also exposes the portion uncertainty that the interval of (2)
-hides. A three-way selector (small, regular, large) multiplies the reference mass
-by 0.7, 1.0 and 1.35, and a weight field accepts the actual mass in grams; either
-control rescales every entry on the client from the per-100\,g prior, without a
-new forward pass, so the user sees immediately how much of the reported range is
-recognition uncertainty and how much is the serving size.
-
-A second tab handles mixed trays. A multi-label variant of the same backbone
-(20 independent sigmoids, trained on plates composited from two or three dishes)
-marks which items are present, and each detected part gets its own selector or
-weight, so the page can sum the parts into one tray total.
-
-The subset is also enforced as a soft constraint. Because a 20-way softmax always
-returns a class, a whole roast chicken comes back as grilled salmon at 49\%.
-Scoring three crops (centre, squashed full frame, wide) and keeping the worst
-top-1 probability separates the two cases: supported dishes stay confident in
-every framing, unseen ones do not. At 0.32 the gate flags 5.3\% of supported
-photos and 27\% of 20 unseen classes, and the page then says the photo is probably
-not one of the twenty rather than showing a confident wrong answer.
-
-The rule above is a heuristic on scores, and two failure modes exposed it. A
-photograph of a supermarket product---a frozen-pizza carton whose front shows a
-pizza---is confidently in-domain, because nothing in the pipeline asks whether
-the pixels depict a plated dish rather than a printed one: in an audit of 62
-product photographs, 36 were accepted and given a dish name---the carton front
-above came back as pizza at 98\%. And the worst-case-of-three-framings score does not separate food
-from non-food: on 138 photographs that contain no dish (empty trays, cups,
-napkins, menu boards, hands) no single threshold both rejects them and keeps the
-dishes---at 0.32 the rule still accepts 70 of the 138, and at 0.60 it accepts 13
-but keeps only 79 of 100 real dishes, down from 96. Both
-problems are handled by learned vetoes instead, each a logistic regression on the
-512-dimensional average-pooled feature that the classifier already computes for
-its full-frame view, so neither head costs an extra forward pass. The food veto
-is fitted on the 131 negatives and 3,700 dish images and rejects 96.9\% (95\% CI
-93.9--99.2) of the negatives while keeping 95\% (90--99) of 100 real canteen
-dishes; the packaging veto is fitted on 79 product photographs and rejects all 62
-audited cartons before scoring, at the price of 18 of 3,700 dish images (0.5\%),
-mostly ice cream and doughnuts photographed on white. Both are stored as a small
-JSON weight file next to the checkpoint, and the page names which veto fired.
-A second tab trades depth for breadth. A 116-class head---the twenty dishes plus
-96 Chinese dishes---covers canteens that serve hot pot or stir-fries, but on the
-same 100 real photographs it names the right class 71.0\% of the time over all
-116 classes, against 89.0\% when the twenty-class subset is scored alone and
-99.0\% top-5. The errors are one-sided: when the wide head names a Food-101 dish
-it is almost always right (83.3\% on 5{,}000 held-out Food-101 images), and it
-loses the photograph only when a Chinese class takes the top. Overriding the
-narrow head on disagreement therefore does nothing---across a grid of top-$k$
-and confidence thresholds the real-photo accuracy moved between $-1.0$ and
-$0.0$ points---because the failure is the Chinese class winning, not the
-Food-101 class being overruled. Mixing the two posteriors does work. With
-$p=(1-\alpha)p_{116}+\alpha p_{20}$, where $p_{20}$ is zero outside the twenty
-classes, $\alpha=0.2$ lifts the real photographs from 71.0\% to 79.0\% (8 fixed,
-0 broken, McNemar $p=0.008$), held-out Food-101 from 83.3\% to 87.4\% (205 fixed,
-3 broken), and costs 1.0 point on 20{,}830 Chinese test images (212 broken, 0
-fixed). The blend is one line in the service and reuses the narrow head that is
-already loaded.
-
-Corrections are collected in the interface itself. Under every result the page
-offers a link that says the answer is wrong, which opens the class list of the
-active tab; a tray result lets the user strike out a dish that is not on the
-plate; and when the answer is uncertain the top-3 list doubles as the form, so a
-single click says which candidate was right. Each submission is stored as a JPEG
-plus a CSV row (timestamp, predicted, corrected, struck-out dishes, note, tab),
-and \texttt{scripts/feedback\_report.py} turns the rows into confusion pairs and
-into the classes that need more photographs. The mechanism is deployed and
-covered by the API tests, but the volume of real corrections is still too small
-to report as a result.
-
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.93\columnwidth]{demo_ui.png}
-\caption{The web demo: a photo (left) yields the top-3 dishes with posteriors and
-energy intervals (right); low-confidence entries are marked.}
-\label{fig:demo}
-\end{figure}
-
-\subsection{Discussion and Limitations}
+\section{Discussion and Limitations}
 \label{sec:lim}
-Three limitations matter. First, the cross-domain numbers come from a
-synthetic proxy built from Food-101 images, not from real canteen photographs;
-the degradation chain covers the main photometric and geometric effects of a
-phone capture but not occlusion by a tray, overlapping servings, or steam. The
-external-data experiment is a partial remedy rather than a substitute: 69\,512
-web images recover \gainCanExternal{} of the \gapFour-point gap (E7), which says
-that photographic diversity is part of what the synthetic proxy was missing, but
-they are still curated photos, not unprompted canteen snapshots. The level of the
-proxy is also a single random draw, so only the gap between models, which is much
-more stable than the level, is interpreted (Section \ref{sec:crossdomain}).
-Second, energy is estimated from class-level priors and a reference portion mass:
-the interval covers recipe variability, and the selector or a typed weight fixes
-the mass the user assumes, but the demo never measures it from the image.
-Third, every configuration is trained from a single seed. Repeating E4 with a
-different seed moves test accuracy from \accTestFour\% to \accTestFourSeed\% and
-proxy accuracy from \accCanFour\% to \accCanFourSeed\%, about half a point, which
-is the size of the augmentation, mobile and distillation differences discussed
-above; only the cross-domain effect of external data clears that bar. The
-bootstrap intervals of Section \ref{sec:crossdomain} make the same point from the
-other side: on 1,000 proxy images an interval spans about three points, which is
-why the paired tests, and not the point estimates, decide which differences are
-real. The 24-epoch
-check (E12) shows that the budget is not the limiting factor either: it adds five
-points of training accuracy without moving validation, test or proxy. The
-fine-tuning depth remains partially confounded with the learning-rate schedule,
-which the seed check does not remove.
+\textbf{The external set measures the menu, not the canteen.} The \webN{} web
+images are the strongest evidence in this paper that the twenty-dish head
+generalises, and they are also its weakest link: they are studio-lit photographs
+of single dishes, so they share the capture style of the training data and not the
+capture style of a tray. The acceptance rate exposes the mismatch (31.6\% on
+baozi against 84.4\% overall) precisely because the domain probe was fitted on
+plated dishes. A real canteen test set of a few hundred trays remains the
+missing experiment, and no amount of web screening substitutes for it.
+
+\textbf{Portions are not measured.} The energy interval covers recipe variability
+and, through the confidence term, recognition uncertainty, but the mass comes from
+a reference value or from the user. Reported intervals are therefore correct
+about the dish and optimistic about the plate.
+
+\textbf{One seed per configuration.} The Western baseline was re-run with a second
+seed and moved half a point, which we use as the noise floor. Every canteen
+number is a single draw, and the three negative results are negative partly
+because their effects are smaller than that floor. The 24-epoch control on the
+baseline (E12) shows that the budget is not the binding constraint, and the two
+pre-training runs differ by \cnGainPretrain{} points, far above the floor, so the
+main claim does not depend on the seed.
+
+\textbf{The gate is a heuristic stack.} A logistic probe, a veto from a wider
+head, a catch-all posterior and two auxiliary detectors are combined by
+thresholds fitted on validation. Each component is simple and inspectable, but
+the composition is not a single calibrated open-set model, and the thresholds do
+not transfer to a new canteen without refitting. Reporting coverage alongside
+rejection is our attempt to keep this honest; a proper treatment would calibrate
+the gate on a held-out tray set, which we do not have.
+
+\textbf{The Western baseline is kept, not discarded.} The twenty Food-101 classes
+and the synthetic proxy answer a different question from the one a Chinese
+canteen asks, and we report them as the baseline branch rather than as
+contributions. Their value here is methodological: the noise floor, the
+calibration procedure and the interface were all established there, and the
+pre-training gain reported above is only interpretable against that background.
 
 \section{Conclusion}
-We presented a reproducible 20-class protocol for campus canteen dish
-recognition with calorie-range estimation, and used it to isolate the effect of
-fine-tuning depth and color augmentation under a fixed recipe. Unfreezing the
-last residual stage helps most: +\gainFinetuneAug{} points over the frozen
-backbone at no inference cost, while color augmentation gains less and
-from-scratch training loses \scratchDrop{} points, locating most of the accuracy
-in the pre-trained weights. The largest remaining error source is domain shift:
-accuracy drops by \gapFour{} points on a phone-photograph proxy despite unchanged
-class semantics, and adding 69\,512 web images of the same classes recovers
-\gainCanExternal{} of those points, more than any change of the adaptation
-policy. A web demo returning top-3 dishes with energy intervals completes the
-pipeline; two small learned vetoes sit in front of it, so that photographs of
-product packaging and of food-free scenes are named as such instead of being
-given a confident wrong label.
+We presented a canteen dish recognition system for a Chinese campus menu, built
+on CNFOOD-241, and measured the three things that decide whether it works.
+Pre-training on 241 Chinese dish classes is worth \cnGainPretrain{} points over
+the same recipe started from ImageNet weights, more than any adaptation-policy or
+augmentation change we could obtain, and it costs nothing at inference. Six-view
+test-time fusion adds \cnFuseGain{} points on top, because a tray photograph has
+no canonical crop. The 21-way head, with a trained catch-all bucket, reaches
+\cnFuseTop\% top-1 and \cnFuseTopFive\% top-5 on \cnTestN{} held-out photographs,
+\cnDishAcc\% on the twenty dish rows, and \webTop\% on \webN{} web images that no
+part of the pipeline had seen.
+
+The open-set gate is the part we would defend hardest and the part that needs the
+most work. It keeps \gateIn\% of supported photographs while rejecting 84\% of
+unseen Chinese dishes, 95\% of non-food scenes and 87\% of real photographs of a
+Western menu, at a cost of \gateInCost{} points of coverage. That trade is the
+right one for a calorie display, where a silent wrong answer is worse than a
+retry, but the thresholds are fitted per deployment and the acceptance rate is
+uneven across the menu.
+
+Three interventions that a practitioner would try---stronger photometric
+augmentation, class-balanced loss and focal loss---do not survive the noise floor,
+and their failure is informative: the residual error is intra-class variation and
+the boundary of the catch-all class, not optimisation. The next step is therefore
+data, not architecture: a few hundred real tray photographs, labelled by the
+people eating from them, which is also what the correction link in the interface
+is collecting.
 
 \section*{Acknowledgment}
-The author thanks the course staff for the assignment specification and the
-maintainers of the Food-101 dataset.
+The author thanks the course staff for the assignment specification, the
+maintainers of CNFOOD-241 and Food-101, and the authors of ChineseFoodNet, whose
+imagery is part of the CNFOOD-241 release.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

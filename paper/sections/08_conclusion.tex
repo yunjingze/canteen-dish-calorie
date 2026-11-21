@@ -1,0 +1,37 @@
+\section{Conclusion}
+We presented a canteen dish recognition system for a Chinese campus menu, built
+on CNFOOD-241, and measured the three things that decide whether it works.
+Pre-training on 241 Chinese dish classes is worth \cnGainPretrain{} points over
+the same recipe started from ImageNet weights, more than any adaptation-policy or
+augmentation change we could obtain, and it costs nothing at inference. Six-view
+test-time fusion adds \cnFuseGain{} points on top, because a tray photograph has
+no canonical crop. The 21-way head, with a trained catch-all bucket, reaches
+\cnFuseTop\% top-1 and \cnFuseTopFive\% top-5 on \cnTestN{} held-out photographs,
+\cnDishAcc\% on the twenty dish rows, and \webTop\% on \webN{} web images that no
+part of the pipeline had seen.
+
+The open-set gate is the part we would defend hardest and the part that needs the
+most work. It keeps \gateIn\% of supported photographs while rejecting 84\% of
+unseen Chinese dishes, 95\% of non-food scenes and 87\% of real photographs of a
+Western menu, at a cost of \gateInCost{} points of coverage. That trade is the
+right one for a calorie display, where a silent wrong answer is worse than a
+retry, but the thresholds are fitted per deployment and the acceptance rate is
+uneven across the menu.
+
+Three interventions that a practitioner would try---stronger photometric
+augmentation, class-balanced loss and focal loss---do not survive the noise floor,
+and their failure is informative: the residual error is intra-class variation and
+the boundary of the catch-all class, not optimisation. The next step is therefore
+data, not architecture: a few hundred real tray photographs, labelled by the
+people eating from them, which is also what the correction link in the interface
+is collecting.
+
+\section*{Acknowledgment}
+The author thanks the course staff for the assignment specification, the
+maintainers of CNFOOD-241 and Food-101, and the authors of ChineseFoodNet, whose
+imagery is part of the CNFOOD-241 release.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
