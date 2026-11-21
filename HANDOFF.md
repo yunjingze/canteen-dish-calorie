@@ -1,6 +1,6 @@
 # FoodCLS 食品识别与热量估计 —— 项目交接文档（现状）
 
-> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-21（第十四轮：论文按食堂主线重写，10 页压到 9 页）。
+> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-21（第十五轮：演示视频分镜 + 分镜数字校验脚本，README §6.4、docs/演示视频分镜.md）。
 
 ## 0. 一句话
 
@@ -25,11 +25,11 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 
 ## 2. 服务与分发包
 
-- 服务：http://127.0.0.1:8000，后台 job **pwsh-37106c8931ae47fe**（2026-11-21 傍晚重启，health 已验），日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
+- 服务：http://127.0.0.1:8000，后台 job **pwsh-ffa725e982b84c69**（2026-11-21 傍晚重启，health 已验），日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
 - 分发包：dist/FoodDemo.zip 168.9 MB / 278 项，含 4 份 best.pt（f101n、plate40、cn116、**cn241_21_pre**）+ 新版 domain_head.json + 4 份 calibration.json；**不含**旧 cn241_21、不含旧 resnet18_last_stage_aug。
-- git：最新 **9a1965e**（论文按食堂主线重写、9 页、paper/_build_tex.py 已删），已推送 origin/main；再往前 ee8384d（623 张网图外部测试集）、362a540（网图筛选工具 + 指纹补 test）、c177910（类平衡/focal 否）。
+- git：最新见本节末尾的提交号；再往前 9a1965e（论文按食堂主线重写、9 页、paper/_build_tex.py 已删）、ee8384d（623 张网图外部测试集）、362a540（网图筛选工具 + 指纹补 test）、c177910（类平衡/focal 否）。
 - 论文：paper/main.pdf **9 页**（IEEE conference，要求 6–9 页），正文由 paper/sections/ 十个节文件经 paper/_assemble.py 拼成；**旧的 paper/_build_tex.py 已删除**（全文见 git 历史，别再手改 main.tex）。
-- 测试：python -m pytest tests -q → **114 passed**（约 6 s）。
+- 测试：python -m pytest tests -q → **114 passed**（约 6 s）。分镜数字另有 scripts/check_demo_shots.py（需服务在跑）。
 
 ## 3. 待办（只列还没做的）
 
@@ -40,6 +40,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 5. **外部测试集**：16chinese 只有糖醋里脊 1 类（392 张 88.5%）；自筛网图 20 道菜已出 **623 张 top-1 95.67%**（README §5.7.8，results/tables/cn_web20.json + web20_manifest.csv 冻结）。这套只报不改；要扩就新开一套（--out data/external/web20_v2），两套都报。**下一步可做**：把网图上暴露的域头误拒（包子/白斩鸡/炒面/可乐鸡翅）在真实托盘数据上复核，别只按网图调阈值。
 6. **小程序部署**：蒸馏 MobileNetV3 + int8（约 45 MB）；服务需要守护进程。
 7. 宽头换 f101n 主干 **已试并否掉**（README §5.5.1），不要再试。
+8. **演示视频**：分镜、口播稿、11 张镜头与中文名副本都已就绪（docs/演示视频分镜.md，README §6.4），**剩下就是录屏**——本机没有 ffmpeg，Edge 只能 headless 截图，脚本录不了。录前先跑 scripts/check_demo_shots.py。
 
 ## 4. 关键常量与规则（改前先读 app.py 顶部注释）
 
@@ -71,6 +72,8 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 - 论文：python scripts/make_paper_numbers.py（刷新 paper/numbers.tex）→ python paper/_assemble.py（拼 main.tex）→ cd paper; pdflatex main && bibtex main && pdflatex main && pdflatex main
 - 论文新图：python scripts/make_cn_figures.py（21 路混淆矩阵 cn21_confusion.png + 门控六集 cn_gate.png）
 - 日志：python scripts/fix_log_encoding.py（把 PowerShell 写出的 UTF-16 日志转成 UTF-8）
+- 演示分镜校验：python scripts/check_demo_shots.py（对着 results/tables/demo_shots.json 比 11 张 × 4 标签；漂移 exit 1，--update 覆盖）
+- 演示上传副本：python scripts/prepare_demo_upload.py（data/external/demo_shots → data/external/demo_upload，中文文件名）
 
 ## 6. 环境坑（新对话必读）
 
@@ -86,6 +89,6 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 ## 7. 文档地图
 
 - paper/：sections/ 十个节文件（00_preamble … 08_conclusion）+ _assemble.py 拼装 + numbers.tex 数字宏 + references.bib；main.tex 是产物。
-- README.md：§5.7.3 食堂 241 类预训练（现行）、§5.7.4 强增广 A/B（否）、§5.7.5 拒识后换标签、§5.7.6 类平衡/focal A/B（否 + 训练管线坑）、§5.7.7 网图筛选工具（ingest_web.py / fetch_web.py）、§5.7.8 20 道菜对外数字（623 张 95.7%）、§5.7.1/§5.7.2 第一版历史、§5.5.1 宽头换主干实验、§5.4.1 食物门控。
+- README.md：§5.7.3 食堂 241 类预训练（现行）、§5.7.4 强增广 A/B（否）、§5.7.5 拒识后换标签、§5.7.6 类平衡/focal A/B（否 + 训练管线坑）、§5.7.7 网图筛选工具（ingest_web.py / fetch_web.py）、§5.7.8 20 道菜对外数字（623 张 95.7%）、§5.7.1/§5.7.2 第一版历史、§5.5.1 宽头换主干实验、§5.4.1 食物门控；§6.4 演示视频（3 分钟）。
 - docs/HISTORY.md：历轮完整记录（第一~第十二轮、被否方案、每轮数字）。
-- docs/复现路径.md、docs/微信小程序上手指南.md、docs/永久公网地址.md、NOTICE（数据许可）。
+- docs/演示视频分镜.md（分镜表 + 口播稿 + 每镜头确切数字 + 录制清单）、docs/复现路径.md、docs/微信小程序上手指南.md、docs/永久公网地址.md、NOTICE（数据许可）。

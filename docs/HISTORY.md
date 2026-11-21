@@ -276,3 +276,15 @@ E:\项目作业\food_project\
 - **数字一致性**：正文里写死的 97.5 / 5.4 / 96.4 / 5.9 / 97.2 / 5.0 / 5.6 全部换成宏；接受率那句「84.4% against 84.4%」是笔误（应为 web 84.4 vs test 90.3），已改。
 - **引用**：references.bib 新增 6 条——cnfood241（Mendeley DOI 10.17632/fspyss5zbb.1）、xiong2026cnfood（PLOS One 21(9):e0358248）、chen2017chinesefoodnet（arXiv:1705.02743）、scheirer2013openset、bendale2016openset、patzer16chinese；scheirer 的 @inproceedings 字段用 journal 会报 empty booktitle，改 @article。
 - **构建命令**：python scripts/make_paper_numbers.py → python paper/_assemble.py → cd paper; pdflatex main && bibtex main && pdflatex main && pdflatex main。README §7 与 scripts/README_template.md 同步。
+
+## 15. 第十五轮：演示视频分镜与分镜数字校验（2026-11-21）
+
+- **动机**：课程要求 2–5 分钟演示，展示模型在**未参与训练的新样本**上的效果（results/_docx.txt:186）。论文已经 9 页定稿，剩下的交付项就是演示。但演示有个隐蔽风险：分镜里要念的具体数字（"90.4%"、"域头只有 23%"、"汉堡 + 薯条 + 牛排"）只对某一套权重成立，重训或重校准后静默失效，**录到一半才发现**。
+- **录屏能力先探清楚**：本机无 ffmpeg；tools/ 只有 cloudflared.exe、ngrok.exe；venv 无 imageio / imageio_ffmpeg / moviepy / cv2 / mss / pyautogui / playwright / requests；pip install websockets 报 "ERROR: Could not find a version that satisfies the requirement websockets (from versions: none)"（无外网 PyPI）。Edge 157.0.4341.60 可 --headless=new --screenshot 截图但不能录屏。→ **结论：演示视频只能用户自己录**（Win+G 或手机拍），我们负责把分镜、素材、口播稿、校验做扎实。
+- **11 张镜头**（data/external/demo_shots/，全部未参与训练）：01 酸辣土豆丝、02 红烧肉、03 地三鲜、04 包子、05 披萨、06 不是菜、07 鱼香肉丝（清单外）、08 麻婆豆腐（清单外）、09 北京烤鸭（清单外）、10 西式拼盘、11 食堂拼盘。来源混合：01/02/03/05 取自 623 张网图，06 取自 negatives，07 取自 cn241_21_ood，08 取自 16chinese，10/11 取自混合餐盘的 mix_02 / mix_13。
+- **scripts/prepare_demo_upload.py**：把 11 张复制成中文文件名到 data/external/demo_upload/（01_酸辣土豆丝.jpg … 11_食堂拼盘.jpg）。理由很实际——网页上传后**不显示文件名**（src/foodcls/static/index.html:961-983 的 showPreview 只设 img.src），录屏时观众只能靠资源管理器里的文件名判断"我现在拖的是哪道菜"。
+- **scripts/check_demo_shots.py**：把 11 张图 × 4 个标签（/api/cn/predict、/api/predict、/api/wide/predict、/api/mixed/predict）重放一遍，只比视频真正展示的字段（in_scope / threshold / domain / suggest / top / prob / plate_kcal），与 results/tables/demo_shots.json 对比；漂移 exit 1 并逐字段打印 a -> b，--update 覆盖基线；服务连不上 exit 2 并提示 scripts/start_demo.ps1。**踩坑**：初版在 main() 里写 global BASE_URL，但模块级 BASE_URL 已被用作 --url 的默认参数 → "SyntaxError: name 'BASE_URL' is used prior to global declaration"；改成把 url 当参数传给 snapshot() 后正常。
+- **11 个镜头的实测数字**（results/tables/demo_shots.json）：酸辣土豆丝 cn 95.1% / 阈值 **0.36**（域 0.9992 ≥ 0.90 触发放宽）/ 150–210 kcal；红烧肉 99.3% / 390–520 kcal；地三鲜在单菜标签被拒（top 蛋炒饭 39.1%）且**给出"换到食堂菜"按钮**，换过去 98.1%；鱼香肉丝食堂拒识（其它中餐 80%）、116 类给 53.7%；不是菜那张 not_food=True 无候选；食堂拼盘 炒青菜 65.3 + 干煸豆角 65.1 + 辣子鸡 51.3 / 550–840 kcal；西式拼盘 汉堡 100% + **华夫饼 87.9%（应为薯条）** + 牛排 56.2%（误检）/ 1100–1500 kcal。
+- **两个刻意的"不美化"**：① 混合餐盘那一段保留失败案例（薯条被判成华夫饼、多检出一块牛排），因为 plate-F1 只有 54.5，讲"很准"会被现场打脸；② 包子那张别当"阈值放宽"的例子——它的域概率只有 0.857 < 0.90，阈值仍是 0.4088，正好可以讲"域头不确定时保守"。
+- **实测延迟**（results/_demo_latency.py，整条 HTTP 往返含上传）：cn 89–138 ms、single 29–76 ms、mixed 37–88 ms。payload 里**没有 elapsed_ms**，网页上那个 1.25 s 是端到端含上传的，随机器变化 → 视频里只说"单张百毫秒级"。
+- **产出**：docs/演示视频分镜.md（分镜表 11 镜 + 逐镜口播稿 + 每镜头确切数字表 + 录制前检查 + 现场演示备选）、README §6.4、HANDOFF 第十五轮与待办 8、本节。

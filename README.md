@@ -935,6 +935,16 @@ module.exports = { BASE_URL: "http://192.168.1.23:8000" };
 - **真机 / 发布**：小程序的 `wx.request`/`wx.uploadFile` 只允许 **HTTPS + 已备案域名**，所以需要一个公网 HTTPS 地址（自己的域名 + Named Tunnel，或云服务器），再到小程序后台把该域名加进 request 与 uploadFile 合法域名。局域网 http 地址在真机开发版里可以靠"不校验合法域名"临时用，但正式发布不行（详见上手指南第 10 节）。
 - 小程序不需要另建模型：后端仍是本项目的 FastAPI 服务，GPU/CPU 都在电脑上，手机只负责拍照和展示。
 
+### 6.4 演示视频（3 分钟）
+
+课程要求 2–5 分钟的演示，展示模型在**未参与训练的新样本**上的效果。分镜表、口播稿、每个镜头的确切数字和录制前检查清单都在 [`docs/演示视频分镜.md`](docs/演示视频分镜.md)，这里只列要点：
+
+- 素材是 `data/external/demo_shots/` 下 11 张图（网图 623 张里的、16chinese 的、CNFOOD-241 的 OOD 集），全部未参与训练；`scripts/prepare_demo_upload.py` 会把它们复制成中文文件名到 `data/external/demo_upload/`，拖拽时认得出是哪道菜。
+- 录屏只能自己录：本机没有 ffmpeg，Edge 只能 headless 截图。用 `Win + G` 或手机拍屏幕，浏览器 F11 全屏。
+- **录之前跑一次** `python scripts/check_demo_shots.py`：它把 11 张图按 4 个标签重放一遍，与 `results/tables/demo_shots.json` 逐项比对 `in_scope / threshold / domain / suggest / top / prob / plate_kcal`。重训或重校准之后分镜里的数字会静默失效，这个脚本是唯一能发现它的地方（漂移 exit 1，`--update` 覆盖基线）。
+- 混合餐盘那一段故意留了一个失败案例（薯条被判成华夫饼、多检出一块牛排），讲"多标签仍会误检"比讲"很准"更可信，plate-F1 是 54.5。
+- 不要念推理耗时：payload 里没有 `elapsed_ms`，网页上的 1.25 s 含上传、随机器变化。
+
 ## 7. 论文
 
 `paper/main.tex` 为 IEEE Conference 模板的英文论文，正文中的每个数字都由 `paper/numbers.tex` 的宏提供，该文件由 `scripts/make_paper_numbers.py` 从实验结果自动生成，保证论文与代码结果一致。

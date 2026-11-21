@@ -1,7 +1,7 @@
 # Start the demo server, capture headless screenshots of the web UI, stop the server.
 param(
   [string]$OutDir = "results\figures",
-  [ValidateSet("single", "mixed", "wide")][string]$Mode = "single",
+  [ValidateSet("single", "mixed", "wide", "cn")][string]$Mode = "single",
   [string]$Sample = "",
   [int]$Grams = 0,
   [int]$Port = 8000,
@@ -36,14 +36,14 @@ try {
   if (-not $ok) { throw "server did not become healthy" }
 
   if (-not $Sample) {
-    $listUrl = if ($Mode -eq "mixed") { "/api/mixed/samples" } elseif ($Mode -eq "wide") { "/api/wide/samples" } else { "/api/samples" }
+    $listUrl = if ($Mode -eq "mixed") { "/api/mixed/samples" } elseif ($Mode -eq "wide") { "/api/wide/samples" } elseif ($Mode -eq "cn") { "/api/cn/samples" } else { "/api/samples" }
     $s = Invoke-RestMethod -Uri "http://127.0.0.1:$Port$listUrl"
     $Sample = $s.samples[0].name
   }
   Write-Host "mode = $Mode, sample = $Sample"
 
   $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-  $key = if ($Mode -eq "mixed") { "msample" } elseif ($Mode -eq "wide") { "wsample" } else { "sample" }
+  $key = if ($Mode -eq "mixed") { "msample" } elseif ($Mode -eq "wide") { "wsample" } elseif ($Mode -eq "cn") { "csample" } else { "sample" }
   $url = "http://127.0.0.1:$Port/?$key=" + [uri]::EscapeDataString($Sample)
   if ($Grams -gt 0) { $url += "&g=$Grams" }
   if ($Extra) { $url += $Extra }

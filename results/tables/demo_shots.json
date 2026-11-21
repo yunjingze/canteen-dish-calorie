@@ -1,0 +1,420 @@
+{
+ "01_hot_sour_potato.jpg": {
+  "cn": {
+   "in_scope": true,
+   "threshold": 0.36,
+   "domain": 0.9992,
+   "suggest": null,
+   "top": "酸辣土豆丝",
+   "prob": 0.951,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "汤面",
+   "prob": 0.528,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "汤面",
+   "prob": 0.295,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "酸辣土豆丝",
+   "prob": 1.0,
+   "plate_kcal": 210
+  }
+ },
+ "02_braised_pork.jpg": {
+  "cn": {
+   "in_scope": true,
+   "threshold": 0.36,
+   "domain": 0.9997,
+   "suggest": null,
+   "top": "红烧肉",
+   "prob": 0.993,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "牛排",
+   "prob": 0.662,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "东坡肉",
+   "prob": 0.697,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "红烧肉",
+   "prob": 1.0,
+   "plate_kcal": 520
+  }
+ },
+ "03_di_san_xian.jpg": {
+  "cn": {
+   "in_scope": true,
+   "threshold": 0.36,
+   "domain": 0.9999,
+   "suggest": null,
+   "top": "地三鲜",
+   "prob": 0.981,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": false,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": "食堂菜",
+   "top": "蛋炒饭",
+   "prob": 0.391,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "回锅肉",
+   "prob": 0.593,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": false,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "地三鲜",
+   "prob": 0.993,
+   "plate_kcal": 370
+  }
+ },
+ "04_baozi.jpg": {
+  "cn": {
+   "in_scope": true,
+   "threshold": 0.4088,
+   "domain": 0.8567,
+   "suggest": null,
+   "top": "包子",
+   "prob": 0.94,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "饺子",
+   "prob": 0.824,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "冰淇淋",
+   "prob": 0.189,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": null,
+   "prob": 0.0,
+   "plate_kcal": 0
+  }
+ },
+ "05_pizza.jpg": {
+  "cn": {
+   "in_scope": false,
+   "threshold": 0.4088,
+   "domain": 0.2306,
+   "suggest": "单菜识别",
+   "top": "西红柿炒鸡蛋",
+   "prob": 0.704,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "披萨",
+   "prob": 0.983,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "披萨",
+   "prob": 0.961,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "披萨",
+   "prob": 1.0,
+   "plate_kcal": 610
+  }
+ },
+ "06_not_food.jpg": {
+  "cn": {
+   "in_scope": false,
+   "threshold": 0.4088,
+   "domain": 0.2742,
+   "suggest": null,
+   "top": null,
+   "prob": 0.0,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": false,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "冰淇淋",
+   "prob": 0.97,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": false,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "冰淇淋",
+   "prob": 0.395,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": false,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": null,
+   "prob": 0.0,
+   "plate_kcal": 0
+  }
+ },
+ "07_off_list_cn.jpg": {
+  "cn": {
+   "in_scope": false,
+   "threshold": 0.36,
+   "domain": 0.9883,
+   "suggest": "单菜识别",
+   "top": null,
+   "prob": 0.0,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "蛋炒饭",
+   "prob": 0.457,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "鱼香肉丝",
+   "prob": 0.537,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "干煸豆角",
+   "prob": 0.476,
+   "plate_kcal": 280
+  }
+ },
+ "08_mapo_tofu.jpg": {
+  "cn": {
+   "in_scope": false,
+   "threshold": 0.4088,
+   "domain": 0.4413,
+   "suggest": "单菜识别",
+   "top": null,
+   "prob": 0.0,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "披萨",
+   "prob": 0.937,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "麻婆豆腐",
+   "prob": 0.793,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "西红柿炒鸡蛋",
+   "prob": 0.83,
+   "plate_kcal": 230
+  }
+ },
+ "09_peking_duck.jpg": {
+  "cn": {
+   "in_scope": false,
+   "threshold": 0.4088,
+   "domain": 0.7315,
+   "suggest": "单菜识别",
+   "top": "可乐鸡翅",
+   "prob": 0.21,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "牛排",
+   "prob": 0.679,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "北京烤鸭",
+   "prob": 0.633,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "可乐鸡翅",
+   "prob": 0.986,
+   "plate_kcal": 970
+  }
+ },
+ "10_mixed_burger_fries.jpg": {
+  "cn": {
+   "in_scope": false,
+   "threshold": 0.4088,
+   "domain": 0.0003,
+   "suggest": "单菜识别",
+   "top": null,
+   "prob": 0.0,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "汉堡",
+   "prob": 0.941,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "汉堡",
+   "prob": 0.974,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "汉堡",
+   "prob": 1.0,
+   "plate_kcal": 1500
+  }
+ },
+ "11_mixed_cn_tray.jpg": {
+  "cn": {
+   "in_scope": true,
+   "threshold": 0.36,
+   "domain": 0.998,
+   "suggest": null,
+   "top": "辣子鸡",
+   "prob": 0.697,
+   "plate_kcal": null
+  },
+  "single": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "蛋炒饭",
+   "prob": 0.69,
+   "plate_kcal": null
+  },
+  "wide": {
+   "in_scope": true,
+   "threshold": 0.18,
+   "domain": null,
+   "suggest": null,
+   "top": "蛋炒饭",
+   "prob": 0.196,
+   "plate_kcal": null
+  },
+  "mixed": {
+   "in_scope": true,
+   "threshold": 0.32,
+   "domain": null,
+   "suggest": null,
+   "top": "炒青菜",
+   "prob": 0.653,
+   "plate_kcal": 840
+  }
+ }
+}
