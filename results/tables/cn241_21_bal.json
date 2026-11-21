@@ -1,0 +1,127 @@
+{
+ "mode": "finetune",
+ "arch": "resnet18",
+ "init": "results/runs/cn241_all_pre/best.pt",
+ "epochs": 8,
+ "best_epoch": 8,
+ "best_val_acc": 0.8663053297199639,
+ "classes": [
+  "hot_sour_potato",
+  "di_san_xian",
+  "hand_torn_cabbage",
+  "stir_fried_greens",
+  "dry_fried_beans",
+  "tomato_egg",
+  "steamed_egg",
+  "sweet_sour_ribs",
+  "cola_wings",
+  "boiled_chicken",
+  "braised_chicken",
+  "spicy_chicken",
+  "braised_pork",
+  "boiled_pork",
+  "sweet_sour_pork",
+  "farmhouse_pork",
+  "pepper_pork",
+  "mu_xi_pork",
+  "baozi",
+  "fried_noodles",
+  "other_cn"
+ ],
+ "history": [
+  {
+   "epoch": 1,
+   "train_loss": 1.2062160092957166,
+   "train_acc": 0.7739158163265306,
+   "val_acc": 0.7881662149954833,
+   "val_macro_f1": 0.8072043595187329,
+   "epoch_time_s": 345.0
+  },
+  {
+   "epoch": 2,
+   "train_loss": 1.0534716451249155,
+   "train_acc": 0.8303039965986394,
+   "val_acc": 0.8071364046973803,
+   "val_macro_f1": 0.8161783790004652,
+   "epoch_time_s": 320.1
+  },
+  {
+   "epoch": 3,
+   "train_loss": 0.9861718298626595,
+   "train_acc": 0.8655399659863946,
+   "val_acc": 0.8401084010840109,
+   "val_macro_f1": 0.8539270180451856,
+   "epoch_time_s": 326.3
+  },
+  {
+   "epoch": 4,
+   "train_loss": 0.9305078510929938,
+   "train_acc": 0.8871173469387755,
+   "val_acc": 0.8396567299006323,
+   "val_macro_f1": 0.8538789887956687,
+   "epoch_time_s": 349.4
+  },
+  {
+   "epoch": 5,
+   "train_loss": 0.8784387965186112,
+   "train_acc": 0.913531037414966,
+   "val_acc": 0.8518518518518519,
+   "val_macro_f1": 0.8651971910259895,
+   "epoch_time_s": 392.3
+  },
+  {
+   "epoch": 6,
+   "train_loss": 0.8434637991749511,
+   "train_acc": 0.9322385204081632,
+   "val_acc": 0.8595302619692864,
+   "val_macro_f1": 0.8724523256383812,
+   "epoch_time_s": 373.7
+  },
+  {
+   "epoch": 7,
+   "train_loss": 0.8124356085345859,
+   "train_acc": 0.94796981292517,
+   "val_acc": 0.8654019873532068,
+   "val_macro_f1": 0.8802797494681884,
+   "epoch_time_s": 373.7
+  },
+  {
+   "epoch": 8,
+   "train_loss": 0.8014782948964307,
+   "train_acc": 0.9529124149659864,
+   "val_acc": 0.8663053297199639,
+   "val_macro_f1": 0.8786176192258446,
+   "epoch_time_s": 381.8
+  }
+ ],
+ "test": {
+  "top1": 0.7765681700362882,
+  "top5": 0.963452566096423,
+  "per_class": {
+   "hot_sour_potato": 0.9770992366412213,
+   "di_san_xian": 0.958041958041958,
+   "hand_torn_cabbage": 0.916030534351145,
+   "stir_fried_greens": 0.8823529411764706,
+   "dry_fried_beans": 0.9469026548672567,
+   "tomato_egg": 0.9770992366412213,
+   "steamed_egg": 0.9618320610687023,
+   "sweet_sour_ribs": 0.7786259541984732,
+   "cola_wings": 0.8625954198473282,
+   "boiled_chicken": 0.9411764705882353,
+   "braised_chicken": 0.8091603053435115,
+   "spicy_chicken": 0.8320610687022901,
+   "braised_pork": 0.8854961832061069,
+   "boiled_pork": 0.9465648854961832,
+   "sweet_sour_pork": 0.9312977099236641,
+   "farmhouse_pork": 0.7553956834532374,
+   "pepper_pork": 0.7633587786259542,
+   "mu_xi_pork": 0.9278350515463918,
+   "baozi": 0.9465648854961832,
+   "fried_noodles": 0.9007633587786259,
+   "other_cn": 0.5723495702005731
+  },
+  "n": 3858,
+  "ece": 0.05884608075114679,
+  "mean_top1_prob": 0.8312843071008341
+ }
+}

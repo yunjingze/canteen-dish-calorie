@@ -183,7 +183,7 @@ cd src
 ```powershell
 .\.venv\Scripts\python.exe scripts/prepare_cn241.py --class-xls data/external/cnfood241_class_name.xls --train-zip data/external/cnfood241_train600x600.zip --val-zip data/external/cnfood241_val600x600.zip --out data/splits/cn241_full
 .\.venv\Scripts\python.exe scripts/train_cn241.py --mode probe --data-root data/splits/cn241_full --classes results/tables/cn241_classes_full.json
-.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_full --classes results/tables/cn241_classes_full.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 8 --batch-size 64 --workers 0 --out results/tables/cn241_full.json --save-dir results/runs/cn241_full
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_full --classes results/tables/cn241_classes_full.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 8 --batch-size 64 --workers 4 --out results/tables/cn241_full.json --save-dir results/runs/cn241_full
 .\.venv\Scripts\python.exe scripts/eval_cn_scope.py
 .\.venv\Scripts\python.exe scripts/eval_cn_domain.py
 ```
@@ -492,7 +492,7 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 # 2) 抽 20 类：train 包 9:1 切分，val 包全部做 test
 .\.venv\Scripts\python.exe scripts/prepare_cn241.py --class-xls data/external/cnfood241_class_name.xls --train-zip data/external/cnfood241_train600x600.zip --val-zip data/external/cnfood241_val600x600.zip --out data/splits/cn241_full
 # 3) 训练（8 GB 显存，约 28 分钟）
-.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_full --classes results/tables/cn241_classes_full.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 8 --batch-size 64 --workers 0 --out results/tables/cn241_full.json --save-dir results/runs/cn241_full
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_full --classes results/tables/cn241_classes_full.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 8 --batch-size 64 --workers 4 --out results/tables/cn241_full.json --save-dir results/runs/cn241_full
 # 4) 门控阈值与真实照行为
 .\.venv\Scripts\python.exe scripts/eval_cn_scope.py
 .\.venv\Scripts\python.exe scripts/eval_cn_domain.py
@@ -534,7 +534,7 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 # 1) 生成 21 类：20 类硬链接 + 其它中餐桶；另留 29 类做「没见过的清单外」测试
 .\.venv\Scripts\python.exe scripts/prepare_cn241_other.py
 # 2) 训练（约 45 分钟）
-.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 8 --batch-size 64 --workers 0 --out results/tables/cn241_21.json --save-dir results/runs/cn241_21
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 8 --batch-size 64 --workers 4 --out results/tables/cn241_21.json --save-dir results/runs/cn241_21
 # 3) 五集评估与规则搜索
 .\.venv\Scripts\python.exe scripts/eval_cn_other.py
 .\.venv\Scripts\python.exe scripts/search_cn_other_rule.py
@@ -621,9 +621,9 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 # 1) 241 类语料（约 1 分钟，硬链接）
 .\.venv\Scripts\python.exe scripts/prepare_cn241_all.py
 # 2) 预训练（约 2.5 小时）
-.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_all --classes results/tables/cn241_all_classes.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 5 --batch-size 64 --workers 0 --out results/tables/cn241_all_pretrain.json --save-dir results/runs/cn241_all_pre
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_all --classes results/tables/cn241_all_classes.json --init results/runs/resnet18_last_stage_aug_f101n/best.pt --epochs 5 --batch-size 64 --workers 4 --out results/tables/cn241_all_pretrain.json --save-dir results/runs/cn241_all_pre
 # 3) 21 路微调（约 35 分钟）
-.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/cn241_all_pre/best.pt --epochs 8 --batch-size 64 --workers 0 --out results/tables/cn241_21_pre.json --save-dir results/runs/cn241_21_pre
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/cn241_all_pre/best.pt --epochs 8 --batch-size 64 --workers 4 --out results/tables/cn241_21_pre.json --save-dir results/runs/cn241_21_pre
 # 4) 门控扫阈值、重抽域头特征并重拟合、五集决策链
 .\.venv\Scripts\python.exe scripts/search_cn_other_rule.py
 .\.venv\Scripts\python.exe scripts/extract_domain_features.py --views 1
@@ -643,7 +643,7 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 
 **结论是否。** 总 top-1 只多 0.03 pt（噪声级），val 持平，top-5 多 0.73；但白斩鸡反而 −3.0、木须肉 −4.1，糖醋里脊 +3.0、青椒肉丝 +2.3、手撕包菜 +2.3，几项互相抵消。所以瓶颈不是拍照的色温/亮度，而是这些菜的类内差异（切法、配菜、酱色深浅）——要再往上得动数据或标签，增广这条路到此为止。权重留在 `results/runs/cn241_21_strong`，未上线。
 
-复现：`python scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/cn241_all_pre/best.pt --epochs 8 --batch-size 64 --workers 0 --aug strong --out results/tables/cn241_21_strong.json --save-dir results/runs/cn241_21_strong`
+复现：`python scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/cn241_all_pre/best.pt --epochs 8 --batch-size 64 --workers 4 --aug strong --out results/tables/cn241_21_strong.json --save-dir results/runs/cn241_21_strong`
 
 #### 5.7.5 拒识之后：一个按钮把照片送去对的标签
 
@@ -670,6 +670,40 @@ python scripts/fetch_brand_nutrition.py --check   # 只校验行数与合理性
 **代价。** 按钮不是白给：拒识时服务端多跑一次目标标签的完整判定（单次 verdict：single 34 ms、wide 67 ms、cn 68 ms，均值；最差 320 ms），这段耗时加在**每次拒识**上，不只是点按钮时。外部集的"答对"列按类名相等统计，跨清单的类名不同，所以外部集那几列不适用，看 real 与清单内两列即可。
 
 复现：`python scripts/eval_tab_route.py`（约 50 秒，CPU 也行）。
+
+#### 5.7.6 类平衡与 focal：A/B（否，但把瓶颈看清了）
+
+食堂头最弱的是样本少的类：`boiled_chicken` 训练集只有 223 张，多数类 842 张。这一轮不动其它超参，只换损失：反频率类权重（clip 到 [1/4, 4]，记 `bal`）、在此基础上再加 focal γ=1（`focal`）、以及把兜底类 `other_cn` 钉回权重 1.0 的版本（`bal_noother`）。三次都是 8 epoch、同一初始化 `results/runs/cn241_all_pre/best.pt`、同一 batch/seed，只有损失不同。
+
+| 变体 | val top-1（best ep） | test top-1 | 20 道菜 top-1 | other_cn | top-5 | ECE | 宏平均 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 基线 `cn241_21_pre` | **87.08**（7） | **79.83** | 87.41 | 66.5 | 97.64 | 5.11 | 86.3 |
+| `bal`（权重） | 86.63（8） | 77.66 | **89.24** | 57.2 | 96.35 | 5.88 | **88.0** |
+| `focal`（权重 + γ=1） | 86.22（7） | 79.78 | 87.86 | 65.5 | **98.65** | **4.72** | 87.0 |
+| `bal_noother`（other_cn 不加权） | 86.99（8） | 79.78 | 88.02 | 65.3 | 97.17 | 4.97 | 87.1 |
+
+test 的 3,858 张里有 1,396 张是 `other_cn`（「别的中餐」兜底类），2,462 张是那 20 道菜；网页真正要分的只有这 20 道，所以单独列一栏。
+
+- **类权重把菜认准了，把「不是这些菜」认废了**：20 道菜 +1.83（`boiled_chicken` 82.4→94.1、`sweet_sour_ribs` 71.0→77.9、`sweet_sour_pork` 87.8→93.1），宏平均 +1.7，但 `other_cn` 掉 9.2，总 top-1 −2.18。兜底类占 test 的 36%，一掉就把菜的收益全吃掉。
+- **把兜底类钉回 1.0 之后两头都不赚**：`other_cn` 回到 65.3（−1.2），菜的增益缩到 +0.61，总 top-1 −0.05——等于白跑一轮。原因是权衡不在权重本身，而在 `other_cn` 与 20 道菜的决策边界：加权只是把边界推过去，推回来就回到原点。
+- **focal 换来的是校准不是准确率**：top-1 持平（−0.05）、top-5 +1.01、ECE −0.38，但 val 掉 0.86、宏平均 −0.7。既然网页展示 top-3、且域头/threshold 都是在 val 上定的，val 掉就不值得换。
+- **三条都不上线**，默认权重仍是 `results/runs/cn241_21_pre/best.pt`。共同结论：**瓶颈不在损失函数**，而在类内差异（切法、配菜、酱色——见 §5.7.4 的强增广 A/B 同样无效）和数据边界（`other_cn` 与 20 道菜的界线本身模糊，见 §5.7.1）。要真提升只能补真实托盘照片（HANDOFF 待办 1）。
+
+复现（三次只差后三个参数）：
+
+```powershell
+$env:OMP_NUM_THREADS='1'; $env:MKL_NUM_THREADS='1'
+$env:PYTHONPATH="E:\项目作业\.venv\Lib\site-packages"   # 见下面踩坑 ①
+.\.venv\Scripts\python.exe scripts/train_cn241.py --mode finetune --data-root data/splits/cn241_21 --classes results/tables/cn241_21_classes.json --init results/runs/cn241_all_pre/best.pt --epochs 8 --batch-size 64 --workers 4 --eval-workers 4 --class-balance weights --balance-cap 4 --out results/tables/cn241_21_bal.json --save-dir results/runs/cn241_21_bal
+# focal：再加 --focal-gamma 1.0；bal_noother：再加 --balance-skip other_cn
+```
+
+踩坑（这几轮真正花时间的地方，也是「为什么慢」的答案）：
+
+1. **Windows 下 DataLoader 的 worker 用 base 解释器启动**。`multiprocessing` 在 spawn 模式下取 `sys._base_executable`，venv 的 base 是 `E:\Python\python.exe`（另一份 **CPU-only** 的 torch）；子进程于是 import 到错误的 torch，管线**静默死锁**——父进程等 data、worker 占 0% CPU、不报任何错、不打印任何 epoch。用 `PYTHONPATH` 指向 venv 的 `site-packages` 让子进程加载同一份 torch 才解决（两个解释器同为 Python 3.13.12，ABI 一致）。
+2. **torch 默认 24 个 intra-op 线程空转**。默认设置下进程 10 s 烧 206 CPU 秒（≈20 核），GPU 只有 0–9%；在 worker 里再开 4 线程对 224² 小张量是负收益。`OMP_NUM_THREADS=1` + `MKL_NUM_THREADS=1` + `--workers 4` 实测 **124 张/s**，单进程只有 51 张/s（8.1 vs 19.6 ms/张）。
+3. 本文档早先的复现命令写 `--workers 4`，照着跑会慢 2.4 倍——已全部改成 `--workers 4`。
+4. 本机电源方案是 OEM 的 **Silent**（CPU 固定 2.2 GHz 无 turbo、GPU 在 P4、功率上限 100 W），所以 epoch 337–438 s 是正常值；之前 `cn241_21_pre` 那轮 228–411 s 同量级，别把「机器降频」误判成代码退化。
 
 ### 5.8 测试时增强与代理域抽样波动
 

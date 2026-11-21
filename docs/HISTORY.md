@@ -1,4 +1,4 @@
-# FoodCLS 历轮记录与细节（归档，截至 2026-11-19 第十轮）
+# FoodCLS 历轮记录与细节（归档，截至 2026-11-21 第十一轮）
 
 > 归档文件：这里是 2026-11-19 第七轮结束时 HANDOFF.md 的完整内容——历轮过程、被否掉的方案、每轮的数字都在这里。**现行状态见 ../HANDOFF.md**。除补写历史细节外不再更新。
 
@@ -223,3 +223,11 @@ E:\项目作业\food_project\
 - **测试**：新增 tests/test_tab_route.py 9 个（refusal reason 顺序、_TAB_ORDER 形状、suggest 门槛与 veto/weak 跳过），全套 90 passed。
 - **文档**：README §5.7.5 新增；§5.7 第 484 行"手动切换、不做自动路由"改为指向 5.7.5；HANDOFF 第十轮、§7 地图。
 - **教训**：用 read 全文 + write 回写会截断大文件（README 831 行曾被写成 336 行）；改大文档一律用按行处理的 Python 脚本，并先 git checkout 兜底。
+## 14. 2026-11-21 第十一轮：类平衡 / focal A/B（否）+ 训练管线三个坑
+- **动机**：21 路头最弱类样本很少（boiled_chicken 训练 223 张，多数类 842）。这一轮不动其它超参、只换损失，看能否补弱类。
+- **代码**（scripts/train_cn241.py）：新增 FocalLoss(gamma, weight, label_smoothing)；class_weights(dataset, num_classes, cap=4.0, skip=())（反频率、clip 到 [1/cap, cap]、skip 的类钉回 1.0）；CLI 新增 --class-balance {none,weights} / --balance-cap / --balance-skip / --focal-gamma / --debug-every。tests/test_class_balance.py 6 个（γ=0 等价 CrossEntropyLoss、权重生效、focal 压高置信样本、cap、skip）。
+- **四个 run**：各 8 epoch、同 init results/runs/cn241_all_pre/best.pt、batch 64、seed 42，只有损失不同。
+- **明细**（val 取 best epoch / test 3,858 张；「20 道菜」= 去掉 other_cn 后的 2,462 张）：基线 val 87.08(ep7) / test 79.83 / 菜 87.41 / other_cn 66.5 / top5 97.64 / ECE 5.11 / 宏平均 86.3；bal 86.63(ep8) / 77.66 / **89.24** / 57.2 / 96.35 / 5.88 / **88.0**；focal 86.22(ep7) / 79.78 / 87.86 / 65.5 / **98.65** / **4.72** / 87.0；bal_noother 86.99(ep8) / 79.78 / 88.02 / 65.3 / 97.17 / 4.97 / 87.1。
+- **结论**：类权重把菜认准了（白斩鸡 82.4→94.1、糖醋排骨 71.0→77.9、糖醋里脊 87.8→93.1）但把「不是这些菜」认废了（other_cn −9.2，占总 top-1 −2.18，因为兜底类占 test 36%）；把 other_cn 钉 1.0 后兜底类回到 65.3、菜的增益缩到 +0.61、总 −0.05（白干）；focal 只换到校准（top5 +1.01、ECE −0.38，val −0.86）。**三条都不上线**，默认仍是 cn241_21_pre/best.pt。瓶颈确认为类内差异 + other_cn 边界，不在损失函数——与第九轮强增广否掉同一结论。
+- **时间黑洞（根因）**：① Windows 下 DataLoader worker 用 sys._base_executable 启动，venv 的 base 是 E:\Python\python.exe（CPU-only torch 2.14.1），子进程 import 错 torch 后**静默死锁**（父等 data、worker 0% CPU、无异常）；解 = $env:PYTHONPATH=<venv>\Lib\site-packages。② torch 默认 24 intra-op 线程空转：10 s 烧 206 CPU 秒、GPU 0–9%；解 = OMP/MKL=1 + workers 4，实测 124 张/s（单进程 51）。③ README 旧复现命令写 --workers 0，照跑慢 2.4 倍（已 7 处改为 4）。④ 电源方案 OEM Silent：CPU 2.2 GHz 无 turbo、GPU P4 / 100 W，epoch 337–438 s 属正常（pre 那轮 228–411 s 同量级）。
+- **产物**：results/tables/cn241_21_{bal,focal,bal_noother}.json（权重目录 results/runs/cn241_21_* 被 .gitignore 忽略）；results/_run_bal_suite.ps1 / _run_bal_noother.ps1 / _cmp_bal.py / _cmp_dish.py。文档：README §5.7.6、HANDOFF 第十一轮与 §6 训练坑重写。

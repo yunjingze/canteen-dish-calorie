@@ -49,6 +49,47 @@ def fit_temperature(val_logits: np.ndarray, labels: np.ndarray) -> float:
     return float(torch.exp(log_t).item())
 
 
+class FocalLoss(nn.Module):
+    """Cross-entropy with optional class weights and focal modulation.
+
+    gamma=0 and weight=None is plain (optionally smoothed) cross-entropy, so the
+    baseline path stays bit-for-bit the same.  Only used for the class-balance
+    A/B on the 21-way canteen head: boiled chicken has 223 training images
+    against 842 for most dishes, and a focal term keeps the easy bulk classes
+    from dominating the gradient once the weights even the loss out.
+    """
+
+    def __init__(self, gamma: float = 0.0, weight=None, label_smoothing: float = 0.0):
+        super().__init__()
+        self.gamma = float(gamma)
+        self.label_smoothing = float(label_smoothing)
+        self.register_buffer("weight", None if weight is None else torch.as_tensor(weight, dtype=torch.float32))
+
+    def forward(self, logits, target):
+        ce = torch.nn.functional.cross_entropy(
+            logits, target, weight=self.weight, label_smoothing=self.label_smoothing, reduction="none")
+        if self.gamma <= 0:
+            return ce.mean()
+        logp = torch.nn.functional.log_softmax(logits, dim=1)
+        pt = logp.gather(1, target[:, None]).squeeze(1).exp()
+        return (ce * (1.0 - pt).pow(self.gamma)).mean()
+
+
+def class_weights(dataset, num_classes: int, cap: float = 4.0, skip=()):
+    """Inverse-frequency weights, clipped so one tiny class cannot dominate.
+
+    The skip indices keep weight 1.0 — used for the "other" bucket, whose many
+    exemplars make it the anchor of overall accuracy.
+    """
+    counts = np.bincount([label for _, label in dataset.samples], minlength=num_classes).astype(np.float64)
+    counts = np.maximum(counts, 1.0)
+    w = counts.sum() / (num_classes * counts)
+    w = np.clip(w, 1.0 / cap, cap)
+    for idx in skip:
+        w[int(idx)] = 1.0
+    return w, counts
+
+
 def class_table(path: Path):
     table = json.loads(path.read_text(encoding="utf-8"))
     return table, [c["slug"] for c in table["classes"]]
@@ -181,7 +222,16 @@ def run_finetune(args, names, table, device):
         groups.append({"params": backbone, "lr": args.lr_backbone})
     opt = torch.optim.AdamW(groups, weight_decay=args.weight_decay)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=max(1, args.epochs))
-    criterion = nn.CrossEntropyLoss(label_smoothing=args.label_smoothing)
+    weights = None
+    if args.class_balance == "weights":
+        skip = [names.index(s.strip()) for s in args.balance_skip.split(",") if s.strip() in names]
+        w, counts = class_weights(train_ds, len(names), cap=args.balance_cap, skip=skip)
+        weights = torch.tensor(w, dtype=torch.float32, device=device)
+        rare = sorted(zip(counts.tolist(), names))[:3]
+        print("class weights on (cap %.1f); rarest: %s | weight range %.2f..%.2f | fixed: %s" % (
+            args.balance_cap, ", ".join(f"{n} {int(c)}" for c, n in rare), w.min(), w.max(),
+            ",".join(names[i] for i in skip) or "none"), flush=True)
+    criterion = FocalLoss(gamma=args.focal_gamma, weight=weights, label_smoothing=args.label_smoothing)
     use_amp = device.type == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
 
@@ -201,7 +251,7 @@ def run_finetune(args, names, table, device):
     for epoch in range(start_epoch, args.epochs + 1):
         model.train()
         t0, loss_sum, seen, correct = time.perf_counter(), 0.0, 0, 0
-        for x, y in loaders["train"]:
+        for step, (x, y) in enumerate(loaders["train"]):
             x, y = x.to(device, non_blocking=True), y.to(device, non_blocking=True)
             opt.zero_grad(set_to_none=True)
             with torch.amp.autocast("cuda", enabled=use_amp):
@@ -213,6 +263,8 @@ def run_finetune(args, names, table, device):
             loss_sum += loss.item() * x.size(0)
             seen += x.size(0)
             correct += (logits.argmax(1) == y).sum().item()
+            if args.debug_every and (step + 1) % args.debug_every == 0:
+                print(f"  batch {step+1} {seen} imgs {time.perf_counter()-t0:.0f}s", flush=True)
         sched.step()
         model.eval()
         probs, labs = [], []
@@ -287,6 +339,7 @@ def main(argv=None) -> int:
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--eval-workers", type=int, default=0)
+    ap.add_argument("--debug-every", type=int, default=0, help="print progress every N train batches")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--C", type=float, default=1.0)
     ap.add_argument("--lr-head", type=float, default=1e-3)
@@ -294,6 +347,13 @@ def main(argv=None) -> int:
     ap.add_argument("--weight-decay", type=float, default=5e-4)
     ap.add_argument("--label-smoothing", type=float, default=0.1)
     ap.add_argument("--aug", default="base", choices=["base", "strong"])
+    ap.add_argument("--class-balance", default="none", choices=["none", "weights"])
+    ap.add_argument("--balance-cap", type=float, default=4.0,
+                    help="clip inverse-frequency weights to [1/cap, cap]")
+    ap.add_argument("--balance-skip", default="",
+                    help="comma-separated class slugs kept at weight 1.0, e.g. other_cn")
+    ap.add_argument("--focal-gamma", type=float, default=0.0,
+                    help="0 = plain cross-entropy; 1-2 typical for hard-example focus")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--out", default=str(ROOT / "results/tables/cn241_probe.json"))
     ap.add_argument("--save-dir", default=str(ROOT / "results/runs/cn241_last_stage"))

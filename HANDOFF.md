@@ -1,6 +1,6 @@
 # FoodCLS 食品识别与热量估计 —— 项目交接文档（现状）
 
-> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-19（第十轮：门控收口 + 拒识后换标签）。
+> 只放「现在是什么状态 / 怎么跑 / 哪里会踩坑」，目标一屏半读完。历轮实验的完整过程、被否掉的方案、每轮数字全在 [docs/HISTORY.md](docs/HISTORY.md)，考古去那里。最后更新：2026-11-21（第十一轮：类平衡/focal A/B 否 + 训练管线三个坑）。
 
 ## 0. 一句话
 
@@ -19,18 +19,20 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 
 食堂完整决策链（五集，results/tables/domain_gate_pre.json）：清单内 **90.3%** / 清单外中餐 16.1% / 没见过的中餐 23.7% / 其它中餐桶 5.2% / 真实西餐照 13.0%；验证集 92.0%。第一版（cn241_21，门 0.3445、域头 0.2554）仍在盘上做对照，已被取代；旧五集数字在 domain_gate_pre_backup.json。外部集只有一道菜可测：16chinese 糖醋里脊 392 张 Top-1 88.5%（cn_external.json）。
 
+损失函数 A/B 已试并否（README §5.7.6）：反频率类权重把 20 道菜 +1.83（白斩鸡 82.4→94.1），但兜底类 other_cn −9.2，总 top-1 −2.18；把 other_cn 权重钉回 1.0 后兜底类回到 65.3、菜的增益缩到 +0.61、总 −0.05（白干）；focal γ=1 总 top-1 持平、top-5 +1.0、ECE −0.38，但 val −0.86。三条都不上线，默认权重不变。
+
 拒识卡片现在给一个「换到 X」按钮（README §5.7.5，results/tables/tab_route.json）：食堂标签拒掉的真实西餐照 87 张里给 84 个按钮、79 个答对（94%）；清单内 300 张里误给 10 张（0 对，都是食堂标签自己认不出的难图）。单菜→食堂很干净（清单内 94–97%，外部集 0 误切）。域概率当开关已试并否掉——被拒食堂照与西餐照的域概率重叠，改看拒识原因（veto/weak 不给按钮）。
 
 ## 2. 服务与分发包
 
-- 服务：http://127.0.0.1:8000，后台 job **pwsh-6e596d591fd947f8**，日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
+- 服务：http://127.0.0.1:8000，后台 job **pwsh-b06b4e0e15a441b7**（2026-11-21 16:16 重启），日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / domain.threshold 0.3524 / cn_temperature 0.7783 / mixed_classes 40 / wide 116。
 - 分发包：dist/FoodDemo.zip 168.9 MB / 278 项，含 4 份 best.pt（f101n、plate40、cn116、**cn241_21_pre**）+ 新版 domain_head.json + 4 份 calibration.json；**不含**旧 cn241_21、不含旧 resnet18_last_stage_aug。
 - git：本轮「Loosen the canteen gate when the domain probe is sure」已推送 origin/main；上一轮 9a398ea。
 - 测试：python -m pytest tests -q → **90 passed**（约 5 s）。
 
 ## 3. 待办（只列还没做的）
 
-1. **弱类增广**：241 类预训练把白斩鸡 58.8→77.1%、糖醋排骨 64.1→71.0%；**强增广已试并否掉**（README §5.7.4：test +0.03，白斩鸡 −3.0、木须肉 −4.1）——瓶颈在类内差异，不在拍照色温。
+1. **弱类增广 / 重加权**：241 类预训练把白斩鸡 58.8→77.1%、糖醋排骨 64.1→71.0%。**强增广已试并否**（README §5.7.4：test +0.03，白斩鸡 −3.0、木须肉 −4.1）；**类权重 / focal 也已试并否**（README §5.7.6：菜的 +1.8 全被兜底类 −9.2 吃掉）。两条路都指同一结论——瓶颈是类内差异和数据边界，不是损失函数或色温；只能补真实托盘数据。
 2. **三套门控收口 + 换标签按钮**：已完成（README §5.7.5）——三套阈值/文案进 _SCOPE_SPECS 一张表，拒识后按目标标签自己的门控给「换到 X」；域概率当开关已试并否掉（拒绝原因 overlap）。**仍未做**：上传即自动切标签（无感路由）。
 3. **真实托盘反馈闭环**：labels.csv 只有 2 条自测样本（source=sample，2026-11-18）；「一步纠正」只在 top-1 < 0.55 或拒识时出现；一顿饭的份量先验（米饭整碗）没建模。
 4. **份量回归**：固定份量先验 ±15%，真实差异 ±50%。
@@ -70,7 +72,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 - DSH 文件策略已是 danger-full-access、审批关闭——**不要请求沙箱升级**。
 - 内层 shell 是 **PowerShell 5.1**：.ps1 必须纯 ASCII；`>` 和 Tee-Object 写 **UTF-16LE**，重定向请用 `| Out-File -Encoding utf8`；存量日志用 scripts/fix_log_encoding.py 转。
 - python -c 传中文路径会被 GBK 打断——写 .py 文件再跑；控制台中文乱码不代表数据坏了，看 json 或用 read 工具。
-- 训练 **--workers 0**（分类）；混合餐盘 --workers 4 反而快（约 160 s/epoch）。GPU 8 GB，eval batch 4，别并行两个训练。
+- 训练必设 `$env:OMP_NUM_THREADS=1`、`$env:MKL_NUM_THREADS=1`、`$env:PYTHONPATH=<venv>\Lib\site-packages`，并 `--workers 4`：缺 PYTHONPATH 时 worker 会用 base 解释器的 CPU-only torch，管线**静默死锁**（父等 data、worker 0% CPU、无报错）；OMP 默认 24 线程空转把整机拖死。实测 124 张/s（workers 4）vs 51 张/s（workers 0）。GPU 8 GB，eval batch 4，别并行两个训练。
 - 电池供电时 GPU 被压到 19 W（一个 epoch 25 分钟）并报 WinError 1455 / OpenBLAS 内存错——**先接电源**。
 - README/HANDOFF/app.py 是 CRLF；多行 old_string 用 edit 会 not found，改用按行处理的 Python 脚本。
 - 门控与主干绑定（见 §4），打包时不能只打主干不打两个 json。
@@ -78,6 +80,6 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 
 ## 7. 文档地图
 
-- README.md：§5.7.3 食堂 241 类预训练（现行）、§5.7.4 强增广 A/B（否）、§5.7.5 拒识后换标签、§5.7.1/§5.7.2 第一版历史、§5.5.1 宽头换主干实验、§5.4.1 食物门控。
-- docs/HISTORY.md：历轮完整记录（第一~第十轮、被否方案、每轮数字）。
+- README.md：§5.7.3 食堂 241 类预训练（现行）、§5.7.4 强增广 A/B（否）、§5.7.5 拒识后换标签、§5.7.6 类平衡/focal A/B（否 + 训练管线坑）、§5.7.1/§5.7.2 第一版历史、§5.5.1 宽头换主干实验、§5.4.1 食物门控。
+- docs/HISTORY.md：历轮完整记录（第一~第十一轮、被否方案、每轮数字）。
 - docs/复现路径.md、docs/微信小程序上手指南.md、docs/永久公网地址.md、NOTICE（数据许可）。
