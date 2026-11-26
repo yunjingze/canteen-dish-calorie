@@ -36,26 +36,26 @@
     "donuts": 0.51,
     "ice_cream": 0.2,
     "chocolate_cake": 0.38,
-    "hot_sour_potato": 0.1,
-    "di_san_xian": 0.1,
-    "hand_torn_cabbage": 0.1,
-    "stir_fried_greens": 0.1,
-    "dry_fried_beans": 0.1,
-    "tomato_egg": 0.1,
-    "steamed_egg": 0.1,
-    "sweet_sour_ribs": 0.1,
-    "cola_wings": 0.1,
-    "boiled_chicken": 0.1,
-    "braised_chicken": 0.1,
-    "spicy_chicken": 0.1,
-    "braised_pork": 0.1,
-    "boiled_pork": 0.1,
-    "sweet_sour_pork": 0.1,
-    "farmhouse_pork": 0.1,
+    "hot_sour_potato": 0.15,
+    "di_san_xian": 0.42,
+    "hand_torn_cabbage": 0.78,
+    "stir_fried_greens": 0.17,
+    "dry_fried_beans": 0.3,
+    "tomato_egg": 0.34,
+    "steamed_egg": 0.23,
+    "sweet_sour_ribs": 0.23,
+    "cola_wings": 0.22,
+    "boiled_chicken": 0.22,
+    "braised_chicken": 0.29,
+    "spicy_chicken": 0.12,
+    "braised_pork": 0.36,
+    "boiled_pork": 0.37,
+    "sweet_sour_pork": 0.2,
+    "farmhouse_pork": 0.22,
     "pepper_pork": 0.1,
-    "mu_xi_pork": 0.1,
-    "baozi": 0.1,
-    "fried_noodles": 0.1
+    "mu_xi_pork": 0.23,
+    "baozi": 0.29,
+    "fried_noodles": 0.38
   },
   "checkpoint_threshold": 0.35,
   "plates": {
@@ -382,15 +382,15 @@
     },
     "per_class": {
       "threshold": 0.35,
-      "precision": 0.6436119116228207,
+      "precision": 0.6485963213933702,
       "recall": 0.46463245492339483,
-      "f1": 0.5396697538420463,
+      "f1": 0.5414141409273581,
       "exact_match": 0.11,
-      "parts_per_plate": 1.735,
-      "single_pred_rate": 0.39166666666666666
+      "parts_per_plate": 1.7216666666666667,
+      "single_pred_rate": 0.395
     },
-    "exact_match_detect_parts": 0.08166666666666667,
-    "empty_plates": 0.006666666666666667
+    "exact_match_detect_parts": 0.105,
+    "empty_plates": 0.01
   },
   "canteen": {
     "global": {
@@ -404,15 +404,15 @@
     },
     "per_class": {
       "threshold": 0.35,
-      "precision": 0.6319018404902438,
-      "recall": 0.5038434661072649,
-      "f1": 0.560653187686325,
-      "exact_match": 0.11333333333333333,
-      "parts_per_plate": 1.9016666666666666,
-      "single_pred_rate": 0.32666666666666666
+      "precision": 0.652014652014055,
+      "recall": 0.49755415793116875,
+      "f1": 0.5644074509552698,
+      "exact_match": 0.12,
+      "parts_per_plate": 1.82,
+      "single_pred_rate": 0.35833333333333334
     },
-    "exact_match_detect_parts": 0.085,
-    "empty_plates": 0.0
+    "exact_match_detect_parts": 0.12833333333333333,
+    "empty_plates": 0.011666666666666667
   },
   "per_class": {}
 }

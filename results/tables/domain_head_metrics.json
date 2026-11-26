@@ -1,109 +1,109 @@
 {
   "mode": "mean",
-  "C": 0.1,
-  "threshold": 0.2554,
-  "val_auc": 0.9737,
-  "val_keep_cn": 0.9499,
-  "val_reject_west": 0.851,
+  "C": 0.03,
+  "threshold": 0.2868,
+  "val_auc": 0.9831,
+  "val_keep_cn": 0.9496,
+  "val_reject_west": 0.9025,
   "sets": {
     "cn_ood": {
       "n": 232,
-      "accept": 0.7974,
-      "mean_prob": 0.6501,
-      "accuracy": 0.797
+      "accept": 0.75,
+      "mean_prob": 0.6322,
+      "accuracy": 0.75
     },
     "cn_te": {
-      "n": 3858,
-      "accept": 0.9129,
-      "mean_prob": 0.8205,
-      "accuracy": 0.913
+      "n": 3916,
+      "accept": 0.9114,
+      "mean_prob": 0.8361,
+      "accuracy": 0.911
     },
     "cn_tr": {
       "n": 12000,
-      "accept": 0.9607,
-      "mean_prob": 0.8899,
-      "accuracy": 0.961
+      "accept": 0.9668,
+      "mean_prob": 0.913,
+      "accuracy": 0.967
     },
     "cn_va": {
-      "n": 2214,
-      "accept": 0.9499,
-      "mean_prob": 0.8702,
+      "n": 2302,
+      "accept": 0.9496,
+      "mean_prob": 0.8928,
       "accuracy": 0.95
     },
     "f101_te": {
       "n": 5000,
-      "accept": 0.1444,
-      "mean_prob": 0.1116,
-      "accuracy": 0.856
+      "accept": 0.0974,
+      "mean_prob": 0.089,
+      "accuracy": 0.903
     },
     "f101_tr": {
       "n": 12000,
-      "accept": 0.1404,
-      "mean_prob": 0.1101,
-      "accuracy": 0.86
+      "accept": 0.0924,
+      "mean_prob": 0.087,
+      "accuracy": 0.908
     },
     "f101_va": {
       "n": 2000,
-      "accept": 0.149,
-      "mean_prob": 0.1153,
-      "accuracy": 0.851
+      "accept": 0.0975,
+      "mean_prob": 0.0897,
+      "accuracy": 0.902
     },
     "mixed_real": {
       "n": 8,
-      "accept": 0.25,
-      "mean_prob": 0.1666,
-      "accuracy": 0.75
+      "accept": 0.125,
+      "mean_prob": 0.1229,
+      "accuracy": 0.875
     },
     "neg": {
       "n": 138,
-      "accept": 0.3116,
-      "mean_prob": 0.2318,
-      "accuracy": 0.688
+      "accept": 0.2246,
+      "mean_prob": 0.1935,
+      "accuracy": 0.775
     },
     "real": {
       "n": 100,
-      "accept": 0.34,
-      "mean_prob": 0.2438,
-      "accuracy": 0.66
+      "accept": 0.28,
+      "mean_prob": 0.227,
+      "accuracy": 0.72
     }
   },
   "per_class_f101_te": {
-    "caesar_salad": 0.156,
-    "chicken_wings": 0.268,
-    "chocolate_cake": 0.04,
-    "donuts": 0.12,
-    "dumplings": 0.464,
-    "french_fries": 0.096,
-    "fried_rice": 0.152,
-    "greek_salad": 0.148,
-    "grilled_salmon": 0.1,
-    "hamburger": 0.048,
-    "hot_dog": 0.096,
-    "ice_cream": 0.116,
-    "lasagna": 0.096,
-    "pancakes": 0.064,
-    "pizza": 0.096,
-    "ramen": 0.316,
-    "spaghetti_bolognese": 0.152,
-    "steak": 0.148,
-    "sushi": 0.128,
-    "waffles": 0.084
+    "caesar_salad": 0.112,
+    "chicken_wings": 0.212,
+    "chocolate_cake": 0.028,
+    "donuts": 0.128,
+    "dumplings": 0.156,
+    "french_fries": 0.076,
+    "fried_rice": 0.168,
+    "greek_salad": 0.128,
+    "grilled_salmon": 0.068,
+    "hamburger": 0.02,
+    "hot_dog": 0.068,
+    "ice_cream": 0.068,
+    "lasagna": 0.056,
+    "pancakes": 0.06,
+    "pizza": 0.08,
+    "ramen": 0.22,
+    "spaghetti_bolognese": 0.084,
+    "steak": 0.112,
+    "sushi": 0.064,
+    "waffles": 0.04
   },
   "per_class_real": {
-    "chicken_wings": 0.625,
+    "chicken_wings": 0.5,
     "chocolate_cake": 0.0,
-    "donuts": 0.2857,
-    "dumplings": 0.6,
+    "donuts": 0.1429,
+    "dumplings": 0.7,
     "french_fries": 0.2857,
-    "fried_rice": 0.5714,
-    "greek_salad": 1.0,
-    "hamburger": 0.0833,
+    "fried_rice": 0.4286,
+    "greek_salad": 0.5,
+    "hamburger": 0.1667,
     "hot_dog": 0.0,
-    "ice_cream": 1.0,
-    "lasagna": 0.0,
+    "ice_cream": 0.0,
+    "lasagna": 0.1667,
     "pancakes": 0.0,
     "pizza": 0.2727,
-    "ramen": 0.75,
+    "ramen": 0.25,
     "spaghetti_bolognese": 0.2857,
     "waffles": 0.0
   }
