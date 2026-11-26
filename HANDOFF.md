@@ -26,7 +26,7 @@ Windows 上的食品识别 + 热量估算网页应用：FastAPI + PyTorch resnet
 ## 2. 服务与分发包
 
 - 服务：http://127.0.0.1:8000，后台 job **pwsh-5baf0a9a8c9549fa**（2026-11-26 夜间重启，health 已验），日志 results/_server.log（UTF-8）。health 应显示 checkpoint=resnet18_last_stage_aug_f101n / **ensemble.members 5**（T=0.63） / **cn_classes 21**（20 道菜 + 米饭，桶不计） / cn_threshold 0.4088（域头 ≥0.90 的图 payload 里报 0.36） / **domain.threshold 0.2868** / **cn_temperature 0.7745** / mixed_classes 40 / wide 116 / **heif true**。
-- 分发包：dist/FoodDemo.zip **327.6 MB / 343,539,726 B / 286 项**（2026-11-26 22:37 重打包，解包 369.9 MB），含 **8 份 best.pt**——集成五份（f101n + aug / nodedup / e24 / seed7）、plate40、cn116、**cn241_22_pre** + ensemble_calibration.json + 22 类版 domain_head.json 与各 run 的 calibration.json；**不含**旧 cn241_21_pre、cn241_21、以及其它被否掉的历史 run。`scripts/start_demo.ps1 -NoEnsemble`（或 `FOODCLS_ENSEMBLE=0`）可退回单模型，此时包只需 f101n 一份。
+- 分发包：dist/FoodDemo.zip **327.6 MB / 286 项**（2026-11-26 22:49 重打包，解包约 369.9 MB），含 **8 份 best.pt**——集成五份（f101n + aug / nodedup / e24 / seed7）、plate40、cn116、**cn241_22_pre** + ensemble_calibration.json + 22 类版 domain_head.json 与各 run 的 calibration.json；**不含**旧 cn241_21_pre、cn241_21、以及其它被否掉的历史 run。`scripts/start_demo.ps1 -NoEnsemble`（或 `FOODCLS_ENSEMBLE=0`）可退回单模型，此时包只需 f101n 一份。
 - git：最新提交 **a3bb31f**（重打包后的域头 / 餐盘表 / 论文）← **d07c491**（第十七轮把 A/B 改进整体入库：五模型集成、22 类食堂头、域头重拟合、诊断三件、文档）；再往前 4951b81、c65a563、a488747、e4c2e4b（演示分镜 + 分镜数字校验脚本）、9a1965e（论文按食堂主线重写、9 页）、ee8384d（623 张网图外部测试集）。
 - 论文：paper/main.pdf **9 页**（IEEE conference，要求 6–9 页），正文由 paper/sections/ 十个节文件经 paper/_assemble.py 拼成；**旧的 paper/_build_tex.py 已删除**（全文见 git 历史，别再手改 main.tex）。
 - 测试：python -m pytest tests -q → **125 passed**（约 8 s；新增 test_feedback_split.py 11 个用例）。分镜数字另有 scripts/check_demo_shots.py（需服务在跑，11 张 × 4 标签）。
