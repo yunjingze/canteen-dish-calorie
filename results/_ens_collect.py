@@ -31,7 +31,7 @@ RUNS = [
     "resnet18_last_stage_aug_f101n_e24",   # E12 longer
     "resnet18_last_stage_aug_seed7",       # E13 reseed
 ]
-SPLITS = ["test", "canteen", "canteen_s7"]
+SPLITS = ["val", "test", "canteen", "canteen_s7"]
 NORM = [transforms.ToTensor(), transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD)]
 
 

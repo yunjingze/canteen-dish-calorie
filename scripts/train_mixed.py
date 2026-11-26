@@ -76,6 +76,8 @@ def parse_args(argv=None):
     p.add_argument("--out", default=str(ROOT / "results/runs/resnet18_multilabel_aug"))
     p.add_argument("--init-ckpt", default=None,
                    help="warm-start weights (e.g. the single-dish or 20-class plate run)")
+    p.add_argument("--pairing-prior", action="store_true",
+                   help="draw plate companions from the role-based pairing prior")
     return p.parse_args(argv)
 
 
@@ -284,9 +286,11 @@ def main(argv=None):
     canteen_src = SplitDataset(data_root / "splits/canteen_clean", CLASS_NAMES, transform=None)
 
     train_samples = list(train_src.samples)
-    val_w = build_eval_set(val_src.samples, args.n_val, seed=1234, num_classes=offset)
+    val_w = build_eval_set(val_src.samples, args.n_val, seed=1234, num_classes=offset,
+                          prior=args.pairing_prior)
     val_c, val_c_real, test_c_samples = [], [], []
-    canteen_plates = build_eval_set(canteen_src.samples, args.n_canteen, seed=999, num_classes=offset)
+    canteen_plates = build_eval_set(canteen_src.samples, args.n_canteen, seed=999, num_classes=offset,
+                                    prior=args.pairing_prior, prior_names=list(CN_CLASS_NAMES))
     single_c = None
     if args.classes == "plate":
         cn_train = SplitDataset(cn_root / "train", CN_CLASS_NAMES, transform=None)
@@ -295,7 +299,8 @@ def main(argv=None):
         label_map = [offset + i for i in range(len(CN_CLASS_NAMES))]
         train_samples += [(p, offset + lab) for p, lab in cn_train.samples]
         val_c = build_eval_set(cn_val.samples, args.n_val, seed=4321,
-                               num_classes=len(CN_CLASS_NAMES), label_map=label_map)
+                               num_classes=len(CN_CLASS_NAMES), label_map=label_map,
+                               prior=args.pairing_prior, prior_names=list(CN_CLASS_NAMES))
         canteen_real = real_canteen_samples(data_root)
         if canteen_real:
             # canteen_real holds only some of the 20 dishes; map the units that
@@ -304,7 +309,9 @@ def main(argv=None):
             remap = {g: i for i, g in enumerate(present)}
             real_local = [(p, remap[lab]) for p, lab in canteen_real]
             val_c_real = build_eval_set(real_local, args.n_real, seed=777,
-                                        num_classes=len(present), label_map=present)
+                                        num_classes=len(present), label_map=present,
+                                        prior=args.pairing_prior,
+                                        prior_names=[CN_CLASS_NAMES[g] for g in present])
         test_c_samples = [(p, offset + lab) for p, lab in cn_test.samples]
     # shuffle so a primary dish is not always drawn from the first pool
     order = np.random.default_rng(args.seed).permutation(len(train_samples))
@@ -315,7 +322,7 @@ def main(argv=None):
 
     train_ds = MixedPlateDataset(
         train_samples, args.n_train, transform=build_transforms(True, True),
-        seed=args.seed, num_classes=n_classes,
+        seed=args.seed, num_classes=n_classes, prior=args.pairing_prior,
     )
     train_loader = DataLoader(
         train_ds,

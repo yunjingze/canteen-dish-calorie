@@ -1,0 +1,17 @@
+{
+ "csv": "E:\\项目作业\\food_project\\data\\splits\\feedback\\labels.csv",
+ "out": "E:\\项目作业\\food_project\\data\\splits\\feedback_built",
+ "rows": 2,
+ "used": 2,
+ "by_mode": {
+  "single": 1,
+  "cn": 0,
+  "wide": 0,
+  "mixed": 1
+ },
+ "skipped": {},
+ "notes": {
+  "weak_positive": 1,
+  "mixed_with_strike_out": 1
+ }
+}

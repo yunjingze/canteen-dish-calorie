@@ -38,6 +38,8 @@ A.load_cn_model()
 A.load_wide_model()
 A.load_domain_head()
 TAG = os.environ.get("EVAL_TAG", "")
+VAL_ROOT = os.environ.get("EVAL_CN_VAL", "data/splits/cn241_full/val")
+IN_ROOT = os.environ.get("EVAL_CN_IN", "data/splits/cn241_full/test")
 HEAD = A._state.get("domain_head")
 if HEAD is None:
     raise SystemExit("no domain head loaded; run scripts/fit_domain_head.py first")
@@ -53,10 +55,10 @@ def build_sets():
     sets = {}
     # Same source as test but held out twice: once for the head, and here for
     # tuning a decision rule that is then reported on test.
-    sets["val"] = [p for c in CN_CLASS_NAMES
-                   for p in sorted((ROOT / "data/splits/cn241_full/val" / c).glob("*.jpg"))]
-    sets["in"] = [p for c in CN_CLASS_NAMES
-                  for p in sorted((ROOT / "data/splits/cn241_full/test" / c).glob("*.jpg"))]
+    sets["val"] = [p for c in CN_NAMES
+                   for p in sorted((ROOT / VAL_ROOT / c).glob("*.jpg"))]
+    sets["in"] = [p for c in CN_NAMES
+                  for p in sorted((ROOT / IN_ROOT / c).glob("*.jpg"))]
     sets["out_cn"] = [p for c in CN_LIKE for p in wide_test_glob(c, 24)]
     ood = json.loads((ROOT / "results/tables/cn241_other_heldout.json").read_text("utf-8"))
     sets["out_ood"] = [ROOT / it["path"] for it in ood["items"]]
@@ -76,11 +78,15 @@ def veto_fired(veto, fused):
                 and veto["prob"] >= float(np.max(fused)) + A.CN_VETO_MARGIN)
 
 
+OTHER_INDEX = A._state.get("cn_other_index")
+CN_NAMES = list(A._state.get("cn_names") or A.CN_CLASS_NAMES)
+
+
 def decide(views, fused, veto, want_domain):
     probs = np.asarray(fused, dtype=np.float64)
-    other = float(probs[A.CN_NUM_CLASSES]) if probs.size > A.CN_NUM_CLASSES else None
-    other_top = bool(int(np.argmax(probs)) == A.CN_NUM_CLASSES) if other is not None else False
-    dish = probs[:A.CN_NUM_CLASSES] if other is not None else probs
+    other = float(probs[OTHER_INDEX]) if OTHER_INDEX is not None and probs.size > OTHER_INDEX else None
+    other_top = bool(int(np.argmax(probs)) == OTHER_INDEX) if other is not None else False
+    dish = probs[:OTHER_INDEX] if other is not None else probs
     dom = A._domain_prob(views["frames"]) if want_domain else None
     sc = A.scope_of(views["views"], probs, cn=True, cn_veto_result=veto,
                     cn_other_prob=other, cn_other_top=other_top, cn_domain_prob=dom)
@@ -105,10 +111,10 @@ def run(paths, tag):
             "p_domain": round(float(dom), 4) if dom is not None else None,
             "robust": on["robust_prob"],
             "p_other": round(float(other), 4) if other is not None else None,
-            "top": A.CN_CLASS_NAMES[top],
+            "top": CN_NAMES[top],
             "domain_fired": bool((on.get("domain") or {}).get("fired")),
             "veto": veto_fired(veto, fused),
-            "other_top": bool(int(np.argmax(fused)) == A.CN_NUM_CLASSES),
+            "other_top": bool(OTHER_INDEX is not None and int(np.argmax(fused)) == OTHER_INDEX),
         })
         if (i + 1) % 50 == 0:
             el = time.time() - t0
@@ -141,10 +147,10 @@ for tag, paths in sets.items():
     rows = run(paths, tag)
     res["sets"][tag] = summarise(rows)
     if tag == "in":
-        truth = np.array([A.CN_CLASS_NAMES.index(r["cls"]) if r["cls"] in A.CN_CLASS_NAMES else -1
-                          for r in rows])
-        pred = np.array([A.CN_CLASS_NAMES.index(r["top"]) for r in rows])
-        res["in_top1_21class"] = round(float(np.mean(pred == truth)), 4)
+        truth = np.array([CN_NAMES.index(r["cls"]) if r["cls"] in CN_NAMES else -1 for r in rows])
+        pred = np.array([CN_NAMES.index(r["top"]) for r in rows])
+        res["in_top1"] = round(float(np.mean(pred == truth)), 4)
+        res["n_dishes"] = len(CN_NAMES)
     if tag in ("out_cn", "real"):
         per = {}
         for r in rows:

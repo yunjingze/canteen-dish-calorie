@@ -232,7 +232,7 @@ E:\项目作业\food_project\
 - **时间黑洞（根因）**：① Windows 下 DataLoader worker 用 sys._base_executable 启动，venv 的 base 是 E:\Python\python.exe（CPU-only torch 2.14.1），子进程 import 错 torch 后**静默死锁**（父等 data、worker 0% CPU、无异常）；解 = $env:PYTHONPATH=<venv>\Lib\site-packages。② torch 默认 24 intra-op 线程空转：10 s 烧 206 CPU 秒、GPU 0–9%；解 = OMP/MKL=1 + workers 4，实测 124 张/s（单进程 51）。③ README 旧复现命令写 --workers 0，照跑慢 2.4 倍（已 7 处改为 4）。④ 电源方案 OEM Silent：CPU 2.2 GHz 无 turbo、GPU P4 / 100 W，epoch 337–438 s 属正常（pre 那轮 228–411 s 同量级）。
 - **产物**：results/tables/cn241_21_{bal,focal,bal_noother}.json（权重目录 results/runs/cn241_21_* 被 .gitignore 忽略）；results/_run_bal_suite.ps1 / _run_bal_noother.ps1 / _cmp_bal.py / _cmp_dish.py。文档：README §5.7.6、HANDOFF 第十一轮与 §6 训练坑重写。
 
-## 12. 第十二轮：网图筛选工具与指纹补 test（2026-11-21）
+## 15. 第十二轮：网图筛选工具与指纹补 test（2026-11-21）
 
 - **动机**：外部测试集只有 16chinese 的糖醋里脊一道菜（392 张，88.5%），报告里缺「20 道菜整体对外多少」这一栏。补它只能自己收图；而收图真正的难点不是下载，是判断哪些图能算「外部」——拼贴、水印菜单、自己 test 里的同一张，混进一张，数字就是假的。
 - **先补的漏洞**：results/tables/_fingerprint_cn241_21.json 原来只含 data/splits/cn241_21/{train,val} 的 21,031 张，**没有 test 的 3,858 张**。改了 results/_hash_cn241.py 的 split 循环为 ("train", "val", "test")，重跑得 **24,889 张**（2.8 MB，229 张/s）。用新指纹重跑 scripts/eval_external_cn.py，16chinese 仍是 398 候选 / md5 重 0 / 近似重 6 / 用 392 张、top-1 88.52%、accept 92.09%、accepted top-1 90.58%，结论不变——说明旧结果没被污染，但漏洞是真实的。
@@ -246,7 +246,7 @@ E:\项目作业\food_project\
 - **自测脚本**：results/_web_selftest_build.py 造 9 张假图（正常、副本、半尺寸、2×2 拼贴、300×200、1600×400 全景、未知类、无类名、以及从 data/splits/cn241_21/test/baozi 直接拷的一张），results/_web_selftest_check.py 验输出。实测：借来的 test 图被判 reject:dup_cn241 并指出撞的是哪张，拼贴标 collage，全景 reject:aspect，副本 reject:dup_batch，缩图 reject:near_dup_batch(h=0)。
 - **文档**：README §5.7.7（新增）、HANDOFF 待办 5 与复现命令、HISTORY 本节。
 
-## 13. 第十三轮：20 道菜对外测试集（623 张，95.7%）（2026-11-21）
+## 16. 第十三轮：20 道菜对外测试集（623 张，95.7%）（2026-11-21）
 
 - **动机**：第十二轮只做了工具，没有数字；报告里最缺的一栏仍是「20 道菜整体对外多少」。这一轮把图收齐、逐张过目、跑出诚实数字。
 - **收图 scripts/fetch_web.py**：Bing 图片搜索当索引。**关键坑**：普通 `/images/search` 只回首批 34 格，`first=36/71/106` 仍是同一页 → 改打 `cn.bing.com/images/async`（参数 q/first/count=35/mkt=zh-CN/qft=+filterui:imagesize-large，Referer cn.bing.com/images/search），first=35 才拿到新的一页；`search_many` 按 1+page*35 翻页、页间 sleep 0.4。**第二个坑**：查询模板一度写成 `["{zh}", "{zh} 食堂 快餐"]`，后者让 Bing 返回握手照、商务会议、地球插画（hot_sour_potato 联系表 133–150 号全是谈判照片）→ **查询只能用菜名本身**，删掉变体后清空重抓。下载改 ThreadPoolExecutor(max_workers=8)，`_grab` 并行取字节后按提交顺序回放以保持编号确定。实测 20 菜 817 张 **370 s**（旧串行版本同量级要 20+ 分钟）。
@@ -264,7 +264,7 @@ E:\项目作业\food_project\
 - **测试**：tests/test_fetch_web.py 的 test_query_templates_cover_every_dish 还在引用已删除的 QUERY_TEMPLATES 列表（重命名成单数后没改），修为 QUERY_TEMPLATE 并加注释说明为什么不加语境词。全套 **114 passed**。
 - **文档**：README §5.7.8（新增）、HANDOFF（标题/§1 外部集行/§3 待办 5/§5 复现命令/§7 地图）、HISTORY 本节。
 
-## 14. 第十四轮：论文按食堂主线重写（2026-11-21）
+## 17. 第十四轮：论文按食堂主线重写（2026-11-21）
 
 - **动机**：课程要求英文 IEEE 论文 6–9 页、正文五节、定量结果必须真实运行。旧 paper/main.tex 全文 **0 行**写食堂线（CNFOOD / 21-way / domain probe / 623 张网图全部 0 命中），只讲 20 类 Food-101 + 1000 张合成代理域，最后构建停在 2026-11-15；10 页也超出 6–9 页建议。六天实验全没进论文。
 - **结构改造**：把 paper 拆成 paper/sections/ 十个节文件（00_preamble / 01_abstract / 02_intro / 03_related / 04_dataset / 05_method / 06_experiments / 06_baseline / 07_discussion / 08_conclusion），新增 paper/_assemble.py 按序拼成 main.tex。**paper/_build_tex.py 已删除**（旧的 @→反斜杠真源，全文见 git 历史），改节文件后重拼，别手改 main.tex。
@@ -277,7 +277,7 @@ E:\项目作业\food_project\
 - **引用**：references.bib 新增 6 条——cnfood241（Mendeley DOI 10.17632/fspyss5zbb.1）、xiong2026cnfood（PLOS One 21(9):e0358248）、chen2017chinesefoodnet（arXiv:1705.02743）、scheirer2013openset、bendale2016openset、patzer16chinese；scheirer 的 @inproceedings 字段用 journal 会报 empty booktitle，改 @article。
 - **构建命令**：python scripts/make_paper_numbers.py → python paper/_assemble.py → cd paper; pdflatex main && bibtex main && pdflatex main && pdflatex main。README §7 与 scripts/README_template.md 同步。
 
-## 15. 第十五轮：演示视频分镜与分镜数字校验（2026-11-21）
+## 18. 第十五轮：演示视频分镜与分镜数字校验（2026-11-21）
 
 - **动机**：课程要求 2–5 分钟演示，展示模型在**未参与训练的新样本**上的效果（results/_docx.txt:186）。论文已经 9 页定稿，剩下的交付项就是演示。但演示有个隐蔽风险：分镜里要念的具体数字（"90.4%"、"域头只有 23%"、"汉堡 + 薯条 + 牛排"）只对某一套权重成立，重训或重校准后静默失效，**录到一半才发现**。
 - **录屏能力先探清楚**：本机无 ffmpeg；tools/ 只有 cloudflared.exe、ngrok.exe；venv 无 imageio / imageio_ffmpeg / moviepy / cv2 / mss / pyautogui / playwright / requests；pip install websockets 报 "ERROR: Could not find a version that satisfies the requirement websockets (from versions: none)"（无外网 PyPI）。Edge 157.0.4341.60 可 --headless=new --screenshot 截图但不能录屏。→ **结论：演示视频只能用户自己录**（Win+G 或手机拍），我们负责把分镜、素材、口播稿、校验做扎实。
@@ -288,3 +288,30 @@ E:\项目作业\food_project\
 - **两个刻意的"不美化"**：① 混合餐盘那一段保留失败案例（薯条被判成华夫饼、多检出一块牛排），因为 plate-F1 只有 54.5，讲"很准"会被现场打脸；② 包子那张别当"阈值放宽"的例子——它的域概率只有 0.857 < 0.90，阈值仍是 0.4088，正好可以讲"域头不确定时保守"。
 - **实测延迟**（results/_demo_latency.py，整条 HTTP 往返含上传）：cn 89–138 ms、single 29–76 ms、mixed 37–88 ms。payload 里**没有 elapsed_ms**，网页上那个 1.25 s 是端到端含上传的，随机器变化 → 视频里只说"单张百毫秒级"。
 - **产出**：docs/演示视频分镜.md（分镜表 11 镜 + 逐镜口播稿 + 每镜头确切数字表 + 录制前检查 + 现场演示备选）、README §6.4、HANDOFF 第十五轮与待办 8、本节。
+
+## 19. 第十六轮：A/B 改进落地——集成上线、米饭拆第 22 类、域头重拟合（2026-11-26）
+
+- **动机**：第十六轮开头盘了一遍「除食堂实拍数据外还能改什么」（A 类零新数据、B 类现有数据再挖）。用户挑明「先把 A、B 类做完」，于是按 A1–A6 / B1–B3 九项逐条落地。**没有一项依赖新采数据**。
+- **A2 先修一个静默 bug**：scripts/eval_mixed_plate.py 的逐类阈值原来把 40 类矩阵配上后 20 个类名（cuts 与类别错位），逐类阈值后的 plate-F1 一直偏低 0.17–0.37；改成两段切片后 **wF1 53.97→54.14、cF1 56.07→56.44**。
+- **A1 五模型集成上线**（README §5.7.9 ①）：成员 aug / f101n / f101n_nodedup / f101n_e24 / seed7，全部 resnet18 + 20 类。先补齐五个 run 的 val 集成缓存（results/_ens_collect.py 的 SPLITS 加 val），再用 scripts/fit_ensemble_temperature.py 在 2,000 张 val 上最小化 NLL 拟合**统一温度 0.63**。test 94.40% / ECE **1.52%**（单模型 93.40 / 2.75）；代理域 76.10 / 2.63；重抽种子 73.50 / 4.35。**门控不动**：阈值仍 0.32，且只读 0 号成员（f101n）的池化特征，因为 foodgate.json / packaging.json 是在它上面拟合的。app.py：`_view_probs` 接受模型列表（先平均 logits 再除温度）、新增 `_narrow_models()`、`analyse_wide` 的 narrow 分支改走它、health 加 ensemble 块。`scripts/start_demo.ps1 -NoEnsemble` 与 `FOODCLS_ENSEMBLE=0` 可退回单模型。延迟 4.5 ms → 18.7 ms（六视图）。
+- **A5 米饭拆成第 22 类**（README §5.7.9 ②）：米饭 = CNFOOD-241 第 172 类，cn241_all 里 train 811 / val 90 / test 66，原来并进 other_cn 桶。新脚本 scripts/prepare_cn241_rice.py 从 cn241_21 硬链接 20 道菜、从 cn241_all 硬链接 rice、按同一 pool/heldout/CAP 重导桶（只跳过 172）→ **data/splits/cn241_22**（桶 2,088/348/1,388，比 21 路各少 12/2/8，正好是米饭；other_pool 175→174）。**关键约束**：rice 刻意**不进** classes_cn.py 的 CN_CLASS_NAMES——plate_classes.py 用它派生 40 类餐盘表，加进去会变 41 类、废掉 plate40 权重；改为派生 CN_MENU_* 供 22 类头使用。app.py 把「菜数」动态化：_state 里的 cn_names / cn_zh / cn_kcal / cn_portion / cn_dish_count / cn_other_index，scope_of / payload / _tab_scope / /api/cn/classes / health 全部读 _state（回落 20 类常量），桶位置一律取最后一维。
+- **22 类头的成绩**：8 epoch，best epoch 7 val 87.53、T=0.774；**test top-1 80.54 / top-5 98.06 / ECE 5.44（n=3,916）**，对照 21 类 79.83 / 97.64 / 5.11（n=3,858）。**米饭类 87.88%**、桶 68.30%（21 类 66.48%）。20 道菜宏平均 87.28→**86.97**（−0.31）：涨的是糖醋里脊 +4.6、青椒肉丝 +4.6、手撕包菜 +3.1、黄焖鸡 +3.1、红烧肉 +3.1；跌的是辣子鸡 −4.6、鸡蛋羹 −3.8、炒面 −3.1、包子 −3.1。
+- **22 类的五集决策链**（results/tables/cn_other_22.json / domain_gate_22.json）：清单内 **90.43%** / 清单外中餐 20.56% / 没见过的中餐 25.00% / 其它中餐桶 6.81% / 真实西餐照 10.00%，对照 21 类的 90.33 / 16.11 / 23.71 / 5.20 / 13.00——**每一集都更好**。门控阈值沿用 **0.4088**：22 类 val 5% 分位是 0.4064，几乎相同。
+- **域头必须跟着换**（README §5.7.9 ④）：域判别头在主干池化特征上拟合，旧 21 类头套到 22 类骨干上会漂移——实测 AUC 0.9779→**0.9513**，西餐域概率均值 0.100→0.251。用 22 类骨干重抽 37,696 张特征（extract_domain_features.py 新增 --data-root，并修了 cn_ood 路径被前缀重写误伤的 bug）后重拟合：**C=0.03、阈值 0.2868、val AUC 0.9831**（旧 0.9737），保留 95.0% 中餐的同时拒掉 90.25% 西餐（旧 85.1%），f101_te 接受率 14.4%→9.7%。
+- **A6 服务侧与文档**：① 装 pillow-heif 1.9.0 并加 _register_heif()，iPhone 的 HEIC 照片能直接上传（health 的 heif 字段可验），五处 400 文案统一成 UNREADABLE_IMAGE；② CORS 中间件（FOODCLS_ORIGINS，默认 *——demo 无 cookie，token 走 query/header）；③ /api/* 请求计数中间件 + health 的 requests 块（n / errors / ms_avg / ms_max / last_status），5xx 或 >3 s 打 WARNING；④ 论文 06_baseline.tex:181 的 20 independent sigmoids 改为 **40**（餐盘头一直是 40 类）；⑤ docs/HISTORY.md 章节号 12/13/14 与 8–11 轮重复，已重排为 11–18。
+- **A3 搭配先验：实现了、评测了，不上线**（README §5.3 末尾）：新模块 src/foodcls/plate_prior.py 给 40 类标角色（主食 / 主菜 / 配菜 / 甜点），配对称权重（主食-主菜 1.00、主菜-配菜 0.90、主食-配菜 0.75、主菜-主菜 0.55、配菜-配菜 0.50、主食-主食 0.35、甜点-甜点 0.70、中西混搭 0.25、兜底 0.02），train_mixed.py --pairing-prior 时替换 pair_indices / MixedPlateDataset 的均匀抽样，并新增 scripts/eval_pairing_prior.py 做「同一套 prior=False 验证盘 + 同一阈值」的交叉评测。结果：西餐 0.35 53.17→**54.04**、食堂 0.35 55.89→**56.83**、真实照盘 0.30 44.38→**46.87**；但逐类阈值不稳（炒青菜被校到 0.68），演示托盘 11 号从 3 样掉到 2 样，净收益不到 1 pt。**默认关闭**，这是本轮唯一没上线的一项。
+- **A4 反馈回流**：新增 scripts/build_feedback_split.py，把 data/splits/feedback/labels.csv 按 mode 分到四个标签空间（single / cn / wide / mixed），物化成 data/splits/feedback_built/ 并写 results/tables/feedback_split.json；单菜模式要求 corrected 恰好一个、mixed 行支持划掉（纯划掉时回落到 predicted 并计入 weak_positive）。配套 tests/test_feedback_split.py 11 个用例。**但 CSV 里只有 2 条自测样本，还没有数据可训**——管线通了，等真机纠正。
+- **B1 canteen_real 逐类拆解**（scripts/eval_wide_real_detail.py → results/tables/wide_real_detail.json）：100 张真实照的 16 个文件夹**全是西餐类名**。宽头全开 116 类 top-1 **71.0%**，限制在 20 个西餐标签内 **89.0%**；29 张全开错、其中 25 张的 top-1 落在 20 类之外。**restricted 口径的 11 张错里 5 张是披萨**（披萨类内 acc 只有 0.545，常被判成 lasagna / hot_dog / pancakes）；答对平均置信度 0.777、答错 0.430。
+- **B2 食堂头退化曲线**（data.py 的 degrade_canteen_image 加 strength 参数，scripts/eval_cn_degrade.py）：6 档强度、每类 20 张共 440 张。**top-1 从 0.850 掉到 0.746（−10.4 pt），门控通过率从 0.920 掉到 0.834（−8.6 pt）**；0→0.6 段掉 7.3 pt，0.6→1.0 再掉 3.1 pt，是缓坡不是悬崖。随机数抽取顺序与 strength 无关，同一 seed 只改伤害量，默认 1.0 与旧行为一致。
+- **B3 8 张真实混合托盘**（scripts/eval_mixed_real.py → results/tables/mixed_real.json）：5 张有标签的托盘 **P 0.600 / R 0.300 / F1 0.400**；3 张无菜托盘里 2 张误检。三个病灶：① pancakes 从没被单独检出过（4 张煎饼盘全被 waffles 吃掉）；② 中式类会吸走西式托盘（004→fried_noodles、006→cola_wings、008→farmhouse_pork）；③ 空托盘误检（007→donuts 0.94）。
+- **测试**：本轮新增 tests/test_feedback_split.py（11 例），全量 **125 passed**。
+
+## 20. 第十七轮：文档收尾、重新打包与提交（2026-11-26）
+
+- **演示分镜按新基线重算**：22 类头 + 新域头改变了 cn 分支的每一个概率，scripts/check_demo_shots.py 首跑 18 处 DRIFT（全是 single / wide / cn，mixed 分支不动——餐盘头没换），已 --update 覆盖 results/tables/demo_shots.json（旧基线备份 results/_demo_shots_before_ens.json 与 _demo_shots_before_cn22.json）。docs/演示视频分镜.md 同步：镜头 3 **95.1%→97.2%**、镜头 4 **99.3%→99.5%**、镜头 5 换台后 **98.1%→97.9%**，域概率 0.9992→0.9981 / 0.9997→0.9992 / 0.9999→0.9998；口播「食堂菜管 21 路」改为 **22 路（20 道菜 + 米饭 + 其它中餐）**。
+- **一条注意事项整个作废**：原文说「包子那张域概率只有 0.857 < 0.90，阈值仍是 0.4088，正好讲域头不确定时保守」——22 类域头在包子上给 **0.9334 ≥ 0.90**，阈值自动放宽到 0.36、包子 93.2% 被接受，这条已经反过来。改写为「包子这张现在会放宽阈值」，并把讲保守的例子换成 **08 麻婆豆腐（域 0.8499 < 0.90，阈值仍 0.4088）**。
+- **README**：§5.3 末尾新增「搭配先验 A/B（已实现、已评测，未上线）」；§5.7.3 标题标注「21 类，已被 5.7.9 取代」；**新增 §5.7.9「部署侧收尾」**（11 个小节：集成 / 米饭 22 类 / 五集表 / 域头重拟合 / 逐类阈值修复 / 退化曲线 / 真实照逐类 / 8 张 mixed_real / 反馈回流 / 服务侧三件 / 文档订正）；§6 食堂模式整条与打包 bullet 重写；§5.7 / §5.7.2 / §5.7.6 的交叉引用一并指到 5.7.9。
+- **HANDOFF 全篇刷新**：标题行改第十七轮；四模式表第①行改成五模型集成（94.40 / ECE 1.52 / 18.7 ms）、第④行改成 22 路（80.54 / 98.06 / 5.44 / 米饭 87.88）；五集数字改 90.43 / 20.56 / 25.00 / 6.81 / 10.00；服务 job 改 **pwsh-5baf0a9a8c9549fa**、health 预期值改 cn_classes 21 / domain 0.2868 / cn_temperature 0.7745 / ensemble 5 / heif true；常量表、env 列表、复现命令全部同步；测试数 114→**125**。
+- **重新打包**：scripts/package_demo.ps1 已含四个集成成员与 cn241_22_pre。实跑输出 **327.6 MB / 343,539,726 B / 286 项**（解包 369.9 MB），8 份 best.pt（集成五份 + plate40 + cn116 + cn241_22_pre）+ ensemble_calibration.json + 22 类版 domain_head.json。
+- **回归**：pytest → **125 passed, 1 warning in 7.65 s**；scripts/check_demo_shots.py → **all 11 shots match**；/api/health 实测 cn_classes 21 / ensemble 5 (T=0.63) / domain 0.2868 / cn_temperature 0.7745 / heif true。
+- **产出**：README §5.3 / §5.7.3 / §5.7.9 / §6、HANDOFF 全篇、docs/演示视频分镜.md、本节。

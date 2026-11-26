@@ -17,6 +17,7 @@ from PIL import Image, ImageFilter
 from .calorie import class_calorie_range, portion_scale
 from .classes import CLASS_NAMES, KCAL_PER_100G, PORTION_G, ZH_LABELS
 from .plate_classes import PLATE_KCAL_PER_100G, PLATE_PORTION_G, PLATE_ZH
+from .plate_prior import default_names, pick_addition
 
 PLATE_SIZE = 256
 DETECT_THRESHOLD = 0.5
@@ -198,6 +199,7 @@ class MixedPlateDataset(_BASE):
         sizes: Sequence[int] = (1, 2, 3),
         probs: Sequence[float] = SINGLE_MIX,
         num_classes: int | None = None,
+        prior: bool = False,
     ):
         self.samples = list(samples)
         self.num_classes = len(CLASS_NAMES) if num_classes is None else int(num_classes)
@@ -206,6 +208,11 @@ class MixedPlateDataset(_BASE):
         self.seed = seed
         self.sizes = list(sizes)
         self.probs = list(probs)
+        self.prior = bool(prior)
+        # label -> row indices, so a prior-guided draw can find a photo fast
+        self._by_label: Dict[int, List[int]] = {}
+        for i, (_, lab) in enumerate(self.samples):
+            self._by_label.setdefault(int(lab), []).append(i)
 
     def __len__(self) -> int:
         return self.length
@@ -215,6 +222,23 @@ class MixedPlateDataset(_BASE):
         with open(path, "rb") as fh:
             return Image.open(fh).convert("RGB")
 
+    def _prior_row(self, rng: np.random.Generator, names: Sequence[str],
+                   labels: Sequence[int]) -> int | None:
+        """One photo of a dish the pairing prior wants next to ``labels``."""
+        from .plate_prior import weights_for_many
+
+        anchors = [names[l] for l in labels if 0 <= l < len(names)]
+        w = weights_for_many(names, anchors, exclude=labels)
+        for i, name in enumerate(names):
+            if i not in self._by_label:       # class absent from this pool
+                w[i] = 0.0
+        total = float(w.sum())
+        if total <= 0.0:
+            return None
+        cls = int(rng.choice(len(names), p=w / total))
+        rows = self._by_label[cls]
+        return int(rows[int(rng.integers(len(rows)))])
+
     def __getitem__(self, index: int):
         import torch
 
@@ -223,7 +247,15 @@ class MixedPlateDataset(_BASE):
         path, label = self.samples[index % len(self.samples)]
         labels = [int(label)]
         parts = [self._load(path)]
+        names = default_names(self.num_classes) if self.prior else []
         for _ in range(n - 1):
+            if self.prior:
+                j = self._prior_row(rng, names, labels)
+                if j is not None:
+                    other_path, other_label = self.samples[j]
+                    labels.append(int(other_label))
+                    parts.append(self._load(other_path))
+                    continue
             for _try in range(30):
                 j = int(rng.integers(len(self.samples)))
                 other_path, other_label = self.samples[j]
@@ -248,6 +280,8 @@ def build_eval_set(
     size: int = PLATE_SIZE,
     num_classes: int | None = None,
     label_map: Sequence[int] | None = None,
+    prior: bool = False,
+    prior_names: Sequence[str] | None = None,
 ) -> List[Tuple[Image.Image, List[int]]]:
     """Deterministic composites, rebuilt identically on every evaluation run.
 
@@ -257,10 +291,22 @@ def build_eval_set(
     """
     out: List[Tuple[Image.Image, List[int]]] = []
     n_samples = len(samples)
+    names = list(prior_names) if prior_names is not None else default_names(num_classes)
+    by_label: Dict[int, List[int]] = {}
+    for i, (_, lab) in enumerate(samples):
+        by_label.setdefault(int(lab), []).append(i)
     for i in range(count):
         rng = np.random.default_rng((seed, i))
         n = int(rng.choice(sizes, p=probs))
-        picks = pair_indices(rng, [], n, num_classes=num_classes)
+        if prior:
+            picks = []
+            for _ in range(n):
+                if not picks:
+                    picks = [int(rng.integers(len(names)))]
+                    continue
+                picks += [pick_addition(rng, names, [names[p] for p in picks], exclude=picks)]
+        else:
+            picks = pair_indices(rng, [], n, num_classes=num_classes)
         paths = []
         for lab in picks:
             # deterministic member of the class: index walks the file list

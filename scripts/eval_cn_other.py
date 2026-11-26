@@ -37,9 +37,17 @@ from foodcls.models import build_model
 from foodcls.utils import pick_device
 
 CN_CKPT = Path(os.environ.get("EVAL_CN_CKPT", ROOT / "results/runs/cn241_21/best.pt"))
+if not CN_CKPT.is_absolute():  #: the JSON records paths relative to the repo
+    CN_CKPT = ROOT / CN_CKPT
 TAG = os.environ.get("EVAL_TAG", "")
 WIDE_CKPT = ROOT / "results/runs/resnet18_food101_cn116/best.pt"
-CLASS_TABLE = ROOT / "results/tables/cn241_21_classes.json"
+#: The class table and the in-scope validation split follow the checkpoint: the
+#: 22-class head (20 dishes + rice + bucket) has its own copies, and the 21-class
+#: ones stay the defaults so older runs reproduce their numbers unchanged.
+CLASS_TABLE = Path(os.environ.get("EVAL_CN_TABLE",
+                                   ROOT / "results/tables/cn241_21_classes.json"))
+VAL_ROOT = Path(os.environ.get("EVAL_CN_VAL", ROOT / "data/splits/cn241_21/val"))
+IN_ROOT = Path(os.environ.get("EVAL_CN_IN", ROOT / "data/splits/cn241_full/test"))
 
 device = pick_device()
 table = json.loads(CLASS_TABLE.read_text(encoding="utf-8"))
@@ -118,8 +126,11 @@ def wide_test_glob(cls, k):
 
 
 sets = {}
-in_paths = [p for c in CN_NAMES[:OTHER]
-            for p in sorted((ROOT / "data/splits/cn241_full/test" / c).glob("*.jpg"))]
+#: Dishes the head was trained on, taken from whichever split tree holds them.
+#: With the 22-class head that tree also holds rice, so rice enters the in-scope
+#: number instead of being counted as a refusal.
+in_paths = [p for c in CN_NAMES[:OTHER] if (IN_ROOT / c).is_dir()
+            for p in sorted((IN_ROOT / c).glob("*.jpg"))]
 sets["in"] = (in_paths, collect("in", in_paths))
 
 out_cn = [p for c in CN_LIKE for p in wide_test_glob(c, 24)]
@@ -137,8 +148,7 @@ real = sorted((ROOT / "data/splits/canteen_real").rglob("*.jpg"))
 sets["real"] = (real, collect("real", real))
 
 # ---- gate threshold from the in-scope validation split (5th percentile) ----
-val_root = ROOT / "data/splits/cn241_21/val"
-val_paths = [p for c in CN_NAMES[:OTHER] for p in sorted((val_root / c).glob("*.jpg"))]
+val_paths = [p for c in CN_NAMES[:OTHER] for p in sorted((VAL_ROOT / c).glob("*.jpg"))]
 print(f"[val] n={len(val_paths)}", flush=True)
 vrob, vtop, _, vother, _, _ = vectors(val_paths, with_wide=False)
 TH = float(round(np.quantile(vrob, 0.05), 4))
@@ -172,7 +182,7 @@ rob, top, p, p_other, w_top, w_p = sets["in"][1]
 truth = np.array([CN_NAMES.index(Path(path).parent.name) for path in in_paths])
 acc = float(np.mean(top == truth))
 in_other = float(np.mean(top == OTHER))
-print(f"in-scope test: top-1 {acc*100:.2f}% (20-class baseline 87.73%), "
+print(f"in-scope test: top-1 {acc*100:.2f}% ({len(CN_NAMES)}-class head), "
       f"called other {in_other*100:.2f}%", flush=True)
 
 sweep = []
@@ -191,11 +201,7 @@ res = {"cn_ckpt": str(CN_CKPT.relative_to(ROOT)), "n_classes": len(CN_NAMES),
        "threshold_from_val_5pct": TH, "in_scope_top1": round(acc, 4),
        "in_scope_called_other": round(in_other, 4),
        "val_other_rate": round(float(np.mean(vtop == OTHER)), 4),
-       "sweep": sweep, "sets": {k: len(v[0]) for k, v in sets.items()},
-       "baseline_20class": {"in_keep": 0.948, "out_cn_keep": 0.711,
-                            "out_other_keep": 0.522, "real_keep": 0.50},
-       "veto_20class": {"in_keep": 0.941, "out_cn_keep": 0.344,
-                        "out_other_keep": 0.522, "real_keep": 0.43}}
+       "sweep": sweep, "sets": {k: len(v[0]) for k, v in sets.items()}}
 (ROOT / f"results/tables/cn_other{TAG}.json").write_text(
     json.dumps(res, indent=2, ensure_ascii=False), "utf-8")
 print(f"wrote results/tables/cn_other{TAG}.json")

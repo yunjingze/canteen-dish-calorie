@@ -1,0 +1,60 @@
+{
+  "runs": [
+    "resnet18_last_stage_aug",
+    "resnet18_last_stage_aug_f101n",
+    "resnet18_last_stage_aug_f101n_nodedup",
+    "resnet18_last_stage_aug_f101n_e24",
+    "resnet18_last_stage_aug_seed7"
+  ],
+  "temperature": 0.63,
+  "splits": {
+    "val": {
+      "raw": {
+        "n": 2000,
+        "accuracy": 0.8995,
+        "ece": 0.1186
+      },
+      "calibrated": {
+        "n": 2000,
+        "accuracy": 0.8995,
+        "ece": 0.0144
+      }
+    },
+    "test": {
+      "raw": {
+        "n": 5000,
+        "accuracy": 0.944,
+        "ece": 0.1264
+      },
+      "calibrated": {
+        "n": 5000,
+        "accuracy": 0.944,
+        "ece": 0.0152
+      }
+    },
+    "canteen": {
+      "raw": {
+        "n": 1000,
+        "accuracy": 0.761,
+        "ece": 0.1562
+      },
+      "calibrated": {
+        "n": 1000,
+        "accuracy": 0.761,
+        "ece": 0.0263
+      }
+    },
+    "canteen_s7": {
+      "raw": {
+        "n": 1000,
+        "accuracy": 0.735,
+        "ece": 0.1381
+      },
+      "calibrated": {
+        "n": 1000,
+        "accuracy": 0.735,
+        "ece": 0.0435
+      }
+    }
+  }
+}

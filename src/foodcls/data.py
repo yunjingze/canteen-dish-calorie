@@ -173,7 +173,14 @@ def prepare_splits(
 # --------------------------------------------------------------------------- #
 # Synthetic "canteen capture" domain shift
 # --------------------------------------------------------------------------- #
-def _apply_color_cast(img: Image.Image, rng: random.Random) -> Image.Image:
+def _lerp(value: float, neutral: float, strength: float) -> float:
+    """Move a jitter draw towards its no-op value; strength 1.0 keeps it exact."""
+    if strength == 1.0:
+        return value
+    return neutral + strength * (value - neutral)
+
+
+def _apply_color_cast(img: Image.Image, rng: random.Random, strength: float = 1.0) -> Image.Image:
     """Warm tungsten / green fluorescent / cool daylight casts seen indoors."""
     cast = rng.choice(["warm", "warm", "fluorescent", "cool", "neutral"])
     gains = {
@@ -182,6 +189,7 @@ def _apply_color_cast(img: Image.Image, rng: random.Random) -> Image.Image:
         "cool": (0.94, 1.00, 1.10),
         "neutral": (1.0, 1.0, 1.0),
     }[cast]
+    gains = tuple(_lerp(g, 1.0, strength) for g in gains)
     arr = np.asarray(img, dtype=np.float32)
     arr *= np.array(gains, dtype=np.float32)[None, None, :]
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
@@ -199,13 +207,13 @@ def _perspective(img: Image.Image, rng: random.Random, strength: float = 0.035) 
     return img.transform((w, h), Image.QUAD, quad, Image.BICUBIC)
 
 
-def _vignette(img: Image.Image, rng: random.Random) -> Image.Image:
+def _vignette(img: Image.Image, rng: random.Random, strength: float = 1.0) -> Image.Image:
     arr = np.asarray(img, dtype=np.float32) / 255.0
     h, w = arr.shape[:2]
     yy, xx = np.mgrid[0:h, 0:w]
     cy, cx = h / 2, w / 2
     r = np.sqrt(((yy - cy) / h) ** 2 + ((xx - cx) / w) ** 2)
-    mask = np.clip(1.0 - rng.uniform(0.25, 0.7) * r ** 2, 0.35, 1.0)[..., None]
+    mask = np.clip(1.0 - strength * rng.uniform(0.25, 0.7) * r ** 2, 0.35, 1.0)[..., None]
     return Image.fromarray(np.clip(arr * mask * 255.0, 0, 255).astype(np.uint8))
 
 
@@ -222,8 +230,15 @@ def _motion_blur(img: Image.Image, rng: random.Random) -> Image.Image:
     return img.filter(IF.Kernel((size, size), kernel.ravel().tolist(), scale=1.0, offset=0))
 
 
-def degrade_canteen_image(src: Path, dst: Path, seed: int) -> None:
-    """Simulate a hand-held phone photo taken in a canteen."""
+def degrade_canteen_image(src: Path, dst: Path, seed: int, strength: float = 1.0) -> None:
+    """Simulate a hand-held phone photo taken in a canteen.
+
+    strength scales every artefact: 1.0 is the full proxy the models were trained
+    on, 0.0 is a plain resize plus JPEG re-encode.  The random draws are taken in
+    the same order whatever the strength, so a sweep over strengths reuses the
+    same framing jitter for a given seed and only the amount of damage changes.
+    """
+    strength = max(0.0, min(1.0, float(strength)))
     rng = random.Random(seed)
     with open(src, "rb") as fh:
         img = Image.open(fh).convert("RGB")
@@ -233,33 +248,36 @@ def degrade_canteen_image(src: Path, dst: Path, seed: int) -> None:
     img = img.resize((max(1, int(img.width * scale)), max(1, int(img.height * scale))), Image.BICUBIC)
 
     # framing jitter: rotate, crop, perspective
-    img = img.rotate(rng.uniform(-7, 7), resample=Image.BICUBIC, expand=False)
+    img = img.rotate(rng.uniform(-7, 7) * strength, resample=Image.BICUBIC, expand=False)
     w, h = img.size
-    cw = int(w * rng.uniform(0.72, 0.92))
-    ch = int(h * rng.uniform(0.72, 0.92))
+    cw = int(w * _lerp(rng.uniform(0.72, 0.92), 1.0, strength))
+    ch = int(h * _lerp(rng.uniform(0.72, 0.92), 1.0, strength))
+    cw, ch = max(1, cw), max(1, ch)
     left = rng.randint(0, max(0, w - cw))
     top = rng.randint(0, max(0, h - ch))
     img = img.crop((left, top, left + cw, top + ch))
-    img = _perspective(img, rng)
+    img = _perspective(img, rng, strength=0.035 * strength)
     img = img.resize((320, 320), Image.BICUBIC)
 
     # photometry
-    img = _apply_color_cast(img, rng)
-    img = ImageEnhance.Brightness(img).enhance(rng.uniform(0.72, 1.25))
-    img = ImageEnhance.Contrast(img).enhance(rng.uniform(0.78, 1.20))
-    img = ImageEnhance.Color(img).enhance(rng.uniform(0.70, 1.30))
-    if rng.random() < 0.55:
-        img = img.filter(ImageFilter.GaussianBlur(radius=rng.uniform(0.4, 1.4)))
-    if rng.random() < 0.35:
+    img = _apply_color_cast(img, rng, strength=strength)
+    img = ImageEnhance.Brightness(img).enhance(_lerp(rng.uniform(0.72, 1.25), 1.0, strength))
+    img = ImageEnhance.Contrast(img).enhance(_lerp(rng.uniform(0.78, 1.20), 1.0, strength))
+    img = ImageEnhance.Color(img).enhance(_lerp(rng.uniform(0.70, 1.30), 1.0, strength))
+    if rng.random() < 0.55 * strength:
+        img = img.filter(ImageFilter.GaussianBlur(radius=rng.uniform(0.4, 1.4) * strength))
+    if rng.random() < 0.35 * strength:
         img = _motion_blur(img, rng)
-    img = _vignette(img, rng)
+    img = _vignette(img, rng, strength=strength)
 
     arr = np.asarray(img, dtype=np.float32)
-    arr += np.random.default_rng(seed).normal(0, rng.uniform(1.5, 6.0), arr.shape)
+    sigma = rng.uniform(1.5, 6.0) * strength
+    if sigma > 0:
+        arr += np.random.default_rng(seed).normal(0, sigma, arr.shape)
     img = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
 
     dst.parent.mkdir(parents=True, exist_ok=True)
-    img.save(dst, "JPEG", quality=rng.randint(35, 65))
+    img.save(dst, "JPEG", quality=int(round(_lerp(rng.randint(35, 65), 95, strength))))
 
 
 def make_canteen_proxy(src_root: str | Path, dst_root: str | Path, seed: int = 42) -> None:

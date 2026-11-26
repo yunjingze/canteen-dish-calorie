@@ -1,0 +1,1264 @@
+{
+ "plates": {
+  "uniform": {
+   "western": 600,
+   "canteen": 600,
+   "real": 80
+  },
+  "prior": {
+   "western": 600,
+   "canteen": 600,
+   "real": 80
+  }
+ },
+ "results": {
+  "plate40": {
+   "uniform": {
+    "western": {
+     "global": {
+      "threshold": 0.35,
+      "precision": 0.6106115107908178,
+      "recall": 0.47087378640744043,
+      "f1": 0.5317149564382364,
+      "exact_match": 0.105,
+      "parts_per_plate": 1.8533333333333333,
+      "single_pred_rate": 0.36
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.6323396567293295,
+      "recall": 0.4854368932035469,
+      "f1": 0.5492349936235447,
+      "exact_match": 0.11,
+      "parts_per_plate": 1.845,
+      "single_pred_rate": 0.36333333333333334
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.48427260812550177,
+       "recall": 0.5124826629677445,
+       "f1": 0.4979784361577469,
+       "exact_match": 0.1,
+       "parts_per_plate": 2.5433333333333334,
+       "single_pred_rate": 0.21333333333333335
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5290654893300006,
+       "recall": 0.4986130374476431,
+       "f1": 0.5133880751873269,
+       "exact_match": 0.10166666666666667,
+       "parts_per_plate": 2.265,
+       "single_pred_rate": 0.25166666666666665
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5748355263153168,
+       "recall": 0.4847434119275418,
+       "f1": 0.5259593674490428,
+       "exact_match": 0.10666666666666667,
+       "parts_per_plate": 2.026666666666667,
+       "single_pred_rate": 0.31166666666666665
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6106115107908178,
+       "recall": 0.47087378640744043,
+       "f1": 0.5317149564382364,
+       "exact_match": 0.105,
+       "parts_per_plate": 1.8533333333333333,
+       "single_pred_rate": 0.36
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6392156862738831,
+       "recall": 0.45214979195530364,
+       "f1": 0.5296506900097916,
+       "exact_match": 0.10833333333333334,
+       "parts_per_plate": 1.7,
+       "single_pred_rate": 0.415
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6677350427343294,
+       "recall": 0.43342579750316684,
+       "f1": 0.5256518077644167,
+       "exact_match": 0.10666666666666667,
+       "parts_per_plate": 1.56,
+       "single_pred_rate": 0.4583333333333333
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.6969001148097624,
+       "recall": 0.42094313453507565,
+       "f1": 0.5248594893700521,
+       "exact_match": 0.10333333333333333,
+       "parts_per_plate": 1.4516666666666667,
+       "single_pred_rate": 0.49166666666666664
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7181372549010807,
+       "recall": 0.40638002773896925,
+       "f1": 0.5190434007780056,
+       "exact_match": 0.1,
+       "parts_per_plate": 1.36,
+       "single_pred_rate": 0.5266666666666666
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7411764705872664,
+       "recall": 0.39320388349487295,
+       "f1": 0.5138196642497995,
+       "exact_match": 0.09166666666666666,
+       "parts_per_plate": 1.275,
+       "single_pred_rate": 0.56
+      }
+     }
+    },
+    "canteen": {
+     "global": {
+      "threshold": 0.35,
+      "precision": 0.6275021758045017,
+      "recall": 0.5038434661072649,
+      "f1": 0.5589147281877108,
+      "exact_match": 0.11333333333333333,
+      "parts_per_plate": 1.915,
+      "single_pred_rate": 0.3233333333333333
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.6309623430957063,
+      "recall": 0.5269042627529511,
+      "f1": 0.5742574252461753,
+      "exact_match": 0.14,
+      "parts_per_plate": 1.9916666666666667,
+      "single_pred_rate": 0.295
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.5258245177345826,
+       "recall": 0.5904961565334798,
+       "f1": 0.5562870304427208,
+       "exact_match": 0.09833333333333333,
+       "parts_per_plate": 2.6783333333333332,
+       "single_pred_rate": 0.165
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5599435825101834,
+       "recall": 0.5548567435356011,
+       "f1": 0.5573885568881766,
+       "exact_match": 0.115,
+       "parts_per_plate": 2.3633333333333333,
+       "single_pred_rate": 0.20666666666666667
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5930871956004767,
+       "recall": 0.5276030747725174,
+       "f1": 0.558431952164016,
+       "exact_match": 0.11833333333333333,
+       "parts_per_plate": 2.1216666666666666,
+       "single_pred_rate": 0.25666666666666665
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6275021758045017,
+       "recall": 0.5038434661072649,
+       "f1": 0.5589147281877108,
+       "exact_match": 0.11333333333333333,
+       "parts_per_plate": 1.915,
+       "single_pred_rate": 0.3233333333333333
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6527909176909623,
+       "recall": 0.4821802935007113,
+       "f1": 0.5546623789320743,
+       "exact_match": 0.11166666666666666,
+       "parts_per_plate": 1.7616666666666667,
+       "single_pred_rate": 0.38666666666666666
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6721479958883123,
+       "recall": 0.4570230607963263,
+       "f1": 0.5440931775543011,
+       "exact_match": 0.10166666666666667,
+       "parts_per_plate": 1.6216666666666666,
+       "single_pred_rate": 0.4266666666666667
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.7005649717506208,
+       "recall": 0.43326345213107387,
+       "f1": 0.5354058717207639,
+       "exact_match": 0.09666666666666666,
+       "parts_per_plate": 1.475,
+       "single_pred_rate": 0.48333333333333334
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7218137254893116,
+       "recall": 0.4116002795245202,
+       "f1": 0.5242545611747279,
+       "exact_match": 0.08666666666666667,
+       "parts_per_plate": 1.36,
+       "single_pred_rate": 0.5233333333333333
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7540322580635026,
+       "recall": 0.39203354297666526,
+       "f1": 0.5158620685149273,
+       "exact_match": 0.08333333333333333,
+       "parts_per_plate": 1.24,
+       "single_pred_rate": 0.5566666666666666
+      }
+     }
+    },
+    "real": {
+     "global": {
+      "threshold": 0.35,
+      "precision": 0.5426356589105222,
+      "recall": 0.3723404255299344,
+      "f1": 0.4416403780634299,
+      "exact_match": 0.0625,
+      "parts_per_plate": 1.6125,
+      "single_pred_rate": 0.45
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.5390624999957886,
+      "recall": 0.36702127659379247,
+      "f1": 0.4367088602747557,
+      "exact_match": 0.075,
+      "parts_per_plate": 1.6,
+      "single_pred_rate": 0.45
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.4285714285690738,
+       "recall": 0.41489361701906974,
+       "f1": 0.4216216211194741,
+       "exact_match": 0.075,
+       "parts_per_plate": 2.275,
+       "single_pred_rate": 0.2875
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.46496815286328047,
+       "recall": 0.38829787233836016,
+       "f1": 0.42318840529868523,
+       "exact_match": 0.0625,
+       "parts_per_plate": 1.9625,
+       "single_pred_rate": 0.3625
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.517730496450229,
+       "recall": 0.38829787233836016,
+       "f1": 0.44376899646799284,
+       "exact_match": 0.0625,
+       "parts_per_plate": 1.7625,
+       "single_pred_rate": 0.4125
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.5426356589105222,
+       "recall": 0.3723404255299344,
+       "f1": 0.4416403780634299,
+       "exact_match": 0.0625,
+       "parts_per_plate": 1.6125,
+       "single_pred_rate": 0.45
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6017699114990993,
+       "recall": 0.36170212765765053,
+       "f1": 0.4518272420529575,
+       "exact_match": 0.0625,
+       "parts_per_plate": 1.4125,
+       "single_pred_rate": 0.475
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6285714285654421,
+       "recall": 0.3510638297853667,
+       "f1": 0.4505119449295391,
+       "exact_match": 0.0625,
+       "parts_per_plate": 1.3125,
+       "single_pred_rate": 0.5
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.6494845360757785,
+       "recall": 0.33510638297694095,
+       "f1": 0.442105262705768,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.2125,
+       "single_pred_rate": 0.5125
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.6555555555482716,
+       "recall": 0.31382978723237326,
+       "f1": 0.42446043121375704,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.125,
+       "single_pred_rate": 0.525
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.6829268292599643,
+       "recall": 0.2978723404239475,
+       "f1": 0.4148148143888066,
+       "exact_match": 0.0375,
+       "parts_per_plate": 1.025,
+       "single_pred_rate": 0.5625
+      }
+     }
+    }
+   },
+   "prior": {
+    "western": {
+     "global": {
+      "threshold": 0.35,
+      "precision": 0.6019503546093954,
+      "recall": 0.47087378640744043,
+      "f1": 0.528404668767753,
+      "exact_match": 0.10166666666666667,
+      "parts_per_plate": 1.88,
+      "single_pred_rate": 0.37333333333333335
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.5903829029380318,
+      "recall": 0.4597780859913594,
+      "f1": 0.5169590638348157,
+      "exact_match": 0.09166666666666666,
+      "parts_per_plate": 1.8716666666666666,
+      "single_pred_rate": 0.39
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.4902975420436673,
+       "recall": 0.5256588072118408,
+       "f1": 0.5073627839714843,
+       "exact_match": 0.08333333333333333,
+       "parts_per_plate": 2.5766666666666667,
+       "single_pred_rate": 0.22333333333333333
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5351390922397253,
+       "recall": 0.506934812759704,
+       "f1": 0.520655270155266,
+       "exact_match": 0.08833333333333333,
+       "parts_per_plate": 2.276666666666667,
+       "single_pred_rate": 0.2816666666666667
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5686274509799276,
+       "recall": 0.4826629680995266,
+       "f1": 0.5221305321361098,
+       "exact_match": 0.09333333333333334,
+       "parts_per_plate": 2.04,
+       "single_pred_rate": 0.33
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6019503546093954,
+       "recall": 0.47087378640744043,
+       "f1": 0.528404668767753,
+       "exact_match": 0.10166666666666667,
+       "parts_per_plate": 1.88,
+       "single_pred_rate": 0.37333333333333335
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6338432122364878,
+       "recall": 0.4597780859913594,
+       "f1": 0.5329581988691514,
+       "exact_match": 0.10166666666666667,
+       "parts_per_plate": 1.7433333333333334,
+       "single_pred_rate": 0.405
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.656934306568658,
+       "recall": 0.4368932038831922,
+       "f1": 0.5247813406276685,
+       "exact_match": 0.10333333333333333,
+       "parts_per_plate": 1.5983333333333334,
+       "single_pred_rate": 0.4483333333333333
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.6883408071741162,
+       "recall": 0.4257975034671111,
+       "f1": 0.5261353894159171,
+       "exact_match": 0.1,
+       "parts_per_plate": 1.4866666666666666,
+       "single_pred_rate": 0.4816666666666667
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7118437118428427,
+       "recall": 0.40429958391095405,
+       "f1": 0.5157010167865104,
+       "exact_match": 0.095,
+       "parts_per_plate": 1.365,
+       "single_pred_rate": 0.51
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7398692810447844,
+       "recall": 0.3925104022188679,
+       "f1": 0.5129134567282779,
+       "exact_match": 0.08666666666666667,
+       "parts_per_plate": 1.275,
+       "single_pred_rate": 0.52
+      }
+     }
+    },
+    "canteen": {
+     "global": {
+      "threshold": 0.35,
+      "precision": 0.6372637263720636,
+      "recall": 0.4947589098529037,
+      "f1": 0.5570416989567376,
+      "exact_match": 0.115,
+      "parts_per_plate": 1.8516666666666666,
+      "single_pred_rate": 0.3416666666666667
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.6094420600853138,
+      "recall": 0.49615653389203623,
+      "f1": 0.5469953770086802,
+      "exact_match": 0.10833333333333334,
+      "parts_per_plate": 1.9416666666666667,
+      "single_pred_rate": 0.31833333333333336
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.5189393939390663,
+       "recall": 0.574423480083456,
+       "f1": 0.5452736313417218,
+       "exact_match": 0.09833333333333333,
+       "parts_per_plate": 2.64,
+       "single_pred_rate": 0.15833333333333333
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5640465793300116,
+       "recall": 0.5415793151638424,
+       "f1": 0.5525846697315414,
+       "exact_match": 0.10666666666666667,
+       "parts_per_plate": 2.29,
+       "single_pred_rate": 0.22666666666666666
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.6004862236623983,
+       "recall": 0.5178197064985899,
+       "f1": 0.5560975604779247,
+       "exact_match": 0.11666666666666667,
+       "parts_per_plate": 2.0566666666666666,
+       "single_pred_rate": 0.2816666666666667
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6372637263720636,
+       "recall": 0.4947589098529037,
+       "f1": 0.5570416989567376,
+       "exact_match": 0.115,
+       "parts_per_plate": 1.8516666666666666,
+       "single_pred_rate": 0.3416666666666667
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6573088092926841,
+       "recall": 0.47449336128548253,
+       "f1": 0.5511363631489615,
+       "exact_match": 0.10833333333333334,
+       "parts_per_plate": 1.7216666666666667,
+       "single_pred_rate": 0.3933333333333333
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6813880126175801,
+       "recall": 0.4528301886789288,
+       "f1": 0.5440806040538515,
+       "exact_match": 0.11166666666666666,
+       "parts_per_plate": 1.585,
+       "single_pred_rate": 0.435
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.7141203703695439,
+       "recall": 0.4311670160723752,
+       "f1": 0.5376906313383293,
+       "exact_match": 0.11,
+       "parts_per_plate": 1.44,
+       "single_pred_rate": 0.495
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7268170426056055,
+       "recall": 0.405310971348424,
+       "f1": 0.5204127406793809,
+       "exact_match": 0.09666666666666666,
+       "parts_per_plate": 1.33,
+       "single_pred_rate": 0.5166666666666667
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7496598639445583,
+       "recall": 0.3850454227810028,
+       "f1": 0.5087719293757179,
+       "exact_match": 0.095,
+       "parts_per_plate": 1.225,
+       "single_pred_rate": 0.5383333333333333
+      }
+     }
+    },
+    "real": {
+     "global": {
+      "threshold": 0.35,
+      "precision": 0.5981308411159053,
+      "recall": 0.34042553191308284,
+      "f1": 0.4338983046195002,
+      "exact_match": 0.05,
+      "parts_per_plate": 1.3375,
+      "single_pred_rate": 0.525
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.6299999999936999,
+      "recall": 0.33510638297694095,
+      "f1": 0.43749999954364394,
+      "exact_match": 0.075,
+      "parts_per_plate": 1.25,
+      "single_pred_rate": 0.5125
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.4814814814785094,
+       "recall": 0.41489361701906974,
+       "f1": 0.445714285214498,
+       "exact_match": 0.05,
+       "parts_per_plate": 2.025,
+       "single_pred_rate": 0.3375
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5147058823491566,
+       "recall": 0.3723404255299344,
+       "f1": 0.43209876494231064,
+       "exact_match": 0.0625,
+       "parts_per_plate": 1.7,
+       "single_pred_rate": 0.3875
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5739130434732703,
+       "recall": 0.3510638297853667,
+       "f1": 0.4356435638825824,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.4375,
+       "single_pred_rate": 0.4375
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.5981308411159053,
+       "recall": 0.34042553191308284,
+       "f1": 0.4338983046195002,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.3375,
+       "single_pred_rate": 0.525
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6421052631511357,
+       "recall": 0.3244680851046571,
+       "f1": 0.4310954059113736,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.1875,
+       "single_pred_rate": 0.5
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6551724137855727,
+       "recall": 0.30319148936008944,
+       "f1": 0.4145454541098843,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.0875,
+       "single_pred_rate": 0.5
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.6588235294040138,
+       "recall": 0.2978723404239475,
+       "f1": 0.41025640982457834,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.0625,
+       "single_pred_rate": 0.4875
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.6626506024016547,
+       "recall": 0.29255319148780556,
+       "f1": 0.40590405861265505,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.0375,
+       "single_pred_rate": 0.4875
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.6883116883027491,
+       "recall": 0.28191489361552174,
+       "f1": 0.39999999958470633,
+       "exact_match": 0.05,
+       "parts_per_plate": 0.9625,
+       "single_pred_rate": 0.4875
+      }
+     }
+    }
+   }
+  },
+  "plate40_prior": {
+   "uniform": {
+    "western": {
+     "global": {
+      "threshold": 0.3,
+      "precision": 0.5862923203958825,
+      "recall": 0.49237170596359753,
+      "f1": 0.5352431204984871,
+      "exact_match": 0.115,
+      "parts_per_plate": 2.0183333333333335,
+      "single_pred_rate": 0.31
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.6020851433530825,
+      "recall": 0.4805825242715114,
+      "f1": 0.5345160041337291,
+      "exact_match": 0.10833333333333334,
+      "parts_per_plate": 1.9183333333333332,
+      "single_pred_rate": 0.3516666666666667
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.5140983606554006,
+       "recall": 0.5436893203879725,
+       "f1": 0.5284799455735099,
+       "exact_match": 0.10166666666666667,
+       "parts_per_plate": 2.5416666666666665,
+       "single_pred_rate": 0.19166666666666668
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5557206537885916,
+       "recall": 0.5187239944517901,
+       "f1": 0.5365853653538665,
+       "exact_match": 0.10833333333333334,
+       "parts_per_plate": 2.243333333333333,
+       "single_pred_rate": 0.23833333333333334
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5862923203958825,
+       "recall": 0.49237170596359753,
+       "f1": 0.5352431204984871,
+       "exact_match": 0.115,
+       "parts_per_plate": 2.0183333333333335,
+       "single_pred_rate": 0.31
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6218411552340958,
+       "recall": 0.47780859916749113,
+       "f1": 0.5403921563708992,
+       "exact_match": 0.12666666666666668,
+       "parts_per_plate": 1.8466666666666667,
+       "single_pred_rate": 0.36666666666666664
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6468292682920519,
+       "recall": 0.4597780859913594,
+       "f1": 0.5374949326309962,
+       "exact_match": 0.13,
+       "parts_per_plate": 1.7083333333333333,
+       "single_pred_rate": 0.4083333333333333
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6776246023322613,
+       "recall": 0.4431345353672378,
+       "f1": 0.5358490561252116,
+       "exact_match": 0.12333333333333334,
+       "parts_per_plate": 1.5716666666666668,
+       "single_pred_rate": 0.4483333333333333
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.7022988505739054,
+       "recall": 0.4237170596390959,
+       "f1": 0.5285467123329155,
+       "exact_match": 0.12,
+       "parts_per_plate": 1.45,
+       "single_pred_rate": 0.4716666666666667
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7350746268647573,
+       "recall": 0.40984743411899455,
+       "f1": 0.5262689220688169,
+       "exact_match": 0.11333333333333333,
+       "parts_per_plate": 1.34,
+       "single_pred_rate": 0.5116666666666667
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7576974564916229,
+       "recall": 0.3925104022188679,
+       "f1": 0.5171311096458638,
+       "exact_match": 0.10333333333333333,
+       "parts_per_plate": 1.245,
+       "single_pred_rate": 0.545
+      }
+     }
+    },
+    "canteen": {
+     "global": {
+      "threshold": 0.3,
+      "precision": 0.6072580645156394,
+      "recall": 0.5262054507333849,
+      "f1": 0.5638337696256838,
+      "exact_match": 0.13666666666666666,
+      "parts_per_plate": 2.066666666666667,
+      "single_pred_rate": 0.2816666666666667
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.6280851063824442,
+      "recall": 0.5157232704398912,
+      "f1": 0.5663852642779896,
+      "exact_match": 0.13833333333333334,
+      "parts_per_plate": 1.9583333333333333,
+      "single_pred_rate": 0.31833333333333336
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.527534418022198,
+       "recall": 0.5890985324943473,
+       "f1": 0.5566193458200694,
+       "exact_match": 0.09833333333333333,
+       "parts_per_plate": 2.6633333333333336,
+       "single_pred_rate": 0.185
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.573074154067262,
+       "recall": 0.5562543675747336,
+       "f1": 0.5645390065919091,
+       "exact_match": 0.11833333333333333,
+       "parts_per_plate": 2.315,
+       "single_pred_rate": 0.24333333333333335
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.6072580645156394,
+       "recall": 0.5262054507333849,
+       "f1": 0.5638337696256838,
+       "exact_match": 0.13666666666666666,
+       "parts_per_plate": 2.066666666666667,
+       "single_pred_rate": 0.2816666666666667
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6436781609189711,
+       "recall": 0.5087351502442287,
+       "f1": 0.5683060104353738,
+       "exact_match": 0.13666666666666666,
+       "parts_per_plate": 1.885,
+       "single_pred_rate": 0.33166666666666667
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6808100289289482,
+       "recall": 0.49336128581377126,
+       "f1": 0.5721231761735436,
+       "exact_match": 0.13666666666666666,
+       "parts_per_plate": 1.7283333333333333,
+       "single_pred_rate": 0.37166666666666665
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.7135416666659234,
+       "recall": 0.47868623340288,
+       "f1": 0.5729820154118549,
+       "exact_match": 0.13833333333333334,
+       "parts_per_plate": 1.6,
+       "single_pred_rate": 0.41333333333333333
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.7380952380944013,
+       "recall": 0.45492662473762757,
+       "f1": 0.5629053172968127,
+       "exact_match": 0.13666666666666666,
+       "parts_per_plate": 1.47,
+       "single_pred_rate": 0.455
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7628361858181384,
+       "recall": 0.4360587002093389,
+       "f1": 0.5549132943343404,
+       "exact_match": 0.12166666666666667,
+       "parts_per_plate": 1.3633333333333333,
+       "single_pred_rate": 0.495
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7826666666656231,
+       "recall": 0.4102026554853877,
+       "f1": 0.5382851898279422,
+       "exact_match": 0.10833333333333334,
+       "parts_per_plate": 1.25,
+       "single_pred_rate": 0.5333333333333333
+      }
+     }
+    },
+    "real": {
+     "global": {
+      "threshold": 0.3,
+      "precision": 0.5681818181775138,
+      "recall": 0.398936170210644,
+      "f1": 0.46874999951238283,
+      "exact_match": 0.0875,
+      "parts_per_plate": 1.65,
+      "single_pred_rate": 0.4375
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.5948275862017687,
+      "recall": 0.36702127659379247,
+      "f1": 0.45394736794611323,
+      "exact_match": 0.0625,
+      "parts_per_plate": 1.45,
+      "single_pred_rate": 0.475
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.49382716049077885,
+       "recall": 0.42553191489135356,
+       "f1": 0.45714285664300414,
+       "exact_match": 0.05,
+       "parts_per_plate": 2.025,
+       "single_pred_rate": 0.375
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5342465753388066,
+       "recall": 0.41489361701906974,
+       "f1": 0.46706586776858267,
+       "exact_match": 0.075,
+       "parts_per_plate": 1.825,
+       "single_pred_rate": 0.425
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5681818181775138,
+       "recall": 0.398936170210644,
+       "f1": 0.46874999951238283,
+       "exact_match": 0.0875,
+       "parts_per_plate": 1.65,
+       "single_pred_rate": 0.4375
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.5655737704871674,
+       "recall": 0.36702127659379247,
+       "f1": 0.4451612898423725,
+       "exact_match": 0.075,
+       "parts_per_plate": 1.525,
+       "single_pred_rate": 0.45
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.5929203539770538,
+       "recall": 0.35638297872150865,
+       "f1": 0.4451827237805764,
+       "exact_match": 0.075,
+       "parts_per_plate": 1.4125,
+       "single_pred_rate": 0.45
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6285714285654421,
+       "recall": 0.3510638297853667,
+       "f1": 0.4505119449295391,
+       "exact_match": 0.075,
+       "parts_per_plate": 1.3125,
+       "single_pred_rate": 0.45
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.6842105263085873,
+       "recall": 0.3457446808492248,
+       "f1": 0.4593639571479229,
+       "exact_match": 0.075,
+       "parts_per_plate": 1.1875,
+       "single_pred_rate": 0.4875
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7176470588150865,
+       "recall": 0.3244680851046571,
+       "f1": 0.4468864464543466,
+       "exact_match": 0.0625,
+       "parts_per_plate": 1.0625,
+       "single_pred_rate": 0.5
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.721518987332639,
+       "recall": 0.30319148936008944,
+       "f1": 0.42696629171496303,
+       "exact_match": 0.0625,
+       "parts_per_plate": 0.9875,
+       "single_pred_rate": 0.4875
+      }
+     }
+    }
+   },
+   "prior": {
+    "western": {
+     "global": {
+      "threshold": 0.3,
+      "precision": 0.5967213114749207,
+      "recall": 0.5048543689316888,
+      "f1": 0.5469571745594152,
+      "exact_match": 0.105,
+      "parts_per_plate": 2.033333333333333,
+      "single_pred_rate": 0.29333333333333333
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.640826873384461,
+      "recall": 0.5159500693477698,
+      "f1": 0.5716480978534475,
+      "exact_match": 0.12333333333333334,
+      "parts_per_plate": 1.935,
+      "single_pred_rate": 0.3
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.5234323432339779,
+       "recall": 0.5499306518720181,
+       "f1": 0.5363544127566209,
+       "exact_match": 0.105,
+       "parts_per_plate": 2.525,
+       "single_pred_rate": 0.19166666666666668
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5602678571424403,
+       "recall": 0.5221914008318154,
+       "f1": 0.5405599420702234,
+       "exact_match": 0.105,
+       "parts_per_plate": 2.24,
+       "single_pred_rate": 0.25333333333333335
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5967213114749207,
+       "recall": 0.5048543689316888,
+       "f1": 0.5469571745594152,
+       "exact_match": 0.105,
+       "parts_per_plate": 2.033333333333333,
+       "single_pred_rate": 0.29333333333333333
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6247771836001562,
+       "recall": 0.48613037447955193,
+       "f1": 0.5468018715822446,
+       "exact_match": 0.10833333333333334,
+       "parts_per_plate": 1.87,
+       "single_pred_rate": 0.335
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6605237633359258,
+       "recall": 0.4722607489594506,
+       "f1": 0.5507480787693293,
+       "exact_match": 0.11833333333333333,
+       "parts_per_plate": 1.7183333333333333,
+       "single_pred_rate": 0.365
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6867219917005325,
+       "recall": 0.45908460471535434,
+       "f1": 0.5502909388376482,
+       "exact_match": 0.115,
+       "parts_per_plate": 1.6066666666666667,
+       "single_pred_rate": 0.4083333333333333
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.7176339285706277,
+       "recall": 0.44590846047125804,
+       "f1": 0.550042771126456,
+       "exact_match": 0.10833333333333334,
+       "parts_per_plate": 1.4933333333333334,
+       "single_pred_rate": 0.4583333333333333
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7473053892206619,
+       "recall": 0.4327323162271618,
+       "f1": 0.5480895911029031,
+       "exact_match": 0.11,
+       "parts_per_plate": 1.3916666666666666,
+       "single_pred_rate": 0.495
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7647058823519634,
+       "recall": 0.41470180305103005,
+       "f1": 0.5377697837162123,
+       "exact_match": 0.1,
+       "parts_per_plate": 1.3033333333333332,
+       "single_pred_rate": 0.525
+      }
+     }
+    },
+    "canteen": {
+     "global": {
+      "threshold": 0.3,
+      "precision": 0.6233870967736909,
+      "recall": 0.5401816911247098,
+      "f1": 0.5788094341707868,
+      "exact_match": 0.12333333333333334,
+      "parts_per_plate": 2.066666666666667,
+      "single_pred_rate": 0.275
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.6580976863747574,
+      "recall": 0.5366876310268787,
+      "f1": 0.5912240179804584,
+      "exact_match": 0.13333333333333333,
+      "parts_per_plate": 1.945,
+      "single_pred_rate": 0.2916666666666667
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.5345477386931315,
+       "recall": 0.5946890286508772,
+       "f1": 0.5630168701593321,
+       "exact_match": 0.11333333333333333,
+       "parts_per_plate": 2.6533333333333333,
+       "single_pred_rate": 0.17
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5866084425032121,
+       "recall": 0.5632424877703961,
+       "f1": 0.5746880565407949,
+       "exact_match": 0.12,
+       "parts_per_plate": 2.29,
+       "single_pred_rate": 0.21333333333333335
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.6233870967736909,
+       "recall": 0.5401816911247098,
+       "f1": 0.5788094341707868,
+       "exact_match": 0.12333333333333334,
+       "parts_per_plate": 2.066666666666667,
+       "single_pred_rate": 0.275
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.6535008976654816,
+       "recall": 0.5087351502442287,
+       "f1": 0.5721021606075042,
+       "exact_match": 0.11833333333333333,
+       "parts_per_plate": 1.8566666666666667,
+       "single_pred_rate": 0.335
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.6727799227792733,
+       "recall": 0.487071977637675,
+       "f1": 0.5650587753534626,
+       "exact_match": 0.115,
+       "parts_per_plate": 1.7266666666666666,
+       "single_pred_rate": 0.385
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6984293193709964,
+       "recall": 0.46610761705068754,
+       "f1": 0.5590947187147367,
+       "exact_match": 0.11333333333333333,
+       "parts_per_plate": 1.5916666666666666,
+       "single_pred_rate": 0.43
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.7229729729721588,
+       "recall": 0.44863731656153133,
+       "f1": 0.553686933550222,
+       "exact_match": 0.115,
+       "parts_per_plate": 1.48,
+       "single_pred_rate": 0.45666666666666667
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7499999999990672,
+       "recall": 0.42138364779844767,
+       "f1": 0.5395973149751092,
+       "exact_match": 0.10166666666666667,
+       "parts_per_plate": 1.34,
+       "single_pred_rate": 0.5183333333333333
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7679782903653081,
+       "recall": 0.39552760307449647,
+       "f1": 0.5221402209529677,
+       "exact_match": 0.09166666666666666,
+       "parts_per_plate": 1.2283333333333333,
+       "single_pred_rate": 0.5566666666666666
+      }
+     }
+    },
+    "real": {
+     "global": {
+      "threshold": 0.3,
+      "precision": 0.5688073394443228,
+      "recall": 0.329787234040799,
+      "f1": 0.41750841704098224,
+      "exact_match": 0.05,
+      "parts_per_plate": 1.3625,
+      "single_pred_rate": 0.5
+     },
+     "tuned": {
+      "threshold": 0.2,
+      "precision": 0.5825242718390046,
+      "recall": 0.3191489361685152,
+      "f1": 0.4123711335604445,
+      "exact_match": 0.05,
+      "parts_per_plate": 1.2875,
+      "single_pred_rate": 0.55
+     },
+     "sweep": {
+      "0.20": {
+       "threshold": 0.2,
+       "precision": 0.49295774647540175,
+       "recall": 0.3723404255299344,
+       "f1": 0.4242424237495685,
+       "exact_match": 0.075,
+       "parts_per_plate": 1.775,
+       "single_pred_rate": 0.425
+      },
+      "0.25": {
+       "threshold": 0.25,
+       "precision": 0.5294117647014335,
+       "recall": 0.33510638297694095,
+       "f1": 0.41042345229131344,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.4875,
+       "single_pred_rate": 0.45
+      },
+      "0.30": {
+       "threshold": 0.3,
+       "precision": 0.5688073394443228,
+       "recall": 0.329787234040799,
+       "f1": 0.41750841704098224,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.3625,
+       "single_pred_rate": 0.5
+      },
+      "0.35": {
+       "threshold": 0.35,
+       "precision": 0.5940594059347123,
+       "recall": 0.3191489361685152,
+       "f1": 0.4152249130372481,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.2625,
+       "single_pred_rate": 0.45
+      },
+      "0.40": {
+       "threshold": 0.4,
+       "precision": 0.5999999999936841,
+       "recall": 0.30319148936008944,
+       "f1": 0.4028268546748243,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.1875,
+       "single_pred_rate": 0.475
+      },
+      "0.45": {
+       "threshold": 0.45,
+       "precision": 0.6352941176395848,
+       "recall": 0.2872340425516637,
+       "f1": 0.39560439517267104,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.0625,
+       "single_pred_rate": 0.5125
+      },
+      "0.50": {
+       "threshold": 0.5,
+       "precision": 0.6666666666584362,
+       "recall": 0.2872340425516637,
+       "f1": 0.40148698842370895,
+       "exact_match": 0.05,
+       "parts_per_plate": 1.0125,
+       "single_pred_rate": 0.4875
+      },
+      "0.55": {
+       "threshold": 0.55,
+       "precision": 0.7058823529307958,
+       "recall": 0.25531914893481217,
+       "f1": 0.3749999996069337,
+       "exact_match": 0.0375,
+       "parts_per_plate": 0.85,
+       "single_pred_rate": 0.5125
+      },
+      "0.60": {
+       "threshold": 0.6,
+       "precision": 0.7384615384501775,
+       "recall": 0.25531914893481217,
+       "f1": 0.37944663993138467,
+       "exact_match": 0.0375,
+       "parts_per_plate": 0.8125,
+       "single_pred_rate": 0.525
+      }
+     }
+    }
+   }
+  }
+ }
+}

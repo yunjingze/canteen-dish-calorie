@@ -39,3 +39,17 @@ CN_ZH = {c[0]: c[1] for c in CLASS_SPEC_CN}
 CN_KCAL_PER_100G = {c[0]: c[2] for c in CLASS_SPEC_CN}
 CN_PORTION_G = {c[0]: c[3] for c in CLASS_SPEC_CN}
 CN_NUM_CLASSES = len(CN_CLASS_NAMES)
+
+# The 21st dish is rice: it is the one item on every canteen tray, it was folded
+# into the 'other Chinese' bucket until the 22-class head gave it a slot of its
+# own, and it is the only canteen class whose slug is not in CN_CLASS_NAMES.
+# It is kept out of CLASS_SPEC_CN on purpose: plate_classes.py derives the 40-
+# class tray table from CN_CLASS_NAMES, and a 41st slug would invalidate the
+# plate40 checkpoint.  The wider table below is what the optional 22-class
+# canteen head reports with (see load_cn_model() in app.py).
+RICE_SPEC = ("rice", "米饭", 116, 200)
+
+CN_MENU_NAMES = CN_CLASS_NAMES + [RICE_SPEC[0]]
+CN_MENU_ZH = {**CN_ZH, RICE_SPEC[0]: RICE_SPEC[1]}
+CN_MENU_KCAL_PER_100G = {**CN_KCAL_PER_100G, RICE_SPEC[0]: RICE_SPEC[2]}
+CN_MENU_PORTION_G = {**CN_PORTION_G, RICE_SPEC[0]: RICE_SPEC[3]}

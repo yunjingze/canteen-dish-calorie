@@ -1,0 +1,834 @@
+{
+  "ckpt": "results/runs/resnet18_food101_cn116/best.pt",
+  "threshold_note": "top1_in_20 = prediction is one of the 20 labels the single tab scores",
+  "summary": {
+    "n": 100,
+    "top1_full116": 0.71,
+    "top1_restricted20": 0.89,
+    "misses": 29,
+    "miss_top1_outside_20": 25,
+    "miss_top1_inside_20": 4,
+    "mean_prob_correct": 0.7765,
+    "mean_prob_miss": 0.4298
+  },
+  "per_class": {
+    "chicken_wings": {
+      "n": 8,
+      "correct": 8,
+      "correct_20": 8,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "chocolate_cake": {
+      "n": 8,
+      "correct": 8,
+      "correct_20": 8,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "donuts": {
+      "n": 7,
+      "correct": 5,
+      "correct_20": 6,
+      "acc_20": 0.857,
+      "misses": [
+        {
+          "file": "donuts/001.jpg",
+          "top1_20": "chocolate_cake",
+          "p20": 0.116,
+          "rank20": 18,
+          "top1_116": "chocolate_mousse",
+          "p116": 0.3018
+        }
+      ]
+    },
+    "dumplings": {
+      "n": 10,
+      "correct": 4,
+      "correct_20": 10,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "french_fries": {
+      "n": 7,
+      "correct": 5,
+      "correct_20": 6,
+      "acc_20": 0.857,
+      "misses": [
+        {
+          "file": "french_fries/002.jpg",
+          "top1_20": "ice_cream",
+          "p20": 0.0225,
+          "rank20": 7,
+          "top1_116": "buddha_jumps_over_wall",
+          "p116": 0.2288
+        }
+      ]
+    },
+    "fried_rice": {
+      "n": 7,
+      "correct": 6,
+      "correct_20": 7,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "greek_salad": {
+      "n": 2,
+      "correct": 0,
+      "correct_20": 1,
+      "acc_20": 0.5,
+      "misses": [
+        {
+          "file": "greek_salad/002.jpg",
+          "top1_20": "caesar_salad",
+          "p20": 0.2112,
+          "rank20": 10,
+          "top1_116": "steamed_sea_bass",
+          "p116": 0.2469
+        }
+      ]
+    },
+    "hamburger": {
+      "n": 12,
+      "correct": 11,
+      "correct_20": 11,
+      "acc_20": 0.917,
+      "misses": [
+        {
+          "file": "hamburger/009.jpg",
+          "top1_20": "french_fries",
+          "p20": 0.1834,
+          "rank20": 6,
+          "top1_116": "french_fries",
+          "p116": 0.1834
+        }
+      ]
+    },
+    "hot_dog": {
+      "n": 4,
+      "correct": 4,
+      "correct_20": 4,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "ice_cream": {
+      "n": 1,
+      "correct": 0,
+      "correct_20": 1,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "lasagna": {
+      "n": 6,
+      "correct": 4,
+      "correct_20": 5,
+      "acc_20": 0.833,
+      "misses": [
+        {
+          "file": "lasagna/003.jpg",
+          "top1_20": "pizza",
+          "p20": 0.0549,
+          "rank20": 14,
+          "top1_116": "carrot_cake",
+          "p116": 0.2295
+        }
+      ]
+    },
+    "pancakes": {
+      "n": 1,
+      "correct": 1,
+      "correct_20": 1,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "pizza": {
+      "n": 11,
+      "correct": 3,
+      "correct_20": 6,
+      "acc_20": 0.545,
+      "misses": [
+        {
+          "file": "pizza/001.jpg",
+          "top1_20": "lasagna",
+          "p20": 0.1126,
+          "rank20": 5,
+          "top1_116": "baklava",
+          "p116": 0.631
+        },
+        {
+          "file": "pizza/003.jpg",
+          "top1_20": "hot_dog",
+          "p20": 0.2054,
+          "rank20": 5,
+          "top1_116": "hot_dog",
+          "p116": 0.2054
+        },
+        {
+          "file": "pizza/004.jpg",
+          "top1_20": "grilled_salmon",
+          "p20": 0.2395,
+          "rank20": 5,
+          "top1_116": "grilled_salmon",
+          "p116": 0.2395
+        },
+        {
+          "file": "pizza/008.jpg",
+          "top1_20": "pancakes",
+          "p20": 0.0619,
+          "rank20": 5,
+          "top1_116": "chicken_curry",
+          "p116": 0.4286
+        },
+        {
+          "file": "pizza/009.jpg",
+          "top1_20": "pancakes",
+          "p20": 0.1697,
+          "rank20": 5,
+          "top1_116": "pancakes",
+          "p116": 0.1697
+        }
+      ]
+    },
+    "ramen": {
+      "n": 8,
+      "correct": 5,
+      "correct_20": 7,
+      "acc_20": 0.875,
+      "misses": [
+        {
+          "file": "ramen/001.jpg",
+          "top1_20": "grilled_salmon",
+          "p20": 0.0326,
+          "rank20": 3,
+          "top1_116": "edamame",
+          "p116": 0.0555
+        }
+      ]
+    },
+    "spaghetti_bolognese": {
+      "n": 7,
+      "correct": 7,
+      "correct_20": 7,
+      "acc_20": 1.0,
+      "misses": []
+    },
+    "waffles": {
+      "n": 1,
+      "correct": 0,
+      "correct_20": 1,
+      "acc_20": 1.0,
+      "misses": []
+    }
+  },
+  "misses": [
+    {
+      "file": "donuts/001.jpg",
+      "truth": "donuts",
+      "top1": "chocolate_mousse",
+      "top1_prob": 0.3018,
+      "top1_20": "chocolate_cake",
+      "top1_20_prob": 0.116,
+      "truth_rank": 5,
+      "truth_rank_20": 18,
+      "truth_prob": 0.0333,
+      "top3": [
+        "chocolate_mousse",
+        "chocolate_cake",
+        "cup_cakes"
+      ],
+      "top3_prob": [
+        0.3018,
+        0.116,
+        0.0614
+      ]
+    },
+    {
+      "file": "donuts/002.jpg",
+      "truth": "donuts",
+      "top1": "cup_cakes",
+      "top1_prob": 0.8279,
+      "top1_20": "donuts",
+      "top1_20_prob": 0.0121,
+      "truth_rank": 2,
+      "truth_rank_20": 18,
+      "truth_prob": 0.0121,
+      "top3": [
+        "cup_cakes",
+        "donuts",
+        "ramen"
+      ],
+      "top3_prob": [
+        0.8279,
+        0.0121,
+        0.0082
+      ]
+    },
+    {
+      "file": "dumplings/001.jpg",
+      "truth": "dumplings",
+      "top1": "gyoza",
+      "top1_prob": 0.8215,
+      "top1_20": "dumplings",
+      "top1_20_prob": 0.0413,
+      "truth_rank": 2,
+      "truth_rank_20": 2,
+      "truth_prob": 0.0413,
+      "top3": [
+        "gyoza",
+        "dumplings",
+        "hummus"
+      ],
+      "top3_prob": [
+        0.8215,
+        0.0413,
+        0.0334
+      ]
+    },
+    {
+      "file": "dumplings/002.jpg",
+      "truth": "dumplings",
+      "top1": "gyoza",
+      "top1_prob": 0.1036,
+      "top1_20": "dumplings",
+      "top1_20_prob": 0.0675,
+      "truth_rank": 3,
+      "truth_rank_20": 2,
+      "truth_prob": 0.0675,
+      "top3": [
+        "gyoza",
+        "deviled_eggs",
+        "dumplings"
+      ],
+      "top3_prob": [
+        0.1036,
+        0.0947,
+        0.0675
+      ]
+    },
+    {
+      "file": "dumplings/003.jpg",
+      "truth": "dumplings",
+      "top1": "gyoza",
+      "top1_prob": 0.936,
+      "top1_20": "dumplings",
+      "top1_20_prob": 0.0537,
+      "truth_rank": 2,
+      "truth_rank_20": 2,
+      "truth_prob": 0.0537,
+      "top3": [
+        "gyoza",
+        "dumplings",
+        "soup_dumplings"
+      ],
+      "top3_prob": [
+        0.936,
+        0.0537,
+        0.0009
+      ]
+    },
+    {
+      "file": "dumplings/006.jpg",
+      "truth": "dumplings",
+      "top1": "gyoza",
+      "top1_prob": 0.5233,
+      "top1_20": "dumplings",
+      "top1_20_prob": 0.1773,
+      "truth_rank": 2,
+      "truth_rank_20": 2,
+      "truth_prob": 0.1773,
+      "top3": [
+        "gyoza",
+        "dumplings",
+        "creme_brulee"
+      ],
+      "top3_prob": [
+        0.5233,
+        0.1773,
+        0.0333
+      ]
+    },
+    {
+      "file": "dumplings/007.jpg",
+      "truth": "dumplings",
+      "top1": "gyoza",
+      "top1_prob": 0.816,
+      "top1_20": "dumplings",
+      "top1_20_prob": 0.0377,
+      "truth_rank": 2,
+      "truth_rank_20": 2,
+      "truth_prob": 0.0377,
+      "top3": [
+        "gyoza",
+        "dumplings",
+        "carrot_cake"
+      ],
+      "top3_prob": [
+        0.816,
+        0.0377,
+        0.0133
+      ]
+    },
+    {
+      "file": "dumplings/010.jpg",
+      "truth": "dumplings",
+      "top1": "pho",
+      "top1_prob": 0.1786,
+      "top1_20": "dumplings",
+      "top1_20_prob": 0.0511,
+      "truth_rank": 4,
+      "truth_rank_20": 2,
+      "truth_prob": 0.0511,
+      "top3": [
+        "pho",
+        "gyoza",
+        "steamed_sea_bass"
+      ],
+      "top3_prob": [
+        0.1786,
+        0.1424,
+        0.0556
+      ]
+    },
+    {
+      "file": "french_fries/002.jpg",
+      "truth": "french_fries",
+      "top1": "buddha_jumps_over_wall",
+      "top1_prob": 0.2288,
+      "top1_20": "ice_cream",
+      "top1_20_prob": 0.0225,
+      "truth_rank": 17,
+      "truth_rank_20": 7,
+      "truth_prob": 0.0137,
+      "top3": [
+        "buddha_jumps_over_wall",
+        "frozen_yogurt",
+        "poutine"
+      ],
+      "top3_prob": [
+        0.2288,
+        0.0944,
+        0.0846
+      ]
+    },
+    {
+      "file": "french_fries/007.jpg",
+      "truth": "french_fries",
+      "top1": "onion_rings",
+      "top1_prob": 0.5316,
+      "top1_20": "french_fries",
+      "top1_20_prob": 0.0716,
+      "truth_rank": 3,
+      "truth_rank_20": 7,
+      "truth_prob": 0.0716,
+      "top3": [
+        "onion_rings",
+        "churros",
+        "french_fries"
+      ],
+      "top3_prob": [
+        0.5316,
+        0.1012,
+        0.0716
+      ]
+    },
+    {
+      "file": "fried_rice/003.jpg",
+      "truth": "fried_rice",
+      "top1": "pad_thai",
+      "top1_prob": 0.5835,
+      "top1_20": "fried_rice",
+      "top1_20_prob": 0.0211,
+      "truth_rank": 3,
+      "truth_rank_20": 1,
+      "truth_prob": 0.0211,
+      "top3": [
+        "pad_thai",
+        "yuxiang_shredded_pork",
+        "fried_rice"
+      ],
+      "top3_prob": [
+        0.5835,
+        0.2025,
+        0.0211
+      ]
+    },
+    {
+      "file": "greek_salad/001.jpg",
+      "truth": "greek_salad",
+      "top1": "guacamole",
+      "top1_prob": 0.7512,
+      "top1_20": "greek_salad",
+      "top1_20_prob": 0.0533,
+      "truth_rank": 3,
+      "truth_rank_20": 10,
+      "truth_prob": 0.0533,
+      "top3": [
+        "guacamole",
+        "ceviche",
+        "greek_salad"
+      ],
+      "top3_prob": [
+        0.7512,
+        0.0653,
+        0.0533
+      ]
+    },
+    {
+      "file": "greek_salad/002.jpg",
+      "truth": "greek_salad",
+      "top1": "steamed_sea_bass",
+      "top1_prob": 0.2469,
+      "top1_20": "caesar_salad",
+      "top1_20_prob": 0.2112,
+      "truth_rank": 7,
+      "truth_rank_20": 10,
+      "truth_prob": 0.0245,
+      "top3": [
+        "steamed_sea_bass",
+        "caesar_salad",
+        "club_sandwich"
+      ],
+      "top3_prob": [
+        0.2469,
+        0.2112,
+        0.0532
+      ]
+    },
+    {
+      "file": "hamburger/009.jpg",
+      "truth": "hamburger",
+      "top1": "french_fries",
+      "top1_prob": 0.1834,
+      "top1_20": "french_fries",
+      "top1_20_prob": 0.1834,
+      "truth_rank": 34,
+      "truth_rank_20": 6,
+      "truth_prob": 0.007,
+      "top3": [
+        "french_fries",
+        "cheese_plate",
+        "ice_cream"
+      ],
+      "top3_prob": [
+        0.1834,
+        0.0588,
+        0.0466
+      ]
+    },
+    {
+      "file": "ice_cream/001.jpg",
+      "truth": "ice_cream",
+      "top1": "frozen_yogurt",
+      "top1_prob": 0.8304,
+      "top1_20": "ice_cream",
+      "top1_20_prob": 0.0746,
+      "truth_rank": 2,
+      "truth_rank_20": 19,
+      "truth_prob": 0.0746,
+      "top3": [
+        "frozen_yogurt",
+        "ice_cream",
+        "chocolate_mousse"
+      ],
+      "top3_prob": [
+        0.8304,
+        0.0746,
+        0.0181
+      ]
+    },
+    {
+      "file": "lasagna/003.jpg",
+      "truth": "lasagna",
+      "top1": "carrot_cake",
+      "top1_prob": 0.2295,
+      "top1_20": "pizza",
+      "top1_20_prob": 0.0549,
+      "truth_rank": 9,
+      "truth_rank_20": 14,
+      "truth_prob": 0.0206,
+      "top3": [
+        "carrot_cake",
+        "risotto",
+        "pizza"
+      ],
+      "top3_prob": [
+        0.2295,
+        0.1392,
+        0.0549
+      ]
+    },
+    {
+      "file": "lasagna/005.jpg",
+      "truth": "lasagna",
+      "top1": "baklava",
+      "top1_prob": 0.2303,
+      "top1_20": "lasagna",
+      "top1_20_prob": 0.102,
+      "truth_rank": 3,
+      "truth_rank_20": 14,
+      "truth_prob": 0.102,
+      "top3": [
+        "baklava",
+        "carrot_cake",
+        "lasagna"
+      ],
+      "top3_prob": [
+        0.2303,
+        0.162,
+        0.102
+      ]
+    },
+    {
+      "file": "pizza/001.jpg",
+      "truth": "pizza",
+      "top1": "baklava",
+      "top1_prob": 0.631,
+      "top1_20": "lasagna",
+      "top1_20_prob": 0.1126,
+      "truth_rank": 10,
+      "truth_rank_20": 5,
+      "truth_prob": 0.0048,
+      "top3": [
+        "baklava",
+        "lasagna",
+        "apple_pie"
+      ],
+      "top3_prob": [
+        0.631,
+        0.1126,
+        0.0563
+      ]
+    },
+    {
+      "file": "pizza/002.jpg",
+      "truth": "pizza",
+      "top1": "apple_pie",
+      "top1_prob": 0.0908,
+      "top1_20": "pizza",
+      "top1_20_prob": 0.0841,
+      "truth_rank": 2,
+      "truth_rank_20": 5,
+      "truth_prob": 0.0841,
+      "top3": [
+        "apple_pie",
+        "pizza",
+        "peking_duck"
+      ],
+      "top3_prob": [
+        0.0908,
+        0.0841,
+        0.0643
+      ]
+    },
+    {
+      "file": "pizza/003.jpg",
+      "truth": "pizza",
+      "top1": "hot_dog",
+      "top1_prob": 0.2054,
+      "top1_20": "hot_dog",
+      "top1_20_prob": 0.2054,
+      "truth_rank": 6,
+      "truth_rank_20": 5,
+      "truth_prob": 0.0238,
+      "top3": [
+        "hot_dog",
+        "apple_pie",
+        "baklava"
+      ],
+      "top3_prob": [
+        0.2054,
+        0.1847,
+        0.1435
+      ]
+    },
+    {
+      "file": "pizza/004.jpg",
+      "truth": "pizza",
+      "top1": "grilled_salmon",
+      "top1_prob": 0.2395,
+      "top1_20": "grilled_salmon",
+      "top1_20_prob": 0.2395,
+      "truth_rank": 2,
+      "truth_rank_20": 5,
+      "truth_prob": 0.1751,
+      "top3": [
+        "grilled_salmon",
+        "pizza",
+        "lasagna"
+      ],
+      "top3_prob": [
+        0.2395,
+        0.1751,
+        0.0929
+      ]
+    },
+    {
+      "file": "pizza/005.jpg",
+      "truth": "pizza",
+      "top1": "paella",
+      "top1_prob": 0.4179,
+      "top1_20": "pizza",
+      "top1_20_prob": 0.0693,
+      "truth_rank": 3,
+      "truth_rank_20": 5,
+      "truth_prob": 0.0693,
+      "top3": [
+        "paella",
+        "boiled_fish_sichuan",
+        "pizza"
+      ],
+      "top3_prob": [
+        0.4179,
+        0.1317,
+        0.0693
+      ]
+    },
+    {
+      "file": "pizza/008.jpg",
+      "truth": "pizza",
+      "top1": "chicken_curry",
+      "top1_prob": 0.4286,
+      "top1_20": "pancakes",
+      "top1_20_prob": 0.0619,
+      "truth_rank": 4,
+      "truth_rank_20": 5,
+      "truth_prob": 0.0491,
+      "top3": [
+        "chicken_curry",
+        "huevos_rancheros",
+        "pancakes"
+      ],
+      "top3_prob": [
+        0.4286,
+        0.0956,
+        0.0619
+      ]
+    },
+    {
+      "file": "pizza/009.jpg",
+      "truth": "pizza",
+      "top1": "pancakes",
+      "top1_prob": 0.1697,
+      "top1_20": "pancakes",
+      "top1_20_prob": 0.1697,
+      "truth_rank": 2,
+      "truth_rank_20": 5,
+      "truth_prob": 0.1232,
+      "top3": [
+        "pancakes",
+        "pizza",
+        "hummus"
+      ],
+      "top3_prob": [
+        0.1697,
+        0.1232,
+        0.0681
+      ]
+    },
+    {
+      "file": "pizza/010.jpg",
+      "truth": "pizza",
+      "top1": "boiled_fish_sichuan",
+      "top1_prob": 0.3535,
+      "top1_20": "pizza",
+      "top1_20_prob": 0.0612,
+      "truth_rank": 3,
+      "truth_rank_20": 5,
+      "truth_prob": 0.0612,
+      "top3": [
+        "boiled_fish_sichuan",
+        "fish_with_pickled_cabbage",
+        "pizza"
+      ],
+      "top3_prob": [
+        0.3535,
+        0.2372,
+        0.0612
+      ]
+    },
+    {
+      "file": "ramen/001.jpg",
+      "truth": "ramen",
+      "top1": "edamame",
+      "top1_prob": 0.0555,
+      "top1_20": "grilled_salmon",
+      "top1_20_prob": 0.0326,
+      "truth_rank": 9,
+      "truth_rank_20": 3,
+      "truth_prob": 0.0313,
+      "top3": [
+        "edamame",
+        "ravioli",
+        "buddha_jumps_over_wall"
+      ],
+      "top3_prob": [
+        0.0555,
+        0.0507,
+        0.0444
+      ]
+    },
+    {
+      "file": "ramen/003.jpg",
+      "truth": "ramen",
+      "top1": "bibimbap",
+      "top1_prob": 0.4033,
+      "top1_20": "ramen",
+      "top1_20_prob": 0.0399,
+      "truth_rank": 3,
+      "truth_rank_20": 3,
+      "truth_prob": 0.0399,
+      "top3": [
+        "bibimbap",
+        "buddha_jumps_over_wall",
+        "ramen"
+      ],
+      "top3_prob": [
+        0.4033,
+        0.0437,
+        0.0399
+      ]
+    },
+    {
+      "file": "ramen/007.jpg",
+      "truth": "ramen",
+      "top1": "pho",
+      "top1_prob": 0.7929,
+      "top1_20": "ramen",
+      "top1_20_prob": 0.0845,
+      "truth_rank": 2,
+      "truth_rank_20": 3,
+      "truth_prob": 0.0845,
+      "top3": [
+        "pho",
+        "ramen",
+        "steamed_sea_bass"
+      ],
+      "top3_prob": [
+        0.7929,
+        0.0845,
+        0.0314
+      ]
+    },
+    {
+      "file": "waffles/001.jpg",
+      "truth": "waffles",
+      "top1": "french_toast",
+      "top1_prob": 0.3515,
+      "top1_20": "waffles",
+      "top1_20_prob": 0.1233,
+      "truth_rank": 2,
+      "truth_rank_20": 17,
+      "truth_prob": 0.1233,
+      "top3": [
+        "french_toast",
+        "waffles",
+        "pancakes"
+      ],
+      "top3_prob": [
+        0.3515,
+        0.1233,
+        0.0951
+      ]
+    }
+  ]
+}

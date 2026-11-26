@@ -65,7 +65,22 @@ def main() -> int:
     ap.add_argument("--out", default="results/tables/domain_feats.npz")
     ap.add_argument("--cap-train", type=int, default=0)
     ap.add_argument("--views", type=int, default=1)
+    ap.add_argument("--data-root", default="data/splits/cn241_21",
+                    help="canteen split to sample cn_tr/cn_va/cn_te from")
     args = ap.parse_args()
+
+    global SETS
+    old = "data/splits/cn241_21/"
+    new = args.data_root.strip().rstrip("/") + "/"
+    fixed = []
+    for n, r, y in SETS:
+        if n == "cn_ood":       # held-out 29 classes are shared by both heads
+            r = r
+        elif r.startswith(old):
+            r = new + r[len(old):]
+        fixed.append((n, r, y))
+    SETS = fixed
+    print("sets:", [(n, r) for n, r, _ in SETS], flush=True)
 
     torch.set_num_threads(4)
     device = pick_device()

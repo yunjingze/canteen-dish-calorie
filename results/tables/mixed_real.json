@@ -1,0 +1,220 @@
+{
+  "ckpt": "results/runs/resnet18_multilabel_plate40/best.pt",
+  "n": 8,
+  "labelled_trays": 5,
+  "empty_trays": 3,
+  "labelled": {
+    "tp": 3,
+    "fp": 2,
+    "fn": 7,
+    "precision": 0.6,
+    "recall": 0.3,
+    "f1": 0.4
+  },
+  "empty_trays_predicted_parts": [
+    0,
+    1,
+    1
+  ],
+  "cases": [
+    {
+      "file": "001.jpg",
+      "truth": [
+        "pancakes",
+        "waffles"
+      ],
+      "truth_empty": false,
+      "predicted": [
+        "waffles"
+      ],
+      "probs": [
+        {
+          "class": "waffles",
+          "prob": 0.4628
+        }
+      ],
+      "hit": [
+        "waffles"
+      ],
+      "extra": [],
+      "non_vocab_items": [
+        "bacon",
+        "berries"
+      ],
+      "kca": 0.0
+    },
+    {
+      "file": "002.jpg",
+      "truth": [
+        "waffles",
+        "pancakes"
+      ],
+      "truth_empty": false,
+      "predicted": [
+        "waffles"
+      ],
+      "probs": [
+        {
+          "class": "waffles",
+          "prob": 0.9922
+        }
+      ],
+      "hit": [
+        "waffles"
+      ],
+      "extra": [],
+      "non_vocab_items": [],
+      "kca": 0.0
+    },
+    {
+      "file": "003.jpg",
+      "truth": [
+        "pancakes",
+        "waffles"
+      ],
+      "truth_empty": false,
+      "predicted": [
+        "waffles"
+      ],
+      "probs": [
+        {
+          "class": "waffles",
+          "prob": 0.9947
+        }
+      ],
+      "hit": [
+        "waffles"
+      ],
+      "extra": [],
+      "non_vocab_items": [
+        "bacon",
+        "banana"
+      ],
+      "kca": 0.0
+    },
+    {
+      "file": "004.jpg",
+      "truth": [
+        "waffles",
+        "pancakes"
+      ],
+      "truth_empty": false,
+      "predicted": [
+        "fried_noodles"
+      ],
+      "probs": [
+        {
+          "class": "fried_noodles",
+          "prob": 0.5629
+        }
+      ],
+      "hit": [],
+      "extra": [
+        "fried_noodles"
+      ],
+      "non_vocab_items": [
+        "berries"
+      ],
+      "kca": 0.0
+    },
+    {
+      "file": "005.jpg",
+      "truth": [],
+      "truth_empty": true,
+      "predicted": [],
+      "probs": [],
+      "hit": [],
+      "extra": [],
+      "non_vocab_items": [
+        "grilled chicken breast",
+        "white rice",
+        "mixed vegetables",
+        "baguette",
+        "watermelon",
+        "blueberries",
+        "cupcake"
+      ],
+      "kca": 0
+    },
+    {
+      "file": "006.jpg",
+      "truth": [
+        "chicken_wings",
+        "greek_salad"
+      ],
+      "truth_empty": false,
+      "predicted": [
+        "cola_wings"
+      ],
+      "probs": [
+        {
+          "class": "cola_wings",
+          "prob": 0.9898
+        }
+      ],
+      "hit": [],
+      "extra": [
+        "cola_wings"
+      ],
+      "non_vocab_items": [
+        "broccoli",
+        "dipping sauces"
+      ],
+      "kca": 0.0
+    },
+    {
+      "file": "007.jpg",
+      "truth": [],
+      "truth_empty": true,
+      "predicted": [
+        "donuts"
+      ],
+      "probs": [
+        {
+          "class": "donuts",
+          "prob": 0.9444
+        }
+      ],
+      "hit": [],
+      "extra": [
+        "donuts"
+      ],
+      "non_vocab_items": [
+        "chicken nuggets",
+        "whole wheat bread",
+        "blueberry yogurt",
+        "peas",
+        "strawberries",
+        "milk"
+      ],
+      "kca": 0.0
+    },
+    {
+      "file": "008.jpg",
+      "truth": [],
+      "truth_empty": true,
+      "predicted": [
+        "farmhouse_pork"
+      ],
+      "probs": [
+        {
+          "class": "farmhouse_pork",
+          "prob": 0.2887
+        }
+      ],
+      "hit": [],
+      "extra": [
+        "farmhouse_pork"
+      ],
+      "non_vocab_items": [
+        "grilled chicken breast",
+        "white rice",
+        "mixed vegetables",
+        "baguette",
+        "fruit",
+        "cupcake"
+      ],
+      "kca": 0.0
+    }
+  ]
+}

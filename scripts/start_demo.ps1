@@ -14,6 +14,7 @@ param(
     [string]$Ckpt = "results/runs/resnet18_last_stage_aug_f101n/best.pt",
     [string]$MixedCkpt = "results/runs/resnet18_multilabel_plate40/best.pt",
     [string]$WideCkpt = "results/runs/resnet18_food101_cn116/best.pt",
+    [switch]$NoEnsemble,
     [switch]$Open,
     [switch]$Qr,
     [switch]$NoFirewallCheck
@@ -42,6 +43,15 @@ if (Test-Path $widePath) {
     $env:FOODCLS_WIDE_CKPT = $widePath
 } else {
     Write-Host "  116-class model not found; that tab stays disabled." -ForegroundColor DarkGray
+}
+# The single-dish tab averages five Food-101N runs (results/tables/ensemble_calibration.json,
+# temperature 0.63).  -NoEnsemble falls back to the one checkpoint above: four fewer
+# 42 MiB files to load, useful on a laptop that has to start the demo in a hurry.
+if ($NoEnsemble) {
+    $env:FOODCLS_ENSEMBLE = "0"
+    Write-Host "  Ensemble disabled; serving the single checkpoint only." -ForegroundColor DarkGray
+} else {
+    $env:FOODCLS_ENSEMBLE = "1"
 }
 $env:FOODCLS_HOST = $BindAddress
 $env:PORT = "$Port"

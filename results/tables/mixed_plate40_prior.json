@@ -1,0 +1,129 @@
+{
+  "singles": {
+    "western_real": {
+      "n": 100,
+      "top1": 0.75,
+      "share_canteen_pred": 0.19
+    },
+    "canteen_test": {
+      "n": 2462,
+      "top1": 0.8111291632818847,
+      "share_canteen_pred": 0.9800974817221771
+    }
+  },
+  "checkpoint": "results\\runs\\resnet18_multilabel_plate40_prior\\best.pt",
+  "epoch": 9,
+  "num_classes": 40,
+  "threshold": 0.3,
+  "class_thresholds": {
+    "fried_rice": 0.21,
+    "dumplings": 0.22,
+    "ramen": 0.14,
+    "sushi": 0.12,
+    "pizza": 0.4,
+    "hamburger": 0.8,
+    "french_fries": 0.65,
+    "hot_dog": 0.32,
+    "caesar_salad": 0.45,
+    "greek_salad": 0.18,
+    "grilled_salmon": 0.2,
+    "steak": 0.2,
+    "spaghetti_bolognese": 0.53,
+    "lasagna": 0.15,
+    "chicken_wings": 0.33,
+    "pancakes": 0.39,
+    "waffles": 0.23,
+    "donuts": 0.32,
+    "ice_cream": 0.13,
+    "chocolate_cake": 0.15,
+    "hot_sour_potato": 0.25,
+    "di_san_xian": 0.28,
+    "hand_torn_cabbage": 0.34,
+    "stir_fried_greens": 0.4,
+    "dry_fried_beans": 0.26,
+    "tomato_egg": 0.33,
+    "steamed_egg": 0.4,
+    "sweet_sour_ribs": 0.25,
+    "cola_wings": 0.27,
+    "boiled_chicken": 0.15,
+    "braised_chicken": 0.24,
+    "spicy_chicken": 0.25,
+    "braised_pork": 0.21,
+    "boiled_pork": 0.31,
+    "sweet_sour_pork": 0.21,
+    "farmhouse_pork": 0.3,
+    "pepper_pork": 0.24,
+    "mu_xi_pork": 0.21,
+    "baozi": 0.19,
+    "fried_noodles": 0.35
+  },
+  "checkpoint_threshold": 0.3,
+  "plates": {
+    "western": 600,
+    "canteen": 600
+  },
+  "sweep": [
+    {
+      "threshold": 0.3,
+      "w_threshold": 0.3,
+      "w_precision": 0.5967213114749207,
+      "w_recall": 0.5048543689316888,
+      "w_f1": 0.5469571745594152,
+      "w_exact_match": 0.105,
+      "w_parts_per_plate": 2.033333333333333,
+      "w_single_pred_rate": 0.29333333333333333,
+      "c_threshold": 0.3,
+      "c_precision": 0.6233870967736909,
+      "c_recall": 0.5401816911247098,
+      "c_f1": 0.5788094341707868,
+      "c_exact_match": 0.12333333333333334,
+      "c_parts_per_plate": 2.066666666666667,
+      "c_single_pred_rate": 0.275
+    }
+  ],
+  "western": {
+    "global": {
+      "threshold": 0.3,
+      "precision": 0.5967213114749207,
+      "recall": 0.5048543689316888,
+      "f1": 0.5469571745594152,
+      "exact_match": 0.105,
+      "parts_per_plate": 2.033333333333333,
+      "single_pred_rate": 0.29333333333333333
+    },
+    "per_class": {
+      "threshold": 0.3,
+      "precision": 0.6345132743357217,
+      "recall": 0.497226074895633,
+      "f1": 0.557542767780641,
+      "exact_match": 0.115,
+      "parts_per_plate": 1.8833333333333333,
+      "single_pred_rate": 0.31833333333333336
+    },
+    "exact_match_detect_parts": 0.13,
+    "empty_plates": 0.02666666666666667
+  },
+  "canteen": {
+    "global": {
+      "threshold": 0.3,
+      "precision": 0.6233870967736909,
+      "recall": 0.5401816911247098,
+      "f1": 0.5788094341707868,
+      "exact_match": 0.12333333333333334,
+      "parts_per_plate": 2.066666666666667,
+      "single_pred_rate": 0.275
+    },
+    "per_class": {
+      "threshold": 0.3,
+      "precision": 0.6378737541522941,
+      "recall": 0.5366876310268787,
+      "f1": 0.5829222006417881,
+      "exact_match": 0.12166666666666667,
+      "parts_per_plate": 2.006666666666667,
+      "single_pred_rate": 0.28833333333333333
+    },
+    "exact_match_detect_parts": 0.12833333333333333,
+    "empty_plates": 0.018333333333333333
+  },
+  "per_class": {}
+}

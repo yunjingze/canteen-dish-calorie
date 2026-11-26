@@ -5,7 +5,9 @@ import csv
 import hashlib
 import io
 import json
+import logging
 import os
+import time
 from datetime import datetime
 from contextlib import asynccontextmanager
 from functools import lru_cache
@@ -16,6 +18,7 @@ import numpy as np
 import torch
 import uvicorn
 from fastapi import FastAPI, File, Form, Response, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
@@ -27,6 +30,10 @@ from .classes import CLASS_NAMES, KCAL_PER_100G, PORTION_G, ZH_LABELS
 from .classes_cn import (
     CN_CLASS_NAMES,
     CN_KCAL_PER_100G,
+    CN_MENU_KCAL_PER_100G,
+    CN_MENU_NAMES,
+    CN_MENU_PORTION_G,
+    CN_MENU_ZH,
     CN_NUM_CLASSES,
     CN_PORTION_G,
     CN_ZH,
@@ -89,12 +96,33 @@ WIDE_SAMPLES = ROOT / "data/wide/splits/test"
 #: This is the second-generation head: a 241-class CNFOOD-241 backbone pretrained
 #: on 153,746 images and then finetuned on the 21-way split (README 5.7.3); test
 #: top-1 79.83 % against 75.40 % for the f101n-initialised one.
-DEFAULT_CN_CKPT = ROOT / "results/runs/cn241_21_pre/best.pt"
+DEFAULT_CN_CKPT = ROOT / "results/runs/cn241_22_pre/best.pt"
 CN_CKPT = Path(os.environ.get("FOODCLS_CN_CKPT", DEFAULT_CN_CKPT))
 if not CN_CKPT.is_absolute():
     CN_CKPT = (ROOT / CN_CKPT).resolve()
 CN_SAMPLES = ROOT / "data/splits/cn241_full/test"
 MIXED_SAMPLES = ROOT / "data/splits/mixed"
+
+#: The single-dish tab serves a five-run ensemble, not one checkpoint.  All five
+#: are the same architecture and label space (20 Food-101 classes); their logits
+#: are averaged and calibrated once with the temperature in
+#: results/tables/ensemble_calibration.json.  Measured on the 5,000-image test
+#: split: 94.40 % top-1 against 93.40 % for the deployed run alone, ECE 1.52 %
+#: after calibration, and 18.7 ms for five forward passes on the laptop GPU --
+#: nothing next to the image decode.  The gates (food / packaging / cuisine) and
+#: the wide-head fusion still run on the deployed run's features, because they
+#: were fitted on that backbone.  FOODCLS_ENSEMBLE=0 restores the single model.
+ENSEMBLE_RUNS = (
+    "resnet18_last_stage_aug_f101n",
+    "resnet18_last_stage_aug",
+    "resnet18_last_stage_aug_f101n_nodedup",
+    "resnet18_last_stage_aug_f101n_e24",
+    "resnet18_last_stage_aug_seed7",
+)
+ENSEMBLE_TABLE = ROOT / "results/tables/ensemble_calibration.json"
+ENSEMBLE = os.environ.get("FOODCLS_ENSEMBLE", "1").strip().lower() not in {
+    "0", "off", "false", "no"}
+
 STATIC = Path(__file__).resolve().parent / "static"
 _PROXY = ROOT / "data/splits/canteen"
 SAMPLES = _PROXY if _PROXY.exists() else ROOT / "data/splits/test"
@@ -162,6 +190,9 @@ CN_VETO_MARGIN = 0.02
 #: left are the look-alikes (回锅肉/农家小炒肉), not low-confidence cases.
 CN_OTHER_SLUG = "other_cn"
 CN_OTHER_ZH = "其它中餐"
+#: Rice ships as a dish of its own only in the 22-class canteen checkpoint; see
+#: src/foodcls/classes_cn.py for why it is kept out of CLASS_SPEC_CN.
+CN_RICE_SLUG = "rice"
 CN_OTHER_THRESHOLD = float(os.environ.get("FOODCLS_CN_OTHER", "0.40"))
 
 #: The bucket steals probability mass from the 20 dishes, so the gate is measured
@@ -274,6 +305,30 @@ def _check_class_names(ckpt, expected, path):
         )
 
 
+def _load_ensemble_temperature() -> float:
+    """One temperature for the averaged logits (results/tables/ensemble_calibration.json).
+
+    It is lower than any member's own temperature because averaging shrinks the
+    logit scale: the ensemble is calibrated once, after the mean, never per member.
+    """
+    try:
+        data = json.loads(ENSEMBLE_TABLE.read_text(encoding="utf-8"))
+        t = float(data["temperature"])
+        if 0.05 <= t <= 20.0:
+            return t
+    except (OSError, ValueError, TypeError, KeyError):
+        pass
+    return 1.0
+
+
+def _load_member(path: Path, device) -> torch.nn.Module:
+    ckpt = torch.load(path, map_location=device, weights_only=False)
+    _check_class_names(ckpt, CLASS_NAMES, path)
+    model = build_model(ckpt["arch"], len(CLASS_NAMES), pretrained=False)
+    model.load_state_dict(ckpt["model"])
+    return model.to(device).eval()
+
+
 def load_model():
     device = pick_device()
     ckpt = torch.load(CKPT, map_location=device, weights_only=False)
@@ -287,6 +342,30 @@ def load_model():
     _state["temperature"] = _load_temperature(CKPT)
     _state["temperature_fused"] = _load_temperature(CKPT, "temperature_fused")
     print(f"loaded {ckpt['arch']} from {CKPT} on {device}", flush=True)
+    _state["ensemble"] = None
+    _state["ensemble_runs"] = []
+    if ENSEMBLE:
+        # The deployed run is always member #0 (it is the one whose features the
+        # gates use), so a missing sibling can shrink the ensemble to one member
+        # without changing which forward pass produces the pooled feature.
+        members = [model]
+        runs = [CKPT.parent.name]
+        for run in ENSEMBLE_RUNS:
+            path = ROOT / "results/runs" / run / "best.pt"
+            if path == CKPT or not path.is_file():
+                continue
+            try:
+                members.append(_load_member(path, device))
+                runs.append(run)
+            except (OSError, RuntimeError, KeyError) as exc:
+                print(f"ensemble member {run} skipped: {exc}", flush=True)
+        if len(members) > 1:
+            _state["ensemble"] = members
+            _state["ensemble_runs"] = runs
+            _state["temperature"] = _load_ensemble_temperature()
+            _state["temperature_fused"] = _state["temperature"]
+            print(f"ensemble: {len(members)} members ({', '.join(runs)}) "
+                  f"at temperature {_state['temperature']:.2f}", flush=True)
     _state["foodgate"] = None
     if FOODGATE_PATH.is_file():
         try:
@@ -377,6 +456,7 @@ def load_wide_model():
     _state["wide_temperature"] = _load_temperature(WIDE_CKPT)
     _state["wide_temperature_fused"] = _load_temperature(WIDE_CKPT, "temperature_fused")
     _state["wide_fuse"] = WIDE_FUSE_ALPHA if _state.get("model") is not None else 0.0
+
     print(f"loaded wide {ckpt['arch']} ({WIDE_NUM_CLASSES} classes) from {WIDE_CKPT} on {device}"
           + (f", fusing {WIDE_FUSE_ALPHA:.2f} of the 20-class posterior" if _state["wide_fuse"] else ""),
           flush=True)
@@ -392,24 +472,51 @@ def load_cn_model():
     device = _state["device"]
     ckpt = torch.load(CN_CKPT, map_location=device, weights_only=False)
     names = list(ckpt.get("class_names") or CN_CLASS_NAMES)
-    has_other = (len(names) == CN_NUM_CLASSES + 1
-                 and names[:CN_NUM_CLASSES] == list(CN_CLASS_NAMES)
-                 and names[-1] == CN_OTHER_SLUG)
+    # Three class lists are accepted; the difference is only whether the bucket
+    # (and rice) have their own output units:
+    #   20  the dishes alone (the pre-bucket checkpoint);
+    #   21  the dishes plus the 'other Chinese' bucket;
+    #   22  the dishes plus rice plus the bucket, i.e. the 22-class head where
+    #       rice is a named dish instead of being poured into the bucket.
+    # Everything downstream reads the *dishes* count from _state, never
+    # CN_NUM_CLASSES, so a 22-class checkpoint names rice like any other dish.
+    has_rice = (len(names) == CN_NUM_CLASSES + 2
+                and names[:CN_NUM_CLASSES] == list(CN_CLASS_NAMES)
+                and names[-2] == CN_RICE_SLUG
+                and names[-1] == CN_OTHER_SLUG)
+    has_other = has_rice or (len(names) == CN_NUM_CLASSES + 1
+                             and names[:CN_NUM_CLASSES] == list(CN_CLASS_NAMES)
+                             and names[-1] == CN_OTHER_SLUG)
     if list(names) != list(CN_CLASS_NAMES) and not has_other:
         raise RuntimeError(
             f"{CN_CKPT.name}: checkpoint class_names ({len(names)}) match neither the "
-            f"{CN_NUM_CLASSES} dishes nor those plus '{CN_OTHER_SLUG}'; refusing to load"
+            f"{CN_NUM_CLASSES} dishes, nor those plus '{CN_OTHER_SLUG}', nor those plus "
+            f"'{CN_RICE_SLUG}' and '{CN_OTHER_SLUG}'; refusing to load"
         )
     model = build_model(ckpt["arch"], len(names), pretrained=False)
     model.load_state_dict(ckpt["model"])
     model.to(device).eval()
     _state["cn_model"] = model
     _state["cn_arch"] = ckpt["arch"]
-    _state["cn_other_index"] = CN_NUM_CLASSES if has_other else None
+    #: the dish table follows the checkpoint: rice is a dish only in the 22-class
+    #: head, and the calorie/portion tables have to grow with it.
+    if has_rice:
+        _state["cn_names"] = CN_MENU_NAMES
+        _state["cn_zh"] = CN_MENU_ZH
+        _state["cn_kcal"] = CN_MENU_KCAL_PER_100G
+        _state["cn_portion"] = CN_MENU_PORTION_G
+    else:
+        _state["cn_names"] = list(CN_CLASS_NAMES)
+        _state["cn_zh"] = CN_ZH
+        _state["cn_kcal"] = CN_KCAL_PER_100G
+        _state["cn_portion"] = CN_PORTION_G
+    _state["cn_dish_count"] = len(_state["cn_names"])
+    _state["cn_other_index"] = len(names) - 1 if has_other else None
     #: the gate is re-measured on the 21-class checkpoint (see CN_SCOPE_THRESHOLD_21)
     _state["cn_scope_threshold"] = CN_SCOPE_THRESHOLD_21 if has_other else CN_SCOPE_THRESHOLD
     _state["cn_temperature"] = _load_temperature(CN_CKPT)
     print(f"loaded canteen {ckpt['arch']} ({len(names)} classes"
+          + (", incl. rice" if has_rice else "")
           + (", incl. 'other Chinese'" if has_other else "")
           + f") from {CN_CKPT} on {device}, T={_state['cn_temperature']:.3f}", flush=True)
 
@@ -483,6 +590,24 @@ class ImageTooLarge(Exception):
     """The upload decodes to more pixels than we are willing to allocate."""
 
 
+#: iPhones upload HEIC by default and Pillow cannot open it on its own.  The
+#: plugin registers a decoder for the HEIF family the first time it is imported;
+#: without it every HEIC upload would come back as "unreadable image".
+def _register_heif() -> bool:
+    try:
+        import pillow_heif
+    except ImportError:
+        return False
+    pillow_heif.register_heif_opener()
+    return True
+
+
+HEIF_OK = _register_heif()
+#: The 400 message names only the formats this build can actually decode.
+UNREADABLE_IMAGE = ("无法解析这张图片，请换一张 JPG/PNG"
+                   + ("/HEIC 照片" if HEIF_OK else " 照片"))
+
+
 def read_image(raw: bytes) -> Image.Image:
     """Decode uploaded bytes, honouring the EXIF orientation of phone photos."""
     img = Image.open(io.BytesIO(raw))
@@ -491,6 +616,19 @@ def read_image(raw: bytes) -> Image.Image:
         raise ImageTooLarge(f"{width}x{height}")
     img = ImageOps.exif_transpose(img)
     return img.convert("RGB")
+
+
+def _narrow_models():
+    """The single-dish head as a list: the ensemble when loaded, else one model.
+
+    Member #0 is always the deployed Food-101N run, the one the gate heads were
+    fitted on, so the pooled feature below never changes owner.
+    """
+    members = _state.get("ensemble")
+    if members:
+        return members
+    model = _state.get("model")
+    return [model] if model is not None else []
 
 
 @torch.no_grad()
@@ -503,17 +641,26 @@ def _view_probs(model, temperature: float, img: Image.Image,
     worse posterior than fusing the logits (93.1 vs 93.4 on test, 71.2 vs 73.0
     on the proxy for E7).  The per-view probabilities keep their own temperature
     because the out-of-scope gate is calibrated on them.
+
+    A model may be one network or a list of them (the single-dish ensemble).
+    Members are averaged in logit space *before* any temperature is applied --
+    calibrating each member and then averaging is a different, worse estimator.
     """
+    models = list(model) if isinstance(model, (list, tuple)) else [model]
     x = preprocess_views(img).to(_state["device"])
     store: dict = {}
     hook = None
     if want_feats:
         # the food gate consumes the pooled penultimate feature of the first
-        # (centre-crop) view, i.e. the same forward pass, no second network
-        hook = model.avgpool.register_forward_hook(
+        # (centre-crop) view, i.e. the same forward pass, no second network.
+        # Only member #0 is hooked: it is the backbone every gate was fitted on.
+        hook = models[0].avgpool.register_forward_hook(
             lambda _m, _i, out: store.__setitem__("feat", out))
     try:
-        logits = model(x).float().cpu()
+        if len(models) == 1:
+            logits = models[0](x).float().cpu()
+        else:
+            logits = torch.stack([m(x).float().cpu() for m in models]).mean(0)
     finally:
         if hook is not None:
             hook.remove()
@@ -530,13 +677,13 @@ def _view_probs(model, temperature: float, img: Image.Image,
 
 
 def analyse(img: Image.Image):
-    return _view_probs(_state["model"], _state.get("temperature", 1.0), img,
+    return _view_probs(_narrow_models(), _state.get("temperature", 1.0), img,
                        _state.get("temperature_fused"))
 
 
 def analyse_full(img: Image.Image):
     """analyse() plus the pooled feature the food gate needs."""
-    return _view_probs(_state["model"], _state.get("temperature", 1.0), img,
+    return _view_probs(_narrow_models(), _state.get("temperature", 1.0), img,
                        _state.get("temperature_fused"), want_feats=True)
 
 
@@ -559,9 +706,10 @@ def analyse_wide(img: Image.Image, want_feats: bool = False):
     views, fused = _view_probs(model, _state.get("wide_temperature", 1.0), img,
                                _state.get("wide_temperature_fused"))
     alpha = _state.get("wide_fuse", 0.0)
-    narrow = _state.get("model")
+    # the narrow side is the ensemble too: same posterior the single-dish tab shows
+    narrow = _narrow_models()
     frames = None
-    if narrow is not None and (alpha > 0 or want_feats):
+    if narrow and (alpha > 0 or want_feats):
         # One narrow forward pass serves both jobs: its posterior is mapped into
         # the wide index space for the fusion, and its pooled feature is what
         # the food gate was fitted on.  Asking for the feature costs nothing.
@@ -677,6 +825,17 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     spec = _SCOPE_SPECS[mode]
     names, zh, label, examples = spec["names"], spec["zh"], spec["label"], spec["examples"]
     threshold = spec["threshold"]
+    #: The canteen tab's dish list comes from the loaded checkpoint, not from the
+    #: module constants: the 20-dish head, the 21-class one (plus the 'other
+    #: Chinese' bucket) and the 22-class one (plus rice) all share this code.
+    menu_size = CN_NUM_CLASSES
+    if cn:
+        names = _state.get("cn_names") or list(CN_CLASS_NAMES)
+        zh = _state.get("cn_zh") or CN_ZH
+        menu_size = int(_state.get("cn_dish_count") or CN_NUM_CLASSES)
+        label = f"{menu_size} 道"
+        examples = (f"牛肉面、麻辣烫、米线、手抓饼、清蒸鱼这些食堂主食和小吃不在这 "
+                    f"{menu_size} 道里")
     if cn and cn_other_prob is not None:
         # With the bucket the gate must ignore it: an in-scope dish can put 40 %
         # on "some other dish" and still be the right one, and the old threshold
@@ -687,12 +846,17 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     # on every photo, so the gate keeps the three original framings only; that
     # is the calibration the 0.32 / 0.18 thresholds were measured on.
     gate_views = views[:_GATE_VIEWS] if len(views) > _GATE_VIEWS else views
-    if cn_other_prob is not None and views.shape[1] > CN_NUM_CLASSES:
+    #: The bucket is always the checkpoint's last unit.  With no model loaded --
+    #: the tests call this directly -- the last column of `views` is the bucket.
+    other_index = _state.get("cn_other_index") if cn else None
+    if cn and other_index is None and cn_other_prob is not None and views.shape[1] > CN_NUM_CLASSES:
+        other_index = int(views.shape[1]) - 1
+    if cn_other_prob is not None and other_index is not None and views.shape[1] > other_index:
         # Divide the bucket back out of every view before asking "which of the 20
         # dishes is this?": the dish mass is what the 20-dish gate was calibrated
         # on, and the bucket answers the other question separately.
-        dish = views[:, :CN_NUM_CLASSES].astype(np.float64)
-        bucket = views[:, CN_NUM_CLASSES].astype(np.float64)
+        dish = views[:, :other_index].astype(np.float64)
+        bucket = views[:, other_index].astype(np.float64)
         renorm = dish / np.clip(1.0 - bucket, 1e-6, None)[:, None]
         robust = float(min(np.max(v) for v in renorm[:_GATE_VIEWS]))
     else:
@@ -744,8 +908,8 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
     # Name the nearest *dish* even when the bucket won: "closest: 其它中餐" tells
     # the user nothing about what the photo looks like.
     top_idx = int(np.argmax(probs))
-    if cn and cn_other_prob is not None and top_idx >= CN_NUM_CLASSES:
-        top_idx = int(np.argmax(probs[:CN_NUM_CLASSES]))
+    if cn and cn_other_prob is not None and top_idx >= len(names):
+        top_idx = int(np.argmax(probs[:len(names)]))
     closest = zh[names[top_idx]]
     scope = {
         "in_scope": in_scope,
@@ -800,14 +964,14 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
         scope["message"] = (
             f"这张看起来不是食堂窗口的家常菜：域判别认为它是「{DOMAIN_ZH}」的把握只有 "
             f"{cn_domain_prob * 100:.0f}%（低于 {dom_th * 100:.0f}%），"
-            "更像西餐、甜点或饮料。食堂模式只认识 20 道中餐——"
+            f"更像西餐、甜点或饮料。食堂模式只认识 {menu_size} 道中餐——"
             "换成「单菜识别」或「116 类」标签再试。"
         )
     elif not in_scope and other_hit:
         # The bucket caught what the wide-head veto kept missing (宫保鸡丁 was
         # 0.005 short of the margin, and 汤包/饺子 fell into 包子).
         scope["message"] = (
-            f"这张看起来不在食堂模式的 20 道清单里：模型把 {cn_other_prob * 100:.0f}% 的把握"
+            f"这张看起来不在食堂模式的 {menu_size} 道清单里：模型把 {cn_other_prob * 100:.0f}% 的把握"
             f"放在「{CN_OTHER_ZH}」这一类上，也就是说它更像清单之外的菜"
             f"（最接近的「{closest}」只是强行归类的候选）。"
             "想吃别的菜可以切到「116 类」标签试试。"
@@ -816,7 +980,7 @@ def scope_of(views: np.ndarray, probs: np.ndarray, wide: bool = False,
         # A dish the canteen head would have force-fitted into its 20 classes:
         # name what the photo actually looks like instead of the nearest match.
         scope["message"] = (
-            f"这张更像「{cn_veto_result['zh']}」——它不在食堂模式的 20 道清单里"
+            f"这张更像「{cn_veto_result['zh']}」——它不在食堂模式的 {menu_size} 道清单里"
             f"（最接近的「{closest}」是强行归类的候选，把握只有 {robust * 100:.0f}%）。"
             "切到「116 类」标签可以认出这道菜。"
         )
@@ -857,9 +1021,10 @@ def _tab_scope(img: Image.Image, mode: str) -> Optional[dict]:
     if _state.get("cn_model") is None:
         return None
     views, fused, frames = analyse_cn(img, want_feats=True)
-    other = float(fused[CN_NUM_CLASSES]) if fused.size > CN_NUM_CLASSES else None
-    other_top = bool(int(np.argmax(fused)) == CN_NUM_CLASSES) if other is not None else False
-    dish = fused[:CN_NUM_CLASSES] if other is not None else fused
+    other_index = _state.get("cn_other_index")
+    other = float(fused[other_index]) if other_index is not None and fused.size > other_index else None
+    other_top = bool(int(np.argmax(fused)) == other_index) if other is not None else False
+    dish = fused[:other_index] if other is not None else fused
     return scope_of(views, dish, cn=True, cn_veto_result=cn_veto(img),
                     cn_other_prob=other, cn_other_top=other_top,
                     cn_domain_prob=_domain_prob(frames))
@@ -914,14 +1079,22 @@ def payload(probs: np.ndarray, source: str, portion: str = "normal", grams=None,
     cn_other_top = False
     if cn:
         # Split off the "other Chinese" bucket: it has no name, no calories and
-        # no portion, so it must never reach topk_with_calories().
-        if len(probs) > CN_NUM_CLASSES:
-            cn_other_prob = float(probs[CN_NUM_CLASSES])
-            cn_other_top = bool(int(np.argmax(probs)) == CN_NUM_CLASSES)
-            probs = probs[:CN_NUM_CLASSES]
+        # no portion, so it must never reach topk_with_calories().  Its index is
+        # the checkpoint's last unit once a model is loaded (21 units with the
+        # bucket alone, 22 with rice in front of it); with nothing loaded -- the
+        # tests call this function directly -- fall back to the historical 21.
+        other_index = _state.get("cn_other_index")
+        if other_index is None and len(probs) > CN_NUM_CLASSES:
+            other_index = len(probs) - 1
+        if other_index is not None and len(probs) > other_index:
+            cn_other_prob = float(probs[other_index])
+            cn_other_top = bool(int(np.argmax(probs)) == other_index)
+            probs = probs[:other_index]
         items = topk_with_calories(probs, k=3, portion=portion, grams=grams,
-                                   class_names=CN_CLASS_NAMES, zh_table=CN_ZH,
-                                   kcal_table=CN_KCAL_PER_100G, portion_table=CN_PORTION_G)
+                                   class_names=_state.get("cn_names") or CN_CLASS_NAMES,
+                                   zh_table=_state.get("cn_zh") or CN_ZH,
+                                   kcal_table=_state.get("cn_kcal") or CN_KCAL_PER_100G,
+                                   portion_table=_state.get("cn_portion") or CN_PORTION_G)
     elif wide:
         items = topk_with_calories(probs, k=3, portion=portion, grams=grams,
                                    class_names=WIDE_CLASS_NAMES, zh_table=WIDE_ZH,
@@ -1114,6 +1287,48 @@ async def _require_token(request, call_next):
     return response
 
 
+#: Cross-origin use.  The mini-program (miniprogram/) calls the API from a
+#: different origin, and so does a page opened over a tunnel; both were blocked
+#: by the browser before this.  The default is *any* origin because the demo has
+#: no cookies to steal (the token, if set, is read from a query string or header).
+#: FOODCLS_ORIGINS=a,b narrows it.
+_ORIGINS = [o.strip() for o in os.environ.get("FOODCLS_ORIGINS", "*").split(",") if o.strip()]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_ORIGINS or ["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+LOG = logging.getLogger("foodcls.api")
+
+#: Per-path request counters for /api/health: a demo that is being recorded has
+#: no terminal in shot, so the payload is the only place a stall or a burst of
+#: 500s can be seen.  Counts since process start, plus the slowest call.
+_metrics: dict = {}
+
+
+@app.middleware("http")
+async def _count_requests(request, call_next):
+    started = time.perf_counter()
+    response = await call_next(request)
+    elapsed = (time.perf_counter() - started) * 1000.0
+    path = request.url.path
+    if path.startswith("/api/"):
+        row = _metrics.setdefault(path, {"n": 0, "errors": 0, "ms_total": 0.0,
+                                    "ms_max": 0.0, "last_status": 200})
+        row["n"] += 1
+        row["ms_total"] += elapsed
+        row["ms_max"] = max(row["ms_max"], elapsed)
+        row["last_status"] = response.status_code
+        if response.status_code >= 400:
+            row["errors"] += 1
+        level = logging.WARNING if (response.status_code >= 500 or elapsed > 3000) else logging.INFO
+        LOG.log(level, "%s %s -> %d in %.0f ms", request.method, path,
+                response.status_code, elapsed)
+    return response
+
+
 @app.get("/")
 def index():
     return FileResponse(STATIC / "index.html")
@@ -1274,7 +1489,7 @@ async def predict(
     except ImageTooLarge:
         return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
-        return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
+        return JSONResponse({"error": UNREADABLE_IMAGE}, status_code=400)
     views, fused, frames = await run_in_threadpool(analyse_full, img)
     food_prob = _food_prob(frames)
     pack = _state.get("packaging")
@@ -1296,7 +1511,8 @@ FEEDBACK_SPECIAL = {"not_a_dish": "照片里没有菜", "not_sure": "我也说�
 #: the canteen menu has its own slugs (tomato_egg, di_san_xian, ...), and without
 #: them every correction made in the canteen tab failed validation.
 FEEDBACK_CLASSES = (
-    set(CLASS_NAMES) | set(WIDE_CLASS_NAMES) | set(CN_CLASS_NAMES) | set(FEEDBACK_SPECIAL)
+    set(CLASS_NAMES) | set(WIDE_CLASS_NAMES) | set(CN_CLASS_NAMES) | set(CN_MENU_NAMES)
+    | set(FEEDBACK_SPECIAL)
 )
 FEEDBACK_COLUMNS = ["timestamp", "file", "predicted", "corrected", "removed", "note", "source", "mode"]
 
@@ -1391,7 +1607,7 @@ async def feedback(
     except ImageTooLarge:
         return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
-        return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
+        return JSONResponse({"error": UNREADABLE_IMAGE}, status_code=400)
 
     FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
     if FEEDBACK_CSV.is_file():
@@ -1509,7 +1725,7 @@ async def wide_predict(file: UploadFile = File(...), portion: str = "normal", gr
     except ImageTooLarge:
         return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
-        return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
+        return JSONResponse({"error": UNREADABLE_IMAGE}, status_code=400)
     views, fused, frames = await run_in_threadpool(analyse_wide, img, True)
     return payload(fused, source=file.filename or "upload", portion=portion, grams=grams,
                    views=views, wide=True, img=img, food_prob=_food_prob(frames))
@@ -1536,7 +1752,11 @@ def _find_cn_sample(name: str) -> Optional[Path]:
 @app.get("/api/cn/classes")
 def cn_classes():
     return {
+        #: `count` stays the 20 dishes the module ships with: it is the front end's
+        #: fallback, and the endpoint must answer the same before and after a
+        #: checkpoint loads.  `dishes` below is what the loaded head actually has.
         "count": CN_NUM_CLASSES,
+        "dishes": int(_state.get("cn_dish_count") or CN_NUM_CLASSES),
         "threshold": (_state.get("cn_scope_threshold") or CN_SCOPE_THRESHOLD),
         "other": {
             "enabled": _state.get("cn_other_index") is not None,
@@ -1545,9 +1765,10 @@ def cn_classes():
         },
         "enabled": _state.get("cn_model") is not None,
         "classes": [
-            {"class": c, "zh": CN_ZH[c], "kcal_per_100g": CN_KCAL_PER_100G[c],
-             "portion_g": CN_PORTION_G[c]}
-            for c in CN_CLASS_NAMES
+            {"class": c, "zh": _state.get("cn_zh", CN_ZH)[c],
+             "kcal_per_100g": _state.get("cn_kcal", CN_KCAL_PER_100G)[c],
+             "portion_g": _state.get("cn_portion", CN_PORTION_G)[c]}
+            for c in (_state.get("cn_names") or CN_CLASS_NAMES)
         ],
     }
 
@@ -1558,9 +1779,12 @@ def cn_samples():
     if not CN_SAMPLES.exists():
         return {"samples": [], "enabled": _state.get("cn_model") is not None}
     out: List[dict] = []
-    for cls in CN_CLASS_NAMES:
+    zh = _state.get("cn_zh") or CN_ZH
+    #: Follows the loaded head, but a dish with no sample folder is simply absent
+    #: (rice ships without one: the gallery predates the 22-class checkpoint).
+    for cls in (_state.get("cn_names") or CN_CLASS_NAMES):
         for f_ in sorted((CN_SAMPLES / cls).glob("*.jpg"))[:1]:
-            out.append({"name": _sample_name(cls, f_.name), "class": cls, "zh": CN_ZH[cls]})
+            out.append({"name": _sample_name(cls, f_.name), "class": cls, "zh": zh[cls]})
     return {"samples": out, "enabled": _state.get("cn_model") is not None}
 
 
@@ -1575,7 +1799,8 @@ def cn_sample_image(name: str):
 @app.get("/api/cn/predict_sample")
 def cn_predict_sample(name: str, portion: str = "normal", grams: Optional[str] = None):
     if _state.get("cn_model") is None:
-        return JSONResponse({"error": f"{CN_NUM_CLASSES} 道食堂菜模型尚未训练完成"}, status_code=503)
+        return JSONResponse({"error": f"{_state.get('cn_dish_count') or CN_NUM_CLASSES} 道食堂菜模型"
+                             "尚未训练完成"}, status_code=503)
     path = _find_cn_sample(name)
     if path is None:
         return JSONResponse({"error": "not found"}, status_code=404)
@@ -1590,7 +1815,8 @@ def cn_predict_sample(name: str, portion: str = "normal", grams: Optional[str] =
 async def cn_predict(file: UploadFile = File(...), portion: str = "normal",
                      grams: Optional[str] = Form(None)):
     if _state.get("cn_model") is None:
-        return JSONResponse({"error": f"{CN_NUM_CLASSES} 道食堂菜模型尚未训练完成"}, status_code=503)
+        return JSONResponse({"error": f"{_state.get('cn_dish_count') or CN_NUM_CLASSES} 道食堂菜模型"
+                             "尚未训练完成"}, status_code=503)
     raw = await file.read(MAX_UPLOAD_BYTES + 1)
     if len(raw) > MAX_UPLOAD_BYTES:
         return JSONResponse({"error": "图片过大，请上传 15 MB 以内的照片"}, status_code=413)
@@ -1599,7 +1825,7 @@ async def cn_predict(file: UploadFile = File(...), portion: str = "normal",
     except ImageTooLarge:
         return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
-        return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
+        return JSONResponse({"error": UNREADABLE_IMAGE}, status_code=400)
     views, fused, frames = await run_in_threadpool(analyse_cn, img, True)
     return payload(fused, source=file.filename or "upload", portion=portion, grams=grams,
                    views=views, cn=True, img=img, cn_frames=frames)
@@ -1664,7 +1890,7 @@ async def mixed_predict(file: UploadFile = File(...), portion: str = "normal"):
     except ImageTooLarge:
         return JSONResponse({"error": "图片分辨率过高（超过 4000 万像素），请先缩小再上传"}, status_code=413)
     except Exception:
-        return JSONResponse({"error": "无法解析这张图片，请换一张 JPG/PNG 照片"}, status_code=400)
+        return JSONResponse({"error": UNREADABLE_IMAGE}, status_code=400)
     parts = await run_in_threadpool(infer_mixed, img)
     return mixed_payload(parts, source=file.filename or "upload", portion=portion,
                          scope=_packaging_scope(img))
@@ -1716,6 +1942,14 @@ def health():
         "temperature": _state.get("temperature", 1.0),
         "temperature_fused": _state.get("temperature_fused", _state.get("temperature", 1.0)),
         "views": len(_VIEW_TFS) or 6,
+        "heif": HEIF_OK,
+        "ensemble": {
+            "enabled": bool(_state.get("ensemble")),
+            "members": len(_state.get("ensemble") or []),
+            "runs": list(_state.get("ensemble_runs") or []),
+            "temperature": _state.get("temperature", 1.0),
+            "gates_on_member": (_state.get("ensemble_runs") or [CKPT.parent.name])[0],
+        },
         "mixed_enabled": _state.get("mixed_model") is not None,
         "mixed_threshold": _state.get("mixed_threshold", DETECT_THRESHOLD),
         "mixed_classes": len(mixed_names),
@@ -1727,7 +1961,7 @@ def health():
         "wide_fuse": _state.get("wide_fuse", 0.0),
         "cn_enabled": _state.get("cn_model") is not None,
         "cn_arch": _state.get("cn_arch"),
-        "cn_classes": CN_NUM_CLASSES,
+        "cn_classes": int(_state.get("cn_dish_count") or CN_NUM_CLASSES),
         "cn_temperature": _state.get("cn_temperature", 1.0),
         "cn_threshold": (_state.get("cn_scope_threshold") or CN_SCOPE_THRESHOLD),
         "cn_other": {
@@ -1748,6 +1982,11 @@ def health():
             "classes": len(CN_VETO_CLASSES),
         },
         "brand_items": _state.get("brand_items", 0),
+        "requests": {k: {"n": v["n"], "errors": v["errors"],
+                            "ms_avg": round(v["ms_total"] / max(1, v["n"]), 1),
+                            "ms_max": round(v["ms_max"], 1),
+                            "last_status": v["last_status"]}
+                    for k, v in sorted(_metrics.items())},
         "checkpoint": CKPT.parent.name,
         "food_gate": {
             "enabled": _state.get("foodgate") is not None,

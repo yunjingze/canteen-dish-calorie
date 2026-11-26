@@ -48,6 +48,10 @@ def parse_args(argv=None):
     p = argparse.ArgumentParser()
     p.add_argument("--ckpt", default=str(ROOT / "results/runs/resnet18_multilabel_plate40/best.pt"))
     p.add_argument("--data-root", default=str(ROOT / "data"))
+    p.add_argument("--cn-root", default=str(ROOT / "data/splits/cn241_21"),
+                   help="canteen val split used to build the tray plates")
+    p.add_argument("--pairing-prior", action="store_true",
+                   help="build eval plates with the role-based pairing prior")
     p.add_argument("--n-west", type=int, default=600)
     p.add_argument("--n-cn", type=int, default=600)
     p.add_argument("--lo", type=float, default=0.05)
@@ -94,14 +98,17 @@ def main(argv=None):
     root = Path(args.data_root)
     offset = len(CLASS_NAMES)
     west_src = SplitDataset(root / "splits/val", CLASS_NAMES, transform=None)
-    cn_src = SplitDataset(root / "splits/cn241_21/val", CN_CLASS_NAMES, transform=None)
-    west = build_eval_set(west_src.samples, args.n_west, seed=1234, num_classes=offset)
+    cn_src = SplitDataset(Path(args.cn_root) / "val", CN_CLASS_NAMES, transform=None)
+    west = build_eval_set(west_src.samples, args.n_west, seed=1234, num_classes=offset,
+                          prior=args.pairing_prior)
     cn = build_eval_set(
         cn_src.samples,
         args.n_cn,
         seed=4321,
         num_classes=len(CN_CLASS_NAMES),
         label_map=[offset + i for i in range(len(CN_CLASS_NAMES))],
+        prior=args.pairing_prior,
+        prior_names=list(CN_CLASS_NAMES),
     )
 
     wp = probs_for(model, west, device, num_classes=len(names))
@@ -124,10 +131,15 @@ def main(argv=None):
               f"{c['f1']*100:6.2f} {c['exact_match']*100:7.2f}{mark}")
 
     thr, m, c = best
-    # each dish only appears on one cuisine's plates, so its cut-off is fitted
-    # there; the other cuisine's column is all zeros and would drag it to 0.10
-    class_thr = per_class_thresholds(wt, wp, class_names=names)
-    class_thr.update(per_class_thresholds(ct, cp, class_names=names[offset:]))
+    # Each dish only appears on one cuisine's plates, so its cut-off is fitted
+    # there.  Slice both the targets *and* the probability matrix: passing the
+    # 20 canteen names with 40-wide arrays paired them with columns 0-19 (the
+    # western ones), which are all zero on canteen plates, so every canteen
+    # cut-off collapsed to the bottom of the grid.  0.17-0.37 F1 point bug.
+    class_thr = per_class_thresholds(wt[:, :offset], wp[:, :offset],
+                                     class_names=names[:offset])
+    class_thr.update(per_class_thresholds(ct[:, offset:], cp[:, offset:],
+                                          class_names=names[offset:]))
     m_t = component_metrics(wt, wp, thr, class_thresholds=class_thr, class_names=names)
     c_t = component_metrics(ct, cp, thr, class_thresholds=class_thr, class_names=names)
     print(f"\nper-class cut-offs ({len(class_thr)} classes, {min(class_thr.values()):.2f}-{max(class_thr.values()):.2f}): "

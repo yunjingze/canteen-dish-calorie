@@ -48,6 +48,23 @@ foreach ($f in @("calibration.json", "foodgate.json", "packaging.json")) {
     }
 }
 
+# The single-dish tab serves a five-run ensemble by default (results/tables/
+# ensemble_calibration.json).  Ship every member plus that table, or the stage
+# silently degrades to the one backbone above with no temperature of its own.
+New-Item -ItemType Directory -Path (Join-Path $stage "results\tables") -Force | Out-Null
+Copy-Item (Join-Path $root "results\tables\ensemble_calibration.json") (Join-Path $stage "results\tables") -Force
+foreach ($runName in @("resnet18_last_stage_aug", "resnet18_last_stage_aug_f101n_nodedup",
+                       "resnet18_last_stage_aug_f101n_e24", "resnet18_last_stage_aug_seed7")) {
+    $runDir = Join-Path $root "results\runs\$runName"
+    if (-not (Test-Path (Join-Path $runDir "best.pt"))) {
+        Write-Host "  ensemble member $runName is missing; the stage will run with fewer members" -ForegroundColor DarkGray
+        continue
+    }
+    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\$runName") -Force | Out-Null
+    Copy-Item (Join-Path $runDir "best.pt") (Join-Path $stage "results\runs\$runName\best.pt")
+    Write-Host "bundled ensemble member $runName"
+}
+
 # keep the bundle clean: no bytecode caches, no TorchInductor scratch directories
 $junk = Get-ChildItem (Join-Path $stage "src") -Recurse -Directory |
     Where-Object { $_.Name -eq "__pycache__" -or $_.Name -like "torchinductor_*" }
@@ -103,18 +120,19 @@ if (Test-Path $wideSamples) {
     Write-Host "bundled $j wide sample images"
 }
 
-# canteen head: 20 dishes + an "other Chinese dish" bucket (optional: the other tabs work without it)
-# The deployed canteen head is the 241-class-pretrained fine-tune (README 5.7.3);
-# its domain probe below was fitted on THIS backbone.  The first-generation run
-# (cn241_21) is not bundled: app.py's default points at cn241_21_pre, and a bundle
-# with the old checkpoint would make the page load it or fail outright.
-$cnRun = Join-Path $root "results\runs\cn241_21_pre"
+# canteen head: 21 dishes (the 20 menu dishes plus rice) + an "other Chinese dish" bucket
+# (optional: the other tabs work without it).  The deployed canteen head is the
+# 241-class-pretrained fine-tune (README 5.7.3); its domain probe below was fitted
+# on THIS backbone.  The earlier runs (cn241_21, cn241_21_pre) are not bundled:
+# app.py's default points at cn241_22_pre, and a bundle with an old checkpoint would
+# make the page load it or fail outright.
+$cnRun = Join-Path $root "results\runs\cn241_22_pre"
 if (Test-Path (Join-Path $cnRun "best.pt")) {
-    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\cn241_21_pre") -Force | Out-Null
-    Copy-Item (Join-Path $cnRun "best.pt") (Join-Path $stage "results\runs\cn241_21_pre\best.pt")
+    New-Item -ItemType Directory -Path (Join-Path $stage "results\runs\cn241_22_pre") -Force | Out-Null
+    Copy-Item (Join-Path $cnRun "best.pt") (Join-Path $stage "results\runs\cn241_22_pre\best.pt")
     $ccal = Join-Path $cnRun "calibration.json"
-    if (Test-Path $ccal) { Copy-Item $ccal (Join-Path $stage "results\runs\cn241_21_pre\calibration.json") }
-    Write-Host "bundled 21-class canteen checkpoint (241-class pretrained)"
+    if (Test-Path $ccal) { Copy-Item $ccal (Join-Path $stage "results\runs\cn241_22_pre\calibration.json") }
+    Write-Host "bundled 22-class canteen checkpoint (241-class pretrained)"
     # the cuisine probe is a 10 KB JSON; without it the canteen gate stands alone
     $domainHead = Join-Path $root "results\tables\domain_head.json"
     if (Test-Path $domainHead) {

@@ -34,8 +34,17 @@ from foodcls import app as A  # noqa: E402
 from foodcls.models import build_model  # noqa: E402
 
 CN_CKPT = Path(os.environ.get("EVAL_CN_CKPT", ROOT / "results/runs/cn241_21/best.pt"))
+if not CN_CKPT.is_absolute():
+    CN_CKPT = ROOT / CN_CKPT
 TAG = os.environ.get("EVAL_TAG", "")
-OTHER = len(A.CN_CLASS_NAMES)
+#: Roots follow the checkpoint, like scripts/eval_cn_other.py: the 22-class head
+#: reads data/splits/cn241_22 and its own class table.
+CLASS_TABLE = Path(os.environ.get("EVAL_CN_TABLE",
+                                   ROOT / "results/tables/cn241_21_classes.json"))
+IN_ROOT = Path(os.environ.get("EVAL_CN_IN", ROOT / "data/splits/cn241_full/test"))
+VAL_ROOT = Path(os.environ.get("EVAL_CN_VAL", ROOT / "data/splits/cn241_21/val"))
+_TABLE = json.loads(CLASS_TABLE.read_text(encoding="utf-8"))
+DISHES = [c["slug"] for c in _TABLE["classes"] if c["slug"] != A.CN_OTHER_SLUG]
 CN_LIKE = ["mapo_tofu", "kung_pao_chicken", "twice_cooked_pork", "sweet_and_sour_pork",
            "boiled_fish_sichuan", "fish_with_pickled_cabbage", "west_lake_vinegar_fish",
            "steamed_sea_bass", "peking_duck", "soup_dumplings", "dumplings", "spring_rolls",
@@ -44,7 +53,8 @@ CN_LIKE = ["mapo_tofu", "kung_pao_chicken", "twice_cooked_pork", "sweet_and_sour
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 ck = torch.load(CN_CKPT, map_location="cpu", weights_only=False)
 names = list(ck["class_names"])
-assert len(names) == OTHER + 1 and names[-1] == A.CN_OTHER_SLUG, names
+OTHER = len(names) - 1
+assert names[-1] == A.CN_OTHER_SLUG and names[:OTHER] == DISHES, names
 model = build_model(ck["arch"], len(names), pretrained=False)
 model.load_state_dict(ck["model"])
 model.to(device).eval()
@@ -85,16 +95,16 @@ def wide_test_glob(cls, k):
 
 
 sets = {}
-sets["in"] = [p for c in A.CN_CLASS_NAMES
-              for p in sorted((ROOT / "data/splits/cn241_full/test" / c).glob("*.jpg"))]
+sets["in"] = [p for c in DISHES if (IN_ROOT / c).is_dir()
+              for p in sorted((IN_ROOT / c).glob("*.jpg"))]
 sets["out_cn"] = [p for c in CN_LIKE for p in wide_test_glob(c, 24)]
 ood_manifest = json.loads((ROOT / "results/tables/cn241_other_heldout.json").read_text("utf-8"))
 sets["out_ood"] = [ROOT / it["path"] for it in ood_manifest["items"]]
 sets["out_other"] = [p for d in sorted((ROOT / "data/wide/splits/test").iterdir())
                      if d.is_dir() and d.name not in CN_LIKE for p in sorted(d.glob("*.jpg"))[:8]]
 sets["real"] = sorted((ROOT / "data/splits/canteen_real").rglob("*.jpg"))
-val_root = ROOT / "data/splits/cn241_21/val"
-sets["val"] = [p for c in A.CN_CLASS_NAMES for p in sorted((val_root / c).glob("*.jpg"))]
+sets["val"] = [p for c in DISHES if (VAL_ROOT / c).is_dir()
+               for p in sorted((VAL_ROOT / c).glob("*.jpg"))]
 
 for tag, paths in sets.items():
     print(f"[{tag}] n={len(paths)}", flush=True)

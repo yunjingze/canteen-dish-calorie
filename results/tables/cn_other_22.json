@@ -1,0 +1,107 @@
+{
+  "cn_ckpt": "results\\runs\\cn241_22_pre\\best.pt",
+  "n_classes": 22,
+  "threshold_from_val_5pct": 0.40639999508857727,
+  "in_scope_top1": 0.89,
+  "in_scope_called_other": 0.04,
+  "val_other_rate": 0.0271,
+  "sweep": [
+    {
+      "tau_other": 0.0,
+      "in": 0.9411,
+      "out_cn": 0.6,
+      "out_ood": 0.8362,
+      "out_other": 0.8106,
+      "real": 0.83,
+      "in_other_rej": 0.0,
+      "out_cn_other_rej": 0.0
+    },
+    {
+      "tau_other": 0.1,
+      "in": 0.8683,
+      "out_cn": 0.2361,
+      "out_ood": 0.1897,
+      "out_other": 0.0767,
+      "real": 0.08,
+      "in_other_rej": 0.1036,
+      "out_cn_other_rej": 0.7111
+    },
+    {
+      "tau_other": 0.2,
+      "in": 0.8924,
+      "out_cn": 0.2417,
+      "out_ood": 0.2284,
+      "out_other": 0.1015,
+      "real": 0.13,
+      "in_other_rej": 0.0676,
+      "out_cn_other_rej": 0.6611
+    },
+    {
+      "tau_other": 0.25,
+      "in": 0.9007,
+      "out_cn": 0.2472,
+      "out_ood": 0.2371,
+      "out_other": 0.1151,
+      "real": 0.14,
+      "in_other_rej": 0.0558,
+      "out_cn_other_rej": 0.6306
+    },
+    {
+      "tau_other": 0.3,
+      "in": 0.9047,
+      "out_cn": 0.2556,
+      "out_ood": 0.25,
+      "out_other": 0.1312,
+      "real": 0.15,
+      "in_other_rej": 0.0494,
+      "out_cn_other_rej": 0.6111
+    },
+    {
+      "tau_other": 0.35,
+      "in": 0.9082,
+      "out_cn": 0.2556,
+      "out_ood": 0.2543,
+      "out_other": 0.1436,
+      "real": 0.15,
+      "in_other_rej": 0.0451,
+      "out_cn_other_rej": 0.6
+    },
+    {
+      "tau_other": 0.4,
+      "in": 0.911,
+      "out_cn": 0.2556,
+      "out_ood": 0.2586,
+      "out_other": 0.1572,
+      "real": 0.15,
+      "in_other_rej": 0.0411,
+      "out_cn_other_rej": 0.5833
+    },
+    {
+      "tau_other": 0.45,
+      "in": 0.9114,
+      "out_cn": 0.2556,
+      "out_ood": 0.2672,
+      "out_other": 0.1584,
+      "real": 0.16,
+      "in_other_rej": 0.0407,
+      "out_cn_other_rej": 0.5778
+    },
+    {
+      "tau_other": 0.5,
+      "in": 0.9122,
+      "out_cn": 0.2556,
+      "out_ood": 0.2716,
+      "out_other": 0.1609,
+      "real": 0.16,
+      "in_other_rej": 0.04,
+      "out_cn_other_rej": 0.575
+    }
+  ],
+  "sets": {
+    "in": 2528,
+    "out_cn": 360,
+    "out_ood": 232,
+    "out_other": 808,
+    "real": 100
+  }
+}
