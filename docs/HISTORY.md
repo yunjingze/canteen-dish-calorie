@@ -314,4 +314,4 @@ E:\项目作业\food_project\
 - **HANDOFF 全篇刷新**：标题行改第十七轮；四模式表第①行改成五模型集成（94.40 / ECE 1.52 / 18.7 ms）、第④行改成 22 路（80.54 / 98.06 / 5.44 / 米饭 87.88）；五集数字改 90.43 / 20.56 / 25.00 / 6.81 / 10.00；服务 job 改 **pwsh-5baf0a9a8c9549fa**、health 预期值改 cn_classes 21 / domain 0.2868 / cn_temperature 0.7745 / ensemble 5 / heif true；常量表、env 列表、复现命令全部同步；测试数 114→**125**。
 - **重新打包**：scripts/package_demo.ps1 已含四个集成成员与 cn241_22_pre。实跑输出 **327.6 MB / 343,539,726 B / 286 项**（解包 369.9 MB），8 份 best.pt（集成五份 + plate40 + cn116 + cn241_22_pre）+ ensemble_calibration.json + 22 类版 domain_head.json。
 - **回归**：pytest → **125 passed, 1 warning in 7.65 s**；scripts/check_demo_shots.py → **all 11 shots match**；/api/health 实测 cn_classes 21 / ensemble 5 (T=0.63) / domain 0.2868 / cn_temperature 0.7745 / heif true。
-- **产出**：README §5.3 / §5.7.3 / §5.7.9 / §6、HANDOFF 全篇、docs/演示视频分镜.md、本节。
+- **产出**：README §5.3 / §5.7.3 / §5.7.9 / §6、HANDOFF 全篇、docs/演示视频分镜.md、本节。提交 **d07c491**（43 个文件：源码、脚本、结果表、文档、论文 40 sigmoids 订正）+ **a3bb31f**（重打包后的 domain_head.json、mixed_plate 表、paper/main.tex）；dist/FoodDemo.zip 327.6 MB 不入库（.gitignore）。
